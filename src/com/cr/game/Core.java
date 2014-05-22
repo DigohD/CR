@@ -9,7 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.cr.input.KeyInput;
 import com.cr.input.Mouse;
 
-
 public abstract class Core implements Runnable{
 	
 	public static int WIDTH;

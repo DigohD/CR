@@ -1,14 +1,14 @@
 package com.cr.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
+import com.cr.graphics.Screen;
 import com.cr.input.KeyInput;
 
 public class Game extends Core{
 	
+	private Screen screen;
+	
 	public Game(){
-		
+		screen = new Screen(WIDTH, HEIGHT);
 	}
 
 	@Override
@@ -27,14 +27,7 @@ public class Game extends Core{
 
 	@Override
 	public void render() {
-		Graphics2D g = null;
-		try{
-			g = Display.getGraphics();
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, Display.getWidth(), Display.getHeight());
-			
-		}finally{ g.dispose();}
-		Display.update();
+		screen.render();
 	}
 	
 	public static void main(String[] args){
