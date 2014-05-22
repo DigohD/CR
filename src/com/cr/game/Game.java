@@ -24,7 +24,7 @@ public class Game extends Core{
 
 	@Override
 	public void tick(float dt) {
-		
+		screen.tick(dt);
 	}
 
 	@Override

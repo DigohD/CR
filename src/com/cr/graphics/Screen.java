@@ -6,15 +6,19 @@ import java.awt.Graphics2D;
 import com.cr.game.Display;
 import com.cr.object.hero.Hero;
 import com.cr.util.Vector2f;
+import com.cr.world.World;
 
 public class Screen {
 	
 	private int width, height;
 	Hero hero;
+	World w;
+	
 	public Screen(int width, int height){
 		this.width = width;
 		this.height = height;
-		hero = new Hero(new Vector2f(400, 400));
+		w = new World();
+		hero = new Hero(new Vector2f(20, 400));
 	}
 	
 	public void tick(float dt){
@@ -28,7 +32,9 @@ public class Screen {
 			clearScreen(g);
 			
 			//draw state here
+			w.render(g);
 			hero.render(g);
+
 			
 		}finally{ g.dispose();}
 		Display.update();
