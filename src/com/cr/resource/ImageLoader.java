@@ -1,4 +1,4 @@
-package com.cr.util;
+package com.cr.resource;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -10,9 +10,15 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 	
-	private static HashMap<String, Image> imageLib = new HashMap<String, Image>();
+	private static HashMap<String, BufferedImage> imageLib = 
+			new HashMap<String, BufferedImage>();
 	
-	public static synchronized BufferedImage loadImage2(String folder, String name){
+	public ImageLoader(){
+		// Tiles
+		imageLib.put("grass", loadImage("image", "grass.png"));
+	}
+	
+	private static synchronized BufferedImage loadImage(String folder, String name){
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(ImageLoader.class.getResource(folder + "/" + name));
@@ -20,6 +26,10 @@ public class ImageLoader {
 			e.printStackTrace();
 		}
 		return img;
+	}
+	
+	public static BufferedImage getImage(String name){
+		return imageLib.get(name);
 	}
 	
 //	public static synchronized BufferedImage loadImage(String folder, String name){
