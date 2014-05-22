@@ -2,12 +2,14 @@ package com.cr.game;
 
 import com.cr.graphics.Screen;
 import com.cr.input.KeyInput;
+import com.cr.resource.ImageLoader;
 
 public class Game extends Core{
 	
 	private Screen screen;
 	
 	public Game(){
+		new ImageLoader();
 		screen = new Screen(WIDTH, HEIGHT);
 	}
 
