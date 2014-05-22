@@ -16,6 +16,7 @@ public class ImageLoader {
 	public ImageLoader(){
 		// Tiles
 		imageLib.put("grass", loadImage("image", "grass.png"));
+		imageLib.put("tree", loadImage("image", "tree.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){

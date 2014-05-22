@@ -7,6 +7,9 @@ import com.cr.resource.ImageLoader;
 
 public abstract class Tile{
 	
+	protected final int TILE_WIDTH = 46, TILE_HEIGHT = 30;
+	protected final int TILE_DRAW_OFFSET_X = -7;
+	protected final int TILE_DRAW_OFFSET_Y = -5;
 	protected BufferedImage image;
 	
 	public Tile(String imageString){
@@ -14,7 +17,8 @@ public abstract class Tile{
 	}
 	
 	public void draw(Graphics g, int xPos, int yPos){
-		g.drawImage(image, xPos, yPos, null);
+		g.drawImage(image, (xPos * TILE_WIDTH) - TILE_DRAW_OFFSET_X, 
+				(yPos * TILE_HEIGHT) - TILE_DRAW_OFFSET_Y, null);
 	}
 	
 }
