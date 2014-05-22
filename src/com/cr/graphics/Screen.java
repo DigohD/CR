@@ -18,7 +18,7 @@ public class Screen {
 		this.width = width;
 		this.height = height;
 		w = new World();
-		hero = new Hero(new Vector2f(20, 400));
+		hero = new Hero();
 	}
 	
 	public void tick(float dt){
