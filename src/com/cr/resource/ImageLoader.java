@@ -17,6 +17,8 @@ public class ImageLoader {
 		// Tiles
 		imageLib.put("grass", loadImage("image", "grass.png"));
 		imageLib.put("tree", loadImage("image", "tree.png"));
+		
+		//Entities
 		imageLib.put("hero", loadImage("image", "hero.png"));
 	}
 	

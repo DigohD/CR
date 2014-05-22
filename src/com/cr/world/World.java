@@ -9,7 +9,7 @@ import com.cr.world.tile.Tile;
 
 public class World implements Renderable{
 	
-	private final int WORLD_SIZE = 100;
+	private final int WORLD_SIZE = 10;
 	private Tile[][] terrain = new Tile[WORLD_SIZE][WORLD_SIZE];
 	
 	public World(){
