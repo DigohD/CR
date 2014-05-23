@@ -46,7 +46,9 @@ public abstract class Item implements Renderable{
 
 	@Override
 	public BufferedImage getImage() {
-		return null;
+		return image;
 	}
+	
+	
 
 }
