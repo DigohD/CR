@@ -14,12 +14,27 @@ public class GameStateManager {
 		states = new StateStack<GameState>();
 	}
 
-	public void pushState(GameState state){
+	/**
+	 * Adds a state at the top of the state stack
+	 * @param state the game state that will be added to the top of the state stack
+	 */
+	public void push(GameState state){
 		states.push(state);
 	}
 	
-	public void removeTop(){
-		states.deleteTop();
+	/**
+	 * Deletes the state at the top of the state stack
+	 */
+	public void pop(){
+		states.pop();
+	}
+	
+	public GameState next(){
+		return states.top.next.data;
+	}
+	
+	public Node<GameState> peek(){
+		return states.top;
 	}
 	
 	public void tick(float dt){

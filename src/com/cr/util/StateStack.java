@@ -18,7 +18,7 @@ public class StateStack<E> {
 		}
 	}
 	
-	public void deleteTop(){
+	public void pop(){
 		if(top != null){
 			Node<E> temp = top.next;
 			top = temp;

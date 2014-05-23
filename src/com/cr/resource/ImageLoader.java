@@ -21,6 +21,7 @@ public class ImageLoader {
 		//Entities
 		imageLib.put("hero", loadImage("image", "hero.png"));
 		imageLib.put("herohead", loadImage("image", "herohead.png"));
+		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){

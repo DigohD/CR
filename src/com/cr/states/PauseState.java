@@ -22,20 +22,24 @@ public class PauseState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		if(KeyInput.enter) gsm.removeTop();
-		if(KeyInput.c) {
-			gsm.removeTop();
-			gsm.removeTop();
+		if(KeyInput.enter) {
+			if(gsm.next() instanceof PlayState){
+				PlayState ps = (PlayState) gsm.next();
+				ps.bg = false;
+			}
+			gsm.pop();
 		}
-		
+		if(KeyInput.c) {
+			gsm.pop();
+			gsm.pop();
+		}
 	}
 
 	@Override
 	public void render(Graphics2D g) {
 		g.setColor(Color.RED);
-		g.drawString("PRESS ENTER TO PLAY", Game.WIDTH/2-100, Game.HEIGHT/2);
+		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
 		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
-		g.drawString("PRESS ESC TO EXIT GAME", Game.WIDTH/2-100, Game.HEIGHT/2+60);
 	}
 
 }

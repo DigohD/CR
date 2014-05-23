@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
 import com.cr.states.MenuState;
-import com.cr.states.PlayState;
 
 public class Game extends Core{
 	
@@ -15,17 +14,12 @@ public class Game extends Core{
 	public Game(){
 		new ImageLoader();
 		gsm = new GameStateManager();
-		
-		gsm.pushState(new MenuState(gsm));
+		gsm.push(new MenuState(gsm));
 	}
 
 	@Override
 	public void getInput() {
-		KeyInput.tick();
-		if(KeyInput.esc){
-			Display.restoreScreen();
-			System.exit(0);
-		}		
+		KeyInput.tick();	
 	}
 
 	@Override

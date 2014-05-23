@@ -3,6 +3,7 @@ package com.cr.states;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.cr.game.Display;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
@@ -23,9 +24,12 @@ public class MenuState extends GameState{
 	@Override
 	public void tick(float dt) {
 		if(KeyInput.enter){
-			gsm.pushState(new PlayState(gsm));
+			gsm.push(new PlayState(gsm));
 		}
-		
+		if(KeyInput.esc){
+			Display.restoreScreen();
+			System.exit(0);
+		}	
 	}
 
 	@Override
