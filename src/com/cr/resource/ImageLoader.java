@@ -23,6 +23,7 @@ public class ImageLoader {
 		imageLib.put("herohead", loadImage("image", "herohead.png"));
 		imageLib.put("herobody", loadImage("image", "herobody.png"));
 		imageLib.put("herorighthand", loadImage("image", "herorighthand.png"));
+		imageLib.put("herolefthand", loadImage("image", "herolefthand.png"));
 		
 		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
