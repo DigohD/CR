@@ -58,6 +58,27 @@ public class Hero extends Mob{
 			targetVel.x = -15f;
 		}
 		
+		if(KeyInput.up && KeyInput.left){
+			currentDir = Direction.NORTH;
+			targetVel.x = -10.6f;
+			targetVel.y = -10.6f;
+		}
+		if(KeyInput.up && KeyInput.right){
+			currentDir = Direction.NORTH;
+			targetVel.x = 10.6f;
+			targetVel.y = -10.6f;
+		}
+		if(KeyInput.down && KeyInput.left){
+			currentDir = Direction.SOUTH;
+			targetVel.x = -10.6f;
+			targetVel.y = 10.6f;
+		}
+		if(KeyInput.down && KeyInput.right){
+			currentDir = Direction.SOUTH;
+			targetVel.x = 10.6f;
+			targetVel.y = 10.6f;
+		}
+		
 		if(!KeyInput.up && !KeyInput.down){
 			targetVel.y = 0f;
 		}
