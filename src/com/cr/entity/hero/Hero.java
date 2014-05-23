@@ -25,7 +25,7 @@ public class Hero extends Mob{
 		NORTH, SOUTH, EAST, WEST;
 	}
 	
-	public Direction currentDir;
+	public static Direction currentDir;
 	
 	public Hero() {
 		super(position);
@@ -103,9 +103,24 @@ public class Hero extends Mob{
 	@Override
 	public void render(Graphics2D g) {
 //		g.drawImage(image, (int)position.x, (int)position.y, null);
-		
-		body.render(g);
-		head.render(g);
+		switch(currentDir){
+			case SOUTH:
+				body.render(g);
+				head.render(g);
+				break;
+			case EAST:
+				body.render(g);
+				head.render(g);
+				break;
+			case NORTH:
+				head.render(g);
+				body.render(g);
+				break;
+			case WEST:
+				body.render(g);
+				head.render(g);
+				break;
+		}
 	}
 	
 	@Override
