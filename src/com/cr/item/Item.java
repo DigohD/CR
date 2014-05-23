@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
+import com.cr.entity.hero.Hero.Direction;
 import com.cr.resource.ImageLoader;
 
 public abstract class Item implements Renderable{
@@ -48,6 +49,8 @@ public abstract class Item implements Renderable{
 	public BufferedImage getImage() {
 		return image;
 	}
+	
+	public abstract boolean renderPrePart(Direction dir);
 	
 	
 

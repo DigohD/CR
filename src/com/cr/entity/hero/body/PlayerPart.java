@@ -67,7 +67,7 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		int drawX = x + (int)bob.getOffset().x + horXOffset + xOffset;
 		int drawY = y + (int)bob.getOffset().y + yOffset;
 		
-		if(item != null)
+		if(item != null && item.renderPrePart(dir))
 			item.render(g, drawX, drawY, spriteID);
 		
 		g.drawImage(image,
@@ -85,6 +85,9 @@ public abstract class PlayerPart implements Renderable, Tickable{
 				
 				// No ImageObserver
 				null);
+		
+		if(item != null && !item.renderPrePart(dir))
+			item.render(g, drawX, drawY, spriteID);
 		
 //		if(item != null)
 //			item.render(g, drawX, drawY, spriteID);
