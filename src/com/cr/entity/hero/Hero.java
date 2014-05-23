@@ -70,20 +70,10 @@ public class Hero extends Mob{
 	@Override
 	public void tick(float dt) {
 		processInput();
-		System.out.println(currentDir);
+
 		velocity.x = approach(targetVel.x, velocity.x, dt*10f);
 		velocity.y = approach(targetVel.y, velocity.y, dt*10f);
 		move(dt);
-		
-		if(position.x >= Game.WIDTH/2){
-			targetVel.y = 25f;
-			targetVel.x = 0;
-		}
-		
-		if(position.y >= Game.HEIGHT/2){
-			targetVel.y = 0;
-			targetVel.x = 0;
-		}
 		
 		head.tick(dt);
 		body.tick(dt);
