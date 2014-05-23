@@ -16,7 +16,7 @@ public abstract class Tile{
 		image = ImageLoader.getImage(imageString);
 	}
 	
-	public void draw(Graphics g, int xPos, int yPos){
+	public void render(Graphics g, int xPos, int yPos){
 		g.drawImage(image, (xPos * TILE_WIDTH) - TILE_DRAW_OFFSET_X, 
 				(yPos * TILE_HEIGHT) - TILE_DRAW_OFFSET_Y, null);
 	}

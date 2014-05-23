@@ -17,6 +17,10 @@ public class Hero extends Mob{
 	private BufferedImage image;
 	private Vector2f targetVel;
 	
+	public Vector2f getTargetVel(){
+		return targetVel;
+	}
+	
 	public static Vector2f position;
 
 	private Head head;
@@ -24,6 +28,10 @@ public class Hero extends Mob{
 	private RightHand rightHand;
 	
 	private float accSpeed = 3.5f;
+	
+	public float getAccSpeed(){
+		return accSpeed;
+	}
 	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
@@ -152,6 +160,14 @@ public class Hero extends Mob{
 	@Override
 	public BufferedImage getImage() {
 		return image;
+	}
+	
+	public float getX() {
+		return position.x;
+	}
+
+	public float getY() {
+		return position.y;
 	}
 
 }
