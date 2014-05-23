@@ -2,12 +2,14 @@ package com.cr.entity.hero;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import com.cr.entity.Mob;
 import com.cr.entity.hero.body.Body;
 import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
+import com.cr.entity.hero.misc.FootPrint;
 import com.cr.gameEngine.Game;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
@@ -26,6 +28,8 @@ public class Hero extends Mob{
 	private LeftHand leftHand;
 	
 	private float accSpeed = 3.5f;
+	
+	private int printTimer;
 	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
@@ -144,6 +148,11 @@ public class Hero extends Mob{
 	@Override
 	protected void move(float dt){
 		position = position.add(velocity.mul(dt));
+		
+		if(printTimer++ > 3){
+			new FootPrint();
+			printTimer = 0;
+		}
 		
 		if(velocity.length() == 0)
 			setBobing(false);
