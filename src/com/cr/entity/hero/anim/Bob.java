@@ -42,8 +42,6 @@ public abstract class Bob implements Tickable{
 			isGoingRight = false;
 		else if(offset.x < -amplitude)
 			isGoingRight = true;
-		
-		System.out.println(offset);
 	}
 
 	public Vector2f getOffset() {
