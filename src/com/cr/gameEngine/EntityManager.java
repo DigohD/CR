@@ -88,8 +88,6 @@ public class EntityManager {
 	public void render(Graphics2D g){
 		for(Renderable r : renderableEntities)
 			r.render(g);
-		if(hero.isLive())
-			hero.render(g);
 	}
 
 }
