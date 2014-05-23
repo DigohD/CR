@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
-import com.cr.entity.hero.Hero;
 import com.cr.gameEngine.EntityManager;
 import com.cr.world.tile.GrassTile;
 import com.cr.world.tile.Tile;
@@ -17,7 +16,6 @@ public class World implements Renderable{
 	
 	public World(){
 		eManager = new EntityManager();
-		new Hero();
 		for(int i = 0; i < WORLD_SIZE; i++)
 			for(int j = 0; j < WORLD_SIZE; j++)
 				terrain[i][j] = new GrassTile();
