@@ -9,12 +9,16 @@ import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.entity.hero.anim.Bob;
 import com.cr.entity.hero.anim.HeadBob;
+import com.cr.item.Item;
+import com.cr.item.weapon.Hammer;
 import com.cr.resource.ImageLoader;
 
 public abstract class PlayerPart implements Renderable, Tickable{
 
 	private BufferedImage image;
 	private Bob bob;
+	
+	private Item item;
 	
 	private int width, height;
 	private int horXOffset, vertXOffset, xOffset, yOffset;
@@ -60,13 +64,18 @@ public abstract class PlayerPart implements Renderable, Tickable{
 				break;
 		}
 		
+		int drawX = x + (int)bob.getOffset().x + horXOffset + xOffset;
+		int drawY = y + (int)bob.getOffset().y + yOffset;
+		
+		if(item != null)
+			item.render(g, drawX, drawY, spriteID);
 		
 		g.drawImage(image,
 				// Define position
-				x + (int)bob.getOffset().x + horXOffset + xOffset,
-				y + (int)bob.getOffset().y + yOffset,
-				x + width + (int)bob.getOffset().x + horXOffset + xOffset,
-				y + height + (int)bob.getOffset().y + yOffset,
+				drawX,
+				drawY,
+				drawX + width,
+				drawY + height,
 				
 				//Define Sprite
 				spriteID * width, 
@@ -76,6 +85,9 @@ public abstract class PlayerPart implements Renderable, Tickable{
 				
 				// No ImageObserver
 				null);
+		
+//		if(item != null)
+//			item.render(g, drawX, drawY, spriteID);
 	}
 
 	@Override
@@ -90,6 +102,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 
 	public Bob getBob() {
 		return bob;
+	}
+	
+	public void setItem(Item item){
+		this.item = item;
 	}
 	
 	

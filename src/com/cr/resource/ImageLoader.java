@@ -28,6 +28,9 @@ public class ImageLoader {
 		// Hero Footprints
 		imageLib.put("footprintgrass", loadImage("image", "footprintgrass.png"));
 		
+		// Weapons
+		imageLib.put("hammer", loadImage("image", "hammer.png"));
+		
 		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 	}
