@@ -52,9 +52,9 @@ public class GameStateManager {
 	}
 	
 	private void render(Node<GameState> state, Graphics2D g){
-		state.data.render(g);
 		if(!state.data.isRenderingBlocked())
 			render(state.next, g);
+		state.data.render(g);
 	}
 	
 	

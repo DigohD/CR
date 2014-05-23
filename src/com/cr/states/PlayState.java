@@ -3,6 +3,7 @@ package com.cr.states;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.cr.gameEngine.Game;
 import com.cr.gameEngine.GameStateManager;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
@@ -37,7 +38,7 @@ public class PlayState extends GameState{
 	@Override
 	public void render(Graphics2D g) {
 		w.render(g);
-		if(bg) g.drawImage(img, 7, 6, 460+12, 300+12, null);
+		if(bg) g.drawImage(img, 7, 6, Game.WIDTH, Game.HEIGHT, null);
 	}
 
 }
