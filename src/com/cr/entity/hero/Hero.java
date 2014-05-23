@@ -126,8 +126,18 @@ public class Hero extends Mob{
 	@Override
 	protected void move(float dt){
 		position = position.add(velocity.mul(dt));
+		
+		if(velocity.length() == 0)
+			setBobing(false);
+		else
+			setBobing(true);
 	}
 
+	private void setBobing(boolean isBobing){
+		head.getBob().setActive(isBobing);
+		body.getBob().setActive(isBobing);
+	}
+	
 	@Override
 	public BufferedImage getImage() {
 		return image;

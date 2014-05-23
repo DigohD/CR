@@ -12,6 +12,7 @@ public abstract class Bob implements Tickable{
 	protected Vector2f xVelocity;
 	
 	protected float amplitude;
+	protected boolean isActive;
 	
 	public Bob(boolean up, boolean right, Vector2f yV, Vector2f xV, float amplitude){
 		isGoingUp = up;
@@ -45,7 +46,14 @@ public abstract class Bob implements Tickable{
 	}
 
 	public Vector2f getOffset() {
-		return offset;
+		if(!isActive)
+			return new Vector2f(0, 0);
+		else
+			return offset;
+	}
+	
+	public void setActive(boolean active){
+		isActive = active;
 	}
 	
 }
