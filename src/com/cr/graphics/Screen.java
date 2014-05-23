@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import com.cr.game.Display;
 import com.cr.object.hero.Hero;
-import com.cr.util.Vector2f;
+import com.cr.states.GameState;
 import com.cr.world.World;
 
 public class Screen {
@@ -25,7 +25,7 @@ public class Screen {
 		hero.tick(dt);
 	}
 	
-	public void render(){
+	public void render(GameState state){
 		Graphics2D g = null;
 		try{
 			g = Display.getGraphics();
