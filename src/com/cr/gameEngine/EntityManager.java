@@ -7,6 +7,7 @@ import java.util.List;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.hero.Hero;
 
 public class EntityManager {
 	
@@ -15,11 +16,22 @@ public class EntityManager {
 	private static List<Renderable> renderableEntities;
 	private static List<Renderable> deToAdd;
 	
+	private Hero hero;
+	
 	public EntityManager(){
 		tickableEntities = new ArrayList<Tickable>();
 		teToAdd = new ArrayList<Tickable>();
 		renderableEntities = new ArrayList<Renderable>();
 		deToAdd = new ArrayList<Renderable>();
+		
+		hero = new Hero();
+	}
+	
+	public static void clear(){
+		tickableEntities.clear();
+		teToAdd.clear();
+		renderableEntities.clear();
+		deToAdd.clear();
 	}
 	
 	public static void addEntity(Entity e){
@@ -68,11 +80,16 @@ public class EntityManager {
 		removeDeadEntities();
 		//check for collisions between collideable entities
 		
+		if(hero.isLive())
+			hero.tick(dt);
+		
 		for(Tickable t : tickableEntities)
 			t.tick(dt);
 	}
 	
 	public void render(Graphics2D g){
+		if(hero.isLive())
+			hero.render(g);
 		for(Renderable r : renderableEntities)
 			r.render(g);
 	}

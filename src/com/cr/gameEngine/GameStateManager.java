@@ -56,6 +56,5 @@ public class GameStateManager {
 			render(state.next, g);
 		state.data.render(g);
 	}
-	
-	
+
 }

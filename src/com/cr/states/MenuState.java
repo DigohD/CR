@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.cr.gameEngine.Display;
+import com.cr.gameEngine.EntityManager;
 import com.cr.gameEngine.Game;
 import com.cr.gameEngine.GameStateManager;
 import com.cr.input.KeyInput;
@@ -17,7 +18,6 @@ public class MenuState extends GameState{
 	
 	@Override
 	public void init() {
-		
 		
 	}
 	
