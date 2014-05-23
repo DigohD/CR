@@ -46,7 +46,8 @@ public class PlayState extends GameState{
 
 	@Override
 	public void render(Graphics2D g) {
-		w.render(g, (int)camera.getPos().x, (int)camera.getPos().y);
+//		w.render(g, (int)camera.getPos().x, (int)camera.getPos().y);
+		w.render(g, 0, 0);
 		hero.render(g);
 		if(bg) g.drawImage(img, 7, 6, Game.WIDTH, Game.HEIGHT, null);
 		
