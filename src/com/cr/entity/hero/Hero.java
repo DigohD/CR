@@ -25,7 +25,7 @@ public class Hero extends Mob{
 		NORTH, SOUTH, EAST, WEST;
 	}
 	
-	private Direction currentDir;
+	public Direction currentDir;
 	
 	public Hero() {
 		super(position);
@@ -42,15 +42,19 @@ public class Hero extends Mob{
 	
 	private void processInput(){
 		if(KeyInput.up){
+			currentDir = Direction.NORTH;
 			targetVel.y = -15f;
 		}
 		if(KeyInput.down){
+			currentDir = Direction.SOUTH;
 			targetVel.y = 15f;
 		}
 		if(KeyInput.right){
+			currentDir = Direction.EAST;
 			targetVel.x = 15f;
 		}
 		if(KeyInput.left){
+			currentDir = Direction.WEST;
 			targetVel.x = -15f;
 		}
 		
@@ -66,6 +70,7 @@ public class Hero extends Mob{
 	@Override
 	public void tick(float dt) {
 		processInput();
+		System.out.println(currentDir);
 		velocity.x = approach(targetVel.x, velocity.x, dt*10f);
 		velocity.y = approach(targetVel.y, velocity.y, dt*10f);
 		move(dt);

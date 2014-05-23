@@ -128,7 +128,7 @@ public abstract class Core implements Runnable{
 
 			if(frameCounter >= 1){
 				//Display.frame.setTitle(TITLE + " || " + "tps: " + tps + ", fps: " + fps);
-				System.out.println("tps: " + tps + ", fps: " + fps);
+				//System.out.println("tps: " + tps + ", fps: " + fps);
 				tps = 0;
 				fps = 0;
 				frameCounter = 0;
