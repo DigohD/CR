@@ -24,6 +24,9 @@ public abstract class Bob implements Tickable{
 	
 	@Override
 	public void tick(float dt) {
+		if(!isActive)
+			dt = dt / 4;
+		
 		if(isGoingUp)
 			offset = offset.sub(yVelocity.mul(dt));
 		else
@@ -47,7 +50,7 @@ public abstract class Bob implements Tickable{
 
 	public Vector2f getOffset() {
 		if(!isActive)
-			return new Vector2f(0, 0);
+			return new Vector2f(0, offset.y);
 		else
 			return offset;
 	}
