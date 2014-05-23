@@ -1,14 +1,15 @@
-package com.cr.object.hero;
+package com.cr.entity.hero;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.cr.game.Game;
-import com.cr.object.DynamicObject;
+import com.cr.entity.Mob;
+import com.cr.gameEngine.EntityManager;
+import com.cr.gameEngine.Game;
 import com.cr.resource.ImageLoader;
 import com.cr.util.Vector2f;
 
-public class Hero extends DynamicObject{
+public class Hero extends Mob{
 	
 	private BufferedImage image;
 	private Vector2f targetVel;
@@ -23,17 +24,25 @@ public class Hero extends DynamicObject{
 		velocity = new Vector2f(0f, 0f);
 		targetVel = new Vector2f(25f, 0);
 		image = ImageLoader.getImage("hero");
+		EntityManager.addEntity(this);
 	}
 	
 	@Override
 	public void tick(float dt) {
-//		velocity.x = approach(targetVel.x, velocity.x, dt);
-//		velocity.y = approach(targetVel.y, velocity.y, dt);
-//		move(dt);
-//		if(position.x >= Game.WIDTH/2){
-//			targetVel.y = 25f;
-//			targetVel.x = 0;
-//		}
+		velocity.x = approach(targetVel.x, velocity.x, dt);
+		velocity.y = approach(targetVel.y, velocity.y, dt);
+		move(dt);
+		if(position.x >= Game.WIDTH/2){
+			targetVel.y = 25f;
+			targetVel.x = 0;
+		}
+		
+		if(position.y >= Game.HEIGHT/2){
+			targetVel.y = 0;
+			targetVel.x = 0;
+			
+		}
+		
 		
 		head.tick(dt);
 	}

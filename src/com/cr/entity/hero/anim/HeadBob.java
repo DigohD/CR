@@ -1,6 +1,6 @@
-package com.cr.object.hero.anim;
+package com.cr.entity.hero.anim;
 
-import com.cr.object.Tickable;
+import com.cr.entity.Tickable;
 import com.cr.util.Vector2f;
 
 public class HeadBob implements Tickable{

@@ -1,4 +1,4 @@
-package com.cr.object;
+package com.cr.entity;
 
 public interface Tickable {
 	

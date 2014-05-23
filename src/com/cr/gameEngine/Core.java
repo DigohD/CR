@@ -1,4 +1,4 @@
-package com.cr.game;
+package com.cr.gameEngine;
 
 import java.awt.DisplayMode;
 import java.awt.Window;
@@ -99,15 +99,15 @@ public abstract class Core implements Runnable{
 		int fps = 0;
 		
 		while(running){
-			lock.lock();
-			while(paused){
-				try {
-					okToRun.await();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			lock.unlock();
+//			lock.lock();
+//			while(paused){
+//				try {
+//					okToRun.await();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			lock.unlock();
 			
 			currentTime = System.nanoTime();
 			passedTime = (currentTime - previousTime) / 1000000000.0;

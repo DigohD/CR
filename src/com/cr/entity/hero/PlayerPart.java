@@ -1,4 +1,4 @@
-package com.cr.object.hero;
+package com.cr.entity.hero;
 
 public abstract class PlayerPart {
 

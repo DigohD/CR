@@ -3,8 +3,8 @@ package com.cr.states;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.cr.game.Game;
-import com.cr.game.GameStateManager;
+import com.cr.gameEngine.Game;
+import com.cr.gameEngine.GameStateManager;
 import com.cr.input.KeyInput;
 
 public class PauseState extends GameState{

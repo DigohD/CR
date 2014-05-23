@@ -1,13 +1,13 @@
-package com.cr.object;
+package com.cr.entity;
 
 import com.cr.util.Vector2f;
 
-public abstract class DynamicObject extends GameObject implements Tickable, Renderable{
+public abstract class Mob extends Entity implements Tickable, Renderable{
 
 	protected float speedX, speedY;
 	protected Vector2f velocity;
 	
-	public DynamicObject(Vector2f position) {
+	public Mob(Vector2f position) {
 		super(position);
 		
 	}

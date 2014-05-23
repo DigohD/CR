@@ -1,12 +1,11 @@
-package com.cr.object.hero;
+package com.cr.entity.hero;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import com.cr.object.Renderable;
-import com.cr.object.Tickable;
-import com.cr.object.hero.anim.HeadBob;
+import com.cr.entity.Renderable;
+import com.cr.entity.Tickable;
+import com.cr.entity.hero.anim.HeadBob;
 import com.cr.resource.ImageLoader;
 
 public class Head implements Renderable, Tickable{

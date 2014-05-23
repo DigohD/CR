@@ -1,14 +1,14 @@
-package com.cr.object;
+package com.cr.entity;
 
 import com.cr.util.Vector2f;
 
-public abstract class GameObject {
+public abstract class Entity {
 
 	protected Vector2f position;
 	protected int width, height;
 	protected boolean live = true;
 
-	public GameObject(Vector2f position) {
+	public Entity(Vector2f position) {
 		this.position = position;
 	}
 

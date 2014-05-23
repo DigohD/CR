@@ -2,7 +2,7 @@ package com.cr.states;
 
 import java.awt.Graphics2D;
 
-import com.cr.game.GameStateManager;
+import com.cr.gameEngine.GameStateManager;
 
 public abstract class GameState {
 	

@@ -3,15 +3,13 @@ package com.cr.states;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.cr.game.GameStateManager;
+import com.cr.gameEngine.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.object.hero.Hero;
 import com.cr.resource.ImageLoader;
 import com.cr.world.World;
 
 public class PlayState extends GameState{
-	
-	private Hero hero;
+
 	private World w;
 	private BufferedImage img;
 	public boolean bg = false;
@@ -25,7 +23,6 @@ public class PlayState extends GameState{
 	@Override
 	public void init() {
 		w = new World();
-		hero = new Hero();
 	}
 
 	@Override
@@ -34,13 +31,12 @@ public class PlayState extends GameState{
 			bg = true;
 			gsm.push(new PauseState(gsm));
 		}
-		hero.tick(dt);
+		w.tick(dt);
 	}
 
 	@Override
 	public void render(Graphics2D g) {
 		w.render(g);
-		hero.render(g);
 		if(bg) g.drawImage(img, 7, 6, 460+12, 300+12, null);
 	}
 

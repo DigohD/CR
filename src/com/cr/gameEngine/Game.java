@@ -1,4 +1,4 @@
-package com.cr.game;
+package com.cr.gameEngine;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
