@@ -23,6 +23,8 @@ public class Hero extends Mob{
 	private Body body;
 	private RightHand rightHand;
 	
+	private float accSpeed = 3.5f;
+	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
 	}
@@ -95,8 +97,8 @@ public class Hero extends Mob{
 	public void tick(float dt) {
 		processInput();
 
-		velocity.x = approach(targetVel.x, velocity.x, dt*10f);
-		velocity.y = approach(targetVel.y, velocity.y, dt*10f);
+		velocity.x = approach(targetVel.x, velocity.x, dt*accSpeed);
+		velocity.y = approach(targetVel.y, velocity.y, dt*accSpeed);
 		move(dt);
 		
 		head.tick(dt);
