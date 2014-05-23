@@ -64,9 +64,9 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		g.drawImage(image,
 				// Define position
 				x + (int)bob.getOffset().x + horXOffset + xOffset,
-				y + (int)bob.getOffset().y + vertXOffset + yOffset,
+				y + (int)bob.getOffset().y + yOffset,
 				x + width + (int)bob.getOffset().x + horXOffset + xOffset,
-				y + height + (int)bob.getOffset().y + vertXOffset + yOffset,
+				y + height + (int)bob.getOffset().y + yOffset,
 				
 				//Define Sprite
 				spriteID * width, 
