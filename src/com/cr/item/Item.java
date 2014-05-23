@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.resource.ImageLoader;
+import com.cr.util.Camera;
 
 public abstract class Item implements Renderable{
 
@@ -25,10 +26,10 @@ public abstract class Item implements Renderable{
 		
 		g.drawImage(image,
 				// Define position
-				drawX + xOffset,
-				drawY + yOffset,
-				drawX + width + xOffset,
-				drawY + height + yOffset,
+				drawX + xOffset - (int) Camera.getCamX(),
+				drawY + yOffset - (int) Camera.getCamY(),
+				drawX + width + xOffset - (int) Camera.getCamX(),
+				drawY + height + yOffset - (int) Camera.getCamY(),
 				
 				//Define Sprite
 				spriteID * width, 

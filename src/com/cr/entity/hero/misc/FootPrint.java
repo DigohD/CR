@@ -9,6 +9,7 @@ import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.gameEngine.EntityManager;
 import com.cr.resource.ImageLoader;
+import com.cr.util.Camera;
 import com.cr.util.Vector2f;
 
 public class FootPrint extends Entity implements Renderable, Tickable{
@@ -25,7 +26,7 @@ public class FootPrint extends Entity implements Renderable, Tickable{
 
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(image, (int) position.x, (int) position.y, null);
+		g.drawImage(image, (int) (position.x - Camera.getCamX()), (int) (position.y - Camera.getCamY()), null);
 	}
 
 	@Override
