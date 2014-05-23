@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyInput implements KeyListener{
 
 	public static boolean up, down, right, left, esc, c, v, space, enter;
-	private static boolean[] keys = new boolean[120];
+	private static boolean[] keys = new boolean[150];
 	
 	public static void tick(){
 		up   	= keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP];
@@ -27,6 +27,7 @@ public class KeyInput implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		System.out.println(e.getKeyCode());
 		keys[e.getKeyCode()] = false;
 	}
 
