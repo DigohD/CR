@@ -18,9 +18,12 @@ public class ImageLoader {
 		imageLib.put("grass", loadImage("image", "grass.png"));
 		imageLib.put("tree", loadImage("image", "tree.png"));
 		
-		//Entities
+		// Entities
 		imageLib.put("hero", loadImage("image", "hero.png"));
 		imageLib.put("herohead", loadImage("image", "herohead.png"));
+		imageLib.put("herobody", loadImage("image", "herobody.png"));
+		
+		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 	}
 	

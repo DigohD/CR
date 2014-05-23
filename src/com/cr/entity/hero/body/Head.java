@@ -1,10 +1,11 @@
-package com.cr.entity.hero;
+package com.cr.entity.hero.body;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.anim.HeadBob;
 import com.cr.resource.ImageLoader;
 
@@ -18,7 +19,7 @@ public class Head implements Renderable, Tickable{
 	}
 	
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g){
 		int x = (int) Hero.position.x;
 		int y = (int) Hero.position.y;
 		g.drawImage(image,
