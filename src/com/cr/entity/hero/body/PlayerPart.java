@@ -17,15 +17,16 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	private Bob bob;
 	
 	private int width, height;
-	private int sideOffset, xOffset, yOffset;
+	private int horXOffset, vertXOffset, xOffset, yOffset;
 	
-	public PlayerPart(String imageString, Bob bob, int sideOffset, int xOffset, int yOffset){
+	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset){
 		image = ImageLoader.getImage(imageString);
 		
 		width = image.getWidth() / 4;
 		height = image.getHeight();
 		
-		this.sideOffset = sideOffset;
+		this.horXOffset = horXOffset;
+		this.vertXOffset = vertXOffset;
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.bob = bob;
@@ -38,32 +39,34 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		
 		Direction dir = Hero.currentDir;
 		int spriteID = 0;
-		int sideOffset = 0;
+		int horXOffset = 0;
 		
 		switch(dir){
 			case SOUTH:
 				spriteID = 0;
+				horXOffset = this.vertXOffset;
 				break;
 			case EAST:
 				spriteID = 1;
-				sideOffset = this.sideOffset;
+				horXOffset = this.horXOffset;
 				break;
 			case NORTH:
 				spriteID = 2;
+				horXOffset = -this.vertXOffset;
 				break;
 			case WEST:
 				spriteID = 3;
-				sideOffset = -this.sideOffset;
+				horXOffset = -this.horXOffset;
 				break;
 		}
 		
 		
 		g.drawImage(image,
 				// Define position
-				x + (int)bob.getOffset().x + sideOffset + xOffset,
-				y + (int)bob.getOffset().y + yOffset,
-				x + width + (int)bob.getOffset().x + sideOffset + xOffset,
-				y + height + (int)bob.getOffset().y + yOffset,
+				x + (int)bob.getOffset().x + horXOffset + xOffset,
+				y + (int)bob.getOffset().y + vertXOffset + yOffset,
+				x + width + (int)bob.getOffset().x + horXOffset + xOffset,
+				y + height + (int)bob.getOffset().y + vertXOffset + yOffset,
 				
 				//Define Sprite
 				spriteID * width, 

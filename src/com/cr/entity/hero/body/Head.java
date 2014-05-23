@@ -15,7 +15,7 @@ public class Head extends PlayerPart{
 //	private HeadBob anim = new HeadBob();
 	
 	public Head() {
-		super("herohead", new HeadBob(), 2, 5, -14);
+		super("herohead", new HeadBob(), 2, 0, 5, -14);
 	}
 
 }
