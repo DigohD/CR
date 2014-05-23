@@ -8,7 +8,7 @@ import com.cr.gameEngine.Game;
 import com.cr.gameEngine.GameStateManager;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
-import com.cr.util.Camera;
+import com.cr.util.Camera2;
 import com.cr.world.World;
 
 public class PlayState extends GameState{

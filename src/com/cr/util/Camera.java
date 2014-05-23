@@ -1,73 +1,70 @@
 package com.cr.util;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import com.cr.gameEngine.Game;
 
-import com.cr.entity.Tickable;
-import com.cr.entity.hero.Hero;
-import com.cr.resource.ImageLoader;
-
-public class Camera implements Tickable{
+public class Camera {
 	
-	private Hero hero;
-	private Vector2f pos, velocity, targetVel, targetPos;
-	private int width, height, xOffset = -20, yOffset = -23;
+	private static Vector2f pos;
 	
-	BufferedImage img;
+	private static float camX, camY;
 	
-	public Camera(Hero hero, int width, int height){
-		this.hero = hero;
-		this.width = width;
-		this.height = height;
-		pos = new Vector2f(hero.getX() - (width/2 - hero.getWidth() - xOffset), hero.getY() - (height/2 - hero.getHeight()-yOffset));
-
-		velocity = new Vector2f(0,0);
-		targetVel = new Vector2f(0,0);
-		targetPos = new Vector2f(0,0);
-		
-		img = ImageLoader.getImage("camera");
+	private int width = Game.WIDTH;
+	private int height = Game.HEIGHT;
+	
+	public Camera(float camX, float camY){
+		this.camX = camX;
+		this.camY = camY;
+		pos = new Vector2f(camX, camY);
 	}
 	
-	protected float approach(float target, float current, float dt){
-		float diff = target - current;
-		if(diff > dt)
-			return current + dt;
-		if(diff < -dt)
-			return current - dt;
-		return target;
+	public void move(float x, float y){
+		camX += x;
+		camY += y;
 	}
 	
-	@Override
-	public void tick(float dt) {
-		targetVel.x = hero.getTargetVel().x;
-		targetVel.y = hero.getTargetVel().y;
-		velocity.x = approach(targetVel.x, velocity.x, dt);
-		velocity.y = approach(targetVel.y, velocity.y, dt);
-		targetPos.x = hero.getX() - (width/2 - hero.getWidth()-xOffset) + velocity.x;
-		targetPos.y = hero.getY() - (height/2 - hero.getHeight()-yOffset) + velocity.y;
-//
-		Vector2f diff = targetPos.sub(pos).div(15);
-		pos = pos.add(diff);
+	public float centerX(){
+		return camX + (width/2);
 	}
 	
-	public void render(Graphics2D g){
-		g.drawImage(img, (int)pos.x, (int)pos.y, null);
+	public float centerY(){
+		return camY + (height/2);
 	}
-
+	
 	public Vector2f getPos() {
 		return pos;
 	}
-
 	public int getWidth() {
 		return width;
 	}
-
 	public int getHeight() {
 		return height;
 	}
+	public void setPos(Vector2f pos) {
+		this.pos = pos;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
 
+	public static float getCamX() {
+		return camX;
+	}
 
+	public static float getCamY() {
+		return camY;
+	}
 
+	public void setCamX(float camX) {
+		this.camX = camX;
+	}
+
+	public void setCamY(float camY) {
+		this.camY = camY;
+	}
+	
 	
 
 }

@@ -12,6 +12,7 @@ import com.cr.entity.hero.anim.HeadBob;
 import com.cr.item.Item;
 import com.cr.item.weapon.Hammer;
 import com.cr.resource.ImageLoader;
+import com.cr.util.Camera;
 
 public abstract class PlayerPart implements Renderable, Tickable{
 
@@ -72,10 +73,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		
 		g.drawImage(image,
 				// Define position
-				drawX,
-				drawY,
-				drawX + width,
-				drawY + height,
+				drawX - (int)Camera.getCamX(),
+				drawY - (int)Camera.getCamY(),
+				drawX + width - (int)Camera.getCamX(),
+				drawY + height - (int)Camera.getCamY(),
 				
 				//Define Sprite
 				spriteID * width, 

@@ -24,7 +24,7 @@ public class World{
 	public World(){
 		eManager = new EntityManager();
 		hero = new Hero(this);
-		camera = new Camera(hero, 200, 200);
+		camera = new Camera(0, 0);
 		tLayer = new TileLayer(ImageLoader.getImage("tileLayer"));
 		width = tLayer.getWidth();
 		height = tLayer.getHeight();
@@ -33,34 +33,31 @@ public class World{
 	}
 	
 	public void tick(float dt){
-//		if(camera.getPos().x < 0) camera.getPos().x = 0;
-//		if(camera.getPos().x > ((width*Tile.TILE_WIDTH) - camera.getWidth()))
-//			camera.getPos().x = (width*Tile.TILE_WIDTH) - camera.getWidth();
-//		
-//		if(camera.getPos().y < 0) camera.getPos().y = 0;
-//		if(camera.getPos().y > ((height*Tile.TILE_HEIGHT) - camera.getHeight()))
-//			camera.getPos().y = (height*Tile.TILE_HEIGHT) - camera.getHeight();
+		if(camera.getPos().x < 0) camera.getPos().x = 0;
+		if(camera.getPos().x > ((width*Tile.TILE_WIDTH) - camera.getWidth()))
+			camera.getPos().x = (width*Tile.TILE_WIDTH) - camera.getWidth();
+		
+		if(camera.getPos().y < 0) camera.getPos().y = 0;
+		if(camera.getPos().y > ((height*Tile.TILE_HEIGHT) - camera.getHeight()))
+			camera.getPos().y = (height*Tile.TILE_HEIGHT) - camera.getHeight();
+		
+		camera.setCamX(hero.getX() - (camera.getWidth()/2 - hero.getWidth()));
+		camera.setCamY(hero.getY() - (camera.getHeight()/2 - hero.getHeight()));
+		
 		
 		eManager.tick(dt);
 		hero.tick(dt);
-		camera.tick(dt);
+//		hero.getPos().x = hero.getPos().x - camera.getCamX();
+//		hero.getPos().y = hero.getPos().y - camera.getCamY();
 	}
 
 	public void render(Graphics2D g) {
-		xScroll = (int)camera.getPos().x;
-		yScroll = (int)camera.getPos().y;
-		if(xScroll <= 0) xScroll = 0;
-		if(yScroll <= 0) yScroll = 0;
-		if(xScroll >= (width*Tile.TILE_WIDTH)){
-			xScroll = (tLayer.getWidth()*Tile.TILE_WIDTH);
-		}
-		if(yScroll >= (tLayer.getHeight()*Tile.TILE_HEIGHT)){
-			yScroll = (tLayer.getHeight()*Tile.TILE_HEIGHT);
-		}
+		
+		xScroll = (int) (Camera.getCamX() - Game.WIDTH/2);
+		yScroll = (int) (Camera.getCamY() - Game.HEIGHT/2);
 		tLayer.renderTileLayer(g, xScroll, yScroll);
 		eManager.render(g);
 		hero.render(g);
-		camera.render(g);
 	}
 
 }

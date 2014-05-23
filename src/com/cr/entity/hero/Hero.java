@@ -51,7 +51,7 @@ public class Hero extends Mob{
 	public Hero(World w) {
 		super(position);
 		this.w = w;
-		position = new Vector2f(Game.WIDTH/2, Game.HEIGHT/2);
+		position = new Vector2f(50,50);
 
 		head = new Head();
 		body = new Body();
@@ -130,7 +130,7 @@ public class Hero extends Mob{
 
 	@Override
 	public void render(Graphics2D g) {
-//		g.drawImage(image, (int)position.x, (int)position.y, null);
+//		g.drawImage(image, (int)position.x - cam.getCamX(), (int)position.y - cam.getCamY(), null);
 		switch(currentDir){
 			case SOUTH:
 				body.render(g);
@@ -184,6 +184,10 @@ public class Hero extends Mob{
 	@Override
 	public BufferedImage getImage() {
 		return image;
+	}
+	
+	public Vector2f getPos(){
+		return position;
 	}
 	
 	public float getX() {
