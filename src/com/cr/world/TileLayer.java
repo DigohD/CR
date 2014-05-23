@@ -43,10 +43,11 @@ public class TileLayer {
 	}
 	
 	public void renderTile(Graphics2D g, Tile tile, int xPos, int yPos){
-		xPos = (xPos * Tile.TILE_WIDTH) - Tile.TILE_DRAW_OFFSET_X;
-		yPos = (yPos * Tile.TILE_HEIGHT) - Tile.TILE_DRAW_OFFSET_Y;
+		xPos = (xPos * Tile.TILE_WIDTH) - Tile.TILE_DRAW_OFFSET_X - 10;
+		yPos = (yPos * Tile.TILE_HEIGHT) - Tile.TILE_DRAW_OFFSET_Y - 10;
 		xPos -= xOffset;
 		yPos -= yOffset;
+		
 		g.drawImage(tile.getImage(), xPos, yPos, null);
 	}
 	

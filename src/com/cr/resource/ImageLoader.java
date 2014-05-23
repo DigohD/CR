@@ -16,6 +16,7 @@ public class ImageLoader {
 	public ImageLoader(){
 		// Tiles
 		imageLib.put("grass", loadImage("image", "grass.png"));
+		imageLib.put("grass2", loadImage("image", "grass2.png"));
 		imageLib.put("tree", loadImage("image", "tree.png"));
 		
 		//TileLayers
