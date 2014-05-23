@@ -44,17 +44,14 @@ public class World{
 		camera.setCamX(hero.getX() - (camera.getWidth()/2 - hero.getWidth()));
 		camera.setCamY(hero.getY() - (camera.getHeight()/2 - hero.getHeight()));
 		
-		
 		eManager.tick(dt);
 		hero.tick(dt);
-//		hero.getPos().x = hero.getPos().x - camera.getCamX();
-//		hero.getPos().y = hero.getPos().y - camera.getCamY();
 	}
 
 	public void render(Graphics2D g) {
 		
-		xScroll = (int) (Camera.getCamX() - Game.WIDTH/2);
-		yScroll = (int) (Camera.getCamY() - Game.HEIGHT/2);
+		xScroll = (int) (Camera.getCamX());
+		yScroll = (int) (Camera.getCamY());
 		tLayer.renderTileLayer(g, xScroll, yScroll);
 		eManager.render(g);
 		hero.render(g);
