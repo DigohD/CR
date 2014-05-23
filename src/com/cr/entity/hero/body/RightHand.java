@@ -5,6 +5,6 @@ import com.cr.entity.hero.anim.RightHandBob;
 
 public class RightHand extends PlayerPart{
 	public RightHand(){
-		super("herorighthand", new RightHandBob(), 0, 10, 5, 10);
+		super("herorighthand", new RightHandBob(), 10, -10, 5, 10);
 	}
 }
