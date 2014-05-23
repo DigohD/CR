@@ -2,7 +2,6 @@ package com.cr.entity.hero;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import com.cr.entity.Mob;
 import com.cr.entity.hero.body.Body;
@@ -12,13 +11,15 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.misc.FootPrint;
 import com.cr.gameEngine.Game;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoader;
 import com.cr.util.Vector2f;
+import com.cr.world.World;
 
 public class Hero extends Mob{
 	
 	private BufferedImage image;
 	private Vector2f targetVel;
+	
+	private World w;
 	
 	public Vector2f getTargetVel(){
 		return targetVel;
@@ -47,9 +48,10 @@ public class Hero extends Mob{
 	
 	public static Direction currentDir;
 	
-	public Hero() {
+	public Hero(World w) {
 		super(position);
-		position = new Vector2f(100, 100);
+		this.w = w;
+		position = new Vector2f(Game.WIDTH/2, Game.HEIGHT/2);
 
 		head = new Head();
 		body = new Body();
@@ -58,7 +60,9 @@ public class Hero extends Mob{
 		
 		velocity = new Vector2f(0f, 0f);
 		targetVel = new Vector2f(0, 0);
-		image = ImageLoader.getImage("hero");
+		
+		width = 88/4 + 52/4;
+		height = 28+19;
 		currentDir = Direction.SOUTH;
 	}
 	

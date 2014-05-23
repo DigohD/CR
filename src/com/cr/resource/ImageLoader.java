@@ -18,12 +18,18 @@ public class ImageLoader {
 		imageLib.put("grass", loadImage("image", "grass.png"));
 		imageLib.put("tree", loadImage("image", "tree.png"));
 		
+		//TileLayers
+		imageLib.put("tileLayer", loadImage("image", "tileLayer.png"));
+		
 		// Hero
 		imageLib.put("hero", loadImage("image", "hero.png"));
 		imageLib.put("herohead", loadImage("image", "herohead.png"));
 		imageLib.put("herobody", loadImage("image", "herobody.png"));
 		imageLib.put("herorighthand", loadImage("image", "herorighthand.png"));
 		imageLib.put("herolefthand", loadImage("image", "herolefthand.png"));
+		
+		//camera
+		imageLib.put("camera", loadImage("image", "cameraBox.png"));
 		
 		// Hero Footprints
 		imageLib.put("footprintgrass", loadImage("image", "footprintgrass.png"));

@@ -1,22 +1,31 @@
 package com.cr.util;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
+import com.cr.resource.ImageLoader;
 
 public class Camera implements Tickable{
 	
 	private Hero hero;
-	private Vector2f pos, velocity, targetVel;
-	private int width, height;
+	private Vector2f pos, velocity, targetVel, targetPos;
+	private int width, height, xOffset = -20, yOffset = -23;
+	
+	BufferedImage img;
 	
 	public Camera(Hero hero, int width, int height){
 		this.hero = hero;
 		this.width = width;
 		this.height = height;
-		this.pos = new Vector2f(hero.getX() - (width/2), hero.getY() - (height/2));
+		pos = new Vector2f(hero.getX() - (width/2 - hero.getWidth() - xOffset), hero.getY() - (height/2 - hero.getHeight()-yOffset));
 
 		velocity = new Vector2f(0,0);
 		targetVel = new Vector2f(0,0);
+		targetPos = new Vector2f(0,0);
+		
+		img = ImageLoader.getImage("camera");
 	}
 	
 	protected float approach(float target, float current, float dt){
@@ -30,23 +39,19 @@ public class Camera implements Tickable{
 	
 	@Override
 	public void tick(float dt) {
-		
-		if(hero.getX() + hero.getWidth() >= pos.x + width){
-			targetVel.x = hero.getTargetVel().x;
-		}else if(hero.getX() <= pos.x){
-			targetVel.x = hero.getTargetVel().x;
-		}else if(hero.getY() + hero.getHeight() >= pos.y + height){
-			targetVel.y = hero.getTargetVel().y;
-		}else if(hero.getY() <= pos.y){
-			targetVel.y = hero.getTargetVel().y;
-		}else{
-			targetVel.y = 0;
-			targetVel.x = 0;
-		}
-		
-		velocity.x = approach(targetVel.x, velocity.x, dt*hero.getAccSpeed());
-		velocity.y = approach(targetVel.y, velocity.y, dt*hero.getAccSpeed());
-		pos = pos.add(velocity.mul(dt));
+		targetVel.x = hero.getTargetVel().x;
+		targetVel.y = hero.getTargetVel().y;
+		velocity.x = approach(targetVel.x, velocity.x, dt);
+		velocity.y = approach(targetVel.y, velocity.y, dt);
+		targetPos.x = hero.getX() - (width/2 - hero.getWidth()-xOffset) + velocity.x;
+		targetPos.y = hero.getY() - (height/2 - hero.getHeight()-yOffset) + velocity.y;
+//
+		Vector2f diff = targetPos.sub(pos).div(15);
+		pos = pos.add(diff);
+	}
+	
+	public void render(Graphics2D g){
+		g.drawImage(img, (int)pos.x, (int)pos.y, null);
 	}
 
 	public Vector2f getPos() {
