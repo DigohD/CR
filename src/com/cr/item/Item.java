@@ -79,8 +79,6 @@ public abstract class Item implements Renderable{
 					
 					// No ImageObserver
 					null);
-			g.setColor(Color.RED);
-			g.drawRect(rect.x, rect.y, rect.width, rect.height);
 			
 		}else{
 			int x0 = drawX + xOffset + horXOffset - (int) Camera.getCamX();

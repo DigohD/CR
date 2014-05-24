@@ -25,8 +25,12 @@ public abstract class Enemy extends Mob implements Collideable{
 //		}
 		
 		if(obj instanceof MeleeWeapon){
-			death();
-			live = false;
+			MeleeWeapon mw = (MeleeWeapon) obj;
+			if(mw.getItemActive() != null && !mw.getItemActive().isDead()){
+				death();
+				live = false;
+			}
+			
 		}
 		
 	}

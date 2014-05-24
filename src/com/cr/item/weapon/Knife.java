@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.weapon.attack.OneHand;
+import com.cr.util.Camera;
 
 public class Knife extends MeleeWeapon{
 
@@ -12,7 +13,6 @@ public class Knife extends MeleeWeapon{
 	
 	public Knife(){
 		super("knife", 4, 0, -3, -13);
-		rect = new Rectangle(x0, y0, width, height);
 //		itemActive = new OneHand();
 	}
 

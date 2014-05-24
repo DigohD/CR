@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.weapon.attack.OneHand;
+import com.cr.util.Camera;
 
 public class Hammer extends MeleeWeapon{
 
@@ -12,15 +13,10 @@ public class Hammer extends MeleeWeapon{
 	
 	public Hammer(){
 		super("hammer", 0, 0, -3, -10);
-		rect = new Rectangle(x0, y0, width, height);
+	
 //		itemActive = new OneHand();
 	}
 
-	public void tick(float dt){
-		super.tick(dt);
-		System.out.println("HammerX: " + rect.x + " , HammerY: " + rect.y);
-		
-	}
 	@Override
 	public boolean renderPrePart(Direction dir) {
 		switch(dir){
