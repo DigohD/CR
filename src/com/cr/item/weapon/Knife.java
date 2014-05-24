@@ -1,20 +1,18 @@
 package com.cr.item.weapon;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
-import com.cr.entity.Renderable;
+import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.item.Item;
 import com.cr.item.weapon.attack.OneHand;
-import com.cr.resource.ImageLoader;
 
-public class Knife extends Item{
+public class Knife extends MeleeWeapon{
 
 	private OneHand oneHand;
 	
 	public Knife(){
 		super("knife", 4, 0, -3, -13);
+		rect = new Rectangle(x0, y0, width, height);
 //		itemActive = new OneHand();
 	}
 
@@ -41,6 +39,12 @@ public class Knife extends Item{
 	public void activateItem() {
 		itemActive = new OneHand();
 		System.out.println("Activated");
+	}
+
+	@Override
+	public void collisionWith(Collideable obj) {
+		System.out.println("KNIFE COLL");
+		
 	}
 	
 	

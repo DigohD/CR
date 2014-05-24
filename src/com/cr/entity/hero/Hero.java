@@ -29,6 +29,8 @@ public class Hero extends Mob implements Collideable{
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
 	
+	
+	
 	private float accSpeed = 3.5f;
 	private int attackCD = 0;
 
@@ -218,6 +220,14 @@ public class Hero extends Mob implements Collideable{
 	
 	public float getAccSpeed(){
 		return accSpeed;
+	}
+
+	public static RightHand getRightHand() {
+		return rightHand;
+	}
+
+	public static LeftHand getLeftHand() {
+		return leftHand;
 	}
 
 }

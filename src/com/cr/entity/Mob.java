@@ -31,6 +31,11 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	}
 	
 	@Override
+	public void tick(float dt){
+		
+	}
+	
+	@Override
 	public void render(Graphics2D g) {
 		g.drawImage(image, (int)(position.x - Camera.getCamX()), (int)(position.y - Camera.getCamY()), null);
 	}

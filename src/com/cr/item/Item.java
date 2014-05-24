@@ -1,6 +1,8 @@
 package com.cr.item;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
@@ -11,11 +13,15 @@ import com.cr.resource.ImageLoader;
 import com.cr.util.Camera;
 
 public abstract class Item implements Renderable{
-
+	protected Rectangle rect;
 	private BufferedImage image;
 	private int xOffset, yOffset;
 	private int vertXOffset, horXOffset;
 	protected ItemActive itemActive;
+	
+	protected int width, height;
+	
+	public int x0, x1, y0, y1;
 	
 	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset){
 		image = ImageLoader.getImage(imageString);
@@ -23,11 +29,13 @@ public abstract class Item implements Renderable{
 		this.yOffset = yOffset;
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
+		
+		width = image.getWidth() / 4;
+		height = image.getHeight();
 	}
 	
 	public void render(Graphics2D g, int drawX, int drawY, int spriteID){
-		int width = image.getWidth() / 4;
-		int height = image.getHeight();
+		
 		
 		Direction dir = Hero.currentDir;
 		int horXOffset = 0;
@@ -51,13 +59,17 @@ public abstract class Item implements Renderable{
 				break;
 		}
 		
-		if(itemActive != null)
+		if(itemActive != null){
+			x0 = drawX + xOffset + horXOffset - (int) Camera.getCamX() + (int) itemActive.getOffset().x;
+			x1 = drawX + width + xOffset + horXOffset - (int) Camera.getCamX() + (int) itemActive.getOffset().x;
+			y0 = drawY + yOffset - (int) Camera.getCamY() + (int) itemActive.getOffset().y;
+			y1 = drawY + height + yOffset - (int) Camera.getCamY() + (int) itemActive.getOffset().y;
 			g.drawImage(image,
 					// Define position
-					drawX + xOffset + horXOffset - (int) Camera.getCamX() + (int) itemActive.getOffset().x,
-					drawY + yOffset - (int) Camera.getCamY() + (int) itemActive.getOffset().y,
-					drawX + width + xOffset + horXOffset - (int) Camera.getCamX() + (int) itemActive.getOffset().x,
-					drawY + height + yOffset - (int) Camera.getCamY() + (int) itemActive.getOffset().y,
+					x0,
+					y0,
+					x1,
+					y1,
 					
 					//Define Sprite
 					spriteID * width, 
@@ -67,13 +79,20 @@ public abstract class Item implements Renderable{
 					
 					// No ImageObserver
 					null);
-		else
+			g.setColor(Color.RED);
+			g.drawRect(rect.x, rect.y, rect.width, rect.height);
+			
+		}else{
+			int x0 = drawX + xOffset + horXOffset - (int) Camera.getCamX();
+			int x1 = drawY + yOffset - (int) Camera.getCamY();
+			int y0 = drawX + width + xOffset + horXOffset - (int) Camera.getCamX();
+			int y1 = drawY + height + yOffset - (int) Camera.getCamY();
 			g.drawImage(image,
 					// Define position
-					drawX + xOffset + horXOffset - (int) Camera.getCamX(),
-					drawY + yOffset - (int) Camera.getCamY(),
-					drawX + width + xOffset + horXOffset - (int) Camera.getCamX(),
-					drawY + height + yOffset - (int) Camera.getCamY(),
+					x0,
+					x1,
+					y0,
+					y1,
 					
 					//Define Sprite
 					spriteID * width, 
@@ -83,6 +102,13 @@ public abstract class Item implements Renderable{
 					
 					// No ImageObserver
 					null);
+			
+		
+		
+			
+		}
+		
+		
 			
 	}
 	

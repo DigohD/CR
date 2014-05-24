@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.Hero;
+import com.cr.item.weapon.MeleeWeapon;
 import com.cr.util.Vector2f;
 
 public abstract class Enemy extends Mob implements Collideable{
@@ -18,7 +19,12 @@ public abstract class Enemy extends Mob implements Collideable{
 	
 	@Override
 	public void collisionWith(Collideable obj) {
-		if(obj instanceof Hero){
+//		if(obj instanceof Hero){
+//			death();
+//			live = false;
+//		}
+		
+		if(obj instanceof MeleeWeapon){
 			death();
 			live = false;
 		}

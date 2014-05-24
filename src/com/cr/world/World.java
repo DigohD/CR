@@ -34,7 +34,9 @@ public class World{
 		
 		tLayer.addTile(ColorRGBA.GREEN, new GrassTile());
 	}
+	
 	int timer = 0;
+	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;

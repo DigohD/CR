@@ -32,11 +32,20 @@ public class CollisionManager {
 	public static void collisionCheck(Hero hero) {
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
-			if (hero != null && e != null && hero.isLive())
+			if (hero != null && e != null && hero.isLive()){
 				if (collisionBetween(hero.getRect(), e.getRect())){
 					e.collisionWith(hero);
 					hero.collisionWith(e);
 				}
+				if(collisionBetween(Hero.getRightHand().getHammer().getRect(), e.getRect())){
+					e.collisionWith(Hero.getRightHand().getHammer());
+					Hero.getRightHand().getHammer().collisionWith(e);
+				}
+				if(collisionBetween(Hero.getLeftHand().getKnife().getRect(), e.getRect())){
+					e.collisionWith(Hero.getLeftHand().getKnife());
+					Hero.getLeftHand().getKnife().collisionWith(e);
+				}
+			}
 		}
 		
 	}
