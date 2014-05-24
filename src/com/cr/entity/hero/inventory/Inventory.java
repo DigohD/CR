@@ -10,6 +10,10 @@ public class Inventory implements Tickable, Renderable{
 
 	private InventorySlot[][] inventory = new InventorySlot[11][3];
 	private InventoryButton b1, b2, b3;
+	private Contour contour;
+	
+	private RightHandSlot rHSlot;
+	private LeftHandSlot lHSlot;
 	
 	public Inventory(){
 		for(int i = 0; i < 11; i++)
@@ -19,6 +23,11 @@ public class Inventory implements Tickable, Renderable{
 		b1 = new InventoryButton(600, 430);
 		b2 = new InventoryButton(600, 482);
 		b3 = new InventoryButton(600, 534);
+		
+		contour = new Contour();
+		
+		rHSlot = new RightHandSlot();
+		lHSlot = new LeftHandSlot();
 	}
 	
 	@Override
@@ -30,6 +39,11 @@ public class Inventory implements Tickable, Renderable{
 		b1.render(g);
 		b2.render(g);
 		b3.render(g);
+		
+		contour.render(g);
+		
+		rHSlot.render(g);
+		lHSlot.render(g);
 	}
 
 	@Override

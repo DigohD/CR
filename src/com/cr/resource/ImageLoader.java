@@ -18,6 +18,7 @@ public class ImageLoader {
 		imageLib.put("grass", loadImage("image", "grass.png"));
 		imageLib.put("grass2", loadImage("image", "grass2.png"));
 		imageLib.put("tree", loadImage("image", "tree.png"));
+		imageLib.put("poison", loadImage("image", "poison.png"));
 		
 		//TileLayers
 		imageLib.put("tileLayer", loadImage("image", "tileLayer.png"));
@@ -47,6 +48,7 @@ public class ImageLoader {
 		imageLib.put("inventorybg", loadImage("image", "inventorybg.png"));
 		imageLib.put("inventorybutton", loadImage("image", "inventorybutton.png"));
 		imageLib.put("slot", loadImage("image", "slot.png"));
+		imageLib.put("contour", loadImage("image", "contour.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){
