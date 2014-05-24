@@ -39,6 +39,9 @@ public class ImageLoader {
 		imageLib.put("hammer", loadImage("image", "hammer.png"));
 		imageLib.put("knife", loadImage("image", "knife.png"));
 		
+		// Armor
+		imageLib.put("copperhelm", loadImage("image", "copperhelm.png"));
+		
 		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 	}
