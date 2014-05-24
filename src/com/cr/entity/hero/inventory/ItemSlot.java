@@ -10,11 +10,11 @@ import com.cr.resource.ImageLoader;
 
 public abstract class ItemSlot implements Renderable, Tickable{
 
-	private BufferedImage slotImage;
-	private BufferedImage itemImage;
-	private int xPos, yPos;
+	protected BufferedImage slotImage;
+	protected BufferedImage itemImage;
+	protected int xPos, yPos;
 	
-	private Item item;
+	protected Item item;
 	
 	public ItemSlot(int xPos, int yPos){
 		slotImage = ImageLoader.getImage("slot");
@@ -25,6 +25,8 @@ public abstract class ItemSlot implements Renderable, Tickable{
 	@Override
 	public void render(Graphics2D g) {
 		g.drawImage(slotImage, xPos, yPos, null);
+		if(item != null)
+			g.drawImage(item.getIconImage(), xPos, yPos, null);
 	}
 
 	@Override

@@ -104,10 +104,6 @@ public abstract class Item implements Renderable{
 					
 					// No ImageObserver
 					null);
-			
-		
-		
-			
 		}
 		
 		
@@ -130,6 +126,12 @@ public abstract class Item implements Renderable{
 	public ItemActive getItemActive() {
 		return itemActive;
 	}
+
+	public BufferedImage getIconImage() {
+		return iconImage;
+	}
+	
+	
 	
 	
 
