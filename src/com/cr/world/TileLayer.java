@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import com.cr.gameEngine.Game;
+import com.cr.game.Game;
 import com.cr.world.tile.Tile;
 
 public class TileLayer {

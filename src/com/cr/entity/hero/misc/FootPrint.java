@@ -7,7 +7,7 @@ import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
-import com.cr.gameEngine.EntityManager;
+import com.cr.game.EntityManager;
 import com.cr.resource.ImageLoader;
 import com.cr.util.Camera;
 import com.cr.util.Vector2f;

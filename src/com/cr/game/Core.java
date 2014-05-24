@@ -1,4 +1,4 @@
-package com.cr.gameEngine;
+package com.cr.game;
 
 import java.awt.DisplayMode;
 import java.awt.Window;

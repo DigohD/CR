@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.hero.Hero;
-import com.cr.gameEngine.Game;
-import com.cr.gameEngine.GameStateManager;
+import com.cr.game.Game;
+import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
 import com.cr.util.Camera2;

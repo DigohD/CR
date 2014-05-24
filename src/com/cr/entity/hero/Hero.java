@@ -1,30 +1,27 @@
 package com.cr.entity.hero;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.body.Body;
 import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.misc.FootPrint;
-import com.cr.gameEngine.Game;
 import com.cr.input.KeyInput;
 import com.cr.util.Vector2f;
 import com.cr.world.World;
 
-public class Hero extends Mob{
+public class Hero extends Mob implements Collideable{
 	
 	private BufferedImage image;
 	private Vector2f targetVel;
 	
-	private World w;
-	
-	public Vector2f getTargetVel(){
-		return targetVel;
-	}
-	
+	private Rectangle rect;
+
 	public static Vector2f position;
 
 	private Head head;
@@ -35,22 +32,17 @@ public class Hero extends Mob{
 	private float accSpeed = 3.5f;
 	private int attackCD = 0;
 
-	public float getAccSpeed(){
-		return accSpeed;
-	}
-
 	private int printTimer;
 
-	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
 	}
 	
 	public static Direction currentDir;
 	
-	public Hero(World w) {
+	public Hero() {
 		super(position);
-		this.w = w;
+
 		position = new Vector2f(50,50);
 
 		head = new Head();
@@ -63,6 +55,7 @@ public class Hero extends Mob{
 		
 		width = 88/4 + 52/4;
 		height = 28+19;
+		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		currentDir = Direction.SOUTH;
 	}
 	
@@ -116,6 +109,7 @@ public class Hero extends Mob{
 	
 	@Override
 	public void tick(float dt) {
+		rect.setLocation((int)position.x,(int)position.y);
 		processInput();
 
 		velocity.x = approach(targetVel.x, velocity.x, dt*accSpeed);
@@ -174,6 +168,12 @@ public class Hero extends Mob{
 		else
 			setBobing(true);
 	}
+	
+	@Override
+	public void collisionWith(Collideable obj) {
+	
+		
+	}
 
 	public static void rightHandActivate(){
 		rightHand.activateItem();
@@ -205,6 +205,19 @@ public class Hero extends Mob{
 
 	public float getY() {
 		return position.y;
+	}
+
+	@Override
+	public Rectangle getRect() {
+		return rect;
+	}
+	
+	public Vector2f getTargetVel(){
+		return targetVel;
+	}
+	
+	public float getAccSpeed(){
+		return accSpeed;
 	}
 
 }

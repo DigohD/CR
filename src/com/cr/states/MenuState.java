@@ -3,10 +3,10 @@ package com.cr.states;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.cr.gameEngine.Display;
-import com.cr.gameEngine.EntityManager;
-import com.cr.gameEngine.Game;
-import com.cr.gameEngine.GameStateManager;
+import com.cr.game.Display;
+import com.cr.game.EntityManager;
+import com.cr.game.Game;
+import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
 
 public class MenuState extends GameState{

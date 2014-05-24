@@ -1,4 +1,4 @@
-package com.cr.gameEngine;
+package com.cr.game;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 
 public class EntityManager {
@@ -16,7 +17,7 @@ public class EntityManager {
 	private static List<Renderable> renderableEntities;
 	private static List<Renderable> deToAdd;
 	
-	
+	private static Hero hero;
 	
 	public EntityManager(){
 		tickableEntities = new ArrayList<Tickable>();
@@ -24,7 +25,7 @@ public class EntityManager {
 		renderableEntities = new ArrayList<Renderable>();
 		deToAdd = new ArrayList<Renderable>();
 		
-		
+		hero = new Hero();
 	}
 	
 	public static void clear(){
@@ -43,6 +44,10 @@ public class EntityManager {
 			Renderable r = (Renderable) e;
 			deToAdd.add(r);
 		}
+		if(e instanceof Enemy){
+			Enemy c = (Enemy) e;
+			CollisionManager.addEnemy(c);
+		}
 	}
 	
 	public static void removeEntity(Entity e){
@@ -53,6 +58,10 @@ public class EntityManager {
 		if(e instanceof Renderable){
 			Renderable r = (Renderable) e;
 			renderableEntities.remove(r);
+		}
+		if(e instanceof Enemy){
+			Enemy c = (Enemy) e;
+			CollisionManager.removeEnemy(c);
 		}
 	}
 	
@@ -78,16 +87,24 @@ public class EntityManager {
 		deToAdd.clear();
 		
 		removeDeadEntities();
-		//check for collisions between collideable entities
-		
+		CollisionManager.collisionCheck(hero);
 		
 		for(Tickable t : tickableEntities)
 			t.tick(dt);
+		
+		if(hero.isLive())
+			hero.tick(dt);
 	}
 	
 	public void render(Graphics2D g){
 		for(Renderable r : renderableEntities)
 			r.render(g);
+		if(hero.isLive())
+			hero.render(g);
+	}
+
+	public static Hero getHero() {
+		return hero;
 	}
 
 }

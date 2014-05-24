@@ -1,6 +1,6 @@
 package com.cr.util;
 
-import com.cr.gameEngine.Game;
+import com.cr.game.Game;
 
 public class Camera {
 	
