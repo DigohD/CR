@@ -13,7 +13,6 @@ public class Hammer extends MeleeWeapon{
 	
 	public Hammer(){
 		super("hammer", 0, 0, -3, -10);
-	
 //		itemActive = new OneHand();
 	}
 

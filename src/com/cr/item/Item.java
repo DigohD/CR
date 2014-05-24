@@ -14,7 +14,10 @@ import com.cr.util.Camera;
 
 public abstract class Item implements Renderable{
 	protected Rectangle rect;
+	
 	private BufferedImage image;
+	private BufferedImage iconImage;
+	
 	private int xOffset, yOffset;
 	private int vertXOffset, horXOffset;
 	protected ItemActive itemActive;
@@ -25,6 +28,7 @@ public abstract class Item implements Renderable{
 	
 	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset){
 		image = ImageLoader.getImage(imageString);
+		iconImage = ImageLoader.getImage(imageString + "icon");
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.horXOffset = horXOffset;

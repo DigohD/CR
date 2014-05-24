@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.item.Item;
 import com.cr.resource.ImageLoader;
 
 public abstract class ItemSlot implements Renderable, Tickable{
@@ -12,6 +13,8 @@ public abstract class ItemSlot implements Renderable, Tickable{
 	private BufferedImage slotImage;
 	private BufferedImage itemImage;
 	private int xPos, yPos;
+	
+	private Item item;
 	
 	public ItemSlot(int xPos, int yPos){
 		slotImage = ImageLoader.getImage("slot");
@@ -34,4 +37,13 @@ public abstract class ItemSlot implements Renderable, Tickable{
 		
 	}
 
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	
 }

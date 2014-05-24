@@ -117,7 +117,7 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	}
 	
 	public void activateItem(){
-		System.out.println(item + " : " + item.getItemActive());
+//		System.out.println(item + " : " + item.getItemActive());
 		if(item != null)
 			item.activateItem();
 	}
@@ -133,6 +133,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	public void setItem(Item item){
 		this.item = item;
+	}
+
+	public Item getItem() {
+		return item;
 	}
 	
 	
