@@ -66,42 +66,82 @@ public class Hero extends Mob implements Collideable{
 	}
 	
 	private void processInput(){
-		if(KeyInput.up){
-			currentDir = Direction.NORTH;
-			targetVel.y = -15f;
-		}
-		if(KeyInput.down){
-			currentDir = Direction.SOUTH;
-			targetVel.y = 15f;
-		}
-		if(KeyInput.right){
-			currentDir = Direction.EAST;
-			targetVel.x = 15f;
-		}
-		if(KeyInput.left){
-			currentDir = Direction.WEST;
-			targetVel.x = -15f;
-		}
-		
-		if(KeyInput.up && KeyInput.left){
-			currentDir = Direction.NORTH;
-			targetVel.x = -10.6f;
-			targetVel.y = -10.6f;
-		}
-		if(KeyInput.up && KeyInput.right){
-			currentDir = Direction.NORTH;
-			targetVel.x = 10.6f;
-			targetVel.y = -10.6f;
-		}
-		if(KeyInput.down && KeyInput.left){
-			currentDir = Direction.SOUTH;
-			targetVel.x = -10.6f;
-			targetVel.y = 10.6f;
-		}
-		if(KeyInput.down && KeyInput.right){
-			currentDir = Direction.SOUTH;
-			targetVel.x = 10.6f;
-			targetVel.y = 10.6f;
+		if(KeyInput.shift){
+			if(KeyInput.up){
+				currentDir = Direction.SOUTH;
+				targetVel.y = -15f;
+			}
+			if(KeyInput.down){
+				currentDir = Direction.NORTH;
+				targetVel.y = 15f;
+			}
+			if(KeyInput.right){
+				currentDir = Direction.WEST;
+				targetVel.x = 15f;
+			}
+			if(KeyInput.left){
+				currentDir = Direction.EAST;
+				targetVel.x = -15f;
+			}
+			
+			if(KeyInput.up && KeyInput.left){
+				currentDir = Direction.SOUTH;
+				targetVel.x = -10.6f;
+				targetVel.y = -10.6f;
+			}
+			if(KeyInput.up && KeyInput.right){
+				currentDir = Direction.SOUTH;
+				targetVel.x = 10.6f;
+				targetVel.y = -10.6f;
+			}
+			if(KeyInput.down && KeyInput.left){
+				currentDir = Direction.NORTH;
+				targetVel.x = -10.6f;
+				targetVel.y = 10.6f;
+			}
+			if(KeyInput.down && KeyInput.right){
+				currentDir = Direction.NORTH;
+				targetVel.x = 10.6f;
+				targetVel.y = 10.6f;
+			}
+		}else{
+			if(KeyInput.up){
+				currentDir = Direction.NORTH;
+				targetVel.y = -15f;
+			}
+			if(KeyInput.down){
+				currentDir = Direction.SOUTH;
+				targetVel.y = 15f;
+			}
+			if(KeyInput.right){
+				currentDir = Direction.EAST;
+				targetVel.x = 15f;
+			}
+			if(KeyInput.left){
+				currentDir = Direction.WEST;
+				targetVel.x = -15f;
+			}
+			
+			if(KeyInput.up && KeyInput.left){
+				currentDir = Direction.NORTH;
+				targetVel.x = -10.6f;
+				targetVel.y = -10.6f;
+			}
+			if(KeyInput.up && KeyInput.right){
+				currentDir = Direction.NORTH;
+				targetVel.x = 10.6f;
+				targetVel.y = -10.6f;
+			}
+			if(KeyInput.down && KeyInput.left){
+				currentDir = Direction.SOUTH;
+				targetVel.x = -10.6f;
+				targetVel.y = 10.6f;
+			}
+			if(KeyInput.down && KeyInput.right){
+				currentDir = Direction.SOUTH;
+				targetVel.x = 10.6f;
+				targetVel.y = 10.6f;
+			}
 		}
 		
 		if(!KeyInput.up && !KeyInput.down){
@@ -110,7 +150,7 @@ public class Hero extends Mob implements Collideable{
 		if(!KeyInput.right && !KeyInput.left){
 			targetVel.x = 0f;
 		}
-		
+
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener{
 
-	public static boolean up, down, right, left, esc, c, v, space, enter;
+	public static boolean up, down, right, left, esc, c, v, space, enter, shift;
 	private static boolean[] keys = new boolean[150];
 	
 	public static void tick(){
@@ -18,6 +18,7 @@ public class KeyInput implements KeyListener{
 		space   = keys[KeyEvent.VK_SPACE];
 		esc 	= keys[KeyEvent.VK_ESCAPE];
 		enter   = keys[KeyEvent.VK_ENTER];
+		shift   = keys[KeyEvent.VK_SHIFT];
 	}
 
 	@Override
