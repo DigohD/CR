@@ -44,6 +44,8 @@ public class ImageLoader {
 		
 		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
+		imageLib.put("inventorybg", loadImage("image", "inventorybg.png"));
+		imageLib.put("slot", loadImage("image", "slot.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){

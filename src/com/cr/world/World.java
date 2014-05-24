@@ -65,7 +65,6 @@ public class World{
 		tLayer.renderTileLayer(g, xScroll, yScroll);
 		eManager.render(g);
 	}
-
 }
 	
 
