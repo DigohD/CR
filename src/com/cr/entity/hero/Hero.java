@@ -215,10 +215,14 @@ public class Hero extends Mob implements Collideable{
 			setBobing(true);
 	}
 	
+	public static void updateInventory(){
+		rightHand.setItem(inventory.getrHSlot().getItem());
+		leftHand.setItem(inventory.getlHSlot().getItem());
+	}
+	
 	@Override
 	public void collisionWith(Collideable obj) {
 	
-		
 	}
 
 	public static void rightHandActivate(){

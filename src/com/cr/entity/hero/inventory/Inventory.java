@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.item.weapon.Knife;
 
 public class Inventory implements Tickable, Renderable{
 
@@ -19,6 +20,10 @@ public class Inventory implements Tickable, Renderable{
 		for(int i = 0; i < 11; i++)
 			for(int j = 0; j < 3; j++)
 				inventory[i][j] = new InventorySlot(i, j);
+		
+		inventory[0][0].setItem(new Knife());
+		inventory[1][0].setItem(new Knife());
+		inventory[2][0].setItem(new Knife());
 		
 		b1 = new InventoryButton(600, 430);
 		b2 = new InventoryButton(600, 482);
@@ -56,6 +61,15 @@ public class Inventory implements Tickable, Renderable{
 		
 	}
 
+	public RightHandSlot getrHSlot() {
+		return rHSlot;
+	}
+
+	public LeftHandSlot getlHSlot() {
+		return lHSlot;
+	}
+
+	
 	
 	
 }

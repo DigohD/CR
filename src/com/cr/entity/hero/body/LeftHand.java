@@ -8,7 +8,6 @@ public class LeftHand extends PlayerPart{
 	
 	public LeftHand(){
 		super("herolefthand", new LeftHandBob(), 10, 10, 5, 10);
-		item = new Knife();
 	}
 
 	@Override
