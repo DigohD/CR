@@ -30,7 +30,7 @@ public class InventoryState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		if(KeyInput.esc) {
+		if(KeyInput.space) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;

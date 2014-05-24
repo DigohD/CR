@@ -17,8 +17,6 @@ public class PlayState extends GameState{
 	private BufferedImage img;
 	public boolean bg = false;
 
-	
-
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
 		init();
@@ -30,9 +28,11 @@ public class PlayState extends GameState{
 	public void init() {
 		w = new World();
 	}
+	
 
 	@Override
 	public void tick(float dt) {
+	
 		if(KeyInput.esc){
 			bg = true;
 			gsm.push(new PauseState(gsm));
