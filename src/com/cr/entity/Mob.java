@@ -30,6 +30,10 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		position = position.add(velocity.mul(dt));
 	}
 	
+	protected void collision(float x, float y){
+		
+	}
+	
 	@Override
 	public void tick(float dt){
 		

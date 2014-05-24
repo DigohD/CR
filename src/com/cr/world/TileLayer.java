@@ -16,7 +16,7 @@ public class TileLayer {
 	private HashMap<Integer, Tile> tiles;
 	
 	private int xOffset, yOffset;
-	
+
 	public TileLayer(BufferedImage img){
 		this.img = img;
 		tiles = new HashMap<Integer, Tile>();
@@ -24,6 +24,10 @@ public class TileLayer {
 		height = img.getHeight();
 		pixels = new int[width*height];
 		img.getRGB(0, 0, width, height, pixels, 0, width);
+	}
+	
+	public void generateRandomTiles(Tile tile){
+		
 	}
 	
 	public void addTile(int color, Tile tile){

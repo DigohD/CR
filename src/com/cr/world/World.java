@@ -10,6 +10,7 @@ import com.cr.util.ColorRGBA;
 import com.cr.util.Randomizer;
 import com.cr.util.Vector2f;
 import com.cr.world.tile.GrassTile;
+import com.cr.world.tile.PoisonTile;
 import com.cr.world.tile.Tile;
 
 public class World{
@@ -33,6 +34,7 @@ public class World{
 		dummy = new Dummy(new Vector2f(100, 500));
 		
 		tLayer.addTile(ColorRGBA.GREEN, new GrassTile());
+		tLayer.addTile(ColorRGBA.RED, new PoisonTile());
 	}
 	
 	int timer = 0;

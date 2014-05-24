@@ -13,8 +13,11 @@ public abstract class Tile{
 	public static  final int TILE_DRAW_OFFSET_Y = -5;
 	protected BufferedImage image;
 	
+	protected boolean walkable;
+	
 	public Tile(String imageString){
 		image = ImageLoader.getImage(imageString);
+		walkable = true;
 	}
 	
 	public void render(Graphics2D g, TileLayer tLayer, int xPos, int yPos){
@@ -25,6 +28,10 @@ public abstract class Tile{
 
 	public BufferedImage getImage() {
 		return image;
+	}
+	
+	public boolean isWalkable(){
+		return walkable;
 	}
 	
 }
