@@ -16,13 +16,13 @@ import com.cr.util.Camera;
 
 public abstract class PlayerPart implements Renderable, Tickable{
 
-	private BufferedImage image;
-	private Bob bob;
+	protected BufferedImage image;
+	protected Bob bob;
 	
-	private Item item;
+	protected Item item;
 	
-	private int width, height;
-	private int horXOffset, vertXOffset, xOffset, yOffset;
+	protected int width, height;
+	protected int horXOffset, vertXOffset, xOffset, yOffset;
 	
 	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset){
 		image = ImageLoader.getImage(imageString);
@@ -71,7 +71,24 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		if(item != null && item.renderPrePart(dir))
 			item.render(g, drawX, drawY, spriteID);
 		
-		g.drawImage(image,
+		if(item != null && item.getItemActive() != null)
+			g.drawImage(image,
+					// Define position
+					drawX - (int)Camera.getCamX() + (int) item.getItemActive().getOffset().x,
+					drawY - (int)Camera.getCamY() + (int) item.getItemActive().getOffset().y,
+					drawX + width - (int)Camera.getCamX() + (int) item.getItemActive().getOffset().x,
+					drawY + height - (int)Camera.getCamY() + (int) item.getItemActive().getOffset().y,
+					
+					//Define Sprite
+					spriteID * width, 
+					0, 
+					(spriteID * width) + width, 
+					height, 
+					
+					// No ImageObserver
+					null);
+		else
+			g.drawImage(image,
 				// Define position
 				drawX - (int)Camera.getCamX(),
 				drawY - (int)Camera.getCamY(),
@@ -89,14 +106,20 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		
 		if(item != null && !item.renderPrePart(dir))
 			item.render(g, drawX, drawY, spriteID);
-		
-//		if(item != null)
-//			item.render(g, drawX, drawY, spriteID);
 	}
-
+	
 	@Override
 	public void tick(float dt) {
 		bob.tick(dt);
+		if(item != null && item.getItemActive() != null)
+			if(!item.getItemActive().isDead())
+				item.getItemActive().tick(dt);
+	}
+	
+	public void activateItem(){
+		System.out.println(item + " : " + item.getItemActive());
+		if(item != null)
+			item.activateItem();
 	}
 	
 	@Override

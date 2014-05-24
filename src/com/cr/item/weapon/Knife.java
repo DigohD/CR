@@ -9,12 +9,12 @@ import com.cr.item.Item;
 import com.cr.item.weapon.attack.OneHand;
 import com.cr.resource.ImageLoader;
 
-public class Hammer extends Item{
+public class Knife extends Item{
 
 	private OneHand oneHand;
 	
-	public Hammer(){
-		super("hammer", 0, 0, -3, -10);
+	public Knife(){
+		super("knife", 4, 0, -3, -13);
 //		itemActive = new OneHand();
 	}
 

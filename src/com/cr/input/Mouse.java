@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import com.cr.entity.hero.Hero;
+
 public class Mouse implements MouseListener, MouseMotionListener{
 	
 	private static int mouseX = -1;
@@ -38,7 +40,6 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	public void mouseClicked(MouseEvent e) {
 //		mouseX = e.getX();
 //		mouseY = e.getY();
-		
 	}
 
 	@Override
@@ -50,17 +51,19 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 		
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
+		if(e.getButton() == MouseEvent.BUTTON1)
+			Hero.rightHandActivate();
+		if(e.getButton() == MouseEvent.BUTTON3)
+			Hero.leftHandActivate();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		mouseButton = -1;
 	}
-
 }

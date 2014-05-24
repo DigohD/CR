@@ -29,11 +29,11 @@ public class Hero extends Mob{
 
 	private Head head;
 	private Body body;
-	private RightHand rightHand;
-	private LeftHand leftHand;
+	private static RightHand rightHand;
+	private static LeftHand leftHand;
 	
 	private float accSpeed = 3.5f;
-	
+	private int attackCD = 0;
 
 	public float getAccSpeed(){
 		return accSpeed;
@@ -148,6 +148,7 @@ public class Hero extends Mob{
 				head.render(g);
 				rightHand.render(g);
 				leftHand.render(g);
+				head.render(g);
 				body.render(g);
 				break;
 			case WEST:
@@ -174,6 +175,14 @@ public class Hero extends Mob{
 			setBobing(true);
 	}
 
+	public static void rightHandActivate(){
+		rightHand.activateItem();
+	}
+	
+	public static void leftHandActivate(){
+		leftHand.activateItem();
+	}
+	
 	private void setBobing(boolean isBobing){
 		head.getBob().setActive(isBobing);
 		body.getBob().setActive(isBobing);
