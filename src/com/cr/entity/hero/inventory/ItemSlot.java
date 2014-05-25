@@ -1,6 +1,7 @@
 package com.cr.entity.hero.inventory;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
@@ -8,7 +9,7 @@ import com.cr.entity.Tickable;
 import com.cr.item.Item;
 import com.cr.resource.ImageLoader;
 
-public abstract class ItemSlot implements Renderable, Tickable{
+public abstract class ItemSlot extends Button implements Renderable, Tickable{
 
 	protected BufferedImage slotImage;
 	protected BufferedImage itemImage;
@@ -17,6 +18,7 @@ public abstract class ItemSlot implements Renderable, Tickable{
 	protected Item item;
 	
 	public ItemSlot(int xPos, int yPos){
+		super(new Rectangle(xPos, yPos, 50, 50));
 		slotImage = ImageLoader.getImage("slot");
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -34,11 +36,6 @@ public abstract class ItemSlot implements Renderable, Tickable{
 		return null;
 	}
 
-	@Override
-	public void tick(float dt) {
-		
-	}
-
 	public Item getItem() {
 		return item;
 	}
@@ -46,6 +43,13 @@ public abstract class ItemSlot implements Renderable, Tickable{
 	public void setItem(Item item) {
 		this.item = item;
 	}
+	
+	@Override
+	public void clicked(){
+		Inventory.buttonClicked(this);
+	}
+	
+	public abstract boolean isCompatible(Item item);
 
 	
 }

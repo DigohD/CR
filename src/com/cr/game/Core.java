@@ -46,7 +46,7 @@ public abstract class Core implements Runnable{
 		Display.init();
 		DisplayMode dm = Display.findFirstCompatibleMode(modes);
 		Display.setFullScreen(dm);
-		Display.hideCursor();
+//		Display.hideCursor();
 		WIDTH = Display.getWidth();
 		HEIGHT = Display.getHeight();
 		Window w = Display.getFullScreenWindow();

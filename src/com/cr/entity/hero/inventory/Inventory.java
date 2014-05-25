@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.item.Item;
+import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.weapon.Knife;
 
 public class Inventory implements Tickable, Renderable{
@@ -15,6 +17,9 @@ public class Inventory implements Tickable, Renderable{
 	
 	private RightHandSlot rHSlot;
 	private LeftHandSlot lHSlot;
+	private HeadSlot headSlot;
+	
+	private static Item selectedItem;
 	
 	public Inventory(){
 		for(int i = 0; i < 11; i++)
@@ -24,6 +29,8 @@ public class Inventory implements Tickable, Renderable{
 		inventory[0][0].setItem(new Knife());
 		inventory[1][0].setItem(new Knife());
 		inventory[2][0].setItem(new Knife());
+		inventory[3][0].setItem(new CopperHelm());
+		inventory[4][0].setItem(new CopperHelm());
 		
 		b1 = new InventoryButton(600, 430);
 		b2 = new InventoryButton(600, 482);
@@ -31,8 +38,11 @@ public class Inventory implements Tickable, Renderable{
 		
 		contour = new Contour();
 		
+		selectedItem = null;
+		
 		rHSlot = new RightHandSlot();
 		lHSlot = new LeftHandSlot();
+		headSlot = new HeadSlot();
 	}
 	
 	@Override
@@ -49,6 +59,7 @@ public class Inventory implements Tickable, Renderable{
 		
 		rHSlot.render(g);
 		lHSlot.render(g);
+		headSlot.render(g);
 	}
 
 	@Override
@@ -58,15 +69,39 @@ public class Inventory implements Tickable, Renderable{
 
 	@Override
 	public void tick(float dt) {
-		
+		for(int i = 0; i < 11; i++)
+			for(int j = 0; j < 3; j++)
+				inventory[i][j].tick(dt);;
+				
+		lHSlot.tick(dt);
+		rHSlot.tick(dt);
+		headSlot.tick(dt);
 	}
 
+	public static void buttonClicked(Button button){
+		if(button instanceof ItemSlot){
+			ItemSlot is = (ItemSlot) button;
+			if(selectedItem != null && is.isCompatible(selectedItem) && 
+					is.getItem() == null){
+				is.setItem(selectedItem);
+				selectedItem = null;
+			}else if(selectedItem == null && is.getItem() != null){
+				selectedItem = is.getItem();
+				is.setItem(null);
+			}
+		}
+	}
+	
 	public RightHandSlot getrHSlot() {
 		return rHSlot;
 	}
 
 	public LeftHandSlot getlHSlot() {
 		return lHSlot;
+	}
+	
+	public HeadSlot getHeadSlot() {
+		return headSlot;
 	}
 
 	

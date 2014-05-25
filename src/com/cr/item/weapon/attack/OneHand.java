@@ -86,7 +86,6 @@ public class OneHand extends ItemActive{
 				}
 		}
 		offset = offset.add(velocity);
-		System.out.println(velocity);
 	}
 	
 	

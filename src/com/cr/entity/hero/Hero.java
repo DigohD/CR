@@ -24,7 +24,7 @@ public class Hero extends Mob implements Collideable{
 
 	public static Vector2f position;
 
-	private Head head;
+	private static Head head;
 	private Body body;
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
@@ -218,6 +218,7 @@ public class Hero extends Mob implements Collideable{
 	public static void updateInventory(){
 		rightHand.setItem(inventory.getrHSlot().getItem());
 		leftHand.setItem(inventory.getlHSlot().getItem());
+		head.setItem(inventory.getHeadSlot().getItem());
 	}
 	
 	@Override

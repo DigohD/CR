@@ -1,17 +1,19 @@
 package com.cr.entity.hero.inventory;
 
 import com.cr.item.Item;
+import com.cr.item.armor.Head;
+import com.cr.item.weapon.Hammer;
 import com.cr.item.weapon.MeleeWeapon;
 
-public class LeftHandSlot extends ItemSlot{
+public class HeadSlot extends ItemSlot{
 
-	public LeftHandSlot(){
-		super(690, 205);
+	public HeadSlot() {
+		super(591, 95);
 	}
-
+	
 	@Override
 	public boolean isCompatible(Item item) {
-		if(item instanceof MeleeWeapon)
+		if(item instanceof Head)
 			return true;
 		return false;
 	}

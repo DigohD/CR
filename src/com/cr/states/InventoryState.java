@@ -30,6 +30,7 @@ public class InventoryState extends GameState{
 
 	@Override
 	public void tick(float dt) {
+		inventory.tick(dt);
 		Hero.updateInventory();
 		if(KeyInput.space) {
 			if(gsm.next() instanceof PlayState){

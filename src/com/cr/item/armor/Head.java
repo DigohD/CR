@@ -3,12 +3,13 @@ package com.cr.item.armor;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.Item;
 
-public class CopperHelm extends Item{
+public abstract class Head extends Item{
 
-	public CopperHelm(){
-		super("copperhelm", 0, 0, 0, 0);
+	public Head(String imageString, int horXOffset, int vertXOffset,
+			int xOffset, int yOffset) {
+		super(imageString, horXOffset, vertXOffset, xOffset, yOffset);
 	}
-
+	
 	@Override
 	public boolean renderPrePart(Direction dir) {
 		switch(dir){
@@ -22,11 +23,6 @@ public class CopperHelm extends Item{
 				return false;
 		}
 		return true;
-	}
-
-	@Override
-	public void activateItem(){
-		
 	}
 
 }
