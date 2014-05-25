@@ -1,6 +1,7 @@
 package com.cr.item;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,7 @@ import java.awt.image.BufferedImage;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
+import com.cr.game.Game;
 import com.cr.item.activation.ItemActive;
 import com.cr.resource.ImageLoader;
 import com.cr.util.Camera;
@@ -22,11 +24,12 @@ public abstract class Item implements Renderable{
 	private int vertXOffset, horXOffset;
 	protected ItemActive itemActive;
 	
+	protected String name;
 	protected int width, height;
 	
 	public int x0, x1, y0, y1;
 	
-	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset){
+	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset, String name){
 		image = ImageLoader.getImage(imageString);
 		iconImage = ImageLoader.getImage(imageString + "icon");
 		this.xOffset = xOffset;
@@ -36,6 +39,8 @@ public abstract class Item implements Renderable{
 		
 		width = image.getWidth() / 4;
 		height = image.getHeight();
+		
+		this.name = name;
 	}
 	
 	public void render(Graphics2D g, int drawX, int drawY, int spriteID){
@@ -104,10 +109,17 @@ public abstract class Item implements Renderable{
 					
 					// No ImageObserver
 					null);
-		}
+		}	
+	}
+	
+	public void renderDescription(Graphics2D g){
+		int xOffset = (Game.WIDTH - 800) / 2;
+		int yOffset = (Game.HEIGHT - 600) / 2;
 		
-		
-			
+		Font font = new Font("Tahoma", 18, 18);
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.drawString(name, xOffset + 20, yOffset + 40);
 	}
 	
 	@Override

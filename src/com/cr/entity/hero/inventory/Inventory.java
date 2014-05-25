@@ -9,6 +9,7 @@ import com.cr.game.Display;
 import com.cr.game.Game;
 import com.cr.item.Item;
 import com.cr.item.armor.head.CopperHelm;
+import com.cr.item.weapon.Hammer;
 import com.cr.item.weapon.Knife;
 
 public class Inventory implements Tickable, Renderable{
@@ -34,6 +35,8 @@ public class Inventory implements Tickable, Renderable{
 		inventory[0][0].setItem(new Knife());
 		inventory[1][0].setItem(new Knife());
 		inventory[2][0].setItem(new Knife());
+		inventory[5][0].setItem(new Hammer());
+		inventory[6][0].setItem(new Hammer());
 		inventory[3][0].setItem(new CopperHelm());
 		inventory[4][0].setItem(new CopperHelm());
 		

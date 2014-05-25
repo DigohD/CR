@@ -7,7 +7,7 @@ import com.cr.input.Mouse;
 
 public abstract class Button implements Tickable{
 
-	private Rectangle rect;
+	protected Rectangle rect;
 	
 	public Button(Rectangle rect){
 		this.rect = rect;

@@ -12,7 +12,7 @@ public class Knife extends MeleeWeapon{
 	private OneHand oneHand;
 	
 	public Knife(){
-		super("knife", 4, 0, -3, -13);
+		super("knife", 4, 0, -3, -13, "Knife");
 //		itemActive = new OneHand();
 	}
 

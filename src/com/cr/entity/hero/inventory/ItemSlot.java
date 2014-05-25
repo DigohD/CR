@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.resource.ImageLoader;
 
@@ -29,6 +30,8 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable{
 		g.drawImage(slotImage, xPos, yPos, null);
 		if(item != null)
 			g.drawImage(item.getIconImage(), xPos, yPos, null);
+		if(item != null && rect.contains(Mouse.getX(), Mouse.getY()))
+			item.renderDescription(g);
 	}
 
 	@Override
