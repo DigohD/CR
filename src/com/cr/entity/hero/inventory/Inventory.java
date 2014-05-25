@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.game.Display;
+import com.cr.game.Game;
 import com.cr.item.Item;
 import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.weapon.Knife;
@@ -22,9 +24,12 @@ public class Inventory implements Tickable, Renderable{
 	private static Item selectedItem;
 	
 	public Inventory(){
+		int xOffset = (Game.WIDTH - 800) / 2;
+		int yOffset = (Game.HEIGHT - 600) / 2;
+		
 		for(int i = 0; i < 11; i++)
 			for(int j = 0; j < 3; j++)
-				inventory[i][j] = new InventorySlot(i, j);
+				inventory[i][j] = new InventorySlot(i, j, xOffset, yOffset);
 		
 		inventory[0][0].setItem(new Knife());
 		inventory[1][0].setItem(new Knife());
@@ -32,17 +37,17 @@ public class Inventory implements Tickable, Renderable{
 		inventory[3][0].setItem(new CopperHelm());
 		inventory[4][0].setItem(new CopperHelm());
 		
-		b1 = new InventoryButton(600, 430);
-		b2 = new InventoryButton(600, 482);
-		b3 = new InventoryButton(600, 534);
+//		b1 = new InventoryButton(600 + xOffset, 430 + yOffset);
+//		b2 = new InventoryButton(600 + xOffset, 482 + yOffset);
+//		b3 = new InventoryButton(600 + xOffset, 534 + yOffset);
 		
-		contour = new Contour();
+		contour = new Contour(xOffset, yOffset);
 		
 		selectedItem = null;
 		
-		rHSlot = new RightHandSlot();
-		lHSlot = new LeftHandSlot();
-		headSlot = new HeadSlot();
+		rHSlot = new RightHandSlot(xOffset, yOffset);
+		lHSlot = new LeftHandSlot(xOffset, yOffset);
+		headSlot = new HeadSlot(xOffset, yOffset);
 	}
 	
 	@Override
@@ -51,9 +56,9 @@ public class Inventory implements Tickable, Renderable{
 			for(int j = 0; j < 3; j++)
 				inventory[i][j].render(g);
 		
-		b1.render(g);
-		b2.render(g);
-		b3.render(g);
+//		b1.render(g);
+//		b2.render(g);
+//		b3.render(g);
 		
 		contour.render(g);
 		
@@ -84,9 +89,11 @@ public class Inventory implements Tickable, Renderable{
 			if(selectedItem != null && is.isCompatible(selectedItem) && 
 					is.getItem() == null){
 				is.setItem(selectedItem);
+				Display.standardCursor();
 				selectedItem = null;
 			}else if(selectedItem == null && is.getItem() != null){
 				selectedItem = is.getItem();
+				Display.setCursor(selectedItem.getIconImage());
 				is.setItem(null);
 			}
 		}

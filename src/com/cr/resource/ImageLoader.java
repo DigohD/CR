@@ -49,9 +49,11 @@ public class ImageLoader {
 		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 		imageLib.put("inventorybg", loadImage("image", "inventorybg.png"));
+		imageLib.put("exitbutton", loadImage("image", "exitbutton.png"));
 		imageLib.put("inventorybutton", loadImage("image", "inventorybutton.png"));
 		imageLib.put("slot", loadImage("image", "slot.png"));
 		imageLib.put("contour", loadImage("image", "contour.png"));
+		imageLib.put("cursor", loadImage("image", "cursor.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){

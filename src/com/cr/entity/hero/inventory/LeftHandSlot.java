@@ -8,6 +8,10 @@ public class LeftHandSlot extends ItemSlot{
 	public LeftHandSlot(){
 		super(690, 205);
 	}
+	
+	public LeftHandSlot(int xOffset, int yOffset) {
+		super(690 + xOffset, 205 + yOffset);
+	}
 
 	@Override
 	public boolean isCompatible(Item item) {

@@ -8,7 +8,10 @@ public class RightHandSlot extends ItemSlot{
 
 	public RightHandSlot() {
 		super(495, 205);
-		item = new Hammer();
+	}
+	
+	public RightHandSlot(int xOffset, int yOffset) {
+		super(495 + xOffset, 205 + yOffset);
 	}
 	
 	@Override

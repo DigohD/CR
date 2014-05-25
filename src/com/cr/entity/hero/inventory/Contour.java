@@ -16,6 +16,12 @@ public class Contour implements Renderable{
 		this.xPos = 460;
 		this.yPos = 30;
 	}
+	
+	public Contour(int xOffset, int yOffset) {
+		image = ImageLoader.getImage("contour");
+		this.xPos = 460 + xOffset;
+		this.yPos = 30 + yOffset;
+	}
 
 	@Override
 	public void render(Graphics2D g) {

@@ -23,6 +23,10 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	public static int getButton(){
 		return mouseButton;
 	}
+	
+	public static void resetButton(){
+		mouseButton = -1;
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {

@@ -15,10 +15,12 @@ public abstract class Button implements Tickable{
 	
 	@Override
 	public void tick(float dt) {
-		System.out.println("TICK");
-		if(Mouse.getButton() == 1)
-			if(rect.contains(Mouse.getX(), Mouse.getY()))
+		if(Mouse.getButton() == 1){
+			if(rect.contains(Mouse.getX(), Mouse.getY())){
 				clicked();
+				Mouse.resetButton();
+			}
+		}
 	}
 
 	public abstract void clicked();

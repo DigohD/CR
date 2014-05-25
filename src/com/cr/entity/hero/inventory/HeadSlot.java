@@ -11,6 +11,10 @@ public class HeadSlot extends ItemSlot{
 		super(591, 95);
 	}
 	
+	public HeadSlot(int xOffset, int yOffset) {
+		super(591 + xOffset, 95 + yOffset);
+	}
+	
 	@Override
 	public boolean isCompatible(Item item) {
 		if(item instanceof Head)

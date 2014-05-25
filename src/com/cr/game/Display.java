@@ -18,6 +18,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import com.cr.resource.ImageLoader;
+
 public class Display {
 	
 	public static Canvas canvas;
@@ -151,11 +153,11 @@ public class Display {
 			frame.getContentPane().setCursor(blankCursor);
 		}
 		
-//		public static void standardCursor(){
-//			Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(
-//					assets.ImageLoader.loadImage("images/UI", "cursor.png"), new Point(0, 0), "custom cursor");
-//			frame.getContentPane().setCursor(cursor);
-//		}s
+		public static void standardCursor(){
+			Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(
+					ImageLoader.getImage("cursor"), new Point(0, 0), "custom cursor");
+			frame.getContentPane().setCursor(cursor);
+		}
 		
 		public static void addKeyListener(KeyListener event){
 			w.addKeyListener(event);
