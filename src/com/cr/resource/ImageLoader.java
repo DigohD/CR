@@ -54,6 +54,14 @@ public class ImageLoader {
 		imageLib.put("slot", loadImage("image", "slot.png"));
 		imageLib.put("contour", loadImage("image", "contour.png"));
 		imageLib.put("cursor", loadImage("image", "cursor.png"));
+		
+		// Materials
+		imageLib.put("copper", loadImage("image", "copper.png"));
+		imageLib.put("basiccloth", loadImage("image", "basiccloth.png"));
+		imageLib.put("pyrite", loadImage("image", "pyrite.png"));
+		imageLib.put("quartz", loadImage("image", "quartz.png"));
+		imageLib.put("scrapwood", loadImage("image", "scrapwood.png"));
+		imageLib.put("strangepowder", loadImage("image", "strangepowder.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){
