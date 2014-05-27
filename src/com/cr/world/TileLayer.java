@@ -45,8 +45,14 @@ public class TileLayer {
 				}else{
 					count++;
 				}
-			}
-				
+			}	
+		}
+	}
+	
+	public void generateTileLayer(){
+		for(int i = 0; i < pixels.length; i++){
+			for(Integer col : tiles.keySet())
+				pixels[i] = col;
 		}
 	}
 
@@ -54,12 +60,12 @@ public class TileLayer {
 		tiles.put(color, tile);
 	}
 	
-	public Tile getTile(int x, int y){
-		return tiles.get(pixels[x + (y*width)]);
-	}
-	
 	public void removeTile(int x, int y){
 		pixels[x + (y*width)] = 0;
+	}
+	
+	public Tile getTile(int x, int y){
+		return tiles.get(pixels[x + (y*width)]);
 	}
 	
 	public boolean shouldRender(int x, int y){

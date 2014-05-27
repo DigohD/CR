@@ -22,6 +22,7 @@ public class ImageLoader {
 		
 		//TileLayers
 		imageLib.put("tileLayer", loadImage("image", "tileLayer.png"));
+		//imageLib.put("tileLayer2", loadImage("image", "tileLayer2.png"));
 		
 		// Hero
 		imageLib.put("hero", loadImage("image", "hero.png"));
