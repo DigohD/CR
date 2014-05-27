@@ -43,8 +43,8 @@ public class ImageLoader {
 		imageLib.put("knifeicon", loadImage("image", "knifeicon.png"));
 		
 		// Armor
-		imageLib.put("copperhelm", loadImage("image", "copperhelm.png"));
-		imageLib.put("copperhelmicon", loadImage("image", "copperhelmicon.png"));
+		imageLib.put("copperhelm", loadImage("image", "copperhelmk.png"));
+		imageLib.put("copperhelmicon", loadImage("image", "copperhelmiconk.png"));
 		
 		// UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
