@@ -55,10 +55,8 @@ public class TileLayer {
 	}
 	
 	public void generateTileLayer(){
-		for(int i = 0; i < pixels.length; i++){
-			for(Integer col : tiles.keySet())
-				pixels[i] = col;
-		}
+		for(int i = 0; i < pixels.length; i++)
+			pixels[i] = tileStack.top.data;
 	}
 
 	public void addTile(int color, Tile tile){
