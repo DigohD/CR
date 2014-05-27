@@ -45,10 +45,6 @@ public class CollisionManager {
 					if(collisionBetween(weapon.getRect(), e.getRect())){
 						e.collisionWith(weapon);
 						weapon.collisionWith(e);
-						
-						Vector2f pos = new Vector2f(weapon.getRect().x, weapon.getRect().y);
-						ImpactEmitter ie = new ImpactEmitter(pos, 1, "slot", 40, 
-								weapon.getItemActive().getVelocity(), 10);
 					}
 				}
 				if(Hero.getLeftHand().getItem() != null && Hero.getLeftHand().getItem() instanceof MeleeWeapon){
@@ -56,10 +52,6 @@ public class CollisionManager {
 					if(collisionBetween(weapon.getRect(), e.getRect())){
 						e.collisionWith(weapon);
 						weapon.collisionWith(e);
-						
-						Vector2f pos = new Vector2f(weapon.getRect().x, weapon.getRect().y);
-						ImpactEmitter ie = new ImpactEmitter(pos, 1, "slot", 40, 
-								weapon.getItemActive().getVelocity(), 10);
 					}
 				}
 //				if(collisionBetween(Hero.getLeftHand().getKnife().getRect(), e.getRect())){
