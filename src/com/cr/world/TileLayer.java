@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.cr.game.Game;
+import com.cr.util.LinkedStack;
 import com.cr.util.Randomizer;
 import com.cr.world.tile.Tile;
 
@@ -14,13 +15,16 @@ public class TileLayer {
 	private int[] pixels;
 	private int width, height;
 	
+	private LinkedStack<Integer> tileStack;
 	private HashMap<Integer, Tile> tiles;
 	
 	private int xOffset, yOffset;
 
 	public TileLayer(BufferedImage img){
 		this.img = img;
+		tileStack = new LinkedStack<Integer>();
 		tiles = new HashMap<Integer, Tile>();
+	
 		width = img.getWidth();
 		height = img.getHeight();
 		pixels = new int[width*height];
@@ -28,6 +32,7 @@ public class TileLayer {
 	}
 	
 	public TileLayer(int width, int height){
+		tileStack = new LinkedStack<Integer>();
 		tiles = new HashMap<Integer, Tile>();
 		this.width = width;
 		this.height = height;
@@ -60,8 +65,15 @@ public class TileLayer {
 		tiles.put(color, tile);
 	}
 	
+	public void createTileStack(int...color){
+		for(int i = 0; i < color.length; i++){
+			tileStack.push(color[i]);
+		}
+	}
+	
 	public void removeTile(int x, int y){
-		pixels[x + (y*width)] = 0;
+		tileStack.pop();
+		pixels[x + (y*width)] = tileStack.top.data;
 	}
 	
 	public Tile getTile(int x, int y){

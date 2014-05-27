@@ -37,12 +37,15 @@ public class World{
 		
 		dummy = new Dummy(new Vector2f(100, 500));
 		
+	
+		tLayer.addTile(ColorRGBA.RED, new PoisonTile());
 		tLayer.addTile(ColorRGBA.GREEN, new GrassTile());
-		tLayer2.addTile(ColorRGBA.GREEN, new PoisonTile());
+		
+		tLayer.createTileStack(ColorRGBA.RED, ColorRGBA.GREEN);
 		
 		//tLayer.generateRandomLayer();
 		tLayer.generateTileLayer();
-		tLayer2.generateTileLayer();
+		//tLayer2.generateTileLayer();
 		
 		tLayer.removeTile(10, 10);
 		
@@ -76,7 +79,7 @@ public class World{
 		xScroll = (int) (Camera.getCamX());
 		yScroll = (int) (Camera.getCamY());
 		
-		tLayer2.renderTileLayer(g, xScroll, yScroll);
+		//tLayer2.renderTileLayer(g, xScroll, yScroll);
 		tLayer.renderTileLayer(g, xScroll, yScroll);
 	
 		eManager.render(g);

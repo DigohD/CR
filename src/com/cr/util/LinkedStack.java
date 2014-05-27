@@ -1,10 +1,10 @@
 package com.cr.util;
 
-public class StateStack<E> {
+public class LinkedStack<E> {
 	
 	public Node<E> top;
 	
-	public StateStack(){
+	public LinkedStack(){
 		top = null;
 	}
 	

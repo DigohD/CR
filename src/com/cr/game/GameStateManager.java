@@ -4,14 +4,14 @@ import java.awt.Graphics2D;
 
 import com.cr.states.GameState;
 import com.cr.util.Node;
-import com.cr.util.StateStack;
+import com.cr.util.LinkedStack;
 
 public class GameStateManager {
 	
-	private StateStack<GameState> states;
+	private LinkedStack<GameState> states;
 	
 	public GameStateManager(){
-		states = new StateStack<GameState>();
+		states = new LinkedStack<GameState>();
 	}
 
 	/**
