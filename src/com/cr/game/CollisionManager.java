@@ -4,9 +4,11 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.item.weapon.MeleeWeapon;
+import com.cr.util.Vector2f;
 
 public class CollisionManager {
 	
@@ -43,6 +45,10 @@ public class CollisionManager {
 					if(collisionBetween(weapon.getRect(), e.getRect())){
 						e.collisionWith(weapon);
 						weapon.collisionWith(e);
+						
+						Vector2f pos = new Vector2f(weapon.getRect().x, weapon.getRect().y);
+						ImpactEmitter ie = new ImpactEmitter(pos, 1, "slot", 40, 
+								weapon.getItemActive().getVelocity(), 10);
 					}
 				}
 				if(Hero.getLeftHand().getItem() != null && Hero.getLeftHand().getItem() instanceof MeleeWeapon){
@@ -50,6 +56,10 @@ public class CollisionManager {
 					if(collisionBetween(weapon.getRect(), e.getRect())){
 						e.collisionWith(weapon);
 						weapon.collisionWith(e);
+						
+						Vector2f pos = new Vector2f(weapon.getRect().x, weapon.getRect().y);
+						ImpactEmitter ie = new ImpactEmitter(pos, 1, "slot", 40, 
+								weapon.getItemActive().getVelocity(), 10);
 					}
 				}
 //				if(collisionBetween(Hero.getLeftHand().getKnife().getRect(), e.getRect())){

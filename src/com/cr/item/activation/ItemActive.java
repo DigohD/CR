@@ -20,5 +20,6 @@ public abstract class ItemActive implements Tickable{
 	public boolean isDead() {
 		return dead;
 	}
-
+	
+	public abstract Vector2f getVelocity();
 }

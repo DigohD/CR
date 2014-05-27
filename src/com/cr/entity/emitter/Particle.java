@@ -7,6 +7,7 @@ import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.game.EntityManager;
+import com.cr.util.Camera;
 import com.cr.util.Vector2f;
 
 public class Particle extends Entity implements Tickable, Renderable{
@@ -35,7 +36,8 @@ public class Particle extends Entity implements Tickable, Renderable{
 	
 	@Override
 	public void render(Graphics2D g) {
-		g.drawImage(image, (int) position.x, (int) position.y, null);
+		g.drawImage(image, (int) position.x - (int)Camera.getCamX(), 
+				(int) position.y - (int)Camera.getCamY(), null);
 	}
 
 	@Override

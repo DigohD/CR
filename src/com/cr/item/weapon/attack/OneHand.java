@@ -87,7 +87,10 @@ public class OneHand extends ItemActive{
 		}
 		offset = offset.add(velocity);
 	}
-	
+
+	public Vector2f getVelocity() {
+		return velocity;
+	}
 	
 	
 }
