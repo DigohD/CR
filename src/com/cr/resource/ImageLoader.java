@@ -22,7 +22,6 @@ public class ImageLoader {
 		
 		//TileLayers
 		imageLib.put("tileLayer", loadImage("image", "tileLayer.png"));
-		//imageLib.put("tileLayer2", loadImage("image", "tileLayer2.png"));
 		
 		// Hero
 		imageLib.put("hero", loadImage("image", "hero.png"));
@@ -47,7 +46,7 @@ public class ImageLoader {
 		imageLib.put("copperhelm", loadImage("image", "copperhelm.png"));
 		imageLib.put("copperhelmicon", loadImage("image", "copperhelmicon.png"));
 		
-		// UI
+		// Inventory UI
 		imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 		imageLib.put("inventorybg", loadImage("image", "inventorybg.png"));
 		imageLib.put("exitbutton", loadImage("image", "exitbutton.png"));
@@ -55,6 +54,11 @@ public class ImageLoader {
 		imageLib.put("slot", loadImage("image", "slot.png"));
 		imageLib.put("contour", loadImage("image", "contour.png"));
 		imageLib.put("cursor", loadImage("image", "cursor.png"));
+		
+		// Materials UI
+		imageLib.put("basebutton", loadImage("image/materialui", "basebutton.png"));
+		imageLib.put("essencesbutton", loadImage("image/materialui", "essencesbutton.png"));
+		imageLib.put("mineralsbutton", loadImage("image/materialui", "mineralsbutton.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){
