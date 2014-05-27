@@ -23,11 +23,13 @@ public class World{
 	
 	private int width, height;
 	Dummy dummy;
+	
 	public World(){
 		eManager = new EntityManager();
 	
 		camera = new Camera(0, 0);
-		tLayer = new TileLayer(ImageLoader.getImage("tileLayer"));
+//		tLayer = new TileLayer(ImageLoader.getImage("tileLayer"));
+		tLayer = new TileLayer(100, 100);
 		width = tLayer.getWidth();
 		height = tLayer.getHeight();
 		
@@ -35,6 +37,7 @@ public class World{
 		
 		tLayer.addTile(ColorRGBA.GREEN, new GrassTile());
 		tLayer.addTile(ColorRGBA.RED, new PoisonTile());
+		tLayer.generateRandomLayer();
 	}
 	
 	int timer = 0;
@@ -57,7 +60,7 @@ public class World{
 		if(timer % 40 == 0){
 			new Dummy(new Vector2f(Randomizer.getFloat(50, width * Tile.TILE_WIDTH), Randomizer.getFloat(50, height * Tile.TILE_HEIGHT)));
 		}
-		
+
 		eManager.tick(dt);
 	}
 

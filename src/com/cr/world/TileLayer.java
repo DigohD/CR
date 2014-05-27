@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.cr.game.Game;
+import com.cr.util.Randomizer;
 import com.cr.world.tile.Tile;
 
 public class TileLayer {
@@ -26,16 +27,39 @@ public class TileLayer {
 		img.getRGB(0, 0, width, height, pixels, 0, width);
 	}
 	
-	public void generateRandomTiles(Tile tile){
-		
+	public TileLayer(int width, int height){
+		tiles = new HashMap<Integer, Tile>();
+		this.width = width;
+		this.height = height;
+		pixels = new int[width*height];
 	}
 	
+	public void generateRandomLayer(){
+		for(int i = 0; i < pixels.length; i++){
+			int rn = Randomizer.getInt(0, tiles.size());
+			int count = 0;
+			for(Integer col : tiles.keySet()){
+				if(rn == count){
+					pixels[i] = col;
+					break;
+				}else{
+					count++;
+				}
+			}
+				
+		}
+	}
+
 	public void addTile(int color, Tile tile){
 		tiles.put(color, tile);
 	}
 	
 	public Tile getTile(int x, int y){
 		return tiles.get(pixels[x + (y*width)]);
+	}
+	
+	public void removeTile(int x, int y){
+		pixels[x + (y*width)] = 0;
 	}
 	
 	public boolean shouldRender(int x, int y){

@@ -4,7 +4,7 @@ public class PoisonTile extends Tile{
 
 	public PoisonTile() {
 		super("poison");
-		walkable = false;
+		solid = false;
 	}
 
 }
