@@ -11,6 +11,8 @@ import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.inventory.InventoryButton;
 import com.cr.entity.hero.materials.BaseButton;
 import com.cr.entity.hero.materials.EssencesButton;
+import com.cr.entity.hero.materials.Materials;
+import com.cr.entity.hero.materials.Materials.MaterialType;
 import com.cr.entity.hero.materials.MineralsButton;
 import com.cr.game.EntityManager;
 import com.cr.game.Game;
@@ -26,6 +28,8 @@ public class MaterialsState extends GameState{
 	private EssencesButton essences;
 	private MineralsButton minerals;
 	
+	private Materials materials;
+	
 	public MaterialsState(GameStateManager gsm) {
 		super(gsm);
 		blockRendering = false;
@@ -37,6 +41,9 @@ public class MaterialsState extends GameState{
 		essences = new EssencesButton(600 + xOffset, 430 + yOffset);
 		minerals = new MineralsButton(600 + xOffset, 482 + yOffset);
 		exit = new ExitButton(600 + xOffset, 534 + yOffset);
+		
+		materials = Hero.getMaterials();
+		Materials.setActiveTab(MaterialType.BASE);
 	}
 
 	@Override
@@ -52,6 +59,14 @@ public class MaterialsState extends GameState{
 		essences.tick(dt);
 		minerals.tick(dt);
 		exit.tick(dt);
+		
+		if(base.isClicked()){
+			Materials.setActiveTab(MaterialType.BASE);
+		}if(essences.isClicked()){
+			Materials.setActiveTab(MaterialType.ESSENCES);
+		}if(minerals.isClicked()){
+			Materials.setActiveTab(MaterialType.MINERALS);
+		}
 		
 //		Hero.updateInventory();
 		
@@ -87,6 +102,8 @@ public class MaterialsState extends GameState{
 		essences.render(g);
 		minerals.render(g);
 		exit.render(g);
+		
+		materials.render(g);
 //		g.setColor(Color.RED);
 //		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
 //		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
