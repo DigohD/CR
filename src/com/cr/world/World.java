@@ -28,7 +28,7 @@ public class World{
 		eManager = new EntityManager();
 	
 		camera = new Camera(0, 0);
-		map = new TileMap(ImageLoader.getImage("tileLayer"));
+		map = new TileMap();
 
 		
 		width = map.getWidth();

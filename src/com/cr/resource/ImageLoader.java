@@ -26,6 +26,10 @@ public class ImageLoader {
 		
 		//TileLayers
 		imageLib.put("tileLayer", loadImage("image", "tileLayer.png"));
+		imageLib.put("grasslayer", loadImage("image", "grasslayer.png"));
+		imageLib.put("stonelayer", loadImage("image", "stonelayer.png"));
+		imageLib.put("sandlayer", loadImage("image", "sandlayer.png"));
+		imageLib.put("waterlayer", loadImage("image", "waterlayer.png"));
 		//imageLib.put("tileLayer2", loadImage("image", "tileLayer2.png"));
 		
 		// Hero
