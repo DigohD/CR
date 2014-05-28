@@ -130,6 +130,10 @@ public abstract class Item implements Renderable{
 		stats.render(g, xOffset + 20, yOffset + 80);
 	}
 	
+	public StatsList getStats(){
+		return stats;
+	}
+	
 	@Override
 	public void render(Graphics2D g) {
 		
