@@ -12,17 +12,15 @@ import com.cr.world.tile.Tile;
 public class TileLayer {
 	
 	private BufferedImage img;
-	private int[] pixels;
+	public int[] pixels;
 	private int width, height;
 	
-	private LinkedStack<Integer> tileStack;
 	private HashMap<Integer, Tile> tiles;
 	
 	private int xOffset, yOffset;
 
 	public TileLayer(BufferedImage img){
 		this.img = img;
-		tileStack = new LinkedStack<Integer>();
 		tiles = new HashMap<Integer, Tile>();
 	
 		width = img.getWidth();
@@ -32,7 +30,6 @@ public class TileLayer {
 	}
 	
 	public TileLayer(int width, int height){
-		tileStack = new LinkedStack<Integer>();
 		tiles = new HashMap<Integer, Tile>();
 		this.width = width;
 		this.height = height;
@@ -54,24 +51,33 @@ public class TileLayer {
 		}
 	}
 	
-	public void generateTileLayer(){
-		for(int i = 0; i < pixels.length; i++)
-			pixels[i] = tileStack.top.data;
-	}
-
+	
+	
 	public void addTile(int color, Tile tile){
 		tiles.put(color, tile);
 	}
 	
-	public void createTileStack(int...color){
-		for(int i = 0; i < color.length; i++){
-			tileStack.push(color[i]);
-		}
+	public void removeTile(int x, int y){
+		pixels[x + (y*width)] = 0;
 	}
 	
-	public void removeTile(int x, int y){
-		tileStack.pop();
-		pixels[x + (y*width)] = tileStack.top.data;
+	public int getTileID(){
+		int col = 0;
+		for(Integer i : tiles.keySet()){
+			col = i;
+		}
+		
+		return col;
+	}
+	
+	public boolean validID(int x, int y){
+		if(x < 0 || y < 0 || x >= width || y >= height)
+			return false;
+		return true;
+	}
+	
+	public int getTileID(int x, int y){
+		return pixels[x + (y*width)];
 	}
 	
 	public Tile getTile(int x, int y){
@@ -86,12 +92,8 @@ public class TileLayer {
 		return false;
 	}
 	
-
-	
 	public void renderTileLayer(Graphics2D g, int xScroll, int yScroll){
-		xOffset = xScroll;
-		yOffset = yScroll;
-		
+	
 		int x0 = xScroll / Tile.TILE_WIDTH;
 		int x1 = (xScroll + Game.WIDTH + Tile.TILE_WIDTH) / Tile.TILE_WIDTH;
 		int y0 = yScroll / Tile.TILE_HEIGHT;

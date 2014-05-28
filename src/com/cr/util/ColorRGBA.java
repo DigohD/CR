@@ -11,5 +11,6 @@ public class ColorRGBA {
 	public static final int PINK   = 0xffff00ff;
 	public static final int GRAY   = 0xff808080;
 	public static final int BROWN  = 0xff7f0000;
+	public static final int ORANGE = 0xffff6a00;
 
 }

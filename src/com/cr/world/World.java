@@ -15,7 +15,7 @@ import com.cr.world.tile.Tile;
 
 public class World{
 	
-	private TileLayer tLayer, tLayer2;
+	private TileMap map;
 	private EntityManager eManager;
 	
 	private Camera camera;
@@ -28,26 +28,14 @@ public class World{
 		eManager = new EntityManager();
 	
 		camera = new Camera(0, 0);
-//		tLayer = new TileLayer(ImageLoader.getImage("tileLayer"));
-		tLayer = new TileLayer(30, 30);
-		tLayer2 = new TileLayer(100, 100);
+		map = new TileMap(ImageLoader.getImage("tileLayer"));
+
 		
-		width = tLayer.getWidth();
-		height = tLayer.getHeight();
+		width = map.getWidth();
+		height = map.getHeight();
 		
 		dummy = new Dummy(new Vector2f(100, 500));
 		
-	
-		tLayer.addTile(ColorRGBA.RED, new PoisonTile());
-		tLayer.addTile(ColorRGBA.GREEN, new GrassTile());
-		
-		tLayer.createTileStack(ColorRGBA.RED, ColorRGBA.GREEN);
-		
-		//tLayer.generateRandomLayer();
-		tLayer.generateTileLayer();
-		//tLayer2.generateTileLayer();
-		
-		tLayer.removeTile(10, 10);
 		
 	}
 	
@@ -80,7 +68,7 @@ public class World{
 		yScroll = (int) (Camera.getCamY());
 		
 		//tLayer2.renderTileLayer(g, xScroll, yScroll);
-		tLayer.renderTileLayer(g, xScroll, yScroll);
+		map.renderMap(g, xScroll, yScroll);
 	
 		eManager.render(g);
 	}
