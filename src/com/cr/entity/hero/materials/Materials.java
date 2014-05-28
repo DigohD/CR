@@ -25,6 +25,8 @@ public class Materials implements Tickable, Renderable{
 	private static HashMap<Minerals, Integer> mineralsMap;
 	
 	private BaseSlot[] bases = new BaseSlot[100];
+	private EssenceSlot[] essences = new EssenceSlot[100];
+	private MineralSlot[] minerals = new MineralSlot[100];
 	
 	public Materials(){
 		baseMap = new HashMap<Base, Integer>();
@@ -40,6 +42,12 @@ public class Materials implements Tickable, Renderable{
 		
 		addBase(Base.COPPER, 100);
 		addBase(Base.RUGGED_CLOTH, 15);
+		addBase(Base.SCRAP_WOOD, 10);
+		
+		addEssence(Essences.STRANGE_POWDER, 20);
+		
+		addMinerals(Minerals.PYRITE, 2);
+		addMinerals(Minerals.QUARTZ, 4);
 	}
 	
 	@Override
@@ -56,6 +64,28 @@ public class Materials implements Tickable, Renderable{
 					bases[counter] = new BaseSlot(counter, 0, base);
 					bases[counter].setAmount(baseMap.get(base));
 					bases[counter].render(g);
+					counter++;
+				}
+			}
+		}
+		if(activeTab == MaterialType.ESSENCES){
+			int counter = 0;
+			for(Essences essence : Essences.values()){
+				if(essencesMap.get(essence) != 0){
+					essences[counter] = new EssenceSlot(counter, 0, essence);
+					essences[counter].setAmount(essencesMap.get(essence));
+					essences[counter].render(g);
+					counter++;
+				}
+			}
+		}
+		if(activeTab == MaterialType.MINERALS){
+			int counter = 0;
+			for(Minerals mineral : Minerals.values()){
+				if(mineralsMap.get(mineral) != 0){
+					minerals[counter] = new MineralSlot(counter, 0, mineral);
+					minerals[counter].setAmount(mineralsMap.get(mineral));
+					minerals[counter].render(g);
 					counter++;
 				}
 			}

@@ -59,6 +59,15 @@ public class ImageLoader {
 		imageLib.put("basebutton", loadImage("image/materialui", "basebutton.png"));
 		imageLib.put("essencesbutton", loadImage("image/materialui", "essencesbutton.png"));
 		imageLib.put("mineralsbutton", loadImage("image/materialui", "mineralsbutton.png"));
+			
+		// Materials
+		imageLib.put("copper", loadImage("image", "copper.png"));
+		imageLib.put("basiccloth", loadImage("image", "basiccloth.png"));
+		imageLib.put("pyrite", loadImage("image", "pyrite.png"));
+		imageLib.put("quartz", loadImage("image", "quartz.png"));
+		imageLib.put("scrapwood", loadImage("image", "scrapwood.png"));
+		imageLib.put("strangepowder", loadImage("image", "strangepowder.png"));
+
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){

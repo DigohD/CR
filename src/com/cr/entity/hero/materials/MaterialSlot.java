@@ -34,9 +34,12 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 		
 		Font font = new Font("Tahoma", 14, 14);
 		g.setFont(font);
-		g.setColor(Color.WHITE);
 		
+		g.setColor(Color.BLACK);
+		g.drawString("" + amount, xPos + 4, yPos + 44);
+		g.setColor(Color.WHITE);
 		g.drawString("" + amount, xPos + 5, yPos + 45);
+		
 	}
 
 	@Override
