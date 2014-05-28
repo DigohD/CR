@@ -14,6 +14,7 @@ public class EssenceSlot extends MaterialSlot{
 		switch(type){
 			case STRANGE_POWDER:
 				materialName = "strangepowder";
+				name = "Strange Powder";
 				break;
 		}
 		setMaterialImage(materialName);

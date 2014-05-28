@@ -15,9 +15,11 @@ public class MineralSlot extends MaterialSlot{
 		switch(type){
 			case PYRITE:
 				materialName = "pyrite";
+				name = "Pyrite";
 				break;
 			case QUARTZ:
 				materialName = "quartz";
+				name = "Quartz";
 				break;
 		}
 		setMaterialImage(materialName);

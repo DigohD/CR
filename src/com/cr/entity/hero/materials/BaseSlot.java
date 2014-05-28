@@ -13,12 +13,15 @@ public class BaseSlot extends MaterialSlot{
 		switch(type){
 			case COPPER:
 				materialName = "copper";
+				name = "Copper";
 				break;
 			case RUGGED_CLOTH:
 				materialName = "basiccloth";
+				name = "Basic Cloth";
 				break;
 			case SCRAP_WOOD:
 				materialName = "scrapwood";
+				name = "Scrap Wood";
 				break;
 		}
 		setMaterialImage(materialName);

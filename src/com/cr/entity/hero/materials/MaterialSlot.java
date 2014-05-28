@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.inventory.Button;
+import com.cr.game.Game;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.resource.ImageLoader;
@@ -19,6 +20,7 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 	protected BufferedImage materialImage;
 	protected int xPos, yPos;
 	protected int amount;
+	protected String name;
 	
 	public MaterialSlot(int xPos, int yPos){
 		super(new Rectangle(xPos, yPos, 50, 50));
@@ -39,6 +41,14 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 		g.drawString("" + amount, xPos + 4, yPos + 44);
 		g.setColor(Color.WHITE);
 		g.drawString("" + amount, xPos + 5, yPos + 45);
+		
+		font = new Font("Tahoma", 18, 18);
+		g.setFont(font);
+		
+		int xOff = ((Game.WIDTH - 800) / 2);
+		int yOff = ((Game.HEIGHT - 600) / 2);
+		if(rect.contains(Mouse.getX(), Mouse.getY()))
+			g.drawString(name, xOff + 600, yOff + 30);
 		
 	}
 
