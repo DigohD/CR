@@ -42,6 +42,9 @@ public class PlayState extends GameState{
 		}else if(KeyInput.v){
 //			bg = true;
 			gsm.push(new MaterialsState(gsm));
+		}else if(KeyInput.q){
+//			bg = true;
+			gsm.push(new StatsState(gsm));
 		}
 		w.tick(dt);
 	}

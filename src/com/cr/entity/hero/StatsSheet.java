@@ -1,5 +1,11 @@
 package com.cr.entity.hero;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+
+import com.cr.game.Game;
+
 public class StatsSheet {
 
 	private static int armor;
@@ -13,7 +19,21 @@ public class StatsSheet {
 		rHDamageDice = 0;
 		lHDamageBase = 0;
 		lHDamageDice = 0;
-		maxHP = 0;
+		maxHP = 15;
+	}
+	
+	public static void render(Graphics2D g){
+		int xOffset = (Game.WIDTH - 800) / 2;
+		int yOffset = (Game.HEIGHT - 600) / 2;
+		
+		Font font = new Font("Tahoma", 14, 14);
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		
+		g.drawString("Maximum HP: ", xOffset + 20, yOffset + 100);
+		g.drawString("" + maxHP, xOffset + 170, yOffset + 100);
+		g.drawString("Armor: ", xOffset + 20, yOffset + 100);
+		g.drawString("" + armor, xOffset + 170, yOffset + 100);
 	}
 	
 	public static void addArmor(int amount){
