@@ -39,6 +39,7 @@ public class Materials implements Tickable, Renderable{
 			  mineralsMap.put(mineral, 0);
 		
 		addBase(Base.COPPER, 100);
+		addBase(Base.RUGGED_CLOTH, 15);
 	}
 	
 	@Override
@@ -63,7 +64,6 @@ public class Materials implements Tickable, Renderable{
 
 	@Override
 	public BufferedImage getImage() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

@@ -1,5 +1,7 @@
 package com.cr.entity.hero.materials;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -29,6 +31,12 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 	public void render(Graphics2D g) {
 		g.drawImage(slotImage, xPos, yPos, null);
 		g.drawImage(materialImage, xPos, yPos, null);
+		
+		Font font = new Font("Tahoma", 14, 14);
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		
+		g.drawString("" + amount, xPos + 5, yPos + 45);
 	}
 
 	@Override
