@@ -29,7 +29,7 @@ public class World{
 	
 		camera = new Camera(0, 0);
 //		tLayer = new TileLayer(ImageLoader.getImage("tileLayer"));
-		tLayer = new TileLayer(100, 100);
+		tLayer = new TileLayer(30, 30);
 		tLayer2 = new TileLayer(100, 100);
 		
 		width = tLayer.getWidth();
@@ -68,9 +68,9 @@ public class World{
 		camera.setCamX(EntityManager.getHero().getX() - (camera.getWidth()/2 - EntityManager.getHero().getWidth()));
 		camera.setCamY(EntityManager.getHero().getY() - (camera.getHeight()/2 - EntityManager.getHero().getHeight()));
 		
-		if(timer % 40 == 0){
-			new Dummy(new Vector2f(Randomizer.getFloat(50, width * Tile.TILE_WIDTH), Randomizer.getFloat(50, height * Tile.TILE_HEIGHT)));
-		}
+//		if(timer % 40 == 0){
+//			new Dummy(new Vector2f(Randomizer.getFloat(50, width * Tile.TILE_WIDTH), Randomizer.getFloat(50, height * Tile.TILE_HEIGHT)));
+//		}
 
 		eManager.tick(dt);
 	}

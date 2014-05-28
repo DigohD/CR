@@ -20,10 +20,13 @@ public abstract class Tile{
 		solid = true;
 	}
 	
-	public void render(Graphics2D g, TileLayer tLayer, int xPos, int yPos){
-		tLayer.renderTile(g, this, xPos, yPos);
-//		g.drawImage(image, (xPos * TILE_WIDTH) - TILE_DRAW_OFFSET_X, 
-//				(yPos * TILE_HEIGHT) - TILE_DRAW_OFFSET_Y, null);
+	public void render(Graphics2D g, int xPos, int yPos, int xOffset, int yOffset){
+		xPos = (xPos * Tile.TILE_WIDTH) - Tile.TILE_DRAW_OFFSET_X - 10;
+		yPos = (yPos * Tile.TILE_HEIGHT) - Tile.TILE_DRAW_OFFSET_Y - 10;
+		xPos -= xOffset;
+		yPos -= yOffset;
+		
+		g.drawImage(image, xPos, yPos, null);
 	}
 
 	public BufferedImage getImage() {

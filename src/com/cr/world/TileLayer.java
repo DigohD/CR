@@ -86,14 +86,7 @@ public class TileLayer {
 		return false;
 	}
 	
-	public void renderTile(Graphics2D g, Tile tile, int xPos, int yPos){
-		xPos = (xPos * Tile.TILE_WIDTH) - Tile.TILE_DRAW_OFFSET_X - 10;
-		yPos = (yPos * Tile.TILE_HEIGHT) - Tile.TILE_DRAW_OFFSET_Y - 10;
-		xPos -= xOffset;
-		yPos -= yOffset;
-		
-		g.drawImage(tile.getImage(), xPos, yPos, null);
-	}
+
 	
 	public void renderTileLayer(Graphics2D g, int xScroll, int yScroll){
 		xOffset = xScroll;
@@ -107,7 +100,7 @@ public class TileLayer {
 		for(int y = y0; y < y1; y++)
 			for(int x = x0; x < x1; x++)
 				if(shouldRender(x, y))
-					getTile(x, y).render(g, this, x, y);	
+					getTile(x, y).render(g, x, y, xScroll, yScroll);	
 	}
 	
 	public int getWidth(){
