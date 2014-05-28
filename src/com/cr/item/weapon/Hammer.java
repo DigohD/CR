@@ -15,7 +15,7 @@ public class Hammer extends MeleeWeapon{
 	public Hammer(){
 		super("hammer", 0, 0, -3, -10, "Hammer");
 //		itemActive = new OneHand();
-		addStat(new Damage(1, 2, 4));
+		addStat(new Damage(1, 7));
 	}
 
 	@Override

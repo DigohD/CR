@@ -15,7 +15,7 @@ public class Knife extends MeleeWeapon{
 	public Knife(){
 		super("knife", 4, 0, -3, -13, "Knife");
 //		itemActive = new OneHand();
-		addStat(new Damage(2, 1, 5));
+		addStat(new Damage(2, 5));
 	}
 
 	@Override

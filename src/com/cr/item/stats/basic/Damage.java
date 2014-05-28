@@ -8,18 +8,17 @@ import com.cr.item.stats.Stat;
 
 public class Damage extends Stat{
 
-	private int base, dice, diceValue;
+	private int base, dice;
 	
-	public Damage(int base, int dice, int diceValue) {
+	public Damage(int base, int dice) {
 		super("Basic Damage", new Color(180, 180, 180));
 		this.base = base;
 		this.dice = dice;
-		this.diceValue = diceValue;
 	}
 
 	@Override
 	public void render(Graphics2D g, int xPos, int yPos) {
-		int maximum = base + (dice * diceValue);
+		int maximum = base + dice;
 		
 		Font font = new Font("Tahoma", 14, 14);
 		g.setFont(font);
