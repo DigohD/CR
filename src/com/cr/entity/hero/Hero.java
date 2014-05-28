@@ -11,6 +11,7 @@ import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
+import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.misc.FootPrint;
 import com.cr.input.KeyInput;
 import com.cr.util.Vector2f;
@@ -37,6 +38,7 @@ public class Hero extends Mob implements Collideable{
 	private int printTimer;
 
 	private static Inventory inventory;
+	private static Materials materials;
 	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
@@ -63,6 +65,7 @@ public class Hero extends Mob implements Collideable{
 		currentDir = Direction.SOUTH;
 		
 		inventory = new Inventory();
+		materials = new Materials();
 	}
 	
 	private void processInput(){
@@ -281,6 +284,10 @@ public class Hero extends Mob implements Collideable{
 
 	public static Inventory getInventory() {
 		return inventory;
+	}
+
+	public static Materials getMaterials() {
+		return materials;
 	}
 	
 	
