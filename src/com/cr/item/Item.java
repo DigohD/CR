@@ -11,6 +11,8 @@ import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.Game;
 import com.cr.item.activation.ItemActive;
+import com.cr.item.stats.Stat;
+import com.cr.item.stats.StatsList;
 import com.cr.resource.ImageLoader;
 import com.cr.util.Camera;
 
@@ -27,6 +29,8 @@ public abstract class Item implements Renderable{
 	protected String name;
 	protected int width, height;
 	
+	protected StatsList stats;
+	
 	public int x0, x1, y0, y1;
 	
 	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset, String name){
@@ -41,6 +45,8 @@ public abstract class Item implements Renderable{
 		height = image.getHeight();
 		
 		this.name = name;
+		
+		stats = new StatsList();
 	}
 	
 	public void render(Graphics2D g, int drawX, int drawY, int spriteID){
@@ -120,6 +126,8 @@ public abstract class Item implements Renderable{
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString(name, xOffset + 20, yOffset + 40);
+		
+		stats.render(g, xOffset + 20, yOffset + 80);
 	}
 	
 	@Override
@@ -141,6 +149,10 @@ public abstract class Item implements Renderable{
 
 	public BufferedImage getIconImage() {
 		return iconImage;
+	}
+	
+	public void addStat(Stat stat){
+		stats.addStat(stat);
 	}
 	
 	

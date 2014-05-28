@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
+import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.attack.OneHand;
 import com.cr.util.Camera;
 
@@ -14,6 +15,7 @@ public class Hammer extends MeleeWeapon{
 	public Hammer(){
 		super("hammer", 0, 0, -3, -10, "Hammer");
 //		itemActive = new OneHand();
+		addStat(new Damage(1, 2, 4));
 	}
 
 	@Override

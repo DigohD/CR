@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
+import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.attack.OneHand;
 import com.cr.util.Camera;
 
@@ -14,6 +15,7 @@ public class Knife extends MeleeWeapon{
 	public Knife(){
 		super("knife", 4, 0, -3, -13, "Knife");
 //		itemActive = new OneHand();
+		addStat(new Damage(2, 1, 5));
 	}
 
 	@Override
