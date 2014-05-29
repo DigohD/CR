@@ -3,6 +3,8 @@ package com.cr.game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.cr.crafting.material.Copper;
+import com.cr.crafting.material.Pyrite;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
 import com.cr.states.MenuState;
@@ -15,6 +17,9 @@ public class Game extends Core{
 		new ImageLoader();
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));
+		
+		Pyrite c = new Pyrite();
+		c.getCurve().testCurve();
 	}
 
 	@Override

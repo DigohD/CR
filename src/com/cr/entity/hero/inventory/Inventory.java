@@ -3,6 +3,10 @@ package com.cr.entity.hero.inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.cr.crafting.material.Copper;
+import com.cr.crafting.material.Pyrite;
+import com.cr.crafting.material.Quartz;
+import com.cr.crafting.weapon.KnifePattern;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.game.Display;
@@ -10,7 +14,7 @@ import com.cr.game.Game;
 import com.cr.item.Item;
 import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.weapon.Hammer;
-import com.cr.item.weapon.Knife;
+import com.cr.item.weapon.CopperKnife;
 
 public class Inventory implements Tickable, Renderable{
 
@@ -32,13 +36,45 @@ public class Inventory implements Tickable, Renderable{
 			for(int j = 0; j < 3; j++)
 				inventory[i][j] = new InventorySlot(i, j, xOffset, yOffset);
 		
-		inventory[0][0].setItem(new Knife());
-		inventory[1][0].setItem(new Knife());
-		inventory[2][0].setItem(new Knife());
-		inventory[5][0].setItem(new Hammer());
-		inventory[6][0].setItem(new Hammer());
-		inventory[3][0].setItem(new CopperHelm());
-		inventory[4][0].setItem(new CopperHelm());
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 20);
+		inventory[1][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 40);
+		inventory[2][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 60);
+		inventory[3][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 80);
+		inventory[4][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 20);
+		KnifePattern.applyMaterial(new Pyrite(), 3);
+		KnifePattern.applyMaterial(new Quartz(), 4);
+		inventory[6][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 40);
+		KnifePattern.applyMaterial(new Pyrite(), 5);
+		KnifePattern.applyMaterial(new Quartz(), 7);
+		inventory[7][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 60);
+		KnifePattern.applyMaterial(new Pyrite(), 6);
+		KnifePattern.applyMaterial(new Quartz(), 9);
+		inventory[8][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 80);
+		KnifePattern.applyMaterial(new Pyrite(), 8);
+		KnifePattern.applyMaterial(new Quartz(), 11);
+		inventory[9][0].setItem(KnifePattern.getKnife());
 		
 //		b1 = new InventoryButton(600 + xOffset, 430 + yOffset);
 //		b2 = new InventoryButton(600 + xOffset, 482 + yOffset);

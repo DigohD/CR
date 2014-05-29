@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.cr.crafting.material.Copper;
+import com.cr.crafting.weapon.KnifePattern;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.body.Body;
@@ -29,8 +31,6 @@ public class Hero extends Mob implements Collideable{
 	private Body body;
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
-	
-	
 	
 	private float accSpeed = 3.5f;
 	private int attackCD = 0;
@@ -222,11 +222,22 @@ public class Hero extends Mob implements Collideable{
 		rightHand.setItem(inventory.getrHSlot().getItem());
 		leftHand.setItem(inventory.getlHSlot().getItem());
 		head.setItem(inventory.getHeadSlot().getItem());
+		
+		StatsSheet.cleanseSheet();
+		
+		StatsSheet.setRightHand(true);
+		if(rightHand.getItem() != null)
+			rightHand.getItem().getStats().applyStats();
+		StatsSheet.setRightHand(false);
+		if(leftHand.getItem() != null)
+			leftHand.getItem().getStats().applyStats();
+		if(head.getItem() != null)
+			head.getItem().getStats().applyStats();
 	}
 	
 	@Override
-	public void collisionWith(Collideable obj) {
-	
+	public void collisionWith(Collideable obj){
+		
 	}
 
 	public static void rightHandActivate(){

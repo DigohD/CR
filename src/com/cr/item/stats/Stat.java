@@ -15,5 +15,7 @@ public abstract class Stat{
 		this.color = color;
 	}
 	
+	public abstract void applyToSheet();
+	
 	public abstract void render(Graphics2D g, int xPos, int yPos);
 }

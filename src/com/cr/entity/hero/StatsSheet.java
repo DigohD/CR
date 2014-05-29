@@ -8,10 +8,11 @@ import com.cr.game.Game;
 
 public class StatsSheet {
 
-	private static int armor;
-	private static int rHDamageBase, rHDamageDice;
-	private static int lHDamageBase, lHDamageDice;
-	private static int maxHP = 15;
+	private static float armor;
+	private static float rHDamageBase, rHDamageDice, rHSpeed;
+	private static float lHDamageBase, lHDamageDice, lHSpeed;
+	private static float maxHP = 15;
+	private static boolean rightHand = true;
 	
 	public static void cleanseSheet(){
 		armor = 0;
@@ -19,6 +20,8 @@ public class StatsSheet {
 		rHDamageDice = 0;
 		lHDamageBase = 0;
 		lHDamageDice = 0;
+		rHSpeed = 0;
+		lHSpeed = 0;
 		maxHP = 15;
 	}
 	
@@ -42,42 +45,72 @@ public class StatsSheet {
 		
 		g.setFont(headerFont);
 		g.drawString("Attacks", xOffset + 320, yOffset + 60);
+	
+		float maximum = rHDamageBase + rHDamageDice;
+		String baseS = String.format("%.1f", rHDamageBase);
+		String maximumS = String.format("%.1f", maximum);
+		
 		g.setFont(sHeaderFont);
-		if(Hero.getRightHand().getItem() != null){
-			g.drawString("Right Hand", xOffset + 320, yOffset + 100);
-			Hero.getRightHand().getItem().getStats()
-					.render(g, xOffset + 320, yOffset + 120);
-		}
-		if(Hero.getLeftHand().getItem() != null){
-			g.setFont(sHeaderFont);
-			g.drawString("Left Hand", xOffset + 320, yOffset + 300);
-			Hero.getLeftHand().getItem().getStats()
-					.render(g, xOffset + 320, yOffset + 320);
-		}
+		g.drawString("Right Hand", xOffset + 320, yOffset + 100);
+		g.setFont(statFont);
+		g.drawString("Damage: " + baseS + " - " + maximumS, 
+				xOffset + 320, yOffset + 120);
+		
+		maximum = lHDamageBase + lHDamageDice;
+		baseS = String.format("%.1f", lHDamageBase);
+		maximumS = String.format("%.1f", maximum);
+		
+		g.setFont(sHeaderFont);
+		g.drawString("Left Hand", xOffset + 320, yOffset + 300);
+		g.setFont(statFont);
+		g.drawString("Damage: " + baseS + " - " + maximumS, 
+				xOffset + 320, yOffset + 320);
+//		if(Hero.getRightHand().getItem() != null){
+//			g.drawString("Right Hand", xOffset + 320, yOffset + 100);
+//			Hero.getRightHand().getItem().getStats()
+//					.render(g, xOffset + 320, yOffset + 120);
+//		}
+//		if(Hero.getLeftHand().getItem() != null){
+//			g.setFont(sHeaderFont);
+//			g.drawString("Left Hand", xOffset + 320, yOffset + 300);
+//			Hero.getLeftHand().getItem().getStats()
+//					.render(g, xOffset + 320, yOffset + 320);
+//		}
 		
 	}
 	
-	public static void addArmor(int amount){
+	public static void addArmor(float amount){
 		armor = armor + amount;
 	}
 	
-	public static void addRHDamageBase(int amount){
-		rHDamageBase = rHDamageBase + amount;
+	public static void addDamageBase(float amount){
+		if(rightHand)
+			rHDamageBase = rHDamageBase + amount;
+		else
+			lHDamageBase = lHDamageBase + amount;
 	}
 	
-	public static void addRHDamageDice(int amount){
-		rHDamageDice = rHDamageDice + amount;
+	public static void addDamageDice(float amount){
+		if(rightHand)
+			rHDamageDice = rHDamageDice + amount;
+		else
+			lHDamageDice = lHDamageDice + amount;
 	}
 	
-	public static void addLHDamageBase(int amount){
-		lHDamageBase = lHDamageBase + amount;
+	public static void addWeaponSpeed(float amount){
+		if(rightHand)
+			rHSpeed = rHSpeed + amount;
+		else
+			lHSpeed = lHSpeed + amount;
 	}
 	
-	public static void addLHDamageDice(int amount){
-		lHDamageDice = lHDamageDice + amount;
-	}
-	
-	public static void addMaxHP(int amount){
+	public static void addMaxHP(float amount){
 		maxHP = maxHP + amount;
 	}
+
+	public static void setRightHand(boolean rightHand) {
+		StatsSheet.rightHand = rightHand;
+	}
+	
+	
 }

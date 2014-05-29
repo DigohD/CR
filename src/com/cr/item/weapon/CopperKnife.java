@@ -8,14 +8,12 @@ import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.attack.OneHand;
 import com.cr.util.Camera;
 
-public class Knife extends MeleeWeapon{
+public class CopperKnife extends MeleeWeapon{
 
 	private OneHand oneHand;
 	
-	public Knife(){
+	public CopperKnife(){
 		super("knife", 4, 0, -3, -13, "Knife");
-//		itemActive = new OneHand();
-		addStat(new Damage(2, 5));
 	}
 
 	@Override

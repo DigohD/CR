@@ -3,33 +3,37 @@ package com.cr.item.stats.basic;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import com.cr.entity.hero.StatsSheet;
 import com.cr.item.stats.Stat;
 
-public class Armor extends Stat{
+public class FlatDamage extends Stat{
 
-	private int amount;
+	private float base;
 	
-	public Armor(int amount) {
-		super("Armor", new Color(180, 180, 180));
-		this.amount = amount;
+	public FlatDamage(float base) {
+		super("Sharpened Damage", new Color(180, 180, 180));
+		this.base = base;
 	}
 
+	@Override
 	public void render(Graphics2D g, int xPos, int yPos) {
 		Font font = new Font("Tahoma", 14, 14);
 		g.setFont(font);
 		
+		String baseS = String.format("%.1f", base);
+		
 		g.setColor(Color.BLACK);
-		g.drawString("" + name + ": " + amount, xPos - 1, yPos - 1);
+		g.drawString("" + name + ": +" + baseS, 
+				xPos - 1, yPos - 1);
 		g.setColor(color);
-		g.drawString("" + name + ": " + amount, xPos, yPos);
+		g.drawString("" + name + ": +" + baseS, 
+				xPos, yPos);
 	}
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addArmor(amount);
+		StatsSheet.addDamageBase(base);
 	}
-
+	
 }

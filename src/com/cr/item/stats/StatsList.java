@@ -17,4 +17,9 @@ public class StatsList{
 			yOff = yOff + 20;
 		}
 	}
+	
+	public void applyStats(){
+		for(Stat stat : stats)
+			stat.applyToSheet();
+	}
 }
