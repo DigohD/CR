@@ -22,7 +22,7 @@ public class TileMap {
 	
 	private BufferedImage img;
 	
-	TileLayer stoneLayer, waterLayer,dirtLayer, sandLayer, grassLayer;
+	TileLayer stoneLayer, waterLayer, dirtLayer, sandLayer, grassLayer;
 	
 	private List<TileLayer> layerList;
 	private LinkedStack<TileLayer> tileStack;
@@ -51,7 +51,6 @@ public class TileMap {
 //	}
 	
 	public TileMap(){
-		
 		stoneLayer = new TileLayer(ImageLoader.getImage("stonelayer"));
 		waterLayer = new TileLayer(ImageLoader.getImage("waterlayer"));
 		sandLayer = new TileLayer(ImageLoader.getImage("sandlayer"));
@@ -63,39 +62,37 @@ public class TileMap {
 		sandLayer.addTile(ColorRGBA.ORANGE, new SandTile());
 		grassLayer.addTile(ColorRGBA.GREEN, new GrassTile());
 		dirtLayer.addTile(ColorRGBA.BROWN, new DirtTile());
-		
-//		for(int i = 0; i < stoneLayer.pixels.length; i++){
-//			stoneLayer.pixels[i] = 0;
-//		}
-//		
-//		for(int i = 0; i < dirtLayer.pixels.length; i++){
-//			dirtLayer.pixels[i] = 0;
-//		}
-		
+	
 		grassLayer.removeTile(10, 10);
+		grassLayer.removeTile(11, 10);
+		grassLayer.removeTile(11, 11);
+		grassLayer.removeTile(10, 11);
 		sandLayer.removeTile(50, 50);
 		dirtLayer.removeTile(50, 50);
 	}
 	
 	public void renderMap(Graphics2D g, int xScroll, int yScroll){
 		
-//		int x0 = xScroll / Tile.TILE_WIDTH;
-//		int x1 = (xScroll + Game.WIDTH + Tile.TILE_WIDTH) / Tile.TILE_WIDTH;
-//		int y0 = yScroll / Tile.TILE_HEIGHT;
-//		int y1 = (yScroll + Game.HEIGHT + Tile.TILE_HEIGHT) / Tile.TILE_HEIGHT;
-//		
-//		for(int y = y0; y < y1; y++)
-//			for(int x = x0; x < x1; x++){
-//				if(grassLayer.validID(x, y))
-//					if(grassLayer.getTileID(x, y) == 0) 
-//						dirtLayer.pixels[x + y*width] = dirtLayer.getTileID();
-//				if(sandLayer.validID(x, y))
-//					if(sandLayer.getTileID(x, y) == 0) 
-//						dirtLayer.pixels[x + y*width] = dirtLayer.getTileID();
-//				if(dirtLayer.validID(x, y))
-//					if(dirtLayer.getTileID(x, y) == 0) 
-//						stoneLayer.pixels[x + y*width] = stoneLayer.getTileID();
-//			}
+		int x0 = xScroll / Tile.TILE_WIDTH;
+		int x1 = (xScroll + Game.WIDTH + Tile.TILE_WIDTH) / Tile.TILE_WIDTH;
+		int y0 = yScroll / Tile.TILE_HEIGHT;
+		int y1 = (yScroll + Game.HEIGHT + Tile.TILE_HEIGHT) / Tile.TILE_HEIGHT;
+		
+		for(int y = y0; y < y1; y++)
+			for(int x = x0; x < x1; x++){
+				if(grassLayer.validID(x, y))
+					if(grassLayer.getTileID(x, y) != 0) 
+						dirtLayer.pixels[x + y*width] = 0;
+					else dirtLayer.pixels[x + y*width] = dirtLayer.getTileID();
+				if(sandLayer.validID(x, y))
+					if(sandLayer.getTileID(x, y) != 0) 
+						dirtLayer.pixels[x + y*width] = 0;
+					else dirtLayer.pixels[x + y*width] = dirtLayer.getTileID();
+				if(dirtLayer.validID(x, y))
+					if(dirtLayer.getTileID(x, y) != 0) 
+						stoneLayer.pixels[x + y*width] = 0;
+					else stoneLayer.pixels[x + y*width] = stoneLayer.getTileID();
+			}
 		
 		stoneLayer.renderTileLayer(g, xScroll, yScroll);
 		dirtLayer.renderTileLayer(g, xScroll, yScroll);

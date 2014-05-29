@@ -34,6 +34,10 @@ public class TileLayer {
 		this.width = width;
 		this.height = height;
 		pixels = new int[width*height];
+		
+		for(int i = 0; i < pixels.length; i++){
+			pixels[i] = 0;
+		}
 	}
 	
 	public void generateRandomLayer(){
@@ -93,7 +97,6 @@ public class TileLayer {
 	}
 	
 	public void renderTileLayer(Graphics2D g, int xScroll, int yScroll){
-	
 		int x0 = xScroll / Tile.TILE_WIDTH;
 		int x1 = (xScroll + Game.WIDTH + Tile.TILE_WIDTH) / Tile.TILE_WIDTH;
 		int y0 = yScroll / Tile.TILE_HEIGHT;
