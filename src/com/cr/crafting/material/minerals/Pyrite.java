@@ -3,7 +3,10 @@ package com.cr.crafting.material.minerals;
 import com.cr.crafting.Curve;
 import com.cr.crafting.material.Material;
 import com.cr.item.stats.Stat;
+import com.cr.item.stats.basic.BasicStat;
 import com.cr.item.stats.basic.FlatDamage;
+import com.cr.item.stats.basic.BasicStat.StatType;
+import com.cr.util.Randomizer;
 
 public class Pyrite extends Material{
 	
@@ -41,6 +44,16 @@ public class Pyrite extends Material{
 
 	@Override
 	public Stat getDefStat(float amount) {
+		switch(Randomizer.getInt2(0, 3)){
+			case 0:
+				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.STRENGTH);
+			case 1:
+				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.DEXTERITY);
+			case 2:
+				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.INTELLECT);
+			case 3:
+				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.ENDURANCE);
+		}
 		return null;
 	}
 
