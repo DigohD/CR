@@ -3,8 +3,8 @@ package com.cr.game;
 import java.awt.Graphics2D;
 
 import com.cr.states.GameState;
-import com.cr.util.Node;
 import com.cr.util.LinkedStack;
+import com.cr.util.Node;
 
 public class GameStateManager {
 	
