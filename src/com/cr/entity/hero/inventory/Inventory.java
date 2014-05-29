@@ -3,9 +3,10 @@ package com.cr.entity.hero.inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.cr.crafting.material.Copper;
-import com.cr.crafting.material.Pyrite;
-import com.cr.crafting.material.Quartz;
+import com.cr.crafting.material.base.Copper;
+import com.cr.crafting.material.essences.StrangePowder;
+import com.cr.crafting.material.minerals.Pyrite;
+import com.cr.crafting.material.minerals.Quartz;
 import com.cr.crafting.weapon.KnifePattern;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
@@ -50,7 +51,23 @@ public class Inventory implements Tickable, Renderable{
 		
 		KnifePattern.startNew();
 		KnifePattern.applyBaseMaterial(new Copper(), 80);
+		KnifePattern.applyMaterial(new StrangePowder(), 8);
 		inventory[4][0].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 60);
+		KnifePattern.applyMaterial(new Pyrite(), 3);
+		KnifePattern.applyMaterial(new Quartz(), 4);
+		KnifePattern.applyMaterial(new Pyrite(), 3);
+		KnifePattern.applyMaterial(new StrangePowder(), 7);
+		inventory[0][1].setItem(KnifePattern.getKnife());
+		
+		KnifePattern.startNew();
+		KnifePattern.applyBaseMaterial(new Copper(), 60);
+		KnifePattern.applyMaterial(new Quartz(), 4);
+		KnifePattern.applyMaterial(new Pyrite(), 3);
+		KnifePattern.applyMaterial(new StrangePowder(), 6);
+		inventory[1][1].setItem(KnifePattern.getKnife());
 		
 		KnifePattern.startNew();
 		KnifePattern.applyBaseMaterial(new Copper(), 20);
@@ -62,6 +79,7 @@ public class Inventory implements Tickable, Renderable{
 		KnifePattern.applyBaseMaterial(new Copper(), 40);
 		KnifePattern.applyMaterial(new Pyrite(), 5);
 		KnifePattern.applyMaterial(new Quartz(), 7);
+		KnifePattern.applyMaterial(new StrangePowder(), 8);
 		inventory[7][0].setItem(KnifePattern.getKnife());
 		
 		KnifePattern.startNew();

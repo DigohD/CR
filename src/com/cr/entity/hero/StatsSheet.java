@@ -13,16 +13,24 @@ public class StatsSheet {
 	private static float lHDamageBase, lHDamageDice, lHSpeed;
 	private static float maxHP = 15;
 	private static boolean rightHand = true;
+	private static float strength, dexterity, intellect, endurance;
 	
 	public static void cleanseSheet(){
 		armor = 0;
+		
 		rHDamageBase = 0;
 		rHDamageDice = 0;
 		lHDamageBase = 0;
 		lHDamageDice = 0;
 		rHSpeed = 0;
 		lHSpeed = 0;
+		
 		maxHP = 15;
+		
+		strength = 10;
+		dexterity = 10;
+		intellect = 10;
+		endurance = 10;
 	}
 	
 	public static void render(Graphics2D g){
@@ -35,13 +43,29 @@ public class StatsSheet {
 		Font sHeaderFont = new Font("Tahoma", 18, 18);
 		
 		g.setFont(headerFont);
-		g.drawString("Defences", xOffset + 20, yOffset + 60);
+		g.drawString("Base Statistics", xOffset + 20, yOffset + 60);
 		
 		g.setFont(statFont);
-		g.drawString("Maximum HP: ", xOffset + 20, yOffset + 100);
-		g.drawString("" + maxHP, xOffset + 170, yOffset + 100);
-		g.drawString("Armor: ", xOffset + 20, yOffset + 120);
-		g.drawString("" + armor, xOffset + 170, yOffset + 120);
+		g.drawString("Strength: ", xOffset + 20, yOffset + 100);
+		g.drawString("" + strength, xOffset + 170, yOffset + 100);
+		
+		g.drawString("Dexterity: ", xOffset + 20, yOffset + 120);
+		g.drawString("" + dexterity, xOffset + 170, yOffset + 120);
+		
+		g.drawString("Intellect: ", xOffset + 20, yOffset + 140);
+		g.drawString("" + intellect, xOffset + 170, yOffset + 140);
+		
+		g.drawString("Endurance: ", xOffset + 20, yOffset + 160);
+		g.drawString("" + endurance, xOffset + 170, yOffset + 160);
+		
+		g.setFont(headerFont);
+		g.drawString("Defences", xOffset + 20, yOffset + 200);
+		
+		g.setFont(statFont);
+		g.drawString("Maximum HP: ", xOffset + 20, yOffset + 220);
+		g.drawString("" + maxHP, xOffset + 170, yOffset + 220);
+		g.drawString("Armor: ", xOffset + 20, yOffset + 240);
+		g.drawString("" + armor, xOffset + 170, yOffset + 240);
 		
 		g.setFont(headerFont);
 		g.drawString("Attacks", xOffset + 320, yOffset + 60);
@@ -110,6 +134,22 @@ public class StatsSheet {
 
 	public static void setRightHand(boolean rightHand) {
 		StatsSheet.rightHand = rightHand;
+	}
+	
+	public static void addStrength(float amount){
+		strength = strength + amount;
+	}
+	
+	public static void addDexterity(float amount){
+		dexterity = dexterity + amount;
+	}
+	
+	public static void addIntellect(float amount){
+		intellect = intellect + amount;
+	}
+	
+	public static void addEndurance(float amount){
+		endurance = endurance + amount;
 	}
 	
 	

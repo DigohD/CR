@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.cr.crafting.material.Copper;
+import com.cr.crafting.material.base.Copper;
 import com.cr.crafting.weapon.KnifePattern;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;

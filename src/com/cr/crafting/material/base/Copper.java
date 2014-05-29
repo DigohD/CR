@@ -1,6 +1,7 @@
-package com.cr.crafting.material;
+package com.cr.crafting.material.base;
 
 import com.cr.crafting.Curve;
+import com.cr.crafting.material.Material;
 import com.cr.item.stats.Stat;
 
 public class Copper extends Material{

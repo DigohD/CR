@@ -2,8 +2,8 @@ package com.cr.crafting.weapon;
 
 import java.util.ArrayList;
 
-import com.cr.crafting.material.Copper;
 import com.cr.crafting.material.Material;
+import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
@@ -37,7 +37,7 @@ public class KnifePattern {
 		material.affectBase(baseMaterial, amount);
 		
 		for(Material sec : secs)
-			material.affectSec(sec, amount);
+			sec.affectSec(material, amount);
 		
 		secs.add(material);
 		secsAmount.add(amount);

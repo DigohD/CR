@@ -1,6 +1,7 @@
-package com.cr.crafting.material;
+package com.cr.crafting.material.minerals;
 
 import com.cr.crafting.Curve;
+import com.cr.crafting.material.Material;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.FlatDamage;
 import com.cr.item.stats.basic.SpeedBonus;
@@ -36,7 +37,7 @@ public class Quartz extends Material{
 	}
 
 	@Override
-	public Stat getStat(float amount) {
+	public Stat getStat(float amount){
 		return new SpeedBonus(Math.abs(curve.getFunctionValue(amount)));
 	}
 

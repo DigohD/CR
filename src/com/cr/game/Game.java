@@ -3,8 +3,8 @@ package com.cr.game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.cr.crafting.material.Copper;
-import com.cr.crafting.material.Pyrite;
+import com.cr.crafting.material.base.Copper;
+import com.cr.crafting.material.minerals.Pyrite;
 import com.cr.input.KeyInput;
 import com.cr.resource.ImageLoader;
 import com.cr.states.MenuState;
