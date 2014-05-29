@@ -41,7 +41,7 @@ public class StrangePowder extends Material{
 	}
 
 	@Override
-	public Stat getStat(float amount) {
+	public Stat getOffStat(float amount) {
 		switch(Randomizer.getInt2(0, 3)){
 			case 0:
 				return new BasicStat((int) curve.getFunctionValue(amount), StatType.STRENGTH);
@@ -52,6 +52,11 @@ public class StrangePowder extends Material{
 			case 3:
 				return new BasicStat((int) curve.getFunctionValue(amount), StatType.ENDURANCE);
 		}
+		return null;
+	}
+
+	@Override
+	public Stat getDefStat(float amount) {
 		return null;
 	}
 

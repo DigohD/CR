@@ -34,7 +34,12 @@ public class Copper extends Material{
 	}
 
 	@Override
-	public Stat getStat(float amount) {
+	public Stat getOffStat(float amount) {
+		return null;
+	}
+
+	@Override
+	public Stat getDefStat(float amount) {
 		return null;
 	}
 

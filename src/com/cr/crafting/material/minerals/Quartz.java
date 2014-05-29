@@ -37,8 +37,13 @@ public class Quartz extends Material{
 	}
 
 	@Override
-	public Stat getStat(float amount){
+	public Stat getOffStat(float amount){
 		return new SpeedBonus(Math.abs(curve.getFunctionValue(amount)));
+	}
+
+	@Override
+	public Stat getDefStat(float amount) {
+		return null;
 	}
 
 }
