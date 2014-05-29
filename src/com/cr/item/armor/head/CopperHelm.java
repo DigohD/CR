@@ -9,7 +9,6 @@ public class CopperHelm extends Head{
 
 	public CopperHelm(){
 		super("copperhelm", 0, 0, 0, 0, "Copper Helm");
-		addStat(new Armor(15));
 	}
 
 	@Override

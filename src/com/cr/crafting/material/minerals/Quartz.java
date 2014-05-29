@@ -4,6 +4,7 @@ import com.cr.crafting.Curve;
 import com.cr.crafting.material.Material;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.FlatDamage;
+import com.cr.item.stats.basic.MaxHP;
 import com.cr.item.stats.basic.SpeedBonus;
 
 public class Quartz extends Material{
@@ -43,7 +44,7 @@ public class Quartz extends Material{
 
 	@Override
 	public Stat getDefStat(float amount) {
-		return null;
+		return new MaxHP((int) Math.abs(curve.getFunctionValue(amount) * 4));
 	}
 
 }

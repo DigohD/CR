@@ -3,6 +3,7 @@ package com.cr.entity.hero.inventory;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.cr.crafting.armor.HelmPattern;
 import com.cr.crafting.material.base.Copper;
 import com.cr.crafting.material.essences.StrangePowder;
 import com.cr.crafting.material.minerals.Pyrite;
@@ -93,6 +94,27 @@ public class Inventory implements Tickable, Renderable{
 		KnifePattern.applyMaterial(new Pyrite(), 8);
 		KnifePattern.applyMaterial(new Quartz(), 11);
 		inventory[9][0].setItem(KnifePattern.getKnife());
+		
+		HelmPattern.startNew();
+		HelmPattern.applyBaseMaterial(new Copper(), 40);
+		HelmPattern.applyMaterial(new Pyrite(), 5);
+		HelmPattern.applyMaterial(new Quartz(), 15);
+		HelmPattern.applyMaterial(new StrangePowder(), 8);
+		inventory[0][2].setItem(HelmPattern.getKnife());
+		
+		HelmPattern.startNew();
+		HelmPattern.applyBaseMaterial(new Copper(), 60);
+		HelmPattern.applyMaterial(new Pyrite(), 3);
+		HelmPattern.applyMaterial(new Quartz(), 10);
+		HelmPattern.applyMaterial(new StrangePowder(), 25);
+		inventory[1][2].setItem(HelmPattern.getKnife());
+		
+		HelmPattern.startNew();
+		HelmPattern.applyBaseMaterial(new Copper(), 75);
+		HelmPattern.applyMaterial(new Pyrite(), 6);
+		HelmPattern.applyMaterial(new Quartz(), 15);
+		HelmPattern.applyMaterial(new StrangePowder(), 15);
+		inventory[2][2].setItem(HelmPattern.getKnife());
 		
 //		b1 = new InventoryButton(600 + xOffset, 430 + yOffset);
 //		b2 = new InventoryButton(600 + xOffset, 482 + yOffset);
