@@ -19,9 +19,19 @@ public class ImageLoader {
 		imageLib.put("grass2", loadImage("image", "grass2.png"));
 		imageLib.put("tree", loadImage("image", "tree.png"));
 		imageLib.put("poison", loadImage("image", "poison.png"));
+		imageLib.put("sand", loadImage("image", "sand.png"));
+		imageLib.put("dirt", loadImage("image", "dirt.png"));
+		imageLib.put("water", loadImage("image", "water.png"));
+		imageLib.put("stone", loadImage("image", "stone.png"));
 		
 		//TileLayers
 		imageLib.put("tileLayer", loadImage("image", "tileLayer.png"));
+		imageLib.put("grasslayer", loadImage("image", "grasslayer.png"));
+		imageLib.put("stonelayer", loadImage("image", "stonelayer.png"));
+		imageLib.put("sandlayer", loadImage("image", "sandlayer.png"));
+		imageLib.put("waterlayer", loadImage("image", "waterlayer.png"));
+		imageLib.put("dirtlayer", loadImage("image", "dirtlayer.png"));
+
 		
 		// Hero
 		imageLib.put("hero", loadImage("image", "hero.png"));

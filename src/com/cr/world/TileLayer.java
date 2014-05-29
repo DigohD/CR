@@ -5,13 +5,14 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.cr.game.Game;
+import com.cr.util.LinkedStack;
 import com.cr.util.Randomizer;
 import com.cr.world.tile.Tile;
 
 public class TileLayer {
 	
 	private BufferedImage img;
-	private int[] pixels;
+	public int[] pixels;
 	private int width, height;
 	
 	private HashMap<Integer, Tile> tiles;
@@ -21,6 +22,7 @@ public class TileLayer {
 	public TileLayer(BufferedImage img){
 		this.img = img;
 		tiles = new HashMap<Integer, Tile>();
+	
 		width = img.getWidth();
 		height = img.getHeight();
 		pixels = new int[width*height];
@@ -32,6 +34,10 @@ public class TileLayer {
 		this.width = width;
 		this.height = height;
 		pixels = new int[width*height];
+		
+		for(int i = 0; i < pixels.length; i++){
+			pixels[i] = 0;
+		}
 	}
 	
 	public void generateRandomLayer(){
@@ -49,19 +55,33 @@ public class TileLayer {
 		}
 	}
 	
-	public void generateTileLayer(){
-		for(int i = 0; i < pixels.length; i++){
-			for(Integer col : tiles.keySet())
-				pixels[i] = col;
-		}
-	}
-
+	
+	
 	public void addTile(int color, Tile tile){
 		tiles.put(color, tile);
 	}
 	
 	public void removeTile(int x, int y){
 		pixels[x + (y*width)] = 0;
+	}
+	
+	public int getTileID(){
+		int col = 0;
+		for(Integer i : tiles.keySet()){
+			col = i;
+		}
+		
+		return col;
+	}
+	
+	public boolean validID(int x, int y){
+		if(x < 0 || y < 0 || x >= width || y >= height)
+			return false;
+		return true;
+	}
+	
+	public int getTileID(int x, int y){
+		return pixels[x + (y*width)];
 	}
 	
 	public Tile getTile(int x, int y){
@@ -76,19 +96,7 @@ public class TileLayer {
 		return false;
 	}
 	
-	public void renderTile(Graphics2D g, Tile tile, int xPos, int yPos){
-		xPos = (xPos * Tile.TILE_WIDTH) - Tile.TILE_DRAW_OFFSET_X - 10;
-		yPos = (yPos * Tile.TILE_HEIGHT) - Tile.TILE_DRAW_OFFSET_Y - 10;
-		xPos -= xOffset;
-		yPos -= yOffset;
-		
-		g.drawImage(tile.getImage(), xPos, yPos, null);
-	}
-	
 	public void renderTileLayer(Graphics2D g, int xScroll, int yScroll){
-		xOffset = xScroll;
-		yOffset = yScroll;
-		
 		int x0 = xScroll / Tile.TILE_WIDTH;
 		int x1 = (xScroll + Game.WIDTH + Tile.TILE_WIDTH) / Tile.TILE_WIDTH;
 		int y0 = yScroll / Tile.TILE_HEIGHT;
@@ -97,7 +105,7 @@ public class TileLayer {
 		for(int y = y0; y < y1; y++)
 			for(int x = x0; x < x1; x++)
 				if(shouldRender(x, y))
-					getTile(x, y).render(g, this, x, y);	
+					getTile(x, y).render(g, x, y, xScroll, yScroll);	
 	}
 	
 	public int getWidth(){

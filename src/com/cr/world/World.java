@@ -15,7 +15,7 @@ import com.cr.world.tile.Tile;
 
 public class World{
 	
-	private TileLayer tLayer, tLayer2;
+	private TileMap map;
 	private EntityManager eManager;
 	
 	private Camera camera;
@@ -28,23 +28,14 @@ public class World{
 		eManager = new EntityManager();
 	
 		camera = new Camera(0, 0);
-//		tLayer = new TileLayer(ImageLoader.getImage("tileLayer"));
-		tLayer = new TileLayer(100, 100);
-		tLayer2 = new TileLayer(100, 100);
+		map = new TileMap();
+
 		
-		width = tLayer.getWidth();
-		height = tLayer.getHeight();
+		width = map.getWidth();
+		height = map.getHeight();
 		
 		dummy = new Dummy(new Vector2f(100, 500));
 		
-		tLayer.addTile(ColorRGBA.GREEN, new GrassTile());
-		tLayer2.addTile(ColorRGBA.GREEN, new PoisonTile());
-		
-		//tLayer.generateRandomLayer();
-		tLayer.generateTileLayer();
-		tLayer2.generateTileLayer();
-		
-		tLayer.removeTile(10, 10);
 		
 	}
 	
@@ -65,9 +56,9 @@ public class World{
 		camera.setCamX(EntityManager.getHero().getX() - (camera.getWidth()/2 - EntityManager.getHero().getWidth()));
 		camera.setCamY(EntityManager.getHero().getY() - (camera.getHeight()/2 - EntityManager.getHero().getHeight()));
 		
-		if(timer % 40 == 0){
-			new Dummy(new Vector2f(Randomizer.getFloat(50, width * Tile.TILE_WIDTH), Randomizer.getFloat(50, height * Tile.TILE_HEIGHT)));
-		}
+//		if(timer % 40 == 0){
+//			new Dummy(new Vector2f(Randomizer.getFloat(50, width * Tile.TILE_WIDTH), Randomizer.getFloat(50, height * Tile.TILE_HEIGHT)));
+//		}
 
 		eManager.tick(dt);
 	}
@@ -76,8 +67,8 @@ public class World{
 		xScroll = (int) (Camera.getCamX());
 		yScroll = (int) (Camera.getCamY());
 		
-		tLayer2.renderTileLayer(g, xScroll, yScroll);
-		tLayer.renderTileLayer(g, xScroll, yScroll);
+		//tLayer2.renderTileLayer(g, xScroll, yScroll);
+		map.renderMap(g, xScroll, yScroll);
 	
 		eManager.render(g);
 	}
