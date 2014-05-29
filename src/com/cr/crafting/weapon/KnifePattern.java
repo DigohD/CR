@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
+import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
 import com.cr.item.weapon.MeleeWeapon;
@@ -56,10 +57,13 @@ public class KnifePattern {
 	public static MeleeWeapon getKnife(){
 		Damage dmg = new Damage(baseMaterial.getCurve().getFunctionValue(baseAmount),
 				baseMaterial.getCurve().getFunctionValue(baseAmount));
+		CoolDown cd = new CoolDown(140 + (baseAmount / 4));
+		
 		knife.addStat(dmg);
+		knife.addStat(cd);
 		
 		for(int i = 0; i < secs.size(); i++){
-			knife.addStat(secs.get(i).getStat(secsAmount.get(i)));
+			knife.addStat(secs.get(i).getOffStat(secsAmount.get(i)));
 		}
 			
 		return knife;

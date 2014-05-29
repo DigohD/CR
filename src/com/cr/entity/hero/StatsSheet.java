@@ -9,8 +9,8 @@ import com.cr.game.Game;
 public class StatsSheet {
 
 	private static float armor;
-	private static float rHDamageBase, rHDamageDice, rHSpeed;
-	private static float lHDamageBase, lHDamageDice, lHSpeed;
+	private static float rHDamageBase, rHDamageDice, rHSpeed, rHCD;
+	private static float lHDamageBase, lHDamageDice, lHSpeed, lHCD;
 	private static float maxHP = 15;
 	private static boolean rightHand = true;
 	private static float strength, dexterity, intellect, endurance;
@@ -24,6 +24,8 @@ public class StatsSheet {
 		lHDamageDice = 0;
 		rHSpeed = 0;
 		lHSpeed = 0;
+		rHCD = 0;
+		lHCD = 0;
 		
 		maxHP = 15;
 		
@@ -73,34 +75,30 @@ public class StatsSheet {
 		float maximum = rHDamageBase + rHDamageDice;
 		String baseS = String.format("%.1f", rHDamageBase);
 		String maximumS = String.format("%.1f", maximum);
+		float CDSec = rHCD / 60;
+		String cdS = String.format("%.1f", CDSec);
 		
 		g.setFont(sHeaderFont);
 		g.drawString("Right Hand", xOffset + 320, yOffset + 100);
 		g.setFont(statFont);
 		g.drawString("Damage: " + baseS + " - " + maximumS, 
 				xOffset + 320, yOffset + 120);
+		g.drawString("Cooldown: " + cdS + "s", 
+				xOffset + 320, yOffset + 140);
 		
 		maximum = lHDamageBase + lHDamageDice;
 		baseS = String.format("%.1f", lHDamageBase);
 		maximumS = String.format("%.1f", maximum);
+		CDSec = lHCD / 60;
+		cdS = String.format("%.1f", CDSec);
 		
 		g.setFont(sHeaderFont);
 		g.drawString("Left Hand", xOffset + 320, yOffset + 300);
 		g.setFont(statFont);
 		g.drawString("Damage: " + baseS + " - " + maximumS, 
 				xOffset + 320, yOffset + 320);
-//		if(Hero.getRightHand().getItem() != null){
-//			g.drawString("Right Hand", xOffset + 320, yOffset + 100);
-//			Hero.getRightHand().getItem().getStats()
-//					.render(g, xOffset + 320, yOffset + 120);
-//		}
-//		if(Hero.getLeftHand().getItem() != null){
-//			g.setFont(sHeaderFont);
-//			g.drawString("Left Hand", xOffset + 320, yOffset + 300);
-//			Hero.getLeftHand().getItem().getStats()
-//					.render(g, xOffset + 320, yOffset + 320);
-//		}
-		
+		g.drawString("Cooldown: " + cdS + "s", 
+				xOffset + 320, yOffset + 340);
 	}
 	
 	public static void addArmor(float amount){
@@ -126,6 +124,13 @@ public class StatsSheet {
 			rHSpeed = rHSpeed + amount;
 		else
 			lHSpeed = lHSpeed + amount;
+	}
+	
+	public static void addWeaponCD(float amount){
+		if(rightHand)
+			rHCD = rHCD + amount;
+		else
+			lHCD = lHCD + amount;
 	}
 	
 	public static void addMaxHP(float amount){

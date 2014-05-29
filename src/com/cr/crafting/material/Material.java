@@ -9,6 +9,7 @@ public abstract class Material{
 	
 	public abstract void affectBase(Material material, float amount);
 	public abstract void affectSec(Material material, float amount);
-	public abstract Stat getStat(float amount);
+	public abstract Stat getOffStat(float amount);
+	public abstract Stat getDefStat(float amount);
 	
 }

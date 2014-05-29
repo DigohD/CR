@@ -35,8 +35,13 @@ public class Pyrite extends Material{
 	}
 
 	@Override
-	public Stat getStat(float amount) {
+	public Stat getOffStat(float amount) {
 		return new FlatDamage(Math.abs(curve.getFunctionValue(amount)) * 3);
+	}
+
+	@Override
+	public Stat getDefStat(float amount) {
+		return null;
 	}
 
 }
