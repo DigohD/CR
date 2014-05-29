@@ -62,6 +62,9 @@ public class ImageLoader {
 		imageLib.put("quartz", loadImage("image", "quartz.png"));
 		imageLib.put("scrapwood", loadImage("image", "scrapwood.png"));
 		imageLib.put("strangepowder", loadImage("image", "strangepowder.png"));
+		imageLib.put("turquoise", loadImage("image", "turquoise.png"));
+		imageLib.put("basicleather", loadImage("image", "basicleather.png"));
+		imageLib.put("forestsoul", loadImage("image", "forestsoul.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){
