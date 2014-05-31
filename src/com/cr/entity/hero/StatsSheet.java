@@ -162,6 +162,63 @@ public class StatsSheet {
 	public static void addEndurance(float amount){
 		endurance = endurance + amount;
 	}
+
+	public static float getrHCD() {
+		return rHCD;
+	}
+
+	public static float getlHCD() {
+		return lHCD;
+	}
+
+	public static float getArmor() {
+		return armor;
+	}
+
+	public static float getrHDamageBase() {
+		return rHDamageBase;
+	}
+
+	public static float getrHDamageDice() {
+		return rHDamageDice;
+	}
+
+	public static float getrHSpeed() {
+		return rHSpeed;
+	}
+
+	public static float getlHDamageBase() {
+		return lHDamageBase;
+	}
+
+	public static float getlHDamageDice() {
+		return lHDamageDice;
+	}
+
+	public static float getlHSpeed() {
+		return lHSpeed;
+	}
+
+	public static float getMaxHP() {
+		return maxHP;
+	}
+
+	public static float getStrength() {
+		return strength;
+	}
+
+	public static float getDexterity() {
+		return dexterity;
+	}
+
+	public static float getIntellect() {
+		return intellect;
+	}
+
+	public static float getEndurance() {
+		return endurance;
+	}
+	
 	
 	
 }

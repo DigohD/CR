@@ -71,29 +71,13 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		if(item != null && item.renderPrePart(dir))
 			item.render(g, drawX, drawY, spriteID);
 		
-		if(item != null && item.getItemActive() != null)
-			g.drawImage(image,
-					// Define position
-					drawX - (int)Camera.getCamX() + (int) item.getItemActive().getOffset().x,
-					drawY - (int)Camera.getCamY() + (int) item.getItemActive().getOffset().y,
-					drawX + width - (int)Camera.getCamX() + (int) item.getItemActive().getOffset().x,
-					drawY + height - (int)Camera.getCamY() + (int) item.getItemActive().getOffset().y,
-					
-					//Define Sprite
-					spriteID * width, 
-					0, 
-					(spriteID * width) + width, 
-					height, 
-					
-					// No ImageObserver
-					null);
-		else
+		if(item != null)
 			g.drawImage(image,
 				// Define position
-				drawX - (int)Camera.getCamX(),
-				drawY - (int)Camera.getCamY(),
-				drawX + width - (int)Camera.getCamX(),
-				drawY + height - (int)Camera.getCamY(),
+				drawX + item.getTempXOffset() - (int)Camera.getCamX(),
+				drawY + item.getTempYOffset()- (int)Camera.getCamY(),
+				drawX + item.getTempXOffset() + width - (int)Camera.getCamX(),
+				drawY + item.getTempYOffset() + height - (int)Camera.getCamY(),
 				
 				//Define Sprite
 				spriteID * width, 
@@ -103,6 +87,22 @@ public abstract class PlayerPart implements Renderable, Tickable{
 				
 				// No ImageObserver
 				null);
+		else
+			g.drawImage(image,
+					// Define position
+					drawX - (int)Camera.getCamX(),
+					drawY  - (int)Camera.getCamY(),
+					drawX + width - (int)Camera.getCamX(),
+					drawY + height - (int)Camera.getCamY(),
+					
+					//Define Sprite
+					spriteID * width, 
+					0, 
+					(spriteID * width) + width, 
+					height, 
+					
+					// No ImageObserver
+					null);
 		
 		if(item != null && !item.renderPrePart(dir))
 			item.render(g, drawX, drawY, spriteID);
@@ -111,15 +111,6 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	@Override
 	public void tick(float dt) {
 		bob.tick(dt);
-		if(item != null && item.getItemActive() != null)
-			if(!item.getItemActive().isDead())
-				item.getItemActive().tick(dt);
-	}
-	
-	public void activateItem(){
-//		System.out.println(item + " : " + item.getItemActive());
-		if(item != null)
-			item.activateItem();
 	}
 	
 	@Override

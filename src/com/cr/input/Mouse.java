@@ -60,10 +60,6 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseButton = e.getButton();
-		if(e.getButton() == MouseEvent.BUTTON1)
-			Hero.rightHandActivate();
-		if(e.getButton() == MouseEvent.BUTTON3)
-			Hero.leftHandActivate();
 	}
 
 	@Override

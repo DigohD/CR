@@ -17,6 +17,7 @@ import com.cr.item.Item;
 import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.weapon.Hammer;
 import com.cr.item.weapon.CopperKnife;
+import com.cr.item.weapon.Weapon;
 
 public class Inventory implements Tickable, Renderable{
 
@@ -168,6 +169,13 @@ public class Inventory implements Tickable, Renderable{
 			if(selectedItem != null && is.isCompatible(selectedItem) && 
 					is.getItem() == null){
 				is.setItem(selectedItem);
+				if(is instanceof RightHandSlot){
+					Weapon w = (Weapon) is.getItem();
+					w.setRightHand(true);
+				}else if(is instanceof LeftHandSlot){
+					Weapon w = (Weapon) is.getItem();
+					w.setRightHand(false);
+				}
 				Display.standardCursor();
 				selectedItem = null;
 			}else if(selectedItem == null && is.getItem() != null){

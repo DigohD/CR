@@ -3,7 +3,7 @@ package com.cr.entity.hero.body;
 import com.cr.entity.hero.anim.BodyBob;
 import com.cr.entity.hero.anim.RightHandBob;
 import com.cr.item.weapon.Hammer;
-import com.cr.item.weapon.MeleeWeapon;
+import com.cr.item.weapon.Weapon;
 
 public class RightHand extends PlayerPart{
 	
@@ -13,15 +13,12 @@ public class RightHand extends PlayerPart{
 	
 	@Override
 	public void tick(float dt) {
-		if(item != null && item instanceof MeleeWeapon){
-			MeleeWeapon weapon = (MeleeWeapon) item;
+		if(item != null && item instanceof Weapon){
+			Weapon weapon = (Weapon) item;
 			weapon.tick(dt);
 		}
 		
 		bob.tick(dt);
-		if(item != null && item.getItemActive() != null)
-			if(!item.getItemActive().isDead())
-				item.getItemActive().tick(dt);
 	}
 	
 	

@@ -11,7 +11,7 @@ import com.cr.item.stats.basic.Armor;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
-import com.cr.item.weapon.MeleeWeapon;
+import com.cr.item.weapon.Weapon;
 
 public class HelmPattern {
 

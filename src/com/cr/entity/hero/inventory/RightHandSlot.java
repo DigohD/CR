@@ -2,7 +2,7 @@ package com.cr.entity.hero.inventory;
 
 import com.cr.item.Item;
 import com.cr.item.weapon.Hammer;
-import com.cr.item.weapon.MeleeWeapon;
+import com.cr.item.weapon.Weapon;
 
 public class RightHandSlot extends ItemSlot{
 
@@ -16,7 +16,7 @@ public class RightHandSlot extends ItemSlot{
 	
 	@Override
 	public boolean isCompatible(Item item) {
-		if(item instanceof MeleeWeapon)
+		if(item instanceof Weapon)
 			return true;
 		return false;
 	}

@@ -7,12 +7,15 @@ import java.util.List;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
-import com.cr.item.weapon.MeleeWeapon;
+import com.cr.item.activation.Projectile;
+import com.cr.item.weapon.Weapon;
 import com.cr.util.Vector2f;
 
 public class CollisionManager {
 	
 	private static List<Enemy> enemies = new ArrayList<Enemy>();
+	private static List<Projectile> playerProjectiles = 
+			new ArrayList<Projectile>();
 	
 	public static void addEnemy(Enemy e){
 		enemies.add(e);
@@ -22,8 +25,17 @@ public class CollisionManager {
 		enemies.remove(e);
 	}
 	
+	public static void addProjectile(Projectile e){
+		playerProjectiles.add(e);
+	}
+	
+	public static void removeProjectile(Projectile e){
+		playerProjectiles.remove(e);
+	}
+	
 	public static void clear(){
 		enemies.clear();
+		playerProjectiles.clear();
 	}
 	
 	private static boolean collisionBetween(Rectangle r1, Rectangle r2) {
@@ -40,24 +52,13 @@ public class CollisionManager {
 					e.collisionWith(hero);
 					hero.collisionWith(e);
 				}
-				if(Hero.getRightHand().getItem() != null && Hero.getRightHand().getItem() instanceof MeleeWeapon){
-					MeleeWeapon weapon = (MeleeWeapon) Hero.getRightHand().getItem();
-					if(collisionBetween(weapon.getRect(), e.getRect())){
-						e.collisionWith(weapon);
-						weapon.collisionWith(e);
-					}
+			}
+			for(int j = 0; j < playerProjectiles.size(); j++){
+				Projectile p = playerProjectiles.get(j);
+				if (collisionBetween(p.getRect(), e.getRect())){
+					e.collisionWith(p);
+					p.collisionWith(e);
 				}
-				if(Hero.getLeftHand().getItem() != null && Hero.getLeftHand().getItem() instanceof MeleeWeapon){
-					MeleeWeapon weapon = (MeleeWeapon) Hero.getLeftHand().getItem();
-					if(collisionBetween(weapon.getRect(), e.getRect())){
-						e.collisionWith(weapon);
-						weapon.collisionWith(e);
-					}
-				}
-//				if(collisionBetween(Hero.getLeftHand().getKnife().getRect(), e.getRect())){
-//					e.collisionWith(Hero.getLeftHand().getKnife());
-//					Hero.getLeftHand().getKnife().collisionWith(e);
-//				}
 			}
 		}
 		

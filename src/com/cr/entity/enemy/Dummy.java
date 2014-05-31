@@ -9,7 +9,8 @@ import com.cr.util.Vector2f;
 
 public class Dummy extends Enemy{
 	
-
+	
+	
 	public Dummy(Vector2f position) {
 		super(position);
 		image = ImageLoader.getImage("hero");

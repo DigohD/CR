@@ -25,9 +25,9 @@ public class ImpactEmitter extends ParticleEmitter{
 		float xVel;
 		
 		for(int i = 0; i < pCount; i++){
-			yVel = impactVelocity.y + Randomizer.getFloat(-10f, 10f);
-			xVel = impactVelocity.x * 0.75f;
-			Vector2f finalV = new Vector2f(yVel, xVel);
+			yVel = impactVelocity.y + Randomizer.getFloat(-10f, 10f) * 0.75f;
+			xVel = impactVelocity.x + Randomizer.getFloat(-10f, 10f) * 0.75f;
+			Vector2f finalV = new Vector2f(xVel, yVel);
 			new Particle(position, finalV, particleImage, pLifeTime);
 		}
 	}

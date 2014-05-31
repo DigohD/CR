@@ -5,12 +5,12 @@ import java.awt.Rectangle;
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.stats.basic.Damage;
-import com.cr.item.weapon.attack.OneHand;
+import com.cr.item.weapon.attack.OneHandAttack;
 import com.cr.util.Camera;
 
-public class Hammer extends MeleeWeapon{
+public class Hammer extends Weapon{
 
-	private OneHand oneHand;
+	private OneHandAttack oneHand;
 	
 	public Hammer(){
 		super("hammer", 0, 0, -3, -10, "Hammer");
@@ -31,19 +31,12 @@ public class Hammer extends MeleeWeapon{
 		return false;
 	}
 
-	public OneHand getOneHand() {
+	public OneHandAttack getOneHand() {
 		return oneHand;
 	}
 
 	@Override
-	public void activateItem() {
-		itemActive = new OneHand();
-		System.out.println("Activated");
-	}
-
-	@Override
-	public void collisionWith(Collideable obj) {
-		System.out.println("HAMMER COLL");
+	public void attack() {
 		
 	}
 	

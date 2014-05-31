@@ -12,7 +12,7 @@ public class CopperHelm extends Head{
 	}
 
 	@Override
-	public void activateItem(){
+	public void tick(float dt) {
 		
 	}
 

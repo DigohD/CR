@@ -9,6 +9,7 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
+import com.cr.item.activation.Projectile;
 
 public class EntityManager {
 	
@@ -47,6 +48,10 @@ public class EntityManager {
 		if(e instanceof Enemy){
 			Enemy c = (Enemy) e;
 			CollisionManager.addEnemy(c);
+		}
+		if(e instanceof Projectile){
+			Projectile c = (Projectile) e;
+			CollisionManager.addProjectile(c);
 		}
 	}
 	

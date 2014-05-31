@@ -5,13 +5,12 @@ import java.awt.Rectangle;
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.stats.basic.Damage;
-import com.cr.item.weapon.attack.OneHand;
+import com.cr.item.weapon.attack.OneHandAttack;
 import com.cr.util.Camera;
+import com.cr.util.Vector2f;
 
-public class CopperKnife extends MeleeWeapon{
+public class CopperKnife extends Weapon{
 
-	private OneHand oneHand;
-	
 	public CopperKnife(){
 		super("knife", 4, 0, -3, -13, "Knife");
 	}
@@ -31,20 +30,9 @@ public class CopperKnife extends MeleeWeapon{
 		return false;
 	}
 
-	public OneHand getOneHand() {
-		return oneHand;
-	}
-
 	@Override
-	public void activateItem() {
-		itemActive = new OneHand();
-		System.out.println("Activated");
-	}
-
-	@Override
-	public void collisionWith(Collideable obj) {
-		System.out.println("KNIFE COLL");
-		
+	public void attack() {
+		attack = new OneHandAttack(new Vector2f(x0, x1), rightHand, width, height);
 	}
 	
 	

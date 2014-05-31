@@ -33,7 +33,6 @@ public class Hero extends Mob implements Collideable{
 	private static LeftHand leftHand;
 	
 	private float accSpeed = 3.5f;
-	private int attackCD = 0;
 
 	private int printTimer;
 
@@ -238,14 +237,6 @@ public class Hero extends Mob implements Collideable{
 	@Override
 	public void collisionWith(Collideable obj){
 		
-	}
-
-	public static void rightHandActivate(){
-		rightHand.activateItem();
-	}
-	
-	public static void leftHandActivate(){
-		leftHand.activateItem();
 	}
 	
 	private void setBobing(boolean isBobing){

@@ -9,13 +9,13 @@ import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
-import com.cr.item.weapon.MeleeWeapon;
+import com.cr.item.weapon.Weapon;
 
 public class KnifePattern {
 
 	public static ArrayList<Base> bases = new ArrayList<Base>();
 	
-	private static MeleeWeapon knife;
+	private static Weapon knife;
 	
 	private static Material baseMaterial;
 	private static int baseAmount;
@@ -55,7 +55,7 @@ public class KnifePattern {
 		}
 	}
 	
-	public static MeleeWeapon getKnife(){
+	public static Weapon getKnife(){
 		Damage dmg = new Damage(baseMaterial.getCurve().getFunctionValue(baseAmount),
 				baseMaterial.getCurve().getFunctionValue(baseAmount));
 		CoolDown cd = new CoolDown(140 + (baseAmount / 4));

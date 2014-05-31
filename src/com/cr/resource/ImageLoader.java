@@ -32,7 +32,6 @@ public class ImageLoader {
 		imageLib.put("waterlayer", loadImage("image", "waterlayer.png"));
 		imageLib.put("dirtlayer", loadImage("image", "dirtlayer.png"));
 
-		
 		// Hero
 		imageLib.put("hero", loadImage("image", "hero.png"));
 		imageLib.put("herohead", loadImage("image", "herohead.png"));
@@ -80,6 +79,9 @@ public class ImageLoader {
 		imageLib.put("turquoise", loadImage("image", "turquoise.png"));
 		imageLib.put("basicleather", loadImage("image", "basicleather.png"));
 		imageLib.put("forestsoul", loadImage("image", "forestsoul.png"));
+	
+		// Particles
+		imageLib.put("blood", loadImage("image", "blood.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String folder, String name){
