@@ -133,9 +133,9 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 			System.out.println("Damage: " + damage);
 			e.setHp(e.getHp() - damage);
 			
-			Vector2f txtPos = new Vector2f(rect.x, rect.y);
+			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
 			new DamageText(txtPos, damage);
-			new ImpactEmitter(txtPos, 3, "blood", 20, offset, 5);
+			new ImpactEmitter(txtPos, 3, "blood", 20, velocity.add(offset.div(4)), 5);
 			
 			System.out.println(offset);
 			
