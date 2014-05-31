@@ -10,9 +10,9 @@ import com.cr.item.stats.Stat;
 
 public class Armor extends Stat{
 
-	private int amount;
+	private float amount;
 	
-	public Armor(int amount) {
+	public Armor(float amount) {
 		super("Armor", new Color(180, 180, 180));
 		this.amount = amount;
 	}
@@ -21,15 +21,26 @@ public class Armor extends Stat{
 		Font font = new Font("Tahoma", 14, 14);
 		g.setFont(font);
 		
+		String statS = String.format("%.1f", amount);
 		g.setColor(Color.BLACK);
-		g.drawString("" + name + ": " + amount, xPos - 1, yPos - 1);
+		g.drawString("" + name + ": " + statS, xPos - 1, yPos - 1);
 		g.setColor(color);
-		g.drawString("" + name + ": " + amount, xPos, yPos);
+		g.drawString("" + name + ": " + statS, xPos, yPos);
 	}
 
 	@Override
 	public void applyToSheet() {
 		StatsSheet.addArmor(amount);
+	}
+
+	@Override
+	public void addAmount(float amount) {
+		this.amount = this.amount + amount;
+	}
+	
+	@Override
+	public float getAmount() {
+		return amount;
 	}
 
 }

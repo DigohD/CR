@@ -40,6 +40,14 @@ public class Damage extends Stat{
 		StatsSheet.addDamageDice(dice);
 	}
 	
+	@Override
+	public void addAmount(float amount) {
+		this.base = this.base + amount;
+	}
 	
+	@Override
+	public float getAmount() {
+		return base;
+	}
 
 }

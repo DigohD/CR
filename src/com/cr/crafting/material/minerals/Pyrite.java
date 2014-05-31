@@ -46,13 +46,13 @@ public class Pyrite extends Material{
 	public Stat getDefStat(float amount) {
 		switch(Randomizer.getInt2(0, 3)){
 			case 0:
-				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.STRENGTH);
+				return new BasicStat(Math.abs(curve.getFunctionValue(amount) * 15), StatType.STRENGTH);
 			case 1:
-				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.DEXTERITY);
+				return new BasicStat(Math.abs(curve.getFunctionValue(amount) * 15), StatType.DEXTERITY);
 			case 2:
-				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.INTELLECT);
+				return new BasicStat(Math.abs(curve.getFunctionValue(amount) * 15), StatType.INTELLECT);
 			case 3:
-				return new BasicStat((int) Math.abs(curve.getFunctionValue(amount) * 15), StatType.ENDURANCE);
+				return new BasicStat(Math.abs(curve.getFunctionValue(amount) * 15), StatType.ENDURANCE);
 		}
 		return null;
 	}

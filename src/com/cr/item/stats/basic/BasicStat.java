@@ -9,12 +9,12 @@ import com.cr.item.stats.Stat;
 
 public class BasicStat extends Stat{
 
-	private int amount;
+	private float amount;
 	public enum StatType {STRENGTH, DEXTERITY, INTELLECT, ENDURANCE};
 	
 	private StatType type;
 	
-	public BasicStat(int amount, StatType type) {
+	public BasicStat(float amount, StatType type) {
 		super("", new Color(180, 180, 180));
 		this.amount = amount;
 		this.type = type;
@@ -39,10 +39,11 @@ public class BasicStat extends Stat{
 		Font font = new Font("Tahoma", 14, 14);
 		g.setFont(font);
 		
+		String statS = String.format("%.1f", amount);
 		g.setColor(Color.BLACK);
-		g.drawString("" + name + ": " + amount, xPos - 1, yPos - 1);
+		g.drawString("" + name + ": " + statS, xPos - 1, yPos - 1);
 		g.setColor(color);
-		g.drawString("" + name + ": " + amount, xPos, yPos);
+		g.drawString("" + name + ": " + statS, xPos, yPos);
 	}
 
 	@Override
@@ -61,6 +62,16 @@ public class BasicStat extends Stat{
 				StatsSheet.addEndurance(amount);
 				break;
 		}
+	}
+	
+	@Override
+	public void addAmount(float amount) {
+		this.amount = this.amount + amount;
+	}
+	
+	@Override
+	public float getAmount() {
+		return amount;
 	}
 	
 }

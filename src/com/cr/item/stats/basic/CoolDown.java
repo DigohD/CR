@@ -36,4 +36,14 @@ public class CoolDown extends Stat{
 		StatsSheet.addWeaponCD(base);;
 	}
 	
+	@Override
+	public void addAmount(float amount) {
+		this.base = this.base + amount;
+	}
+	
+	@Override
+	public float getAmount() {
+		return base;
+	}
+	
 }

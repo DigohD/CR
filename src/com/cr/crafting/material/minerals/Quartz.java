@@ -44,7 +44,7 @@ public class Quartz extends Material{
 
 	@Override
 	public Stat getDefStat(float amount) {
-		return new MaxHP((int) Math.abs(curve.getFunctionValue(amount) * 4));
+		return new MaxHP(Math.abs(curve.getFunctionValue(amount) * 4));
 	}
 
 }

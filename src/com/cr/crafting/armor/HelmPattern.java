@@ -6,6 +6,7 @@ import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
 import com.cr.item.armor.head.CopperHelm;
+import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.Armor;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
@@ -57,14 +58,24 @@ public class HelmPattern {
 	}
 	
 	public static CopperHelm getKnife(){
-		int armor = (int) (baseMaterial.getCurve().getFunctionValue(baseAmount) * 5);
+		float armor = (float) (baseMaterial.getCurve().getFunctionValue(baseAmount));
 		helm.addStat(new Armor(Math.abs(armor)));
 		
 		for(int i = 0; i < secs.size(); i++){
-			helm.addStat(secs.get(i).getDefStat(secsAmount.get(i)));
+			Stat newStat = secs.get(i).getDefStat(secsAmount.get(i));
+			for(Stat stat : helm.getStats().getStats())
+				if(stat.getName().equals(newStat.getName())){
+					newStat.setDuplicate(true);
+					stat.addAmount(newStat.getAmount());
+				}
+			
+			if(!newStat.isDuplicate())
+				helm.addStat(newStat);
 		}
 			
 		return helm;
+		
+		
 	}
 	
 }

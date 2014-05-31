@@ -44,13 +44,13 @@ public class StrangePowder extends Material{
 	public Stat getOffStat(float amount) {
 		switch(Randomizer.getInt2(0, 3)){
 			case 0:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.STRENGTH);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.STRENGTH);
 			case 1:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.DEXTERITY);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.DEXTERITY);
 			case 2:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.INTELLECT);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.INTELLECT);
 			case 3:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.ENDURANCE);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.ENDURANCE);
 		}
 		return null;
 	}
@@ -59,13 +59,13 @@ public class StrangePowder extends Material{
 	public Stat getDefStat(float amount) {
 		switch(Randomizer.getInt2(0, 3)){
 			case 0:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.STRENGTH);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.STRENGTH);
 			case 1:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.DEXTERITY);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.DEXTERITY);
 			case 2:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.INTELLECT);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.INTELLECT);
 			case 3:
-				return new BasicStat((int) curve.getFunctionValue(amount), StatType.ENDURANCE);
+				return new BasicStat(curve.getFunctionValue(amount), StatType.ENDURANCE);
 		}
 		return null;
 	}

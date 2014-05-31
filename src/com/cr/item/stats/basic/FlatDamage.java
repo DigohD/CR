@@ -36,4 +36,13 @@ public class FlatDamage extends Stat{
 		StatsSheet.addDamageBase(base);
 	}
 	
+	@Override
+	public void addAmount(float amount) {
+		this.base = this.base + amount;
+	}
+	
+	@Override
+	public float getAmount() {
+		return base;
+	}
 }

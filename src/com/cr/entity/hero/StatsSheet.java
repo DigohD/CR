@@ -48,15 +48,19 @@ public class StatsSheet {
 		g.drawString("Base Statistics", xOffset + 20, yOffset + 60);
 		
 		g.setFont(statFont);
+		String statS = String.format("%.1f", strength);
 		g.drawString("Strength: ", xOffset + 20, yOffset + 100);
-		g.drawString("" + strength, xOffset + 170, yOffset + 100);
+		g.drawString("" + statS, xOffset + 170, yOffset + 100);
 		
+		statS = String.format("%.1f", dexterity);
 		g.drawString("Dexterity: ", xOffset + 20, yOffset + 120);
-		g.drawString("" + dexterity, xOffset + 170, yOffset + 120);
+		g.drawString("" + statS, xOffset + 170, yOffset + 120);
 		
+		statS = String.format("%.1f", intellect);
 		g.drawString("Intellect: ", xOffset + 20, yOffset + 140);
-		g.drawString("" + intellect, xOffset + 170, yOffset + 140);
+		g.drawString("" + statS, xOffset + 170, yOffset + 140);
 		
+		statS = String.format("%.1f", endurance);
 		g.drawString("Endurance: ", xOffset + 20, yOffset + 160);
 		g.drawString("" + endurance, xOffset + 170, yOffset + 160);
 		
@@ -64,10 +68,12 @@ public class StatsSheet {
 		g.drawString("Defences", xOffset + 20, yOffset + 200);
 		
 		g.setFont(statFont);
+		statS = String.format("%.1f", maxHP);
 		g.drawString("Maximum HP: ", xOffset + 20, yOffset + 220);
-		g.drawString("" + maxHP, xOffset + 170, yOffset + 220);
+		g.drawString("" + statS, xOffset + 170, yOffset + 220);
+		statS = String.format("%.1f", armor);
 		g.drawString("Armor: ", xOffset + 20, yOffset + 240);
-		g.drawString("" + armor, xOffset + 170, yOffset + 240);
+		g.drawString("" + statS, xOffset + 170, yOffset + 240);
 		
 		g.setFont(headerFont);
 		g.drawString("Attacks", xOffset + 320, yOffset + 60);

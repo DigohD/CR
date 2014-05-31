@@ -22,4 +22,10 @@ public class StatsList{
 		for(Stat stat : stats)
 			stat.applyToSheet();
 	}
+
+	public ArrayList<Stat> getStats() {
+		return stats;
+	}
+	
+	
 }

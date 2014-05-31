@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
+import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
@@ -63,8 +64,17 @@ public class KnifePattern {
 		knife.addStat(cd);
 		
 		for(int i = 0; i < secs.size(); i++){
-			knife.addStat(secs.get(i).getOffStat(secsAmount.get(i)));
+			Stat newStat = secs.get(i).getOffStat(secsAmount.get(i));
+			for(Stat stat : knife.getStats().getStats())
+				if(stat.getName().equals(newStat.getName())){
+					newStat.setDuplicate(true);
+					stat.addAmount(newStat.getAmount());
+				}
+			
+			if(!newStat.isDuplicate())
+				knife.addStat(newStat);
 		}
+		
 			
 		return knife;
 	}
