@@ -45,6 +45,9 @@ public class PlayState extends GameState{
 		}else if(KeyInput.q){
 //			bg = true;
 			gsm.push(new StatsState(gsm));
+		}else if(KeyInput.shift){
+//			bg = true;
+			gsm.push(new BiomeTestState(gsm));
 		}
 		w.tick(dt);
 	}

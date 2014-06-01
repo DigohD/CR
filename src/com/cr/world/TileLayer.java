@@ -57,8 +57,16 @@ public class TileLayer {
 	
 	
 	
-	public void addTile(int color, Tile tile){
+	public void addTileType(int color, Tile tile){
 		tiles.put(color, tile);
+	}
+	
+	public void addTile(int x, int y, int color){
+		pixels[x + (y*width)] = color;
+	}
+	
+	public int getTileColor(int x, int y){
+		return pixels[x + (y*width)];
 	}
 	
 	public void removeTile(int x, int y){
@@ -80,6 +88,10 @@ public class TileLayer {
 		return true;
 	}
 	
+	public int[] getPixels() {
+		return pixels;
+	}
+
 	public int getTileID(int x, int y){
 		return pixels[x + (y*width)];
 	}
