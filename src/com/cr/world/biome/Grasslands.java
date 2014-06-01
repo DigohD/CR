@@ -15,16 +15,16 @@ import com.cr.world.tile.WaterTile;
 
 public class Grasslands{
 
-	private final float LAKE_WEIGHT = 0.60f, LAKE_LOSS = 0.005f;
-	private final int LAKE_COUNT = 9;
+	private final float LAKE_WEIGHT = 0.80f, LAKE_LOSS = 0.01f;
+	private final int LAKE_COUNT = 5;
 	
-	private final float DIRT_WEIGHT = 0.80f, DIRT_LOSS = 0.006f;
-	private final int DIRT_COUNT = 9;
+	private final float DIRT_WEIGHT = 0.90f, DIRT_LOSS = 0.006f;
+	private final int DIRT_COUNT = 15;
 	
 	private final float SAND_WEIGHT = 0.5f, SAND_LOSS = 0.00006f;
 	private final int SAND_COUNT = 1000;
 	
-	private final float GRASS_WEIGHT = 0.7f, GRASS_LOSS = 0.006f;
+	private final float GRASS_WEIGHT = 0.9f, GRASS_LOSS = 0.015f;
 	private final int GRASS_COUNT = 20;
 	
 	private TileLayer bottomLayer, middleLayer, topLayer;

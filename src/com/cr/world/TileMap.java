@@ -56,7 +56,7 @@ public class TileMap {
 		
 		bottomLayer = g.getBottomLayer();
 		middleLayer = g.getMiddleLayer();
-		
+		topLayer = g.getTopLayer();
 		
 //		stoneLayer = new TileLayer(ImageLoader.getImage("stonelayer"));
 //		waterLayer = new TileLayer(ImageLoader.getImage("waterlayer"));
@@ -103,6 +103,7 @@ public class TileMap {
 		
 		bottomLayer.renderTileLayer(g, xScroll, yScroll);
 		middleLayer.renderTileLayer(g, xScroll, yScroll);
+		topLayer.renderTileLayer(g, xScroll, yScroll);
 		
 		
 //		stoneLayer.renderTileLayer(g, xScroll, yScroll);
