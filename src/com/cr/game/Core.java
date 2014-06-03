@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.cr.input.KeyInput;
 import com.cr.input.Mouse;
 
-public abstract class Core implements Runnable{
+public abstract class Core{
 	
 	public static int WIDTH;
 	public static int HEIGHT;
@@ -69,10 +69,11 @@ public abstract class Core implements Runnable{
 	protected synchronized void start(){
 		fullScreenMode();
 		running = true;
-		if(thread == null){
-			thread = new Thread(this, "Game-Thread");
-			thread.start();
-		}
+//		if(thread == null){
+//			thread = new Thread(this, "Game-Thread");
+//			thread.start();
+//		}
+		run();
 	}
 	
 	protected synchronized void stop(){
@@ -96,7 +97,6 @@ public abstract class Core implements Runnable{
 		lock.unlock();
 	}
 	
-	@Override
 	public void run(){
 		double currentTime = 0;
 		double previousTime = System.nanoTime();
@@ -128,16 +128,16 @@ public abstract class Core implements Runnable{
 			frameCounter += passedTime;
 			previousTime = currentTime;
 		
-			while(accumulator >= OPTIMAL_TICK_TIME){
+			render();
+			fps++;
+
+//			while(accumulator >= OPTIMAL_TICK_TIME){
 				getInput();
 				tick(dt);
 				tps++;
 				accumulator -= OPTIMAL_TICK_TIME;
-			}
+//			}
 			
-			render();
-			fps++;
-
 			if(frameCounter >= 1){
 				//Display.frame.setTitle(TITLE + " || " + "tps: " + tps + ", fps: " + fps);
 				//System.out.println("tps: " + tps + ", fps: " + fps);
