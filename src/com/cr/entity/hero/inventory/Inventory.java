@@ -8,6 +8,7 @@ import com.cr.crafting.material.base.Copper;
 import com.cr.crafting.material.essences.StrangePowder;
 import com.cr.crafting.material.minerals.Pyrite;
 import com.cr.crafting.material.minerals.Quartz;
+import com.cr.crafting.weapon.HammerPattern;
 import com.cr.crafting.weapon.KnifePattern;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
@@ -116,6 +117,13 @@ public class Inventory implements Tickable, Renderable{
 		HelmPattern.applyMaterial(new Quartz(), 15);
 		HelmPattern.applyMaterial(new StrangePowder(), 15);
 		inventory[2][2].setItem(HelmPattern.getKnife());
+		
+		HammerPattern.startNew();
+		HammerPattern.applyBaseMaterial(new Copper(), 75);
+		HammerPattern.applyMaterial(new Pyrite(), 6);
+		HammerPattern.applyMaterial(new Quartz(), 15);
+		HammerPattern.applyMaterial(new StrangePowder(), 15);
+		inventory[2][2].setItem(HammerPattern.getHammer());
 		
 //		b1 = new InventoryButton(600 + xOffset, 430 + yOffset);
 //		b2 = new InventoryButton(600 + xOffset, 482 + yOffset);

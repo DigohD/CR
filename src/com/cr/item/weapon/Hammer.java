@@ -7,6 +7,7 @@ import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.attack.OneHandAttack;
 import com.cr.util.Camera;
+import com.cr.util.Vector2f;
 
 public class Hammer extends Weapon{
 
@@ -37,7 +38,7 @@ public class Hammer extends Weapon{
 
 	@Override
 	public void attack() {
-		
+		attack = new OneHandAttack(new Vector2f(x0, x1), rightHand, width, height);
 	}
 	
 	
