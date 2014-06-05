@@ -17,20 +17,23 @@ public class HammerPattern extends Pattern{
 	
 	public HammerPattern(){
 		super("hammerpattern");
-		bases.add(Base.COPPER);
 	}
 	
 	@Override
 	public void startNew(){
 		item = new Hammer();
+		bases.clear();
 		secs.clear();
 		secsAmount.clear();
 		baseMaterial = null;
 		baseAmount = 0;
+		
+		bases.add(Base.COPPER);
 	}
 	
 	@Override
 	public void applyMaterial(Material material, int amount){
+		System.out.println(material);
 		material.affectBase(baseMaterial, amount);
 		
 		for(Material sec : secs)

@@ -20,11 +20,15 @@ import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.inventory.InventoryButton;
 import com.cr.entity.hero.materials.BaseButton;
 import com.cr.entity.hero.materials.BaseSlot;
+import com.cr.entity.hero.materials.EssenceSlot;
 import com.cr.entity.hero.materials.EssencesButton;
 import com.cr.entity.hero.materials.MaterialSlot;
 import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.materials.Materials.Base;
+import com.cr.entity.hero.materials.Materials.Essences;
 import com.cr.entity.hero.materials.Materials.MaterialType;
+import com.cr.entity.hero.materials.Materials.Minerals;
+import com.cr.entity.hero.materials.MineralSlot;
 import com.cr.entity.hero.materials.MineralsButton;
 import com.cr.game.EntityManager;
 import com.cr.game.Game;
@@ -52,7 +56,9 @@ public class CraftingState extends GameState{
 	private Materials materials;
 	
 	private enum Phase {PATTERN, BASE, SECONDARIES};
+	private enum Tab {ESSENCES, MINERALS};
 	private Phase phase;
+	private Tab tab;
 	
 	private Pattern activePattern;
 	
@@ -60,13 +66,16 @@ public class CraftingState extends GameState{
 	private ArrayList<PatternButton> patterns = new ArrayList<PatternButton>();
 	
 	private ArrayList<BaseSlot> bases = new ArrayList<BaseSlot>();
+	private ArrayList<EssenceSlot> essence = new ArrayList<EssenceSlot>();
+	private ArrayList<MineralSlot> mineral = new ArrayList<MineralSlot>();
+	
 	private BaseSlot chosenBase;
 	private MaterialSlot chosenMat;
 	
 	private int xOffset = (Game.WIDTH - 800) / 2;
 	private int yOffset = (Game.HEIGHT - 600) / 2;
 	
-	public CraftingState(GameStateManager gsm) {
+	public CraftingState(GameStateManager gsm){
 		super(gsm);
 		blockRendering = false;
 		
@@ -122,6 +131,7 @@ public class CraftingState extends GameState{
 					activePattern.startNew();
 					
 					ArrayList<Base> bases = activePattern.getBases();
+					System.out.println(bases.size() + " size");
 					for(int i = 0; i < bases.size(); i++){
 						this.bases.add(new BaseSlot(i, 0, bases.get(i)));
 						this.bases.get(i).setAmount(Materials.getBaseAmount(bases.get(i)));
@@ -150,12 +160,72 @@ public class CraftingState extends GameState{
 				
 				phase = Phase.SECONDARIES;
 				bases.clear();
+				
+				ArrayList<Essences> e = Materials.getEssences();
+				for(int i = 0; i < e.size(); i++){
+					this.essence.add(new EssenceSlot(i, 0, e.get(i)));
+					this.essence.get(i).setAmount(Materials.getEssenceAmount(e.get(i)));
+				}
+				ArrayList<Minerals> m = Materials.getMinerals();
+				for(int i = 0; i < m.size(); i++){
+					this.mineral.add(new MineralSlot(i, 0, m.get(i)));
+					this.mineral.get(i).setAmount(Materials.getMineralAmount(m.get(i)));
+				}
+//				essence = new EssenceSlot();
+//				mineral = Materials.getMinerals():
 			}
 		}
 				
 		if(phase == Phase.SECONDARIES){
 			essences.tick(dt);
+			if(essences.isClicked()){
+				tab = Tab.ESSENCES;
+				chosenMat = null;
+			}
 			minerals.tick(dt);
+			if(minerals.isClicked()){
+				tab = Tab.MINERALS;
+				chosenMat = null;
+			}
+			
+			if(tab == Tab.ESSENCES)
+				for(EssenceSlot es : essence){
+					es.tick(dt);
+					if(es.isClicked()){
+						chosenMat = es;
+					}
+				}
+			if(tab == Tab.MINERALS)
+				for(MineralSlot ms : mineral){
+					ms.tick(dt);
+					if(ms.isClicked()){
+						chosenMat = ms;
+					}
+				}
+			
+			if(chosenMat != null && add.isClicked()){
+				int amount = (int) (sliderArrow.getRatio() * Materials.getAmount(chosenMat)) + 1;
+				activePattern.applyMaterial(chosenMat.getMaterial(), amount);
+				
+				if(tab == Tab.ESSENCES){
+					essence.remove(chosenMat);
+					ArrayList<EssenceSlot> tmp = new ArrayList<EssenceSlot>();
+					for(int i = 0; i < essence.size(); i++){
+						tmp.add(new EssenceSlot(i, 0, essence.get(i).getType()));
+						tmp.get(i).setAmount(Materials.getEssenceAmount(essence.get(i).getType()));
+					}
+					essence = tmp;
+				}if(tab == Tab.MINERALS){
+					mineral.remove(chosenMat);
+					ArrayList<MineralSlot> tmp = new ArrayList<MineralSlot>();
+					for(int i = 0; i < mineral.size(); i++){
+						tmp.add(new MineralSlot(i, 0, mineral.get(i).getType()));
+						tmp.get(i).setAmount(Materials.getMineralAmount(mineral.get(i).getType()));
+					}
+					mineral = tmp;
+				}
+				chosenMat = null;
+			}
 		}
 		
 //		Hero.updateInventory();
@@ -228,7 +298,7 @@ public class CraftingState extends GameState{
 		g.setColor(Color.WHITE);
 		
 		if(chosenBase != null){
-			int amount = (int) (sliderArrow.getRatio() * materials.getBaseAmount(chosenBase.getBaseType())) + 1;
+			int amount = (int) (sliderArrow.getRatio() * Materials.getBaseAmount(chosenBase.getBaseType())) + 1;
 			g.drawString("Use " + amount + " " + chosenBase.getName(), 
 					xOffset + 23, yOffset + 450);
 		}else
@@ -236,8 +306,12 @@ public class CraftingState extends GameState{
 	}
 	
 	private void renderSecondaryPhase(Graphics2D g){
-		for(BaseSlot bs : bases)
-			bs.render(g);
+		if(tab == Tab.ESSENCES)
+			for(EssenceSlot es : essence)
+				es.render(g);
+		if(tab == Tab.MINERALS)
+			for(MineralSlot ms : mineral)
+				ms.render(g);
 		
 		g.drawImage(craftingbg, xOffset + 10, yOffset + 400, null);
 		g.drawImage(slider, xOffset + 23, yOffset + 470, null);
@@ -251,13 +325,21 @@ public class CraftingState extends GameState{
 		
 		essences.render(g);
 		minerals.render(g);
-		
-		if(chosenMat != null){
-			int amount = (int) (sliderArrow.getRatio() * materials.(chosenMat.getMaterial())) + 1;
-			g.drawString("Use " + amount + " " + chosenMat.getName(), 
-					xOffset + 23, yOffset + 450);
-		}else
-			g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
+		if(tab == Tab.ESSENCES){
+			if(chosenMat != null){
+				int amount = (int) (sliderArrow.getRatio() * materials.getAmount(chosenMat)) + 1;
+				g.drawString("Use " + amount + " " + chosenMat.getName(), 
+						xOffset + 23, yOffset + 450);
+			}else
+				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
+		}else if(tab == Tab.MINERALS){
+			if(chosenMat != null){
+				int amount = (int) (sliderArrow.getRatio() * materials.getAmount(chosenMat)) + 1;
+				g.drawString("Use " + amount + " " + chosenMat.getName(), 
+						xOffset + 23, yOffset + 450);
+			}else
+				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
+		}
 	}
 
 }

@@ -2,8 +2,10 @@ package com.cr.entity.hero.materials;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.cr.crafting.material.Material;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.inventory.Button;
@@ -92,6 +94,19 @@ public class Materials implements Tickable, Renderable{
 		}
 	}
 
+	public static ArrayList<Essences> getEssences() {
+		ArrayList<Essences> basics = new ArrayList<Essences>();
+		basics.add(Essences.STRANGE_POWDER);
+		return basics;
+	}
+	
+	public static ArrayList<Minerals> getMinerals() {
+		ArrayList<Minerals> basics = new ArrayList<Minerals>();
+		basics.add(Minerals.PYRITE);
+		basics.add(Minerals.QUARTZ);
+		return basics;
+	}
+	
 	@Override
 	public BufferedImage getImage() {
 		return null;
@@ -121,10 +136,23 @@ public class Materials implements Tickable, Renderable{
 		return baseMap.get(base);
 	}
 	
-	public static int getMaterialAmount(MaterialSlot material){
+	public static int getEssenceAmount(Essences essence){
+		return essencesMap.get(essence);
+	}
+	
+	public static int getMineralAmount(Minerals mineral){
+		return mineralsMap.get(mineral);
+	}
+	
+	public static int getAmount(MaterialSlot material){
 		if(material instanceof EssenceSlot){
-			return essencesMap.get(material.);
+			return essencesMap.get(((EssenceSlot) material).getType());
+		}else if(material instanceof MineralSlot){
+			return mineralsMap.get(((MineralSlot) material).getType());
 		}
 		
+		return 0;
 	}
+	
+	
 }

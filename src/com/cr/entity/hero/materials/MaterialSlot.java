@@ -32,7 +32,7 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 	}
 	
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g){
 		g.drawImage(slotImage, xPos, yPos, null);
 		g.drawImage(materialImage, xPos, yPos, null);
 		
@@ -51,11 +51,10 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 		int yOff = ((Game.HEIGHT - 600) / 2);
 		if(rect.contains(Mouse.getX(), Mouse.getY()))
 			g.drawString(name, xOff + 600, yOff + 30);
-		
 	}
 
 	@Override
-	public BufferedImage getImage() {
+	public BufferedImage getImage(){
 		return null;
 	}
 	
@@ -65,7 +64,7 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 		isClicked = true;
 	}
 	
-	public int getAmount() {
+	public int getAmount(){
 		return amount;
 	}
 
