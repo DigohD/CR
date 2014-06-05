@@ -120,4 +120,11 @@ public class Materials implements Tickable, Renderable{
 	public static int getBaseAmount(Base base){
 		return baseMap.get(base);
 	}
+	
+	public static int getMaterialAmount(MaterialSlot material){
+		if(material instanceof EssenceSlot){
+			return essencesMap.get(material.);
+		}
+		
+	}
 }
