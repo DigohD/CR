@@ -1,5 +1,6 @@
 package com.cr.entity.hero.materials;
 
+import com.cr.crafting.material.Material;
 import com.cr.entity.hero.materials.Materials.Base;
 import com.cr.entity.hero.materials.Materials.Essences;
 import com.cr.entity.hero.materials.Materials.Minerals;
@@ -28,6 +29,12 @@ public class MineralSlot extends MaterialSlot{
 	@Override
 	public void setMaterialImage(String imageName) {
 		materialImage = ImageLoader.getImage(imageName);
+	}
+
+	@Override
+	public Material getMaterial() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

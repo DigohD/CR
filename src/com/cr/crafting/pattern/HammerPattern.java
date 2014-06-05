@@ -1,41 +1,36 @@
-package com.cr.crafting.weapon;
+package com.cr.crafting.pattern;
 
 import java.util.ArrayList;
 
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
+import com.cr.item.Item;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
+import com.cr.item.weapon.Hammer;
 import com.cr.item.weapon.Weapon;
 
-public class KnifePattern {
-
-	public static ArrayList<Base> bases = new ArrayList<Base>();
+public class HammerPattern extends Pattern{
 	
-	private static Weapon knife;
-	
-	private static Material baseMaterial;
-	private static int baseAmount;
-	
-	private static ArrayList<Material> secs = new ArrayList<Material>();
-	private static ArrayList<Integer> secsAmount = new ArrayList<Integer>();
-	
-	public KnifePattern(){
+	public HammerPattern(){
+		super("hammerpattern");
 		bases.add(Base.COPPER);
 	}
 	
-	public static void startNew(){
-		knife = new CopperKnife();
+	@Override
+	public void startNew(){
+		item = new Hammer();
 		secs.clear();
 		secsAmount.clear();
 		baseMaterial = null;
 		baseAmount = 0;
 	}
 	
-	public static void applyMaterial(Material material, int amount){
+	@Override
+	public void applyMaterial(Material material, int amount){
 		material.affectBase(baseMaterial, amount);
 		
 		for(Material sec : secs)
@@ -45,38 +40,38 @@ public class KnifePattern {
 		secsAmount.add(amount);
 	}
 	
-	public static void applyBaseMaterial(Material material, int amount){
+	@Override
+	public void applyBaseMaterial(Material material, int amount){
 		baseMaterial = material;
 		if(material instanceof Copper){
-			baseMaterial.getCurve().addPerMod(0.2f);
-			baseMaterial.getCurve().addAmpMod(-0.2f);
-			baseMaterial.getCurve().addOffset(0.2f);
+			baseMaterial.getCurve().addPerMod(0.5f);
+			baseMaterial.getCurve().addAmpMod(0.3f);
+			baseMaterial.getCurve().addOffset(-0.15f);
 			baseAmount = amount;
 		}
 	}
 	
-	public static Weapon getKnife(){
+	@Override
+	public Hammer generateItem(){
 		Damage dmg = new Damage(baseMaterial.getCurve().getFunctionValue(baseAmount),
 				baseMaterial.getCurve().getFunctionValue(baseAmount));
-		CoolDown cd = new CoolDown(100 + (baseAmount / 6));
+		CoolDown cd = new CoolDown(180 + (baseAmount / 4));
 		
-		knife.addStat(dmg);
-		knife.addStat(cd);
+		item.addStat(dmg);
+		item.addStat(cd);
 		
 		for(int i = 0; i < secs.size(); i++){
 			Stat newStat = secs.get(i).getOffStat(secsAmount.get(i));
-			for(Stat stat : knife.getStats().getStats())
+			for(Stat stat : item.getStats().getStats())
 				if(stat.getName().equals(newStat.getName())){
 					newStat.setDuplicate(true);
 					stat.addAmount(newStat.getAmount());
 				}
 			
 			if(!newStat.isDuplicate())
-				knife.addStat(newStat);
+				item.addStat(newStat);
 		}
-		
-			
-		return knife;
+		return (Hammer) item;
 	}
 	
 }

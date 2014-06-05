@@ -8,9 +8,11 @@ import com.cr.input.Mouse;
 public abstract class Button implements Tickable{
 
 	protected Rectangle rect;
+	protected boolean resetsButton;
 	
 	public Button(Rectangle rect){
 		this.rect = rect;
+		resetsButton = true;
 	}
 	
 	@Override
@@ -18,12 +20,17 @@ public abstract class Button implements Tickable{
 		if(Mouse.getButton() == 1){
 			if(rect.contains(Mouse.getX(), Mouse.getY())){
 				clicked();
-				Mouse.resetButton();
+				if(resetsButton)
+					Mouse.resetButton();
 			}
 		}
 	}
 
 	public abstract void clicked();
+
+	public void setResetsButton(boolean resetsButton) {
+		this.resetsButton = resetsButton;
+	}
 	
 	
 }
