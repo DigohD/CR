@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.cr.crafting.material.Material;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.inventory.Button;
@@ -21,6 +22,7 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 	protected int xPos, yPos;
 	protected int amount;
 	protected String name;
+	protected boolean isClicked;
 	
 	public MaterialSlot(int xPos, int yPos){
 		super(new Rectangle(xPos, yPos, 50, 50));
@@ -60,6 +62,7 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 	@Override
 	public void clicked(){
 		Materials.buttonClicked(this);
+		isClicked = true;
 	}
 	
 	public int getAmount() {
@@ -72,5 +75,17 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 
 	public abstract void setMaterialImage(String imageName);
 	
+	public boolean isClicked() {
+		if(isClicked){
+			isClicked = false;
+			return true;
+		}
+		return false;
+	}
+
+	public String getName() {
+		return name;
+	}
 	
+	public abstract Material getMaterial();
 }

@@ -116,4 +116,8 @@ public class Materials implements Tickable, Renderable{
 	public void addMinerals(Minerals type, int amount){
 		mineralsMap.put(type, mineralsMap.get(type) + amount);
 	}
+	
+	public static int getBaseAmount(Base base){
+		return baseMap.get(base);
+	}
 }

@@ -1,23 +1,21 @@
-package com.cr.crafting.armor;
+package com.cr.crafting.pattern;
 
 import java.util.ArrayList;
 
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
-import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.stats.Stat;
-import com.cr.item.stats.basic.Armor;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
 import com.cr.item.weapon.Weapon;
 
-public class HelmPattern {
+public class KnifePattern {
 
 	public static ArrayList<Base> bases = new ArrayList<Base>();
 	
-	private static CopperHelm helm;
+	private static Weapon knife;
 	
 	private static Material baseMaterial;
 	private static int baseAmount;
@@ -25,12 +23,12 @@ public class HelmPattern {
 	private static ArrayList<Material> secs = new ArrayList<Material>();
 	private static ArrayList<Integer> secsAmount = new ArrayList<Integer>();
 	
-	public HelmPattern(){
+	public KnifePattern(){
 		bases.add(Base.COPPER);
 	}
 	
 	public static void startNew(){
-		helm = new CopperHelm();
+		knife = new CopperKnife();
 		secs.clear();
 		secsAmount.clear();
 		baseMaterial = null;
@@ -50,32 +48,35 @@ public class HelmPattern {
 	public static void applyBaseMaterial(Material material, int amount){
 		baseMaterial = material;
 		if(material instanceof Copper){
-			baseMaterial.getCurve().addPerMod(0.0f);
-			baseMaterial.getCurve().addAmpMod(-0.3f);
-			baseMaterial.getCurve().addOffset(-0.3f);
+			baseMaterial.getCurve().addPerMod(0.2f);
+			baseMaterial.getCurve().addAmpMod(-0.2f);
+			baseMaterial.getCurve().addOffset(0.2f);
 			baseAmount = amount;
 		}
 	}
 	
-	public static CopperHelm getKnife(){
-		float armor = (float) (baseMaterial.getCurve().getFunctionValue(baseAmount));
-		helm.addStat(new Armor(Math.abs(armor)));
+	public static Weapon getKnife(){
+		Damage dmg = new Damage(baseMaterial.getCurve().getFunctionValue(baseAmount),
+				baseMaterial.getCurve().getFunctionValue(baseAmount));
+		CoolDown cd = new CoolDown(100 + (baseAmount / 6));
+		
+		knife.addStat(dmg);
+		knife.addStat(cd);
 		
 		for(int i = 0; i < secs.size(); i++){
-			Stat newStat = secs.get(i).getDefStat(secsAmount.get(i));
-			for(Stat stat : helm.getStats().getStats())
+			Stat newStat = secs.get(i).getOffStat(secsAmount.get(i));
+			for(Stat stat : knife.getStats().getStats())
 				if(stat.getName().equals(newStat.getName())){
 					newStat.setDuplicate(true);
 					stat.addAmount(newStat.getAmount());
 				}
 			
 			if(!newStat.isDuplicate())
-				helm.addStat(newStat);
+				knife.addStat(newStat);
 		}
+		
 			
-		return helm;
-		
-		
+		return knife;
 	}
 	
 }

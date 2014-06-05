@@ -80,6 +80,18 @@ public class ImageLoader {
 		imageLib.put("basicleather", loadImage("image", "basicleather.png"));
 		imageLib.put("forestsoul", loadImage("image", "forestsoul.png"));
 	
+		// Crafting UI
+		imageLib.put("addbutton", loadImage("image/craftingui", "addbutton.png"));
+		imageLib.put("backbutton", loadImage("image/craftingui", "backbutton.png"));
+		imageLib.put("sliderarrow", loadImage("image/craftingui", "sliderarrow.png"));
+		imageLib.put("slider", loadImage("image/craftingui", "slider.png"));
+		imageLib.put("craftingbg", loadImage("image/craftingui", "craftingbg.png"));
+		
+		// Patterns
+		imageLib.put("knifepattern", loadImage("image", "knifepattern.png"));
+		imageLib.put("hammerpattern", loadImage("image", "hammerpattern.png"));
+		imageLib.put("helmpattern", loadImage("image", "helmpattern.png"));
+		
 		// Particles
 		imageLib.put("blood", loadImage("image", "blood.png"));
 	}

@@ -1,22 +1,23 @@
-package com.cr.crafting.weapon;
+package com.cr.crafting.pattern;
 
 import java.util.ArrayList;
 
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
+import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.stats.Stat;
+import com.cr.item.stats.basic.Armor;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
-import com.cr.item.weapon.Hammer;
 import com.cr.item.weapon.Weapon;
 
-public class HammerPattern {
+public class HelmPattern {
 
 	public static ArrayList<Base> bases = new ArrayList<Base>();
 	
-	private static Weapon knife;
+	private static CopperHelm helm;
 	
 	private static Material baseMaterial;
 	private static int baseAmount;
@@ -24,12 +25,12 @@ public class HammerPattern {
 	private static ArrayList<Material> secs = new ArrayList<Material>();
 	private static ArrayList<Integer> secsAmount = new ArrayList<Integer>();
 	
-	public HammerPattern(){
+	public HelmPattern(){
 		bases.add(Base.COPPER);
 	}
 	
 	public static void startNew(){
-		knife = new Hammer();
+		helm = new CopperHelm();
 		secs.clear();
 		secsAmount.clear();
 		baseMaterial = null;
@@ -49,33 +50,32 @@ public class HammerPattern {
 	public static void applyBaseMaterial(Material material, int amount){
 		baseMaterial = material;
 		if(material instanceof Copper){
-			baseMaterial.getCurve().addPerMod(0.5f);
-			baseMaterial.getCurve().addAmpMod(0.3f);
-			baseMaterial.getCurve().addOffset(-0.15f);
+			baseMaterial.getCurve().addPerMod(0.0f);
+			baseMaterial.getCurve().addAmpMod(-0.3f);
+			baseMaterial.getCurve().addOffset(-0.3f);
 			baseAmount = amount;
 		}
 	}
 	
-	public static Weapon getHammer(){
-		Damage dmg = new Damage(baseMaterial.getCurve().getFunctionValue(baseAmount),
-				baseMaterial.getCurve().getFunctionValue(baseAmount));
-		CoolDown cd = new CoolDown(180 + (baseAmount / 4));
-		
-		knife.addStat(dmg);
-		knife.addStat(cd);
+	public static CopperHelm getKnife(){
+		float armor = (float) (baseMaterial.getCurve().getFunctionValue(baseAmount));
+		helm.addStat(new Armor(Math.abs(armor)));
 		
 		for(int i = 0; i < secs.size(); i++){
-			Stat newStat = secs.get(i).getOffStat(secsAmount.get(i));
-			for(Stat stat : knife.getStats().getStats())
+			Stat newStat = secs.get(i).getDefStat(secsAmount.get(i));
+			for(Stat stat : helm.getStats().getStats())
 				if(stat.getName().equals(newStat.getName())){
 					newStat.setDuplicate(true);
 					stat.addAmount(newStat.getAmount());
 				}
 			
 			if(!newStat.isDuplicate())
-				knife.addStat(newStat);
+				helm.addStat(newStat);
 		}
-		return knife;
+			
+		return helm;
+		
+		
 	}
 	
 }
