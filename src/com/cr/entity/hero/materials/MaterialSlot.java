@@ -46,13 +46,17 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 		
 		font = new Font("Tahoma", 18, 18);
 		g.setFont(font);
-		
-		int xOff = ((Game.WIDTH - 800) / 2);
-		int yOff = ((Game.HEIGHT - 600) / 2);
-		if(rect.contains(Mouse.getX(), Mouse.getY()))
-			g.drawString(name, xOff + 600, yOff + 30);
 	}
 
+	public void renderHoover(Graphics2D g){
+		if(rect.contains(Mouse.getX(), Mouse.getY())){
+			g.setColor(Color.BLACK);
+			g.fillRect(Mouse.getX(), Mouse.getY(), 20 + (name.length() * 9), 20);
+			g.setColor(Color.WHITE);
+			g.drawString(name, Mouse.getX() + 18, Mouse.getY() + 16);
+		}
+	}
+	
 	@Override
 	public BufferedImage getImage(){
 		return null;

@@ -83,6 +83,7 @@ public class ImageLoader {
 		// Crafting UI
 		imageLib.put("addbutton", loadImage("image/craftingui", "addbutton.png"));
 		imageLib.put("backbutton", loadImage("image/craftingui", "backbutton.png"));
+		imageLib.put("craftbutton", loadImage("image/craftingui", "craftbutton.png"));
 		imageLib.put("sliderarrow", loadImage("image/craftingui", "sliderarrow.png"));
 		imageLib.put("slider", loadImage("image/craftingui", "slider.png"));
 		imageLib.put("craftingbg", loadImage("image/craftingui", "craftingbg.png"));

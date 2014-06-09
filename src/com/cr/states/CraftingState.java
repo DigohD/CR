@@ -9,15 +9,9 @@ import java.util.ArrayList;
 import com.cr.crafting.pattern.Pattern;
 import com.cr.crafting.station.CraftingStation;
 import com.cr.crafting.station.Forge;
-import com.cr.crafting.ui.AddButton;
-import com.cr.crafting.ui.BackButton;
-import com.cr.crafting.ui.PatternButton;
-import com.cr.crafting.ui.SliderArrow;
+import com.cr.crafting.ui.*;
 import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.inventory.Button;
-import com.cr.entity.hero.inventory.ExitButton;
-import com.cr.entity.hero.inventory.Inventory;
-import com.cr.entity.hero.inventory.InventoryButton;
+import com.cr.entity.hero.inventory.*;
 import com.cr.entity.hero.materials.BaseButton;
 import com.cr.entity.hero.materials.BaseSlot;
 import com.cr.entity.hero.materials.EssenceSlot;
@@ -49,6 +43,7 @@ public class CraftingState extends GameState{
 	
 	private AddButton add;
 	private BackButton back;
+	private CraftButton craft;
 	private SliderArrow sliderArrow;
 	
 	private CraftingStation station;
@@ -70,7 +65,13 @@ public class CraftingState extends GameState{
 	private ArrayList<MineralSlot> mineral = new ArrayList<MineralSlot>();
 	
 	private BaseSlot chosenBase;
+	private int baseAmount;
 	private MaterialSlot chosenMat;
+	
+	private ArrayList<MaterialSlot> mats = new ArrayList<MaterialSlot>();
+	private ArrayList<Integer> matsAmounts = new ArrayList<Integer>();
+	
+	private boolean isCrafted;
 	
 	private int xOffset = (Game.WIDTH - 800) / 2;
 	private int yOffset = (Game.HEIGHT - 600) / 2;
@@ -78,6 +79,8 @@ public class CraftingState extends GameState{
 	public CraftingState(GameStateManager gsm){
 		super(gsm);
 		blockRendering = false;
+		
+		isCrafted = false;
 		
 		int xOffset = (Game.WIDTH - 800) / 2;
 		int yOffset = (Game.HEIGHT - 600) / 2;
@@ -87,8 +90,10 @@ public class CraftingState extends GameState{
 		minerals = new MineralsButton(600 + xOffset, 482 + yOffset);
 		exit = new ExitButton(600 + xOffset, 534 + yOffset);
 		
-		add = new AddButton(xOffset + 320, yOffset + 515);
-		back = new BackButton(xOffset + 170, yOffset + 515);
+		craft = new CraftButton(xOffset + 390, yOffset + 515);
+		add = new AddButton(xOffset + 240, yOffset + 515);
+		back = new BackButton(xOffset + 90, yOffset + 515);
+		
 		
 		sliderArrow = new SliderArrow(xOffset + 25, yOffset + 460);
 		
@@ -158,6 +163,8 @@ public class CraftingState extends GameState{
 				int amount = (int) (sliderArrow.getRatio() * materials.getBaseAmount(chosenBase.getBaseType())) + 1;
 				activePattern.applyBaseMaterial(chosenBase.getMaterial(), amount);
 				
+				baseAmount = amount;
+				
 				phase = Phase.SECONDARIES;
 				bases.clear();
 				
@@ -178,6 +185,8 @@ public class CraftingState extends GameState{
 				
 		if(phase == Phase.SECONDARIES){
 			essences.tick(dt);
+			craft.tick(dt);
+			
 			if(essences.isClicked()){
 				tab = Tab.ESSENCES;
 				chosenMat = null;
@@ -203,9 +212,17 @@ public class CraftingState extends GameState{
 					}
 				}
 			
+			if(craft.isClicked()){
+				Inventory.addItem(activePattern.generateItem());
+				isCrafted = true;
+			}
+			
 			if(chosenMat != null && add.isClicked()){
 				int amount = (int) (sliderArrow.getRatio() * Materials.getAmount(chosenMat)) + 1;
 				activePattern.applyMaterial(chosenMat.getMaterial(), amount);
+				
+				mats.add(chosenMat);
+				matsAmounts.add(amount);
 				
 				if(tab == Tab.ESSENCES){
 					essence.remove(chosenMat);
@@ -230,11 +247,7 @@ public class CraftingState extends GameState{
 		
 //		Hero.updateInventory();
 		
-		if(KeyInput.space || exit.isClicked()) {
-			if(gsm.next() instanceof PlayState){
-				PlayState ps = (PlayState) gsm.next();
-				ps.bg = false;
-			}
+		if(KeyInput.space || exit.isClicked() || isCrafted) {
 			gsm.pop();
 		}
 		
@@ -266,6 +279,14 @@ public class CraftingState extends GameState{
 		if(phase == Phase.SECONDARIES)
 			renderSecondaryPhase(g);
 		
+		if(phase != Phase.PATTERN){
+			Font bigFont = new Font("Tahoma", 36, 36);
+			g.setFont(bigFont);
+			g.setColor(Color.WHITE);
+			g.drawString(activePattern.getName(), 
+					xOffset + 20, yOffset - 10);
+		}
+			
 //		inventory.render(g);
 //		base.render(g);
 //		essences.render(g);
@@ -286,6 +307,8 @@ public class CraftingState extends GameState{
 	private void renderBasePhase(Graphics2D g){
 		for(BaseSlot bs : bases)
 			bs.render(g);
+		for(BaseSlot bs : bases)
+			bs.renderHoover(g);
 		
 		g.drawImage(craftingbg, xOffset + 10, yOffset + 400, null);
 		g.drawImage(slider, xOffset + 23, yOffset + 470, null);
@@ -306,20 +329,27 @@ public class CraftingState extends GameState{
 	}
 	
 	private void renderSecondaryPhase(Graphics2D g){
-		if(tab == Tab.ESSENCES)
+		if(tab == Tab.ESSENCES){
 			for(EssenceSlot es : essence)
 				es.render(g);
-		if(tab == Tab.MINERALS)
+			for(EssenceSlot es : essence)
+				es.renderHoover(g);
+		}
+		if(tab == Tab.MINERALS){
 			for(MineralSlot ms : mineral)
 				ms.render(g);
-		
+			for(MineralSlot ms : mineral)
+				ms.renderHoover(g);
+		}
 		g.drawImage(craftingbg, xOffset + 10, yOffset + 400, null);
 		g.drawImage(slider, xOffset + 23, yOffset + 470, null);
+		craft.render(g);
 		add.render(g);
 		back.render(g);
 		sliderArrow.render(g);
 		
 		Font headerFont = new Font("Tahoma", 24, 24);
+		Font subFont = new Font("Tahoma", 18, 18);
 		g.setFont(headerFont);
 		g.setColor(Color.WHITE);
 		
@@ -340,6 +370,23 @@ public class CraftingState extends GameState{
 			}else
 				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
 		}
+		
+		g.setFont(headerFont);
+		g.drawString("Base", 
+				xOffset + 603, yOffset + 100);
+		g.setFont(subFont);
+		g.drawString(chosenBase.getName() + ": " + baseAmount, 
+				xOffset + 603, yOffset + 130);
+		
+		for(int i = 0; i < mats.size(); i++){
+			g.setFont(headerFont);
+			g.drawString("Additional", 
+					xOffset + 603, yOffset + 200);
+			g.setFont(subFont);
+			g.drawString(mats.get(i).getName() + ": " + matsAmounts.get(i), 
+					xOffset + 603, yOffset + 230 + (30 * i));
+		}
+		
 	}
 
 }

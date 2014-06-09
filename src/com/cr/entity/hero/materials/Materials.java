@@ -69,6 +69,9 @@ public class Materials implements Tickable, Renderable{
 					counter++;
 				}
 			}
+			for(int i = 0; i < Base.values().length; i++)
+				if(bases[i] != null)
+					bases[i].renderHoover(g);
 		}
 		if(activeTab == MaterialType.ESSENCES){
 			int counter = 0;
@@ -80,6 +83,9 @@ public class Materials implements Tickable, Renderable{
 					counter++;
 				}
 			}
+			for(int i = 0; i < Essences.values().length; i++)
+				if(essences[i] != null)
+					essences[i].renderHoover(g);
 		}
 		if(activeTab == MaterialType.MINERALS){
 			int counter = 0;
@@ -91,6 +97,9 @@ public class Materials implements Tickable, Renderable{
 					counter++;
 				}
 			}
+			for(int i = 0; i < Minerals.values().length; i++)
+				if(minerals[i] != null)
+					minerals[i].renderHoover(g);
 		}
 	}
 
