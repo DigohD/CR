@@ -18,6 +18,8 @@ public abstract class Pattern {
 	protected Material baseMaterial;
 	protected int baseAmount;
 	
+	protected String name;
+	
 	protected ArrayList<Material> secs = new ArrayList<Material>();
 	protected ArrayList<Integer> secsAmount = new ArrayList<Integer>();
 	
@@ -31,6 +33,8 @@ public abstract class Pattern {
 	public abstract void applyMaterial(Material material, int amount);
 	public abstract void applyBaseMaterial(Material material, int amount);
 	public abstract Item generateItem();
+	
+	public abstract String getName();
 	
 	public BufferedImage getImage(){
 		return image;

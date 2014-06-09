@@ -76,5 +76,10 @@ public class HammerPattern extends Pattern{
 		}
 		return (Hammer) item;
 	}
+
+	@Override
+	public String getName() {
+		return "Hammer";
+	}
 	
 }
