@@ -33,7 +33,6 @@ public class HammerPattern extends Pattern{
 	
 	@Override
 	public void applyMaterial(Material material, int amount){
-		System.out.println(material);
 		material.affectBase(baseMaterial, amount);
 		
 		for(Material sec : secs)
