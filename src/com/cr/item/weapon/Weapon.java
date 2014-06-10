@@ -13,7 +13,6 @@ import com.cr.util.Camera;
 public abstract class Weapon extends Item{
 	
 	protected Rectangle hitBox;
-	protected boolean rightHand;
 	protected int CDTimer, CD;
 	protected ItemObject attack;
 	
@@ -27,17 +26,6 @@ public abstract class Weapon extends Item{
 	public void tick(float dt){
 		hitBox.setLocation(x0 + (int)Camera.getCamX(), y0 + (int)Camera.getCamY());
 		CDTimer--;
-		if(rightHand && Mouse.getButton() == 1 && CDTimer < 0){
-			attack();
-			CD = (int) StatsSheet.getrHCD();
-			CDTimer = CD;
-			Mouse.resetButton();
-		}else if(!rightHand && Mouse.getButton() == 3 && CDTimer < 0){
-			attack();
-			CD = (int) StatsSheet.getlHCD();
-			CDTimer = CD;
-			Mouse.resetButton();
-		}
 		
 		tempXOffset = 0;
 		tempYOffset = 0;
@@ -46,10 +34,6 @@ public abstract class Weapon extends Item{
 			tempXOffset = (int) attack.getOffset().x;
 			tempYOffset = (int) attack.getOffset().y;
 		}
-	}
-	
-	public void setRightHand(boolean rightHand) {
-		this.rightHand = rightHand;
 	}
 
 	public Rectangle getRect(){

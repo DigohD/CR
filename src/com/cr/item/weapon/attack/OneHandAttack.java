@@ -19,6 +19,7 @@ import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.item.activation.ItemObject;
 import com.cr.item.activation.Projectile;
+import com.cr.item.weapon.Weapon;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.util.Vector2f;
@@ -28,13 +29,15 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 	private Vector2f velocity;
 	private boolean horizontal;
 	private int changeTimer, phase, width, height;
-	private boolean rightHand, spent;
+	private boolean spent;
+	private Weapon weapon;
 	
-	public OneHandAttack(Vector2f pos, boolean rightHand, int width, int height) {
+	public OneHandAttack(Vector2f pos, int width, int height, Weapon weapon) {
 		super(pos);
-		this.rightHand = rightHand;
 		this.width = width;
 		this.height = height;
+		this.weapon = weapon;
+		
 		Direction dir = Hero.currentDir;
 		switch(dir){
 			case SOUTH:
@@ -123,14 +126,7 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 			Enemy e = (Enemy) obj;
 			
 			float damage = 0;
-			if(rightHand)
-				damage = Randomizer.getFloat(StatsSheet.getrHDamageBase(), 
-								StatsSheet.getrHDamageBase() + StatsSheet.getrHDamageDice());
-			if(!rightHand)
-				damage = Randomizer.getFloat(StatsSheet.getlHDamageBase(), 
-								StatsSheet.getlHDamageBase() + StatsSheet.getlHDamageDice());
-
-			System.out.println("Damage: " + damage);
+			
 			e.setHp(e.getHp() - damage);
 			
 			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
@@ -145,14 +141,9 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 
 	@Override
 	public void updateRect() {
-		if(rightHand)
-			rect = new Rectangle((int) Hero.getRightHand().getItem().getPos().x + (int) offset.x, 
-					(int) Hero.getRightHand().getItem().getPos().y + (int) offset.y, 
-					width, height);
-		if(!rightHand)
-			rect = new Rectangle((int) Hero.getLeftHand().getItem().getPos().x + (int) offset.x, 
-					(int) Hero.getLeftHand().getItem().getPos().y + (int) offset.y, 
-					width, height);
+		rect = new Rectangle((int) Hero.getRightHand().getItem().getPos().x + (int) offset.x, 
+				(int) Hero.getRightHand().getItem().getPos().y + (int) offset.y, 
+				width, height);
 	}
 
 	@Override

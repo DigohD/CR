@@ -92,13 +92,6 @@ public class Inventory implements Tickable, Renderable{
 			if(selectedItem != null && is.isCompatible(selectedItem) && 
 					is.getItem() == null){
 				is.setItem(selectedItem);
-				if(is instanceof RightHandSlot){
-					Weapon w = (Weapon) is.getItem();
-					w.setRightHand(true);
-				}else if(is instanceof LeftHandSlot){
-					Weapon w = (Weapon) is.getItem();
-					w.setRightHand(false);
-				}
 				Display.standardCursor();
 				selectedItem = null;
 			}else if(selectedItem == null && is.getItem() != null){

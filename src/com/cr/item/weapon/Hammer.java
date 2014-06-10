@@ -38,7 +38,7 @@ public class Hammer extends Weapon{
 
 	@Override
 	public void attack() {
-		attack = new OneHandAttack(new Vector2f(x0, x1), rightHand, width, height);
+		attack = new OneHandAttack(new Vector2f(x0, x1), width, height, this);
 	}
 	
 	
