@@ -5,9 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.cr.entity.hero.StatsSheet;
+import com.cr.item.stats.AffectsDamage;
 import com.cr.item.stats.Stat;
+import com.cr.util.Randomizer;
 
-public class Damage extends Stat{
+public class Damage extends Stat implements AffectsDamage{
 
 	private float base, dice;
 	
@@ -35,6 +37,11 @@ public class Damage extends Stat{
 	}
 
 	@Override
+	public float affectDamage(float damage) {
+		return damage + (Randomizer.getFloat(base, base + dice));
+	}
+	
+	@Override
 	public void applyToSheet() {
 		
 	}
@@ -56,6 +63,8 @@ public class Damage extends Stat{
 	public float getDice() {
 		return dice;
 	}
+
+	
 	
 	
 
