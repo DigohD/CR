@@ -19,6 +19,7 @@ import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.item.activation.ItemObject;
 import com.cr.item.activation.Projectile;
+import com.cr.item.stats.AffectBearerOnHit;
 import com.cr.item.stats.AffectsDamageDone;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
@@ -138,6 +139,10 @@ public class OneHandAttack extends Projectile implements Renderable{
 				if(s instanceof AffectsDamageDone){
 					AffectsDamageDone ad = (AffectsDamageDone) s;
 					damage = ad.affectDamage(damage);
+				}
+				if(s instanceof AffectBearerOnHit){
+					AffectBearerOnHit ad = (AffectBearerOnHit) s;
+					ad.affectMob(EntityManager.getHero());
 				}
 			}
 			

@@ -7,18 +7,17 @@ import java.awt.image.BufferedImage;
 
 import com.cr.entity.Mob;
 import com.cr.entity.hero.StatsSheet;
+import com.cr.item.stats.AffectBearerOnHit;
 import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 
-public class LifeRegain extends Stat implements PassiveTicking{
+public class LifeOnHit extends Stat implements AffectBearerOnHit{
 
 	private float amount;
-	private Mob owner;
 	
-	public LifeRegain(float amount, Mob owner) {
-		super("Life Regain", new Color(180, 180, 180));
+	public LifeOnHit(float amount) {
+		super("Life On Hit", new Color(180, 180, 180));
 		this.amount = amount;
-		this.owner = owner;
 	}
 
 	public void render(Graphics2D g, int xPos, int yPos) {
@@ -48,8 +47,8 @@ public class LifeRegain extends Stat implements PassiveTicking{
 	}
 
 	@Override
-	public void tick(float dt) {
-		owner.addHealth(amount / 60);
+	public void affectMob(Mob mob) {
+		mob.addHealth(amount);
 	}
 
 }

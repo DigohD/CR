@@ -68,7 +68,7 @@ public class Hero extends Mob implements Collideable{
 		
 		StatsSheet.cleanseSheet();
 		maxHP = StatsSheet.getMaxHP();
-		currentHP = maxHP;
+		currentHP = 1;
 		
 		inventory = new Inventory();
 		materials = new Materials();
