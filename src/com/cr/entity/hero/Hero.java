@@ -16,6 +16,7 @@ import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.misc.FootPrint;
 import com.cr.input.KeyInput;
+import com.cr.input.Mouse;
 import com.cr.util.Vector2f;
 
 public class Hero extends Mob implements Collideable{
@@ -168,6 +169,12 @@ public class Hero extends Mob implements Collideable{
 		body.tick(dt);
 		rightHand.tick(dt);
 		leftHand.tick(dt);
+		
+		if(rightHand.getItem() != null && Mouse.getButton() == 1){
+			rightHand.getItem().activate();
+		}if(leftHand.getItem() != null && Mouse.getButton() == 3){
+			leftHand.getItem().activate();
+		}
 	}
 
 	@Override

@@ -145,7 +145,7 @@ public abstract class Item implements Renderable, Tickable{
 		return new Vector2f(x, y);
 	}
 	
-	
+	public abstract void activate();
 	
 	
 

@@ -68,6 +68,10 @@ public class EntityManager {
 			Enemy c = (Enemy) e;
 			CollisionManager.removeEnemy(c);
 		}
+		if(e instanceof Projectile){
+			Projectile c = (Projectile) e;
+			CollisionManager.removeProjectile(c);
+		}
 	}
 	
 	private void removeDeadEntities(){

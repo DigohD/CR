@@ -16,4 +16,9 @@ public class CopperHelm extends Head{
 		
 	}
 
+	@Override
+	public void activate() {
+		
+	}
+
 }
