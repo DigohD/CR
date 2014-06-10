@@ -5,7 +5,7 @@ import com.cr.crafting.material.Material;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.FlatDamage;
 import com.cr.item.stats.basic.MaxHP;
-import com.cr.item.stats.basic.SpeedBonus;
+import com.cr.item.stats.basic.Haste;
 
 public class Quartz extends Material{
 	
@@ -39,7 +39,7 @@ public class Quartz extends Material{
 
 	@Override
 	public Stat getOffStat(float amount){
-		return new SpeedBonus(Math.abs(curve.getFunctionValue(amount)));
+		return new Haste(Math.abs(curve.getFunctionValue(amount) * 4));
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.BasicStat;
 import com.cr.item.stats.basic.BasicStat.StatType;
 import com.cr.item.stats.basic.FlatDamage;
-import com.cr.item.stats.basic.SpeedBonus;
+import com.cr.item.stats.basic.Haste;
 import com.cr.util.Randomizer;
 
 public class StrangePowder extends Material{

@@ -1,10 +1,5 @@
 package com.cr.item;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -13,10 +8,9 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.game.Game;
+import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.StatsList;
-import com.cr.resource.ImageLoaderOld;
 import com.cr.util.Camera;
 
 public abstract class Item implements Renderable, Tickable{
@@ -93,6 +87,12 @@ public abstract class Item implements Renderable, Tickable{
 //		g.drawString(name, xOffset + 20, yOffset + 40);
 		
 		stats.render(screen, xOffset + 20, yOffset + 80);
+	}
+	
+	protected void tickPassives(float dt){
+		for(Stat s : stats.getStats())
+			if(s instanceof PassiveTicking)
+				((PassiveTicking) s).tick(dt);
 	}
 	
 	public StatsList getStats(){

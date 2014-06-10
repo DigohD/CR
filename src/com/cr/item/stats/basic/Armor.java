@@ -6,9 +6,10 @@ import java.awt.Graphics2D;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.StatsSheet;
+import com.cr.item.stats.AffectsDamageTaken;
 import com.cr.item.stats.Stat;
 
-public class Armor extends Stat{
+public class Armor extends Stat implements AffectsDamageTaken{
 
 	private float amount;
 	
@@ -43,10 +44,13 @@ public class Armor extends Stat{
 		return amount;
 	}
 
-	@Override
+
 	public void render(Screen screen, int xPos, int yPos) {
 		// TODO Auto-generated method stub
-		
+	}
+
+	public float affectDamage(float damage) {
+		return damage - amount;
 	}
 
 }

@@ -1,14 +1,13 @@
 package com.cr.item.stats.basic;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.item.stats.AffectsDamage;
+import com.cr.item.stats.AffectsDamageDone;
 import com.cr.item.stats.Stat;
 import com.cr.util.Randomizer;
 
-public class Damage extends Stat implements AffectsDamage{
+public class Damage extends Stat implements AffectsDamageDone{
 
 	private float base, dice;
 	

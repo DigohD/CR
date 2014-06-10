@@ -3,10 +3,10 @@ package com.cr.item.stats.basic;
 import java.awt.Color;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.item.stats.AffectsDamage;
+import com.cr.item.stats.AffectsDamageDone;
 import com.cr.item.stats.Stat;
 
-public class FlatDamage extends Stat implements AffectsDamage{
+public class FlatDamage extends Stat implements AffectsDamageDone{
 
 	private float base;
 	

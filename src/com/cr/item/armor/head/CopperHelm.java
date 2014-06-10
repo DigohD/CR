@@ -11,7 +11,8 @@ public class CopperHelm extends Head{
 
 	@Override
 	public void tick(float dt) {
-		
+		System.out.println("TICK COPPERHELM");
+		tickPassives(dt);
 	}
 
 	@Override

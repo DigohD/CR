@@ -1,8 +1,7 @@
 package com.cr.entity.hero;
 
-import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
@@ -15,9 +14,8 @@ import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
-import com.cr.entity.hero.misc.FootPrint;
+import com.cr.game.Game;
 import com.cr.input.KeyInput;
-import com.cr.input.Mouse;
 import com.cr.world.World;
 
 public class Hero extends Mob implements Collideable{
@@ -64,6 +62,10 @@ public class Hero extends Mob implements Collideable{
 		height = 28+19;
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		currentDir = Direction.SOUTH;
+		
+		StatsSheet.cleanseSheet();
+		maxHP = StatsSheet.getMaxHP();
+		currentHP = 1;
 		
 		inventory = new Inventory();
 		materials = new Materials();
@@ -162,8 +164,13 @@ public class Hero extends Mob implements Collideable{
 		rect.setLocation((int)position.x,(int)position.y);
 		processInput();
 
+
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
+
+		maxHP = StatsSheet.getMaxHP();
+		addHealth(0);
+		
 		move(dt);
 		
 		head.tick(dt);
@@ -171,11 +178,11 @@ public class Hero extends Mob implements Collideable{
 		rightHand.tick(dt);
 		leftHand.tick(dt);
 		
-		if(rightHand.getItem() != null && Mouse.getButton() == 1){
-			rightHand.getItem().activate();
-		}if(leftHand.getItem() != null && Mouse.getButton() == 3){
-			leftHand.getItem().activate();
-		}
+//		if(rightHand.getItem() != null && Mouse.getButton() == 1){
+//			rightHand.getItem().activate();
+//		}if(leftHand.getItem() != null && Mouse.getButton() == 3){
+//			leftHand.getItem().activate();
+//		}
 	}
 
 	@Override
@@ -208,6 +215,13 @@ public class Hero extends Mob implements Collideable{
 				leftHand.render(screen);
 				break;
 		}
+		
+//		g.setColor(Color.BLACK);
+//		g.fillRect(Game.WIDTH - 100, Game.HEIGHT - 50, 90, 40);
+//		g.setColor(Color.WHITE);
+//		String cHPS = String.format("%.1f", currentHP);
+//		String mHPS = String.format("%.1f", maxHP);
+//		g.drawString(cHPS + "/" + mHPS, Game.WIDTH - 90, Game.HEIGHT - 25);
 	}
 	
 	@Override
