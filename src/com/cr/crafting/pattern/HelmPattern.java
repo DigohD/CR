@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
 import com.cr.entity.hero.materials.Materials.Base;
+import com.cr.item.Item;
 import com.cr.item.armor.head.CopperHelm;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.Armor;
@@ -13,31 +14,24 @@ import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
 import com.cr.item.weapon.Weapon;
 
-public class HelmPattern {
-
-	public static ArrayList<Base> bases = new ArrayList<Base>();
-	
-	private static CopperHelm helm;
-	
-	private static Material baseMaterial;
-	private static int baseAmount;
-	
-	private static ArrayList<Material> secs = new ArrayList<Material>();
-	private static ArrayList<Integer> secsAmount = new ArrayList<Integer>();
+public class HelmPattern extends Pattern{
 	
 	public HelmPattern(){
-		bases.add(Base.COPPER);
+		super("helmpattern");
 	}
 	
-	public static void startNew(){
-		helm = new CopperHelm();
+	public void startNew(){
+		item = new CopperHelm();
+		bases.clear();
 		secs.clear();
 		secsAmount.clear();
 		baseMaterial = null;
 		baseAmount = 0;
+		
+		bases.add(Base.COPPER);
 	}
 	
-	public static void applyMaterial(Material material, int amount){
+	public void applyMaterial(Material material, int amount){
 		material.affectBase(baseMaterial, amount);
 		
 		for(Material sec : secs)
@@ -47,7 +41,7 @@ public class HelmPattern {
 		secsAmount.add(amount);
 	}
 	
-	public static void applyBaseMaterial(Material material, int amount){
+	public void applyBaseMaterial(Material material, int amount){
 		baseMaterial = material;
 		if(material instanceof Copper){
 			baseMaterial.getCurve().addPerMod(0.0f);
@@ -57,25 +51,28 @@ public class HelmPattern {
 		}
 	}
 	
-	public static CopperHelm getKnife(){
+	public CopperHelm generateItem(){
 		float armor = (float) (baseMaterial.getCurve().getFunctionValue(baseAmount));
-		helm.addStat(new Armor(Math.abs(armor)));
+		item.addStat(new Armor(Math.abs(armor)));
 		
 		for(int i = 0; i < secs.size(); i++){
 			Stat newStat = secs.get(i).getDefStat(secsAmount.get(i));
-			for(Stat stat : helm.getStats().getStats())
+			for(Stat stat : item.getStats().getStats())
 				if(stat.getName().equals(newStat.getName())){
 					newStat.setDuplicate(true);
 					stat.addAmount(newStat.getAmount());
 				}
 			
 			if(!newStat.isDuplicate())
-				helm.addStat(newStat);
+				item.addStat(newStat);
 		}
 			
-		return helm;
-		
-		
+		return (CopperHelm) item;
+	}
+
+	@Override
+	public String getName() {
+		return "Helm";
 	}
 	
 }

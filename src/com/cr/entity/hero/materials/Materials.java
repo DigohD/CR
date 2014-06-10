@@ -19,7 +19,7 @@ public class Materials implements Tickable, Renderable{
 	private static MaterialType activeTab;
 	
 	public enum Base {COPPER, RUGGED_CLOTH, SCRAP_WOOD};
-	public enum Essences {STRANGE_POWDER};
+	public enum Essences {STRANGE_POWDER, FOREST_SOUL};
 	public enum Minerals {PYRITE, QUARTZ};
 	
 	private static HashMap<Base, Integer> baseMap;
@@ -46,10 +46,11 @@ public class Materials implements Tickable, Renderable{
 		addBase(Base.RUGGED_CLOTH, 15);
 		addBase(Base.SCRAP_WOOD, 10);
 		
-		addEssence(Essences.STRANGE_POWDER, 20);
+		addEssence(Essences.STRANGE_POWDER, 50);
+		addEssence(Essences.FOREST_SOUL, 50);
 		
-		addMinerals(Minerals.PYRITE, 2);
-		addMinerals(Minerals.QUARTZ, 4);
+		addMinerals(Minerals.PYRITE, 50);
+		addMinerals(Minerals.QUARTZ, 50);
 	}
 	
 	@Override
@@ -106,6 +107,7 @@ public class Materials implements Tickable, Renderable{
 	public static ArrayList<Essences> getEssences() {
 		ArrayList<Essences> basics = new ArrayList<Essences>();
 		basics.add(Essences.STRANGE_POWDER);
+		basics.add(Essences.FOREST_SOUL);
 		return basics;
 	}
 	

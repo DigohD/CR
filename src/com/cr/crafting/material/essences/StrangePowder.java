@@ -14,8 +14,8 @@ public class StrangePowder extends Material{
 	private class PowderOffCurve extends Curve{
 		@Override
 		public float getFunctionValue(float x){
-			float first = (float) (1.75f*Math.sin(x));
-			float second = (float) Math.log(x);
+			float first = (float) (1.75f*ampMod*Math.sin(x*perMod));
+			float second = (float) Math.log(x*perMod);
 			float third = 0.5f;
 			return first + second + third;
 		}

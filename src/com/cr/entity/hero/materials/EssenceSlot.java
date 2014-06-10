@@ -2,6 +2,7 @@ package com.cr.entity.hero.materials;
 
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
+import com.cr.crafting.material.essences.ForestSoul;
 import com.cr.crafting.material.essences.StrangePowder;
 import com.cr.entity.hero.materials.Materials.Base;
 import com.cr.entity.hero.materials.Materials.Essences;
@@ -21,6 +22,10 @@ public class EssenceSlot extends MaterialSlot{
 			case STRANGE_POWDER:
 				materialName = "strangepowder";
 				name = "Strange Powder";
+				break;
+			case FOREST_SOUL:
+				materialName = "forestsoul";
+				name = "Forest Soul";
 				break;
 		}
 		setMaterialImage(materialName);
@@ -42,6 +47,8 @@ public class EssenceSlot extends MaterialSlot{
 		switch(type){
 			case STRANGE_POWDER:
 				return new StrangePowder();
+			case FOREST_SOUL:
+				return new ForestSoul();
 		}
 		return null;
 	}
