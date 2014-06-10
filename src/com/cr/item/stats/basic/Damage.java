@@ -49,4 +49,14 @@ public class Damage extends Stat{
 		return base;
 	}
 
+	public float getBase() {
+		return base;
+	}
+
+	public float getDice() {
+		return dice;
+	}
+	
+	
+
 }

@@ -19,12 +19,15 @@ import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.item.activation.ItemObject;
 import com.cr.item.activation.Projectile;
+import com.cr.item.stats.Stat;
+import com.cr.item.stats.basic.CoolDown;
+import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.Weapon;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.util.Vector2f;
 
-public class OneHandAttack extends Projectile implements Collideable, Renderable{
+public class OneHandAttack extends Projectile implements Renderable{
 
 	private Vector2f velocity;
 	private boolean horizontal;
@@ -37,6 +40,8 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 		this.width = width;
 		this.height = height;
 		this.weapon = weapon;
+		
+		rect = weapon.getRect();
 		
 		Direction dir = Hero.currentDir;
 		switch(dir){
@@ -65,7 +70,7 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 	@Override
 	public void tick(float dt) {
 		changeTimer++;
-		if(changeTimer > 2){
+		if(changeTimer > 3){
 			changeTimer = 0;
 			if(horizontal)
 				switch(phase){
@@ -106,6 +111,7 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 						return;
 				}
 		}
+		
 		offset = offset.add(velocity);
 		updateRect();
 	}
@@ -127,6 +133,13 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 			
 			float damage = 0;
 			
+			for(Stat s : weapon.getStats().getStats()){
+				if(s instanceof Damage){
+					Damage d = (Damage) s;
+					damage = Randomizer.getFloat(d.getBase(), d.getBase() + d.getDice());
+				}	
+			}
+			
 			e.setHp(e.getHp() - damage);
 			
 			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
@@ -136,14 +149,13 @@ public class OneHandAttack extends Projectile implements Collideable, Renderable
 			System.out.println(offset);
 			
 			spent = true;
+			live = false;
 		}
 	}
 
 	@Override
 	public void updateRect() {
-		rect = new Rectangle((int) Hero.getRightHand().getItem().getPos().x + (int) offset.x, 
-				(int) Hero.getRightHand().getItem().getPos().y + (int) offset.y, 
-				width, height);
+		rect = weapon.getRect();
 	}
 
 	@Override
