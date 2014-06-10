@@ -1,5 +1,6 @@
 package com.cr.entity.hero;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -15,6 +16,7 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.misc.FootPrint;
+import com.cr.game.Game;
 import com.cr.input.KeyInput;
 import com.cr.input.Mouse;
 import com.cr.util.Vector2f;
@@ -63,6 +65,10 @@ public class Hero extends Mob implements Collideable{
 		height = 28+19;
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		currentDir = Direction.SOUTH;
+		
+		StatsSheet.cleanseSheet();
+		maxHP = StatsSheet.getMaxHP();
+		currentHP = maxHP;
 		
 		inventory = new Inventory();
 		materials = new Materials();
@@ -161,6 +167,9 @@ public class Hero extends Mob implements Collideable{
 		rect.setLocation((int)position.x,(int)position.y);
 		processInput();
 
+		maxHP = StatsSheet.getMaxHP();
+		addHealth(0);
+		
 		velocity.x = approach(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approach(targetVel.y, velocity.y, dt*accSpeed);
 		move(dt);
@@ -207,6 +216,13 @@ public class Hero extends Mob implements Collideable{
 				leftHand.render(g);
 				break;
 		}
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(Game.WIDTH - 100, Game.HEIGHT - 50, 90, 40);
+		g.setColor(Color.WHITE);
+		String cHPS = String.format("%.1f", currentHP);
+		String mHPS = String.format("%.1f", maxHP);
+		g.drawString(cHPS + "/" + mHPS, Game.WIDTH - 90, Game.HEIGHT - 25);
 	}
 	
 	@Override

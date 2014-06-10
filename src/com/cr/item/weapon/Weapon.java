@@ -7,6 +7,7 @@ import com.cr.entity.hero.StatsSheet;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.item.activation.ItemObject;
+import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.weapon.attack.OneHandAttack;
@@ -29,6 +30,8 @@ public abstract class Weapon extends Item{
 		hitBox.setLocation(x0 + (int)Camera.getCamX(), x1 + (int)Camera.getCamY());
 		CDTimer--;
 		
+		tickPassives(dt);
+		
 		tempXOffset = 0;
 		tempYOffset = 0;
 		if(attack != null && !attack.isDead()){
@@ -49,6 +52,7 @@ public abstract class Weapon extends Item{
 		for(Stat s : stats.getStats()){
 			if(s instanceof CoolDown){
 				CD = (int) ((CoolDown) s).getAmount();
+				CD = (int) (CD - StatsSheet.getHaste());
 			}	
 		}
 		

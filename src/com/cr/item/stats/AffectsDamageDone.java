@@ -1,6 +1,6 @@
 package com.cr.item.stats;
 
-public interface AffectsDamage {
+public interface AffectsDamageDone {
 
 	public abstract float affectDamage(float damage);
 	
