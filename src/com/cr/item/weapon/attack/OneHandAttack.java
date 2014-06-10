@@ -19,6 +19,7 @@ import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.item.activation.ItemObject;
 import com.cr.item.activation.Projectile;
+import com.cr.item.stats.AffectsDamage;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
@@ -134,10 +135,10 @@ public class OneHandAttack extends Projectile implements Renderable{
 			float damage = 0;
 			
 			for(Stat s : weapon.getStats().getStats()){
-				if(s instanceof Damage){
-					Damage d = (Damage) s;
-					damage = Randomizer.getFloat(d.getBase(), d.getBase() + d.getDice());
-				}	
+				if(s instanceof AffectsDamage){
+					AffectsDamage ad = (AffectsDamage) s;
+					damage = ad.affectDamage(damage);
+				}
 			}
 			
 			e.setHp(e.getHp() - damage);

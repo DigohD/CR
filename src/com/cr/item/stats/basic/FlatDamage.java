@@ -5,9 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.cr.entity.hero.StatsSheet;
+import com.cr.item.stats.AffectsDamage;
 import com.cr.item.stats.Stat;
 
-public class FlatDamage extends Stat{
+public class FlatDamage extends Stat implements AffectsDamage{
 
 	private float base;
 	
@@ -32,6 +33,11 @@ public class FlatDamage extends Stat{
 	}
 
 	@Override
+	public float affectDamage(float damage) {
+		return damage + base;
+	}
+	
+	@Override
 	public void applyToSheet() {
 		
 	}
@@ -45,4 +51,6 @@ public class FlatDamage extends Stat{
 	public float getAmount() {
 		return base;
 	}
+
+	
 }
