@@ -36,8 +36,7 @@ public class Damage extends Stat{
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addDamageBase(base);
-		StatsSheet.addDamageDice(dice);
+		
 	}
 	
 	@Override

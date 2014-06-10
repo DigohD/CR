@@ -33,7 +33,7 @@ public class FlatDamage extends Stat{
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addDamageBase(base);
+		
 	}
 	
 	@Override

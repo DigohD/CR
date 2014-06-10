@@ -224,12 +224,6 @@ public class Hero extends Mob implements Collideable{
 		
 		StatsSheet.cleanseSheet();
 		
-		StatsSheet.setRightHand(true);
-		if(rightHand.getItem() != null)
-			rightHand.getItem().getStats().applyStats();
-		StatsSheet.setRightHand(false);
-		if(leftHand.getItem() != null)
-			leftHand.getItem().getStats().applyStats();
 		if(head.getItem() != null)
 			head.getItem().getStats().applyStats();
 	}

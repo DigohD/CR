@@ -33,7 +33,7 @@ public class CoolDown extends Stat{
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addWeaponCD(base);;
+		
 	}
 	
 	@Override
