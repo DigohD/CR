@@ -7,6 +7,7 @@ import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.BasicStat;
 import com.cr.item.stats.basic.BasicStat.StatType;
 import com.cr.item.stats.basic.FlatDamage;
+import com.cr.item.stats.regen.LifeOnHit;
 import com.cr.item.stats.regen.LifeRegain;
 import com.cr.util.Randomizer;
 
@@ -42,13 +43,13 @@ public class ForestSoul extends Material{
 
 	@Override
 	public Stat getOffStat(float amount) {
-		return null;
+		return new LifeOnHit(curve.getFunctionValue(amount) / 4);
 	}
 
 	@Override
 	public Stat getDefStat(float amount){
 		if(curve.getFunctionValue(amount) / 10 > 0)
-			return new LifeRegain(curve.getFunctionValue(amount) / 10, EntityManager.getHero());
+			return new LifeRegain(curve.getFunctionValue(amount) / 8, EntityManager.getHero());
 		else
 			return new LifeRegain(1f, EntityManager.getHero());
 	}
