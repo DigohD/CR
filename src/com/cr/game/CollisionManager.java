@@ -53,7 +53,6 @@ public class CollisionManager {
 					hero.collisionWith(e);
 				}
 			}
-			System.out.println(playerProjectiles.size());
 			for(int j = 0; j < playerProjectiles.size(); j++){
 				Projectile p = playerProjectiles.get(j);
 				if (collisionBetween(p.getRect(), e.getRect())){

@@ -6,9 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.cr.entity.hero.StatsSheet;
+import com.cr.item.stats.AffectsDamageTaken;
 import com.cr.item.stats.Stat;
 
-public class Armor extends Stat{
+public class Armor extends Stat implements AffectsDamageTaken{
 
 	private float amount;
 	
@@ -41,6 +42,11 @@ public class Armor extends Stat{
 	@Override
 	public float getAmount() {
 		return amount;
+	}
+
+	@Override
+	public float affectDamage(float damage) {
+		return damage - amount;
 	}
 
 }

@@ -68,9 +68,12 @@ public class StatsSheet {
 		statS = String.format("%.1f", armor);
 		g.drawString("Armor: ", xOffset + 20, yOffset + 240);
 		g.drawString("" + statS, xOffset + 170, yOffset + 240);
+		statS = String.format("%.1f", haste);
+		g.drawString("Haste: ", xOffset + 20, yOffset + 280);
+		g.drawString("" + statS, xOffset + 170, yOffset + 280);
 		
-		g.setFont(headerFont);
-		g.drawString("Attacks", xOffset + 320, yOffset + 60);
+//		g.setFont(headerFont);
+//		g.drawString("Attacks", xOffset + 320, yOffset + 60);
 	}
 	
 	public static void addArmor(float amount){

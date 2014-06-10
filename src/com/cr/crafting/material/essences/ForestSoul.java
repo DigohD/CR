@@ -2,11 +2,12 @@ package com.cr.crafting.material.essences;
 
 import com.cr.crafting.Curve;
 import com.cr.crafting.material.Material;
+import com.cr.game.EntityManager;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.BasicStat;
 import com.cr.item.stats.basic.BasicStat.StatType;
 import com.cr.item.stats.basic.FlatDamage;
-import com.cr.item.stats.basic.SpeedBonus;
+import com.cr.item.stats.regen.LifeRegain;
 import com.cr.util.Randomizer;
 
 public class ForestSoul extends Material{
@@ -41,14 +42,15 @@ public class ForestSoul extends Material{
 
 	@Override
 	public Stat getOffStat(float amount) {
-		
 		return null;
 	}
 
 	@Override
-	public Stat getDefStat(float amount) {
-		
-		return null;
+	public Stat getDefStat(float amount){
+		if(curve.getFunctionValue(amount) / 10 > 0)
+			return new LifeRegain(curve.getFunctionValue(amount) / 10, EntityManager.getHero());
+		else
+			return new LifeRegain(1f, EntityManager.getHero());
 	}
 
 }

@@ -12,9 +12,10 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	protected Vector2f velocity;
 	protected BufferedImage image;
 	
+	protected float maxHP, currentHP;
+	
 	public Mob(Vector2f position) {
 		super(position);
-		
 	}
 
 	protected float approach(float target, float current, float dt){
@@ -55,6 +56,12 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	@Override
 	public BufferedImage getImage() {
 		return image;
+	}
+	
+	public void addHealth(float amount){
+		currentHP = currentHP + amount;
+		if(currentHP > maxHP)
+			currentHP = maxHP;
 	}
 
 }

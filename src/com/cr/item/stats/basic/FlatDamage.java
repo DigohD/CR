@@ -5,10 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.cr.entity.hero.StatsSheet;
-import com.cr.item.stats.AffectsDamage;
+import com.cr.item.stats.AffectsDamageDone;
 import com.cr.item.stats.Stat;
 
-public class FlatDamage extends Stat implements AffectsDamage{
+public class FlatDamage extends Stat implements AffectsDamageDone{
 
 	private float base;
 	

@@ -3,6 +3,8 @@ package com.cr.item.armor.head;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.Item;
 import com.cr.item.armor.Head;
+import com.cr.item.stats.PassiveTicking;
+import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.Armor;
 
 public class CopperHelm extends Head{
@@ -13,7 +15,8 @@ public class CopperHelm extends Head{
 
 	@Override
 	public void tick(float dt) {
-		
+		System.out.println("TICK COPPERHELM");
+		tickPassives(dt);
 	}
 
 	@Override

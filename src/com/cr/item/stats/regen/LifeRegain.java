@@ -5,16 +5,20 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.cr.entity.Mob;
 import com.cr.entity.hero.StatsSheet;
+import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 
-public class LifeRegain extends Stat{
+public class LifeRegain extends Stat implements PassiveTicking{
 
 	private float amount;
+	private Mob owner;
 	
-	public LifeRegain(float amount) {
+	public LifeRegain(float amount, Mob owner) {
 		super("Life Regain", new Color(180, 180, 180));
 		this.amount = amount;
+		this.owner = owner;
 	}
 
 	public void render(Graphics2D g, int xPos, int yPos) {
@@ -39,8 +43,13 @@ public class LifeRegain extends Stat{
 	}
 	
 	@Override
-	public float getAmount() {
+	public float getAmount(){
 		return amount;
+	}
+
+	@Override
+	public void tick(float dt) {
+		owner.addHealth(amount / 60);
 	}
 
 }

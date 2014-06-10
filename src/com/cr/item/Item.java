@@ -12,6 +12,7 @@ import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.Game;
 import com.cr.item.activation.ItemObject;
+import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.StatsList;
 import com.cr.resource.ImageLoader;
@@ -105,6 +106,12 @@ public abstract class Item implements Renderable, Tickable{
 		g.drawString(name, xOffset + 20, yOffset + 40);
 		
 		stats.render(g, xOffset + 20, yOffset + 80);
+	}
+	
+	protected void tickPassives(float dt){
+		for(Stat s : stats.getStats())
+			if(s instanceof PassiveTicking)
+				((PassiveTicking) s).tick(dt);
 	}
 	
 	public StatsList getStats(){

@@ -111,6 +111,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	@Override
 	public void tick(float dt) {
 		bob.tick(dt);
+		if(item != null)
+			item.tick(dt);
 	}
 	
 	@Override
