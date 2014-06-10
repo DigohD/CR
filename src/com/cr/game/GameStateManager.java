@@ -1,10 +1,9 @@
 package com.cr.game;
 
-import java.awt.Graphics2D;
-
+import com.cr.engine.datastructure.LinkedStack;
+import com.cr.engine.datastructure.Node;
+import com.cr.engine.graphics.Screen;
 import com.cr.states.GameState;
-import com.cr.util.LinkedStack;
-import com.cr.util.Node;
 
 public class GameStateManager {
 	
@@ -47,14 +46,14 @@ public class GameStateManager {
 			tick(state.next, dt);
 	}
 	
-	public void render(Graphics2D g){
-		render(states.top, g);
+	public void render(Screen screen){
+		render(states.top, screen);
 	}
 	
-	private void render(Node<GameState> state, Graphics2D g){
+	private void render(Node<GameState> state, Screen screen){
 		if(!state.data.isRenderingBlocked())
-			render(state.next, g);
-		state.data.render(g);
+			render(state.next, screen);
+		state.data.render(screen);
 	}
 
 }

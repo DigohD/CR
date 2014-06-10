@@ -1,26 +1,24 @@
 package com.cr.entity.emitter;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.game.EntityManager;
-import com.cr.util.Camera;
-import com.cr.util.Vector2f;
 
 public class Particle extends Entity implements Tickable, Renderable{
 
 	protected Vector2f velocity;
-	protected BufferedImage image;
+	protected Sprite sprite;
 	protected int lifeTime, timeLived;
 	
-	public Particle(Vector2f position, Vector2f velocity, BufferedImage image,
+	public Particle(Vector2f position, Vector2f velocity, Sprite sprite,
 			int lifeTime) {
 		super(position);
 		this.velocity = velocity;
-		this.image = image;
+		this.sprite = sprite;
 		this.lifeTime = lifeTime;
 		EntityManager.addEntity(this);
 	}
@@ -35,14 +33,13 @@ public class Particle extends Entity implements Tickable, Renderable{
 	}
 	
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(image, (int) position.x - (int)Camera.getCamX(), 
-				(int) position.y - (int)Camera.getCamY(), null);
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, position.x, position.y);
 	}
 
 	@Override
-	public BufferedImage getImage() {
-		return image;
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	

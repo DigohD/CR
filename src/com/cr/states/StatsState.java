@@ -1,32 +1,27 @@
 package com.cr.states;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.cr.entity.hero.Hero;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.hero.StatsSheet;
-import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.ExitButton;
-import com.cr.entity.hero.inventory.Inventory;
-import com.cr.entity.hero.inventory.InventoryButton;
-import com.cr.game.EntityManager;
-import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoader;
+import com.cr.resource.ImageLoaderOld;
 
 public class StatsState extends GameState{
 
-	private BufferedImage bg = ImageLoader.getImage("inventorybg");
+	private Sprite bg = new Sprite("inventorybg");
 	private ExitButton exit;
 	
 	public StatsState(GameStateManager gsm) {
 		super(gsm);
 		blockRendering = false;
 		
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
 		exit = new ExitButton(600 + xOffset, 534 + yOffset);
 	}
@@ -63,17 +58,17 @@ public class StatsState extends GameState{
 	}
 
 	@Override
-	public void render(Graphics2D g){
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
-		g.drawImage(bg, xOffset, yOffset, null);
+	public void render(Screen screen){
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
+		screen.renderSprite(bg, xOffset, yOffset);
 		
-		StatsSheet.render(g);
+		StatsSheet.render(screen);
 		
-		exit.render(g);
+		exit.render(screen);
 //		g.setColor(Color.RED);
-//		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
-//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
+//		g.drawString("PRESS ENTER TO RESUME", Window.getWidth()/2-100, Window.getHeight()/2);
+//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Window.getWidth()/2-100, Window.getHeight()/2+30);
 	}
 
 }

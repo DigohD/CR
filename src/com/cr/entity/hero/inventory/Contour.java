@@ -1,36 +1,34 @@
 package com.cr.entity.hero.inventory;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
-import com.cr.resource.ImageLoader;
 
 public class Contour implements Renderable{
 
-	private BufferedImage image;
+	private Sprite sprite;
 	private int xPos, yPos;
 	
 	public Contour() {
-		image = ImageLoader.getImage("contour");
+		sprite = new Sprite("contour");
 		this.xPos = 460;
 		this.yPos = 30;
 	}
 	
 	public Contour(int xOffset, int yOffset) {
-		image = ImageLoader.getImage("contour");
+		sprite = new Sprite("contour");
 		this.xPos = 460 + xOffset;
 		this.yPos = 30 + yOffset;
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(image, xPos, yPos, null);
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, xPos, yPos);
 	}
 
 	@Override
-	public BufferedImage getImage() {
-		return null;
+	public Sprite getSprite() {
+		return sprite;
 	}
 	
 }

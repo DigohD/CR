@@ -2,17 +2,22 @@ package com.cr.states;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.cr.crafting.pattern.Pattern;
 import com.cr.crafting.station.CraftingStation;
 import com.cr.crafting.station.Forge;
-import com.cr.crafting.ui.*;
+import com.cr.crafting.ui.AddButton;
+import com.cr.crafting.ui.BackButton;
+import com.cr.crafting.ui.CraftButton;
+import com.cr.crafting.ui.PatternButton;
+import com.cr.crafting.ui.SliderArrow;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.inventory.*;
-import com.cr.entity.hero.materials.BaseButton;
+import com.cr.entity.hero.inventory.ExitButton;
+import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.BaseSlot;
 import com.cr.entity.hero.materials.EssenceSlot;
 import com.cr.entity.hero.materials.EssencesButton;
@@ -24,17 +29,15 @@ import com.cr.entity.hero.materials.Materials.MaterialType;
 import com.cr.entity.hero.materials.Materials.Minerals;
 import com.cr.entity.hero.materials.MineralSlot;
 import com.cr.entity.hero.materials.MineralsButton;
-import com.cr.game.EntityManager;
-import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoader;
+import com.cr.resource.ImageLoaderOld;
 
 public class CraftingState extends GameState{
 
-	private BufferedImage bg = ImageLoader.getImage("inventorybg");
-	private BufferedImage craftingbg = ImageLoader.getImage("craftingbg");
-	private BufferedImage slider = ImageLoader.getImage("slider");
+	private Sprite bg = new Sprite("inventorybg");
+	private Sprite craftingbg = new Sprite("craftingbg");
+	private Sprite slider = new Sprite("slider");
 	
 	private ExitButton exit;
 //	private BaseButton base;
@@ -73,8 +76,8 @@ public class CraftingState extends GameState{
 	
 	private boolean isCrafted;
 	
-	private int xOffset = (Game.WIDTH - 800) / 2;
-	private int yOffset = (Game.HEIGHT - 600) / 2;
+	private int xOffset = (Window.getWidth() - 800) / 2;
+	private int yOffset = (Window.getHeight() - 600) / 2;
 	
 	public CraftingState(GameStateManager gsm){
 		super(gsm);
@@ -82,8 +85,8 @@ public class CraftingState extends GameState{
 		
 		isCrafted = false;
 		
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
 //		base = new BaseButton(600 + xOffset, 378 + yOffset);
 		essences = new EssencesButton(600 + xOffset, 430 + yOffset);
@@ -105,7 +108,7 @@ public class CraftingState extends GameState{
 		station = new Forge();
 		possiblePatterns = station.getPatterns();
 		for(int i = 0; i < possiblePatterns.length; i++)
-			patterns.add(new PatternButton(xOffset + 10 + (i * 85), yOffset + 10, possiblePatterns[i].getImage(), possiblePatterns[i]));
+			patterns.add(new PatternButton(xOffset + 10 + (i * 85), yOffset + 10, possiblePatterns[i].getSprite(), possiblePatterns[i]));
 	}
 
 	@Override
@@ -266,126 +269,126 @@ public class CraftingState extends GameState{
 	}
 
 	@Override
-	public void render(Graphics2D g){
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+	public void render(Screen screen){
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
-		g.drawImage(bg, xOffset, yOffset, null);
+		screen.renderSprite(bg, xOffset, yOffset);
 		
 		if(phase == Phase.PATTERN)
-			renderPatternPhase(g);
+			renderPatternPhase(screen);
 		if(phase == Phase.BASE)
-			renderBasePhase(g);
+			renderBasePhase(screen);
 		if(phase == Phase.SECONDARIES)
-			renderSecondaryPhase(g);
+			renderSecondaryPhase(screen);
 		
 		if(phase != Phase.PATTERN){
-			Font bigFont = new Font("Tahoma", 36, 36);
-			g.setFont(bigFont);
-			g.setColor(Color.WHITE);
-			g.drawString(activePattern.getName(), 
-					xOffset + 20, yOffset - 10);
+//			Font bigFont = new Font("Tahoma", 36, 36);
+//			screen.setFont(bigFont);
+//			screen.setColor(Color.WHITE);
+//			screen.drawString(activePattern.getName(), 
+//					xOffset + 20, yOffset - 10);
 		}
 			
 //		inventory.render(g);
 //		base.render(g);
 //		essences.render(g);
 //		minerals.render(g);
-		exit.render(g);
+		exit.render(screen);
 		
 //		materials.render(g);
 //		g.setColor(Color.RED);
-//		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
-//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
+//		g.drawString("PRESS ENTER TO RESUME", Window.getWidth()/2-100, Window.getHeight()/2);
+//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Window.getWidth()/2-100, Window.getHeight()/2+30);
 	}
 	
-	private void renderPatternPhase(Graphics2D g){
+	private void renderPatternPhase(Screen screen){
 		for(PatternButton pb : patterns)
-			pb.render(g);
+			pb.render(screen);
 	}
 	
-	private void renderBasePhase(Graphics2D g){
+	private void renderBasePhase(Screen screen){
 		for(BaseSlot bs : bases)
-			bs.render(g);
+			bs.render(screen);
 		for(BaseSlot bs : bases)
-			bs.renderHoover(g);
+			bs.renderHoover(screen);
 		
-		g.drawImage(craftingbg, xOffset + 10, yOffset + 400, null);
-		g.drawImage(slider, xOffset + 23, yOffset + 470, null);
-		add.render(g);
-		back.render(g);
-		sliderArrow.render(g);
+		screen.renderSprite(craftingbg, xOffset + 10, yOffset + 400);
+		screen.renderSprite(slider, xOffset + 23, yOffset + 470);
+		add.render(screen);
+		back.render(screen);
+		sliderArrow.render(screen);
 		
-		Font headerFont = new Font("Tahoma", 24, 24);
-		g.setFont(headerFont);
-		g.setColor(Color.WHITE);
-		
-		if(chosenBase != null){
-			int amount = (int) (sliderArrow.getRatio() * Materials.getBaseAmount(chosenBase.getBaseType())) + 1;
-			g.drawString("Use " + amount + " " + chosenBase.getName(), 
-					xOffset + 23, yOffset + 450);
-		}else
-			g.drawString("Choose a base material", xOffset + 23, yOffset + 450);
+//		Font headerFont = new Font("Tahoma", 24, 24);
+//		g.setFont(headerFont);
+//		g.setColor(Color.WHITE);
+//		
+//		if(chosenBase != null){
+//			int amount = (int) (sliderArrow.getRatio() * Materials.getBaseAmount(chosenBase.getBaseType())) + 1;
+//			g.drawString("Use " + amount + " " + chosenBase.getName(), 
+//					xOffset + 23, yOffset + 450);
+//		}else
+//			g.drawString("Choose a base material", xOffset + 23, yOffset + 450);
 	}
 	
-	private void renderSecondaryPhase(Graphics2D g){
+	private void renderSecondaryPhase(Screen screen){
 		if(tab == Tab.ESSENCES){
 			for(EssenceSlot es : essence)
-				es.render(g);
+				es.render(screen);
 			for(EssenceSlot es : essence)
-				es.renderHoover(g);
+				es.renderHoover(screen);
 		}
 		if(tab == Tab.MINERALS){
 			for(MineralSlot ms : mineral)
-				ms.render(g);
+				ms.render(screen);
 			for(MineralSlot ms : mineral)
-				ms.renderHoover(g);
+				ms.renderHoover(screen);
 		}
-		g.drawImage(craftingbg, xOffset + 10, yOffset + 400, null);
-		g.drawImage(slider, xOffset + 23, yOffset + 470, null);
-		craft.render(g);
-		add.render(g);
-		back.render(g);
-		sliderArrow.render(g);
+		screen.renderSprite(craftingbg, xOffset + 10, yOffset + 400);
+		screen.renderSprite(slider, xOffset + 23, yOffset + 470);
+		craft.render(screen);
+		add.render(screen);
+		back.render(screen);
+		sliderArrow.render(screen);
 		
-		Font headerFont = new Font("Tahoma", 24, 24);
-		Font subFont = new Font("Tahoma", 18, 18);
-		g.setFont(headerFont);
-		g.setColor(Color.WHITE);
+//		Font headerFont = new Font("Tahoma", 24, 24);
+//		Font subFont = new Font("Tahoma", 18, 18);
+//		g.setFont(headerFont);
+//		g.setColor(Color.WHITE);
 		
-		essences.render(g);
-		minerals.render(g);
-		if(tab == Tab.ESSENCES){
-			if(chosenMat != null){
-				int amount = (int) (sliderArrow.getRatio() * materials.getAmount(chosenMat)) + 1;
-				g.drawString("Use " + amount + " " + chosenMat.getName(), 
-						xOffset + 23, yOffset + 450);
-			}else
-				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
-		}else if(tab == Tab.MINERALS){
-			if(chosenMat != null){
-				int amount = (int) (sliderArrow.getRatio() * materials.getAmount(chosenMat)) + 1;
-				g.drawString("Use " + amount + " " + chosenMat.getName(), 
-						xOffset + 23, yOffset + 450);
-			}else
-				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
-		}
-		
-		g.setFont(headerFont);
-		g.drawString("Base", 
-				xOffset + 603, yOffset + 100);
-		g.setFont(subFont);
-		g.drawString(chosenBase.getName() + ": " + baseAmount, 
-				xOffset + 603, yOffset + 130);
-		
-		for(int i = 0; i < mats.size(); i++){
-			g.setFont(headerFont);
-			g.drawString("Additional", 
-					xOffset + 603, yOffset + 200);
-			g.setFont(subFont);
-			g.drawString(mats.get(i).getName() + ": " + matsAmounts.get(i), 
-					xOffset + 603, yOffset + 230 + (30 * i));
-		}
+		essences.render(screen);
+		minerals.render(screen);
+//		if(tab == Tab.ESSENCES){
+//			if(chosenMat != null){
+//				int amount = (int) (sliderArrow.getRatio() * materials.getAmount(chosenMat)) + 1;
+//				g.drawString("Use " + amount + " " + chosenMat.getName(), 
+//						xOffset + 23, yOffset + 450);
+//			}else
+//				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
+//		}else if(tab == Tab.MINERALS){
+//			if(chosenMat != null){
+//				int amount = (int) (sliderArrow.getRatio() * materials.getAmount(chosenMat)) + 1;
+//				g.drawString("Use " + amount + " " + chosenMat.getName(), 
+//						xOffset + 23, yOffset + 450);
+//			}else
+//				g.drawString("Choose an additional material", xOffset + 23, yOffset + 450);
+//		}
+//		
+//		g.setFont(headerFont);
+//		g.drawString("Base", 
+//				xOffset + 603, yOffset + 100);
+//		g.setFont(subFont);
+//		g.drawString(chosenBase.getName() + ": " + baseAmount, 
+//				xOffset + 603, yOffset + 130);
+//		
+//		for(int i = 0; i < mats.size(); i++){
+//			g.setFont(headerFont);
+//			g.drawString("Additional", 
+//					xOffset + 603, yOffset + 200);
+//			g.setFont(subFont);
+//			g.drawString(mats.get(i).getName() + ": " + matsAmounts.get(i), 
+//					xOffset + 603, yOffset + 230 + (30 * i));
+//		}
 		
 	}
 

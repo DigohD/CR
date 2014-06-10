@@ -2,8 +2,8 @@ package com.cr.item.activation;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.entity.Collideable;
-import com.cr.util.Vector2f;
 
 public abstract class Projectile extends ItemObject implements Collideable{
 	

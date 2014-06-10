@@ -1,8 +1,6 @@
 package com.cr.entity.hero.body;
 
-import com.cr.entity.hero.anim.BodyBob;
 import com.cr.entity.hero.anim.RightHandBob;
-import com.cr.item.weapon.Hammer;
 import com.cr.item.weapon.Weapon;
 
 public class RightHand extends PlayerPart{

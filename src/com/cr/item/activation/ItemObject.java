@@ -1,9 +1,8 @@
 package com.cr.item.activation;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.entity.Entity;
 import com.cr.entity.Tickable;
-import com.cr.entity.hero.body.PlayerPart;
-import com.cr.util.Vector2f;
 
 public abstract class ItemObject extends Entity implements Tickable{
 

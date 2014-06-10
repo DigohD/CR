@@ -1,12 +1,10 @@
 package com.cr.entity;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 
 public interface Renderable {
 	
-	public void render(Graphics2D g);
-	public BufferedImage getImage();
-	
+	public void render(Screen screen);
+	public Sprite getSprite();
 }

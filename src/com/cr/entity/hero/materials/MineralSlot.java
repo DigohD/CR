@@ -1,22 +1,19 @@
 package com.cr.entity.hero.materials;
 
 import com.cr.crafting.material.Material;
-import com.cr.crafting.material.essences.StrangePowder;
 import com.cr.crafting.material.minerals.Pyrite;
 import com.cr.crafting.material.minerals.Quartz;
-import com.cr.entity.hero.materials.Materials.Base;
-import com.cr.entity.hero.materials.Materials.Essences;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.hero.materials.Materials.Minerals;
-import com.cr.game.Game;
-import com.cr.resource.ImageLoader;
 
 public class MineralSlot extends MaterialSlot{
 
 	private Minerals type;
 	
 	public MineralSlot(int xIndex, int yIndex, Minerals type) {
-		super(xIndex * 52 + ((Game.WIDTH - 800) / 2) + 10, 
-				yIndex * 52 + ((Game.HEIGHT - 600) / 2) + 10);
+		super(xIndex * 52 + ((Window.getWidth() - 800) / 2) + 10, 
+				yIndex * 52 + ((Window.getHeight() - 600) / 2) + 10);
 		String materialName = null;
 		this.type = type;
 		switch(type){
@@ -34,7 +31,7 @@ public class MineralSlot extends MaterialSlot{
 
 	@Override
 	public void setMaterialImage(String imageName) {
-		materialImage = ImageLoader.getImage(imageName);
+		materialSprite = new Sprite(imageName);
 	}
 
 	public Minerals getType() {

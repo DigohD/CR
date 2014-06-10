@@ -3,8 +3,12 @@ package com.cr.world.tile;
 public class WaterTile extends Tile{
 
 	public WaterTile() {
-		super("water");
-		
+		super();
+		row = 0f;
+		col = 2f;
+		walkable = false;
 	}
+
+	
 
 }

@@ -1,35 +1,29 @@
 package com.cr.crafting.ui;
 
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.input.Mouse;
-import com.cr.resource.ImageLoader;
 
 public class BackButton extends Button implements Renderable{
 
-	private BufferedImage image;
+	private Sprite sprite;
 	private int xPos, yPos;
 	private boolean isClicked;
 	
 	public BackButton(int xPos, int yPos) {
 		super(new Rectangle(xPos, yPos, 130, 48));
-		image = ImageLoader.getImage("backbutton");
+		sprite = new Sprite("backbutton");
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(image, xPos, yPos, null);
-	}
-
-	@Override
-	public BufferedImage getImage() {
-		return null;
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, xPos, yPos);
 	}
 
 	@Override
@@ -44,6 +38,11 @@ public class BackButton extends Button implements Renderable{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	

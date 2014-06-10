@@ -1,15 +1,16 @@
 package com.cr.game;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cr.engine.graphics.Screen;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.item.activation.Projectile;
+import com.cr.world.World;
 
 public class EntityManager {
 	
@@ -20,13 +21,13 @@ public class EntityManager {
 	
 	private static Hero hero;
 	
-	public EntityManager(){
+	public EntityManager(World world){
 		tickableEntities = new ArrayList<Tickable>();
 		teToAdd = new ArrayList<Tickable>();
 		renderableEntities = new ArrayList<Renderable>();
 		deToAdd = new ArrayList<Renderable>();
 		
-		hero = new Hero();
+		hero = new Hero(world);
 	}
 	
 	public static void clear(){
@@ -105,11 +106,11 @@ public class EntityManager {
 			hero.tick(dt);
 	}
 	
-	public void render(Graphics2D g){
+	public void render(Screen screen){
 		for(Renderable r : renderableEntities)
-			r.render(g);
+			r.render(screen);
 		if(hero.isLive())
-			hero.render(g);
+			hero.render(screen);
 	}
 
 	public static Hero getHero() {

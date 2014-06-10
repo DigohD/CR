@@ -1,22 +1,17 @@
 package com.cr.entity.hero.body;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.entity.hero.anim.Bob;
-import com.cr.entity.hero.anim.HeadBob;
 import com.cr.item.Item;
-import com.cr.item.weapon.Hammer;
-import com.cr.resource.ImageLoader;
-import com.cr.util.Camera;
 
 public abstract class PlayerPart implements Renderable, Tickable{
 
-	protected BufferedImage image;
+	protected Sprite sprite;
 	protected Bob bob;
 	
 	protected Item item;
@@ -25,10 +20,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	protected int horXOffset, vertXOffset, xOffset, yOffset;
 	
 	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset){
-		image = ImageLoader.getImage(imageString);
+		sprite = new Sprite(imageString);
 		
-		width = image.getWidth() / 4;
-		height = image.getHeight();
+		width = sprite.getWidth() / 4;
+		height = sprite.getHeight();
 		
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
@@ -38,7 +33,7 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	}
 	
 	@Override
-	public void render(Graphics2D g){
+	public void render(Screen screen){
 		int x = (int) Hero.position.x;
 		int y = (int) Hero.position.y;
 		
@@ -69,43 +64,15 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		int drawY = y + (int)bob.getOffset().y + yOffset;
 		
 		if(item != null && item.renderPrePart(dir))
-			item.render(g, drawX, drawY, spriteID);
+			item.render(screen, drawX, drawY, spriteID);
 		
 		if(item != null)
-			g.drawImage(image,
-				// Define position
-				drawX + item.getTempXOffset() - (int)Camera.getCamX(),
-				drawY + item.getTempYOffset()- (int)Camera.getCamY(),
-				drawX + item.getTempXOffset() + width - (int)Camera.getCamX(),
-				drawY + item.getTempYOffset() + height - (int)Camera.getCamY(),
-				
-				//Define Sprite
-				spriteID * width, 
-				0, 
-				(spriteID * width) + width, 
-				height, 
-				
-				// No ImageObserver
-				null);
+			screen.renderSprite(sprite, drawX + item.getTempXOffset(), drawY + item.getTempYOffset(), 0, spriteID);
 		else
-			g.drawImage(image,
-					// Define position
-					drawX - (int)Camera.getCamX(),
-					drawY  - (int)Camera.getCamY(),
-					drawX + width - (int)Camera.getCamX(),
-					drawY + height - (int)Camera.getCamY(),
-					
-					//Define Sprite
-					spriteID * width, 
-					0, 
-					(spriteID * width) + width, 
-					height, 
-					
-					// No ImageObserver
-					null);
+			screen.renderSprite(sprite, drawX,drawY, 0, spriteID);
 		
 		if(item != null && !item.renderPrePart(dir))
-			item.render(g, drawX, drawY, spriteID);
+			item.render(screen, drawX, drawY, spriteID);
 	}
 	
 	@Override
@@ -114,8 +81,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	}
 	
 	@Override
-	public BufferedImage getImage() {
-		return image;
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	public Bob getBob() {

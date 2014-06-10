@@ -1,18 +1,17 @@
 package com.cr.crafting.ui;
 
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
-import com.cr.game.Game;
 import com.cr.input.Mouse;
-import com.cr.resource.ImageLoader;
 
 public class SliderArrow extends Button implements Renderable{
 
-	private BufferedImage image;
+	private Sprite sprite;
 	private int xPos, yPos;
 	private boolean isClicked;
 	private float ratio;
@@ -20,26 +19,26 @@ public class SliderArrow extends Button implements Renderable{
 	
 	public SliderArrow(int xPos, int yPos) {
 		super(new Rectangle(xPos - 20, yPos, 80, 34));
-		image = ImageLoader.getImage("sliderarrow");
+		sprite = new Sprite("sliderarrow");
 		this.xPos = xPos;
 		this.yPos = yPos;
 		resetsButton = false;
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(image, xPos, yPos, null);
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, xPos, yPos);
 	}
 
 	@Override
-	public BufferedImage getImage() {
-		return null;
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	@Override
 	public void clicked() {
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
 		isClicked = true;
 		if(Mouse.getX() < xOffset + 565 && Mouse.getX() > xOffset + 35){

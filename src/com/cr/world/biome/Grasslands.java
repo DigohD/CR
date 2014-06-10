@@ -1,10 +1,10 @@
 package com.cr.world.biome;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import com.cr.util.ColorRGBA;
+import com.cr.engine.core.Transform;
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.util.Randomizer;
 import com.cr.world.TileLayer;
 import com.cr.world.tile.DirtTile;
@@ -14,6 +14,7 @@ import com.cr.world.tile.StoneTile;
 import com.cr.world.tile.WaterTile;
 
 public class Grasslands{
+	
 	private final float LAKE_WEIGHT = 1.8f, LAKE_LOSS = 0.05f;
 	private final int LAKE_COUNT = 3;
 	
@@ -28,10 +29,14 @@ public class Grasslands{
 	
 	private TileLayer bottomLayer, middleLayer, topLayer;
 	
-	public Grasslands(){
-		bottomLayer = new TileLayer(100, 100);
-		middleLayer = new TileLayer(100, 100);
-		topLayer = new TileLayer(100, 100);
+	private int width, height;
+	
+	public Grasslands(int width, int height){
+		this.width = width;
+		this.height = height;
+		bottomLayer = new TileLayer(width, height);
+		middleLayer = new TileLayer(width, height);
+		topLayer    = new TileLayer(width, height);
 		
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
 		bottomLayer.addTileType(ColorRGBA.GRAY, new StoneTile());
@@ -42,26 +47,24 @@ public class Grasslands{
 		
 		topLayer.addTileType(ColorRGBA.GREEN, new GrassTile());
 		
-		generateLakes(100, 100);
-		
-		generateSand(100, 100);
-		generateDirt(100, 100);
-		
-		generateGrass(100, 100);
+		generateLakes(width, height);
+		generateSand(width, height);
+		generateDirt(width, height);
+		generateGrass(width, height);
 		
 		fillLayers();
 	}
 	
 	private void fillLayers() {
-		int bottomPixels[] = bottomLayer.getPixels();
+		int bottomPixels[] = bottomLayer.getBitmap().getPixels();
 		for(int i = 0; i < bottomPixels.length; i++)
 			if(bottomPixels[i] == 0)
-				bottomLayer.addTile(i % 100, i / 100, ColorRGBA.GRAY);
+				bottomLayer.setTile(i % width, i / height, ColorRGBA.GRAY);
 		
-		int middlePixels[] = middleLayer.getPixels();
+		int middlePixels[] = middleLayer.getBitmap().getPixels();
 		for(int i = 0; i < middlePixels.length; i++)
 			if(middlePixels[i] == 0 && bottomPixels[i] != ColorRGBA.BLUE)
-				middleLayer.addTile(i % 100, i / 100, ColorRGBA.GRAY);
+				middleLayer.setTile(i % width, i / height, ColorRGBA.GRAY);
 	}
 
 	private void generateLakes(int worldWidth, int worldHeight){
@@ -74,7 +77,7 @@ public class Grasslands{
 			Point pos = new Point(x, y);
 			centers.add(pos);
 //			addEntity(pos, new WaterTile(x, y));
-			bottomLayer.addTile(x, y, ColorRGBA.BLUE);
+			bottomLayer.setTile(x, y, ColorRGBA.BLUE);
 		}
 		
 		//weight and loss defines the sizes of lakes
@@ -89,20 +92,20 @@ public class Grasslands{
 			while(!lakeDone){
 				ArrayList<Point> newWater = new ArrayList<Point>();
 				for(Point p : oldWater){
-					if(Randomizer.getFloat() < weight && p.x != 0 && !(bottomLayer.getTileColor(p.x - 1, p.y) == ColorRGBA.BLUE)){
-						bottomLayer.addTile(p.x - 1, p.y, ColorRGBA.BLUE);
+					if(Randomizer.getFloat() < weight && p.x != 0 && !(bottomLayer.getTileID(p.x - 1, p.y) == ColorRGBA.BLUE)){
+						bottomLayer.setTile(p.x - 1, p.y, ColorRGBA.BLUE);
 						newWater.add(new Point(p.x-1, p.y));
 					}
-					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(bottomLayer.getTileColor(p.x + 1, p.y) == ColorRGBA.BLUE)){
-						bottomLayer.addTile(p.x + 1, p.y, ColorRGBA.BLUE);
+					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(bottomLayer.getTileID(p.x + 1, p.y) == ColorRGBA.BLUE)){
+						bottomLayer.setTile(p.x + 1, p.y, ColorRGBA.BLUE);
 						newWater.add(new Point(p.x+1, p.y));
 					}	
-					if(Randomizer.getFloat() < weight  && p.y != 0 && !(bottomLayer.getTileColor(p.x, p.y - 1) == ColorRGBA.BLUE)){
-						bottomLayer.addTile(p.x, p.y - 1, ColorRGBA.BLUE);
+					if(Randomizer.getFloat() < weight  && p.y != 0 && !(bottomLayer.getTileID(p.x, p.y - 1) == ColorRGBA.BLUE)){
+						bottomLayer.setTile(p.x, p.y - 1, ColorRGBA.BLUE);
 						newWater.add(new Point(p.x, p.y-1));
 					}
-					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(bottomLayer.getTileColor(p.x, p.y + 1) == ColorRGBA.BLUE)){
-						bottomLayer.addTile(p.x, p.y + 1, ColorRGBA.BLUE);
+					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(bottomLayer.getTileID(p.x, p.y + 1) == ColorRGBA.BLUE)){
+						bottomLayer.setTile(p.x, p.y + 1, ColorRGBA.BLUE);
 						newWater.add(new Point(p.x, p.y+1));
 					}
 				}
@@ -123,8 +126,8 @@ public class Grasslands{
 			int x = Randomizer.getInt(0, worldWidth);
 			int y = Randomizer.getInt(0, worldHeight);
 			Point pos = new Point(x, y);
-			if(bottomLayer.getTileColor(x, y) != ColorRGBA.BLUE){
-				middleLayer.addTile(x, y, ColorRGBA.BROWN);
+			if(bottomLayer.getTileID(x, y) != ColorRGBA.BLUE){
+				middleLayer.setTile(x, y, ColorRGBA.BROWN);
 				centers.add(pos);
 			}else
 				i--;
@@ -142,27 +145,27 @@ public class Grasslands{
 			while(!dirtDone){
 				ArrayList<Point> newDirt = new ArrayList<Point>();
 				for(Point p : oldDirt){
-					if(Randomizer.getFloat() < weight && p.x != 0 && !(middleLayer.getTileColor(p.x - 1, p.y) == ColorRGBA.BROWN)){
-						if(bottomLayer.getTileColor(p.x - 1, p.y) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x - 1, p.y, ColorRGBA.BROWN);
+					if(Randomizer.getFloat() < weight && p.x != 0 && !(middleLayer.getTileID(p.x - 1, p.y) == ColorRGBA.BROWN)){
+						if(bottomLayer.getTileID(p.x - 1, p.y) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x - 1, p.y, ColorRGBA.BROWN);
 							newDirt.add(new Point(p.x-1, p.y));
 						}
 					}
-					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(middleLayer.getTileColor(p.x + 1, p.y) == ColorRGBA.BROWN)){
-						if(bottomLayer.getTileColor(p.x + 1, p.y) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x + 1, p.y, ColorRGBA.BROWN);
+					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(middleLayer.getTileID(p.x + 1, p.y) == ColorRGBA.BROWN)){
+						if(bottomLayer.getTileID(p.x + 1, p.y) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x + 1, p.y, ColorRGBA.BROWN);
 							newDirt.add(new Point(p.x+1, p.y));
 						}
 					}	
-					if(Randomizer.getFloat() < weight  && p.y != 0 && !(middleLayer.getTileColor(p.x, p.y - 1) == ColorRGBA.BROWN)){
-						if(bottomLayer.getTileColor(p.x, p.y - 1) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x, p.y - 1, ColorRGBA.BROWN);
+					if(Randomizer.getFloat() < weight  && p.y != 0 && !(middleLayer.getTileID(p.x, p.y - 1) == ColorRGBA.BROWN)){
+						if(bottomLayer.getTileID(p.x, p.y - 1) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x, p.y - 1, ColorRGBA.BROWN);
 							newDirt.add(new Point(p.x, p.y-1));
 						}
 					}
-					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(middleLayer.getTileColor(p.x, p.y + 1) == ColorRGBA.BROWN)){
-						if(bottomLayer.getTileColor(p.x, p.y + 1) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x, p.y + 1, ColorRGBA.BROWN);
+					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(middleLayer.getTileID(p.x, p.y + 1) == ColorRGBA.BROWN)){
+						if(bottomLayer.getTileID(p.x, p.y + 1) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x, p.y + 1, ColorRGBA.BROWN);
 							newDirt.add(new Point(p.x, p.y+1));
 						}
 					}
@@ -184,8 +187,8 @@ public class Grasslands{
 			int x = Randomizer.getInt(0, worldWidth);
 			int y = Randomizer.getInt(0, worldHeight);
 			Point pos = new Point(x, y);
-			if(bottomLayer.getTileColor(x, y) != ColorRGBA.BLUE){
-				middleLayer.addTile(x, y, ColorRGBA.YELLOW);
+			if(bottomLayer.getTileID(x, y) != ColorRGBA.BLUE){
+				middleLayer.setTile(x, y, ColorRGBA.YELLOW);
 				centers.add(pos);
 			}else
 				i--;
@@ -203,27 +206,27 @@ public class Grasslands{
 			while(!sandDone){
 				ArrayList<Point> newSand = new ArrayList<Point>();
 				for(Point p : oldSand){
-					if(Randomizer.getFloat() < weight && p.x != 0 && !(middleLayer.getTileColor(p.x - 1, p.y) == ColorRGBA.YELLOW)){
-						if(bottomLayer.getTileColor(p.x - 1, p.y) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x - 1, p.y, ColorRGBA.YELLOW);
+					if(Randomizer.getFloat() < weight && p.x != 0 && !(middleLayer.getTileID(p.x - 1, p.y) == ColorRGBA.YELLOW)){
+						if(bottomLayer.getTileID(p.x - 1, p.y) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x - 1, p.y, ColorRGBA.YELLOW);
 							newSand.add(new Point(p.x-1, p.y));
 						}
 					}
-					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(middleLayer.getTileColor(p.x + 1, p.y) == ColorRGBA.YELLOW)){
-						if(bottomLayer.getTileColor(p.x + 1, p.y) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x + 1, p.y, ColorRGBA.YELLOW);
+					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(middleLayer.getTileID(p.x + 1, p.y) == ColorRGBA.YELLOW)){
+						if(bottomLayer.getTileID(p.x + 1, p.y) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x + 1, p.y, ColorRGBA.YELLOW);
 							newSand.add(new Point(p.x+1, p.y));
 						}
 					}	
-					if(Randomizer.getFloat() < weight  && p.y != 0 && !(middleLayer.getTileColor(p.x, p.y - 1) == ColorRGBA.YELLOW)){
-						if(bottomLayer.getTileColor(p.x, p.y - 1) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x, p.y - 1, ColorRGBA.YELLOW);
+					if(Randomizer.getFloat() < weight  && p.y != 0 && !(middleLayer.getTileID(p.x, p.y - 1) == ColorRGBA.YELLOW)){
+						if(bottomLayer.getTileID(p.x, p.y - 1) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x, p.y - 1, ColorRGBA.YELLOW);
 							newSand.add(new Point(p.x, p.y-1));
 						}
 					}
-					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(middleLayer.getTileColor(p.x, p.y + 1) == ColorRGBA.YELLOW)){
-						if(bottomLayer.getTileColor(p.x, p.y + 1) != ColorRGBA.BLUE){
-							middleLayer.addTile(p.x, p.y + 1, ColorRGBA.YELLOW);
+					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(middleLayer.getTileID(p.x, p.y + 1) == ColorRGBA.YELLOW)){
+						if(bottomLayer.getTileID(p.x, p.y + 1) != ColorRGBA.BLUE){
+							middleLayer.setTile(p.x, p.y + 1, ColorRGBA.YELLOW);
 							newSand.add(new Point(p.x, p.y+1));
 						}
 					}
@@ -245,8 +248,8 @@ public class Grasslands{
 			int x = Randomizer.getInt(0, worldWidth);
 			int y = Randomizer.getInt(0, worldHeight);
 			Point pos = new Point(x, y);
-			if(middleLayer.getTileColor(x, y) == ColorRGBA.BROWN){
-				topLayer.addTile(x, y, ColorRGBA.GREEN);
+			if(middleLayer.getTileID(x, y) == ColorRGBA.BROWN){
+				topLayer.setTile(x, y, ColorRGBA.GREEN);
 				centers.add(pos);
 			}else
 				i--;
@@ -264,27 +267,27 @@ public class Grasslands{
 			while(!grassDone){
 				ArrayList<Point> newGrass = new ArrayList<Point>();
 				for(Point p : oldGrass){
-					if(Randomizer.getFloat() < weight && p.x != 0 && !(topLayer.getTileColor(p.x - 1, p.y) == ColorRGBA.GREEN)){
-						if(middleLayer.getTileColor(p.x - 1, p.y) == ColorRGBA.BROWN){
-							topLayer.addTile(p.x - 1, p.y, ColorRGBA.GREEN);
+					if(Randomizer.getFloat() < weight && p.x != 0 && !(topLayer.getTileID(p.x - 1, p.y) == ColorRGBA.GREEN)){
+						if(middleLayer.getTileID(p.x - 1, p.y) == ColorRGBA.BROWN){
+							topLayer.setTile(p.x - 1, p.y, ColorRGBA.GREEN);
 							newGrass.add(new Point(p.x-1, p.y));
 						}
 					}
-					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(topLayer.getTileColor(p.x + 1, p.y) == ColorRGBA.GREEN)){
-						if(middleLayer.getTileColor(p.x + 1, p.y) == ColorRGBA.BROWN){
-							topLayer.addTile(p.x + 1, p.y, ColorRGBA.GREEN);
+					if(Randomizer.getFloat() < weight  && p.x != worldWidth-1 && !(topLayer.getTileID(p.x + 1, p.y) == ColorRGBA.GREEN)){
+						if(middleLayer.getTileID(p.x + 1, p.y) == ColorRGBA.BROWN){
+							topLayer.setTile(p.x + 1, p.y, ColorRGBA.GREEN);
 							newGrass.add(new Point(p.x+1, p.y));
 						}
 					}	
-					if(Randomizer.getFloat() < weight  && p.y != 0 && !(topLayer.getTileColor(p.x, p.y - 1) == ColorRGBA.GREEN)){
-						if(middleLayer.getTileColor(p.x, p.y - 1) == ColorRGBA.BROWN){
-							topLayer.addTile(p.x, p.y - 1, ColorRGBA.GREEN);
+					if(Randomizer.getFloat() < weight  && p.y != 0 && !(topLayer.getTileID(p.x, p.y - 1) == ColorRGBA.GREEN)){
+						if(middleLayer.getTileID(p.x, p.y - 1) == ColorRGBA.BROWN){
+							topLayer.setTile(p.x, p.y - 1, ColorRGBA.GREEN);
 							newGrass.add(new Point(p.x, p.y-1));
 						}
 					}
-					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(topLayer.getTileColor(p.x, p.y + 1) == ColorRGBA.GREEN)){
-						if(middleLayer.getTileColor(p.x, p.y + 1) == ColorRGBA.BROWN){
-							topLayer.addTile(p.x, p.y + 1, ColorRGBA.GREEN);
+					if(Randomizer.getFloat() < weight  && p.y != worldHeight-1 && !(topLayer.getTileID(p.x, p.y + 1) == ColorRGBA.GREEN)){
+						if(middleLayer.getTileID(p.x, p.y + 1) == ColorRGBA.BROWN){
+							topLayer.setTile(p.x, p.y + 1, ColorRGBA.GREEN);
 							newGrass.add(new Point(p.x, p.y+1));
 						}
 					}

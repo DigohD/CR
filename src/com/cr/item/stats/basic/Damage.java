@@ -2,9 +2,8 @@ package com.cr.item.stats.basic;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
 
-import com.cr.entity.hero.StatsSheet;
+import com.cr.engine.graphics.Screen;
 import com.cr.item.stats.AffectsDamage;
 import com.cr.item.stats.Stat;
 import com.cr.util.Randomizer;
@@ -20,20 +19,20 @@ public class Damage extends Stat implements AffectsDamage{
 	}
 
 	@Override
-	public void render(Graphics2D g, int xPos, int yPos) {
-		float maximum = base + dice;
-		
-		Font font = new Font("Tahoma", 14, 14);
-		g.setFont(font);
-		
-		String baseS = String.format("%.1f", base);
-		String maximumS = String.format("%.1f", maximum);
-		g.setColor(Color.BLACK);
-		g.drawString("" + name + ": " + baseS + " - " + maximumS, 
-				xPos - 1, yPos - 1);
-		g.setColor(color);
-		g.drawString("" + name + ": " + baseS + " - " + maximumS, 
-				xPos, yPos);
+	public void render(Screen screen, int xPos, int yPos) {
+//		float maximum = base + dice;
+//		
+//		Font font = new Font("Tahoma", 14, 14);
+//		g.setFont(font);
+//		
+//		String baseS = String.format("%.1f", base);
+//		String maximumS = String.format("%.1f", maximum);
+//		g.setColor(Color.BLACK);
+//		g.drawString("" + name + ": " + baseS + " - " + maximumS, 
+//				xPos - 1, yPos - 1);
+//		g.setColor(color);
+//		g.drawString("" + name + ": " + baseS + " - " + maximumS, 
+//				xPos, yPos);
 	}
 
 	@Override

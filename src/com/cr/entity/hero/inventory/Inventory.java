@@ -1,24 +1,11 @@
 package com.cr.entity.hero.inventory;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import com.cr.crafting.material.base.Copper;
-import com.cr.crafting.material.essences.StrangePowder;
-import com.cr.crafting.material.minerals.Pyrite;
-import com.cr.crafting.material.minerals.Quartz;
-import com.cr.crafting.pattern.HammerPattern;
-import com.cr.crafting.pattern.HelmPattern;
-import com.cr.crafting.pattern.KnifePattern;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
-import com.cr.game.Display;
-import com.cr.game.Game;
 import com.cr.item.Item;
-import com.cr.item.armor.head.CopperHelm;
-import com.cr.item.weapon.Hammer;
-import com.cr.item.weapon.CopperKnife;
-import com.cr.item.weapon.Weapon;
 
 public class Inventory implements Tickable, Renderable{
 
@@ -33,8 +20,8 @@ public class Inventory implements Tickable, Renderable{
 	private static Item selectedItem;
 	
 	public Inventory(){
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
 		for(int i = 0; i < 11; i++)
 			for(int j = 0; j < 3; j++)
@@ -54,24 +41,24 @@ public class Inventory implements Tickable, Renderable{
 	}
 	
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Screen screen) {
 		for(int i = 0; i < 11; i++)
 			for(int j = 0; j < 3; j++)
-				inventory[i][j].render(g);
+				inventory[i][j].render(screen);
 		
 //		b1.render(g);
 //		b2.render(g);
 //		b3.render(g);
 		
-		contour.render(g);
+		contour.render(screen);
 		
-		rHSlot.render(g);
-		lHSlot.render(g);
-		headSlot.render(g);
+		rHSlot.render(screen);
+		lHSlot.render(screen);
+		headSlot.render(screen);
 	}
 
 	@Override
-	public BufferedImage getImage() {
+	public Sprite getSprite() {
 		return null;
 	}
 
@@ -92,11 +79,11 @@ public class Inventory implements Tickable, Renderable{
 			if(selectedItem != null && is.isCompatible(selectedItem) && 
 					is.getItem() == null){
 				is.setItem(selectedItem);
-				Display.standardCursor();
+				//Display.standardCursor();
 				selectedItem = null;
 			}else if(selectedItem == null && is.getItem() != null){
 				selectedItem = is.getItem();
-				Display.setCursor(selectedItem.getIconImage());
+				//Display.setCursor(selectedItem.getIconImage());
 				is.setItem(null);
 			}
 		}

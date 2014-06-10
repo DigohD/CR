@@ -1,7 +1,8 @@
 package com.cr.item.stats;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
+
+import com.cr.engine.graphics.Screen;
 
 public class StatsList{
 
@@ -11,9 +12,9 @@ public class StatsList{
 		stats.add(stat);
 	}
 	
-	public void render(Graphics2D g, int xOff, int yOff){
+	public void render(Screen screen, int xOff, int yOff){
 		for(Stat stat : stats){
-			stat.render(g, xOff, yOff);
+			stat.render(screen, xOff, yOff);
 			yOff = yOff + 20;
 		}
 	}

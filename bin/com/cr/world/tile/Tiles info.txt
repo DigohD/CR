@@ -1,3 +1,0 @@
-Tiles are drawn with an offset off x: -7 y: -5
-
-Each tile is width: 46 height: 30

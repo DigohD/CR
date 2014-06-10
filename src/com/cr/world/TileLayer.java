@@ -1,124 +1,166 @@
 package com.cr.world;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import com.cr.game.Game;
-import com.cr.util.LinkedStack;
-import com.cr.util.Randomizer;
+import com.cr.engine.core.Transform;
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.core.Vector3f;
+import com.cr.engine.core.Vertex;
+import com.cr.engine.graphics.Bitmap;
+import com.cr.engine.graphics.Mesh;
+import com.cr.engine.graphics.shader.Shader;
 import com.cr.world.tile.Tile;
 
 public class TileLayer {
 	
-	private BufferedImage img;
-	public int[] pixels;
 	private int width, height;
+
+	private Bitmap bitmap;
+	private Mesh mesh;
+	private Shader shader;
+	private Transform transform;
 	
 	private HashMap<Integer, Tile> tiles;
 	
-	private int xOffset, yOffset;
-
-	public TileLayer(BufferedImage img){
-		this.img = img;
-		tiles = new HashMap<Integer, Tile>();
+	private float xLow = 0;
+	private float xHigh = 0;
+	private float yLow = 0;
+	private float yHigh = 0;
 	
-		width = img.getWidth();
-		height = img.getHeight();
-		pixels = new int[width*height];
-		img.getRGB(0, 0, width, height, pixels, 0, width);
-	}
+	private float scaleFactor = 1f;
 	
 	public TileLayer(int width, int height){
-		tiles = new HashMap<Integer, Tile>();
+		bitmap = new Bitmap(width, height);
+		
 		this.width = width;
 		this.height = height;
-		pixels = new int[width*height];
+		this.transform = TileMap.getTransform();
 		
-		for(int i = 0; i < pixels.length; i++){
-			pixels[i] = 0;
-		}
+		this.shader = World.getShader();
+		
+		tiles = new HashMap<Integer, Tile>();
 	}
 	
-	public void generateRandomLayer(){
-		for(int i = 0; i < pixels.length; i++){
-			int rn = Randomizer.getInt(0, tiles.size());
-			int count = 0;
-			for(Integer col : tiles.keySet()){
-				if(rn == count){
-					pixels[i] = col;
-					break;
-				}else{
-					count++;
-				}
-			}	
-		}
+	public TileLayer(String name, Transform transform){
+		this.transform = transform;
+		bitmap = new Bitmap(name);
+		
+		this.width = bitmap.getWidth();
+		this.height = bitmap.getHeight();
+		this.transform = transform;
+		this.shader = World.getShader();
+		
+		tiles = new HashMap<Integer, Tile>();
 	}
 	
+	public void generateTileLayer(){
+		List<Vertex> vertices = new ArrayList<Vertex>();
+		List<Integer> indices = new ArrayList<Integer>();
+		
+		float tWidth = Tile.getTileWidth();
+		float tHeight = Tile.getTileHeight();
+		
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				if(bitmap.getPixel(x, y) == 0) continue;
+				
+				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
+			
+				float xPos = x * tWidth ;
+				float yPos = y * tHeight ;
+				
+				float xOffset = 7f;
+				float yOffset = 5f;
+				
+				indices.add(vertices.size() + 0);
+				indices.add(vertices.size() + 1);
+				indices.add(vertices.size() + 2);
+				
+				indices.add(vertices.size() + 2);
+				indices.add(vertices.size() + 3);
+				indices.add(vertices.size() + 0);
+				
+				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0), new Vector2f(xLow,yLow)));
+				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0), new Vector2f(xLow,yHigh)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0), new Vector2f(xHigh,yHigh)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0), new Vector2f(xHigh,yLow)));
+			}
+		}
+		
+		Vertex[] vertexArray = new Vertex[vertices.size()];
+		Integer[] indexArray = new Integer[indices.size()];
+		
+		vertices.toArray(vertexArray);
+		indices.toArray(indexArray);
+		
+		int[] iArray = new int[indexArray.length];
+		
+		for(int i = 0; i < indexArray.length; i++)
+			iArray[i] = indexArray[i];
+		
+		mesh = new Mesh(vertexArray, iArray);
+		transform.scale(scaleFactor, scaleFactor, 1);
+	}
 	
+	public void renderTileLayer(float depth){
+		transform.translate(0, 0, depth);
+		shader.bind();
+		shader.setUniform("transformation", transform.getOrthoTransformation());
+		Tile.getTexture().bind();
+		mesh.render();
+		Tile.getTexture().unbind();
+		shader.unbind();
+	}
+	
+	private void calcTexCoords(float row, float col){
+		xLow = col / Tile.TILE_ATLAS_COLS;
+		xHigh = xLow + (1 / Tile.TILE_ATLAS_COLS);
+		yLow = row / Tile.TILE_ATLAS_ROWS;
+		yHigh = yLow + (1 / Tile.TILE_ATLAS_ROWS);
+	}
 	
 	public void addTileType(int color, Tile tile){
 		tiles.put(color, tile);
 	}
 	
-	public void addTile(int x, int y, int color){
-		pixels[x + (y*width)] = color;
-	}
-	
-	public int getTileColor(int x, int y){
-		return pixels[x + (y*width)];
+	public void setTile(int x, int y, int color){
+		bitmap.setPixel(x, y, color);
 	}
 	
 	public void removeTile(int x, int y){
-		pixels[x + (y*width)] = 0;
+		bitmap.setPixel(x, y, 0);
 	}
 	
 	public int getTileID(){
 		int col = 0;
-		for(Integer i : tiles.keySet()){
+		for(Integer i : tiles.keySet())
 			col = i;
-		}
-		
 		return col;
 	}
 	
-	public boolean validID(int x, int y){
-		if(x < 0 || y < 0 || x >= width || y >= height)
-			return false;
-		return true;
-	}
-	
-	public int[] getPixels() {
-		return pixels;
-	}
-
 	public int getTileID(int x, int y){
-		return pixels[x + (y*width)];
+		return bitmap.getPixel(x, y);
 	}
 	
 	public Tile getTile(int x, int y){
-		return tiles.get(pixels[x + (y*width)]);
+		return tiles.get(bitmap.getPixel(x, y));
 	}
 	
-	public boolean shouldRender(int x, int y){
+	public Tile getTile(int color){
+		return tiles.get(color);
+	}
+	
+	public boolean tileExists(int x, int y){
 		if(x < 0 || y < 0 || x >= width || y >= height)
 			return false;
-		if(tiles.containsKey(pixels[x + (y*width)]))
+		if(tiles.containsKey(bitmap.getPixel(x, y)))
 			return true;
 		return false;
 	}
 	
-	public void renderTileLayer(Graphics2D g, int xScroll, int yScroll){
-		int x0 = xScroll / Tile.TILE_WIDTH;
-		int x1 = (xScroll + Game.WIDTH + Tile.TILE_WIDTH) / Tile.TILE_WIDTH;
-		int y0 = yScroll / Tile.TILE_HEIGHT;
-		int y1 = (yScroll + Game.HEIGHT + Tile.TILE_HEIGHT) / Tile.TILE_HEIGHT;
-		
-		for(int y = y0; y < y1; y++)
-			for(int x = x0; x < x1; x++)
-				if(shouldRender(x, y))
-					getTile(x, y).render(g, x, y, xScroll, yScroll);	
-	}
+
 	
 	public int getWidth(){
 		return width;
@@ -126,6 +168,10 @@ public class TileLayer {
 	
 	public int getHeight(){
 		return height;
+	}
+
+	public Bitmap getBitmap() {
+		return bitmap;
 	}
 
 }

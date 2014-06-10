@@ -1,10 +1,8 @@
 package com.cr.entity.emitter;
 
-import java.util.Vector;
-
+import com.cr.engine.core.Vector2f;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
-import com.cr.util.Vector2f;
 
 public class ImpactEmitter extends ParticleEmitter{
 	
@@ -28,7 +26,7 @@ public class ImpactEmitter extends ParticleEmitter{
 			yVel = impactVelocity.y + Randomizer.getFloat(-10f, 10f) * 0.75f;
 			xVel = impactVelocity.x + Randomizer.getFloat(-10f, 10f) * 0.75f;
 			Vector2f finalV = new Vector2f(xVel, yVel);
-			new Particle(position, finalV, particleImage, pLifeTime);
+			new Particle(position, finalV, particleSprite, pLifeTime);
 		}
 	}
 }

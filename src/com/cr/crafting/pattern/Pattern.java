@@ -4,10 +4,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.cr.crafting.material.Material;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.hero.materials.Materials.Base;
 import com.cr.item.Item;
 import com.cr.item.weapon.Weapon;
-import com.cr.resource.ImageLoader;
+import com.cr.resource.ImageLoaderOld;
 
 public abstract class Pattern {
 
@@ -23,10 +24,10 @@ public abstract class Pattern {
 	protected ArrayList<Material> secs = new ArrayList<Material>();
 	protected ArrayList<Integer> secsAmount = new ArrayList<Integer>();
 	
-	protected BufferedImage image;
+	protected Sprite sprite;
 	
 	public Pattern(String imageName){
-		image = ImageLoader.getImage(imageName);
+		sprite = new Sprite(imageName);
 	}
 	
 	public abstract void startNew();
@@ -36,8 +37,8 @@ public abstract class Pattern {
 	
 	public abstract String getName();
 	
-	public BufferedImage getImage(){
-		return image;
+	public Sprite getSprite(){
+		return sprite;
 	}
 
 	public ArrayList<Base> getBases() {

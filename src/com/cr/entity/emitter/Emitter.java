@@ -2,7 +2,7 @@ package com.cr.entity.emitter;
 
 import com.cr.entity.Entity;
 import com.cr.entity.Tickable;
-import com.cr.util.Vector2f;
+import com.cr.engine.core.Vector2f;
 
 public abstract class Emitter extends Entity implements Tickable{
 

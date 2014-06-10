@@ -1,69 +1,59 @@
 package com.cr.util;
 
-import com.cr.game.Game;
+import com.cr.engine.core.Vector3f;
+import com.cr.engine.graphics.Window;
+import com.cr.game.EntityManager;
 
 public class Camera {
 	
-	private static Vector2f pos;
+	private static Vector3f position;
+	private Vector3f targetPos;
 	
-	private static float camX, camY;
+	private float cameraFollowFactor = 40.0f; 
 	
-	private int width = Game.WIDTH;
-	private int height = Game.HEIGHT;
-	
-	public Camera(float camX, float camY){
-		this.camX = camX;
-		this.camY = camY;
-		pos = new Vector2f(camX, camY);
-	}
-	
-	public void move(float x, float y){
-		camX += x;
-		camY += y;
+	public Camera(){
+		this(new Vector3f(0,0,0));
+		targetPos = new Vector3f(0,0,0);
+		position.x = EntityManager.getHero().getX() - (Window.getWidth()/2 - EntityManager.getHero().getWidth());
+		position.y = EntityManager.getHero().getY() - (Window.getHeight()/2 - EntityManager.getHero().getHeight());
 	}
 	
-	public float centerX(){
-		return camX + (width/2);
+	public Camera(Vector3f position) {
+		Camera.position = position;
 	}
 	
-	public float centerY(){
-		return camY + (height/2);
+	public void tick(float dt){
+		targetPos.x = EntityManager.getHero().getX() - (Window.getWidth()/2 - EntityManager.getHero().getWidth());
+		targetPos.y = EntityManager.getHero().getY() - (Window.getHeight()/2 - EntityManager.getHero().getHeight());
+		
+		Vector3f diff = targetPos.sub(position).div(cameraFollowFactor);
+		
+		position = position.add(diff);
 	}
 	
-	public Vector2f getPos() {
-		return pos;
+	public static float getCamX(){
+		return position.x;
 	}
-	public int getWidth() {
-		return width;
+	
+	public static float getCamY(){
+		return position.y;
 	}
-	public int getHeight() {
-		return height;
+	
+	public static float getCamZ(){
+		return position.z;
 	}
-	public void setPos(Vector2f pos) {
-		this.pos = pos;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public void setHeight(int height) {
-		this.height = height;
+	
+	public static Vector3f getPos() {
+		return position;
 	}
 
-	public static float getCamX() {
-		return camX;
+	public void setPos(Vector3f position) {
+		Camera.position = position;
 	}
 
-	public static float getCamY() {
-		return camY;
-	}
 
-	public void setCamX(float camX) {
-		this.camX = camX;
-	}
-
-	public void setCamY(float camY) {
-		this.camY = camY;
-	}
+	
+	
 	
 	
 

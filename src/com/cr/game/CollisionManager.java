@@ -9,7 +9,7 @@ import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.item.activation.Projectile;
 import com.cr.item.weapon.Weapon;
-import com.cr.util.Vector2f;
+import com.cr.engine.core.Vector2f;
 
 public class CollisionManager {
 	

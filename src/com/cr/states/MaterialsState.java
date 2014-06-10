@@ -1,28 +1,22 @@
 package com.cr.states;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.ExitButton;
-import com.cr.entity.hero.inventory.Inventory;
-import com.cr.entity.hero.inventory.InventoryButton;
 import com.cr.entity.hero.materials.BaseButton;
 import com.cr.entity.hero.materials.EssencesButton;
 import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.materials.Materials.MaterialType;
 import com.cr.entity.hero.materials.MineralsButton;
-import com.cr.game.EntityManager;
-import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoader;
+import com.cr.resource.ImageLoaderOld;
 
 public class MaterialsState extends GameState{
 
-	private BufferedImage bg = ImageLoader.getImage("inventorybg");
+	private Sprite bg = new Sprite("inventorybg");
 	private ExitButton exit;
 	private BaseButton base;
 	private EssencesButton essences;
@@ -34,8 +28,8 @@ public class MaterialsState extends GameState{
 		super(gsm);
 		blockRendering = false;
 		
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
 		base = new BaseButton(600 + xOffset, 378 + yOffset);
 		essences = new EssencesButton(600 + xOffset, 430 + yOffset);
@@ -93,20 +87,20 @@ public class MaterialsState extends GameState{
 	}
 
 	@Override
-	public void render(Graphics2D g){
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
-		g.drawImage(bg, xOffset, yOffset, null);
+	public void render(Screen screen){
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
+		screen.renderSprite(bg, xOffset, yOffset);
 //		inventory.render(g);
-		base.render(g);
-		essences.render(g);
-		minerals.render(g);
-		exit.render(g);
+		base.render(screen);
+		essences.render(screen);
+		minerals.render(screen);
+		exit.render(screen);
 		
-		materials.render(g);
+		materials.render(screen);
 //		g.setColor(Color.RED);
-//		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
-//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
+//		g.drawString("PRESS ENTER TO RESUME", Window.getWidth()/2-100, Window.getHeight()/2);
+//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Window.getWidth()/2-100, Window.getHeight()/2+30);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.cr.entity.hero.inventory;
 
+import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
 import com.cr.item.weapon.Weapon;
 
@@ -17,5 +18,11 @@ public class InventorySlot extends ItemSlot{
 	@Override
 	public boolean isCompatible(Item item) {
 		return true;
+	}
+
+	@Override
+	public Sprite getSprite() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

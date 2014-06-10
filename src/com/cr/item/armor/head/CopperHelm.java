@@ -1,9 +1,7 @@
 package com.cr.item.armor.head;
 
-import com.cr.entity.hero.Hero.Direction;
-import com.cr.item.Item;
+import com.cr.engine.graphics.Screen;
 import com.cr.item.armor.Head;
-import com.cr.item.stats.basic.Armor;
 
 public class CopperHelm extends Head{
 
@@ -18,6 +16,12 @@ public class CopperHelm extends Head{
 
 	@Override
 	public void activate() {
+		
+	}
+
+	@Override
+	public void render(Screen screen) {
+		// TODO Auto-generated method stub
 		
 	}
 

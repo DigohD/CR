@@ -1,7 +1,6 @@
 package com.cr.entity.hero.anim;
 
-import com.cr.entity.Tickable;
-import com.cr.util.Vector2f;
+import com.cr.engine.core.Vector2f;
 
 public class LeftHandBob extends Bob{
 

@@ -2,17 +2,17 @@ package com.cr.entity.hero.materials;
 
 import com.cr.crafting.material.Material;
 import com.cr.crafting.material.base.Copper;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.hero.materials.Materials.Base;
-import com.cr.game.Game;
-import com.cr.resource.ImageLoader;
 
 public class BaseSlot extends MaterialSlot{
 
 	private Base type;
 	
 	public BaseSlot(int xIndex, int yIndex, Base type) {
-		super(xIndex * 52 + ((Game.WIDTH - 800) / 2) + 10, 
-				yIndex * 52 + ((Game.HEIGHT - 600) / 2) + 10);
+		super(xIndex * 52 + ((Window.getWidth() - 800) / 2) + 10, 
+				yIndex * 52 + ((Window.getHeight() - 600) / 2) + 10);
 		String materialName = null;
 		this.type = type;
 		switch(type){
@@ -34,7 +34,7 @@ public class BaseSlot extends MaterialSlot{
 
 	@Override
 	public void setMaterialImage(String imageName) {
-		materialImage = ImageLoader.getImage(imageName);
+		materialSprite = new Sprite(imageName);
 	}
 	
 	public Base getBaseType(){

@@ -1,16 +1,13 @@
 package com.cr.entity.hero.materials;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.cr.crafting.material.Material;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.inventory.Button;
-import com.cr.entity.hero.inventory.ItemSlot;
-import com.cr.game.Display;
 
 public class Materials implements Tickable, Renderable{
 
@@ -59,20 +56,20 @@ public class Materials implements Tickable, Renderable{
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Screen screen) {
 		if(activeTab == MaterialType.BASE){
 			int counter = 0;
 			for(Base base : Base.values()){
 				if(baseMap.get(base) != 0){
 					bases[counter] = new BaseSlot(counter, 0, base);
 					bases[counter].setAmount(baseMap.get(base));
-					bases[counter].render(g);
+					bases[counter].render(screen);
 					counter++;
 				}
 			}
 			for(int i = 0; i < Base.values().length; i++)
 				if(bases[i] != null)
-					bases[i].renderHoover(g);
+					bases[i].renderHoover(screen);
 		}
 		if(activeTab == MaterialType.ESSENCES){
 			int counter = 0;
@@ -80,13 +77,13 @@ public class Materials implements Tickable, Renderable{
 				if(essencesMap.get(essence) != 0){
 					essences[counter] = new EssenceSlot(counter, 0, essence);
 					essences[counter].setAmount(essencesMap.get(essence));
-					essences[counter].render(g);
+					essences[counter].render(screen);
 					counter++;
 				}
 			}
 			for(int i = 0; i < Essences.values().length; i++)
 				if(essences[i] != null)
-					essences[i].renderHoover(g);
+					essences[i].renderHoover(screen);
 		}
 		if(activeTab == MaterialType.MINERALS){
 			int counter = 0;
@@ -94,13 +91,13 @@ public class Materials implements Tickable, Renderable{
 				if(mineralsMap.get(mineral) != 0){
 					minerals[counter] = new MineralSlot(counter, 0, mineral);
 					minerals[counter].setAmount(mineralsMap.get(mineral));
-					minerals[counter].render(g);
+					minerals[counter].render(screen);
 					counter++;
 				}
 			}
 			for(int i = 0; i < Minerals.values().length; i++)
 				if(minerals[i] != null)
-					minerals[i].renderHoover(g);
+					minerals[i].renderHoover(screen);
 		}
 	}
 
@@ -119,7 +116,7 @@ public class Materials implements Tickable, Renderable{
 	}
 	
 	@Override
-	public BufferedImage getImage() {
+	public Sprite getSprite() {
 		return null;
 	}
 	

@@ -3,35 +3,37 @@ package com.cr.entity.hero.misc;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
-import com.cr.resource.ImageLoader;
+import com.cr.resource.ImageLoaderOld;
 import com.cr.util.Camera;
-import com.cr.util.Vector2f;
 
 public class FootPrint extends Entity implements Renderable, Tickable{
 
-	private BufferedImage image;
+	private Sprite sprite;
 	private int timer;
 	
 	public FootPrint(){
 		super(Hero.position.add(new Vector2f(0, 28)));
-		image = ImageLoader.getImage("footprintgrass");
+		sprite = new Sprite("footprintgrass");
 		timer = 0;
 		EntityManager.addEntity(this);
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(image, (int) (position.x - Camera.getCamX()), (int) (position.y - Camera.getCamY()), null);
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, position.x, position.y);
 	}
 
 	@Override
-	public BufferedImage getImage() {
-		return image;
+	public Sprite getSprite() {
+		return sprite;
 	}
 
 	@Override

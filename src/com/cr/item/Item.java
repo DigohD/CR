@@ -3,25 +3,26 @@ package com.cr.item;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.Game;
-import com.cr.item.activation.ItemObject;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.StatsList;
-import com.cr.resource.ImageLoader;
+import com.cr.resource.ImageLoaderOld;
 import com.cr.util.Camera;
-import com.cr.util.Vector2f;
 
 public abstract class Item implements Renderable, Tickable{
 	
-	protected BufferedImage image;
-	protected BufferedImage iconImage;
+	protected Sprite sprite;
+	protected Sprite iconSprite;
 	
 	protected int xOffset, yOffset;
 	protected int vertXOffset, horXOffset;
@@ -37,22 +38,22 @@ public abstract class Item implements Renderable, Tickable{
 	protected Vector2f pos;
 	
 	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset, String name){
-		image = ImageLoader.getImage(imageString);
-		iconImage = ImageLoader.getImage(imageString + "icon");
+		sprite = new Sprite(imageString);
+		iconSprite = new Sprite(imageString + "icon");
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
 		
-		width = image.getWidth() / 4;
-		height = image.getHeight();
+		width = sprite.getWidth() / 4;
+		height = sprite.getHeight();
 		
 		this.name = name;
 		
 		stats = new StatsList();
 	}
 	
-	public void render(Graphics2D g, int drawX, int drawY, int spriteID){
+	public void render(Screen screen, int drawX, int drawY, int spriteID){
 		Direction dir = Hero.currentDir;
 		int horXOffset = 0;
 		
@@ -78,53 +79,37 @@ public abstract class Item implements Renderable, Tickable{
 		x1 = drawY + yOffset + tempYOffset - (int) Camera.getCamY();
 		y0 = drawX + width + xOffset + horXOffset + tempXOffset - (int) Camera.getCamX();
 		y1 = drawY + height + yOffset + tempYOffset - (int) Camera.getCamY();
-		g.drawImage(image,
-				// Define position
-				x0,
-				x1,
-				y0,
-				y1,
-				
-				//Define Sprite
-				spriteID * width, 
-				0, 
-				(spriteID * width) + width, 
-				height, 
-				
-				// No ImageObserver
-				null);
+		
+		screen.renderSprite(sprite, x0, x1, 0, spriteID);
 	}
 	
-	public void renderDescription(Graphics2D g){
-		int xOffset = (Game.WIDTH - 800) / 2;
-		int yOffset = (Game.HEIGHT - 600) / 2;
+	public void renderDescription(Screen screen){
+		int xOffset = (Window.getWidth() - 800) / 2;
+		int yOffset = (Window.getHeight() - 600) / 2;
 		
-		Font font = new Font("Tahoma", 18, 18);
-		g.setFont(font);
-		g.setColor(Color.WHITE);
-		g.drawString(name, xOffset + 20, yOffset + 40);
+//		Font font = new Font("Tahoma", 18, 18);
+//		g.setFont(font);
+//		g.setColor(Color.WHITE);
+//		g.drawString(name, xOffset + 20, yOffset + 40);
 		
-		stats.render(g, xOffset + 20, yOffset + 80);
+		stats.render(screen, xOffset + 20, yOffset + 80);
 	}
 	
 	public StatsList getStats(){
 		return stats;
 	}
 	
-	@Override
-	public void render(Graphics2D g) {
-		
-	}
+	
 
 	@Override
-	public BufferedImage getImage() {
-		return image;
+	public Sprite getSprite() {
+		return sprite;
 	}
 	
 	public abstract boolean renderPrePart(Direction dir);
 
-	public BufferedImage getIconImage() {
-		return iconImage;
+	public Sprite getIconSprite() {
+		return iconSprite;
 	}
 	
 	public void addStat(Stat stat){

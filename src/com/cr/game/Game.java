@@ -1,29 +1,36 @@
 package com.cr.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import com.cr.engine.core.CoreEngine;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
+import com.cr.states.PlayState;
+import com.cr.util.ImageLoader;
+import com.cr.world.World;
 
-import com.cr.crafting.material.minerals.Pyrite;
-import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoader;
-import com.cr.states.MenuState;
-
-public class Game extends Core{
+public class Game extends CoreEngine{
 	
 	private GameStateManager gsm;
+	private Screen screen;
 	
 	public Game(){
+		boolean fullscreen = true;
+		Window.createWindow(1200, 675, fullscreen);
+		init();
+	}
+	
+	private void init(){
 		new ImageLoader();
+		screen = new Screen();
 		gsm = new GameStateManager();
-		gsm.push(new MenuState(gsm));
-		
-		Pyrite c = new Pyrite();
-		c.getCurve().testCurve();
+		gsm.push(new PlayState(gsm));
 	}
 
 	@Override
 	public void getInput() {
-		KeyInput.tick();	
+		Input.tick();
+		if(Input.getKey(Input.KEY_ESCAPE))
+			stop();
 	}
 
 	@Override
@@ -33,18 +40,12 @@ public class Game extends Core{
 
 	@Override
 	public void render() {
-		Graphics2D g = null;
-		try{
-			g = Display.getGraphics();
-			clearScreen(g);
-			gsm.render(g);
-		}finally{ g.dispose();}
-		Display.update();
+		screen.render(gsm);
 	}
 	
-	private void clearScreen(Graphics2D g){
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, Display.getWidth(), Display.getHeight());
+	@Override
+	public void cleanUp() {
+		World.getShader().deleteShader();
 	}
 	
 	public static void main(String[] args){

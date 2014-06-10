@@ -1,5 +1,6 @@
 package com.cr.entity.hero.inventory;
 
+import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
 import com.cr.item.weapon.Weapon;
 
@@ -18,6 +19,12 @@ public class LeftHandSlot extends ItemSlot{
 		if(item instanceof Weapon)
 			return true;
 		return false;
+	}
+
+	@Override
+	public Sprite getSprite() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

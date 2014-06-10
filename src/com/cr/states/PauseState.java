@@ -1,12 +1,7 @@
 package com.cr.states;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
-import com.cr.game.EntityManager;
-import com.cr.game.Game;
+import com.cr.engine.graphics.Screen;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
 
 public class PauseState extends GameState{
 
@@ -23,25 +18,25 @@ public class PauseState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		if(KeyInput.enter) {
-			if(gsm.next() instanceof PlayState){
-				PlayState ps = (PlayState) gsm.next();
-				ps.bg = false;
-			}
-			gsm.pop();
-		}
-		if(KeyInput.c) {
-			gsm.pop();
-			EntityManager.clear();
-			gsm.pop();
-		}
+//		if(KeyInput.enter) {
+//			if(gsm.next() instanceof PlayState){
+//				PlayState ps = (PlayState) gsm.next();
+//				ps.bg = false;
+//			}
+//			gsm.pop();
+//		}
+//		if(KeyInput.c) {
+//			gsm.pop();
+//			EntityManager.clear();
+//			gsm.pop();
+//		}
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		g.setColor(Color.RED);
-		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
-		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
+	public void render(Screen screen) {
+//		g.setColor(Color.RED);
+//		g.drawString("PRESS ENTER TO RESUME", Game.WIDTH/2-100, Game.HEIGHT/2);
+//		g.drawString("PRESS C TO RETURN TO MAIN MENU", Game.WIDTH/2-100, Game.HEIGHT/2+30);
 	}
 
 }

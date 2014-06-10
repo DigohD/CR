@@ -1,9 +1,8 @@
 package com.cr.item.stats;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
-import com.cr.entity.Renderable;
+import com.cr.engine.graphics.Screen;
 
 public abstract class Stat{
 	
@@ -18,7 +17,7 @@ public abstract class Stat{
 	
 	public abstract void applyToSheet();
 	
-	public abstract void render(Graphics2D g, int xPos, int yPos);
+	public abstract void render(Screen screen, int xPos, int yPos);
 
 	public abstract void addAmount(float amount);
 	public abstract float getAmount();

@@ -1,7 +1,6 @@
 package com.cr.entity.hero.body;
 
 import com.cr.entity.hero.anim.LeftHandBob;
-import com.cr.item.weapon.CopperKnife;
 import com.cr.item.weapon.Weapon;
 
 public class LeftHand extends PlayerPart{

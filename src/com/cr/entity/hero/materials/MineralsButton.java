@@ -1,34 +1,34 @@
 package com.cr.entity.hero.materials;
 
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.input.Mouse;
-import com.cr.resource.ImageLoader;
 
 public class MineralsButton extends Button implements Renderable{
 
-	private BufferedImage image;
+	private Sprite sprite;
 	private int xPos, yPos;
 	private boolean isClicked;
 	
 	public MineralsButton(int xPos, int yPos){
 		super(new Rectangle(xPos, yPos, 150, 50));
-		image = ImageLoader.getImage("mineralsbutton");
+		sprite = new Sprite("mineralsbutton");
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(image, xPos, yPos, null);
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, xPos, yPos);
 	}
 
 	@Override
-	public BufferedImage getImage() {
+	public Sprite getSprite() {
 		return null;
 	}
 

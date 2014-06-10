@@ -1,7 +1,7 @@
 package com.cr.entity.hero.anim;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.entity.Tickable;
-import com.cr.util.Vector2f;
 
 public abstract class Bob implements Tickable{
 

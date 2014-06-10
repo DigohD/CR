@@ -1,40 +1,54 @@
 package com.cr.world.tile;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import com.cr.engine.graphics.Texture;
 
-import com.cr.resource.ImageLoader;
-import com.cr.world.TileLayer;
-
-public abstract class Tile{
+public abstract class Tile {
 	
-	public static final int TILE_WIDTH = 46, TILE_HEIGHT = 30;
-	public static  final int TILE_DRAW_OFFSET_X = -7;
-	public static  final int TILE_DRAW_OFFSET_Y = -5;
-	protected BufferedImage image;
+	private static Texture texture = new Texture("tileatlas");
 	
-	protected boolean solid;
+	public final static float TILE_ATLAS_ROWS = 4;
+	public final static float TILE_ATLAS_COLS = 4;
 	
-	public Tile(String imageString){
-		image = ImageLoader.getImage(imageString);
-		solid = true;
-	}
+	private static int width, height;
+	protected float row, col;
+	protected boolean walkable;
 	
-	public void render(Graphics2D g, int xPos, int yPos, int xOffset, int yOffset){
-		xPos = (xPos * Tile.TILE_WIDTH) - Tile.TILE_DRAW_OFFSET_X - 10;
-		yPos = (yPos * Tile.TILE_HEIGHT) - Tile.TILE_DRAW_OFFSET_Y - 10;
-		xPos -= xOffset;
-		yPos -= yOffset;
-		
-		g.drawImage(image, xPos, yPos, null);
+	public Tile(){
+		width = texture.getWidth();
+		height = texture.getHeight();
+		walkable = true;
 	}
 
-	public BufferedImage getImage() {
-		return image;
+	public static Texture getTexture() {
+		return texture;
 	}
 	
-	public boolean isWalkable(){
-		return solid;
+	public static int getTileWidth() {
+		return (int) (width/TILE_ATLAS_ROWS);
+	}
+
+	public static int getTileHeight() {
+		return (int) (height / TILE_ATLAS_COLS);
 	}
 	
+	public static int getAtlasWidth() {
+		return width;
+	}
+
+	public static int getAtlasHeight() {
+		return height;
+	}
+
+	public boolean isWalkable() {
+		return walkable;
+	}
+
+	public float getRow() {
+		return row;
+	}
+
+	public float getCol() {
+		return col;
+	}
+
 }

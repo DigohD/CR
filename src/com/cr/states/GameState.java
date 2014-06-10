@@ -1,7 +1,6 @@
 package com.cr.states;
 
-import java.awt.Graphics2D;
-
+import com.cr.engine.graphics.Screen;
 import com.cr.game.GameStateManager;
 
 public abstract class GameState {
@@ -16,7 +15,7 @@ public abstract class GameState {
 	
 	public abstract void init();
 	public abstract void tick(float dt);
-	public abstract void render(Graphics2D g);
+	public abstract void render(Screen screen);
 	
 	public boolean isTickingBlocked() {
 		return blockTicking;

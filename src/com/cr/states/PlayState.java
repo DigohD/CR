@@ -1,14 +1,13 @@
 package com.cr.states;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.cr.entity.hero.Hero;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Window;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoader;
-import com.cr.util.Camera2;
+import com.cr.resource.ImageLoaderOld;
 import com.cr.world.World;
 
 public class PlayState extends GameState{
@@ -20,7 +19,7 @@ public class PlayState extends GameState{
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
 		init();
-		img = ImageLoader.getImage("stBG");
+		img = ImageLoaderOld.getImage("stBG");
 	
 	}
 	
@@ -56,9 +55,9 @@ public class PlayState extends GameState{
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		w.render(g);
-		if(bg) g.drawImage(img, 0, 0, Game.WIDTH, Game.HEIGHT, null);
+	public void render(Screen screen) {
+		w.render(screen);
+		//if(bg) g.drawImage(img, 0, 0, Window.getWidth(), Window.getHeight(), null);
 	}
 
 }

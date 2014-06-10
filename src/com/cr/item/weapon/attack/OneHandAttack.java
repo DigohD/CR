@@ -1,32 +1,20 @@
 package com.cr.item.weapon.attack;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
 import com.cr.entity.Renderable;
-import com.cr.entity.Tickable;
 import com.cr.entity.emitter.DamageText;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.entity.hero.StatsSheet;
-import com.cr.entity.hero.body.PlayerPart;
-import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
-import com.cr.item.activation.ItemObject;
 import com.cr.item.activation.Projectile;
 import com.cr.item.stats.AffectsDamage;
 import com.cr.item.stats.Stat;
-import com.cr.item.stats.basic.CoolDown;
-import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.Weapon;
-import com.cr.util.Camera;
-import com.cr.util.Randomizer;
-import com.cr.util.Vector2f;
 
 public class OneHandAttack extends Projectile implements Renderable{
 
@@ -65,7 +53,7 @@ public class OneHandAttack extends Projectile implements Renderable{
 		phase = 0;
 		changeTimer = 0;
 		
-		EntityManager.addEntity(this);;
+		EntityManager.addEntity(this);
 	}
 
 	@Override
@@ -118,9 +106,7 @@ public class OneHandAttack extends Projectile implements Renderable{
 	}
 	
 	@Override
-	public void render(Graphics2D g){
-		g.setColor(Color.RED);
-		g.drawRect(rect.x - (int) Camera.getCamX(), rect.y - (int) Camera.getCamY(), width, height);
+	public void render(Screen screen){
 	}
 
 	public Vector2f getVelocity() {
@@ -160,7 +146,7 @@ public class OneHandAttack extends Projectile implements Renderable{
 	}
 
 	@Override
-	public BufferedImage getImage() {
+	public Sprite getSprite() {
 		return null;
 	}
 	

@@ -1,13 +1,9 @@
 package com.cr.item.weapon;
 
-import java.awt.Rectangle;
-
-import com.cr.entity.Collideable;
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.attack.OneHandAttack;
-import com.cr.util.Camera;
-import com.cr.util.Vector2f;
 
 public class CopperKnife extends Weapon{
 
@@ -33,6 +29,12 @@ public class CopperKnife extends Weapon{
 	@Override
 	public void attack() {
 		attack = new OneHandAttack(new Vector2f(x0, x1), width, height, this);
+	}
+
+	@Override
+	public void render(Screen screen) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

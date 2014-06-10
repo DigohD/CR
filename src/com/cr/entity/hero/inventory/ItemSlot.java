@@ -1,42 +1,36 @@
 package com.cr.entity.hero.inventory;
 
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
-import com.cr.resource.ImageLoader;
 
 public abstract class ItemSlot extends Button implements Renderable, Tickable{
 
-	protected BufferedImage slotImage;
-	protected BufferedImage itemImage;
+	protected Sprite slotSprite;
+	protected Sprite itemSprite;
 	protected int xPos, yPos;
 	
 	protected Item item;
 	
 	public ItemSlot(int xPos, int yPos){
 		super(new Rectangle(xPos, yPos, 50, 50));
-		slotImage = ImageLoader.getImage("slot");
+		slotSprite = new Sprite("slot");
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 	
 	@Override
-	public void render(Graphics2D g) {
-		g.drawImage(slotImage, xPos, yPos, null);
+	public void render(Screen screen) {
+		screen.renderSprite(slotSprite, xPos, yPos);
 		if(item != null)
-			g.drawImage(item.getIconImage(), xPos, yPos, null);
+			screen.renderSprite(item.getIconSprite(), xPos, yPos);
 		if(item != null && rect.contains(Mouse.getX(), Mouse.getY()))
-			item.renderDescription(g);
-	}
-
-	@Override
-	public BufferedImage getImage() {
-		return null;
+			item.renderDescription(screen);
 	}
 
 	public Item getItem() {

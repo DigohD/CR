@@ -4,8 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.cr.crafting.material.base.Copper;
-import com.cr.crafting.pattern.KnifePattern;
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.body.Body;
@@ -17,11 +18,11 @@ import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.misc.FootPrint;
 import com.cr.input.KeyInput;
 import com.cr.input.Mouse;
-import com.cr.util.Vector2f;
+import com.cr.world.World;
 
 public class Hero extends Mob implements Collideable{
 	
-	private BufferedImage image;
+	private Sprite sprite;
 	private Vector2f targetVel;
 	
 	private Rectangle rect;
@@ -46,8 +47,8 @@ public class Hero extends Mob implements Collideable{
 	
 	public static Direction currentDir;
 	
-	public Hero() {
-		super(position);
+	public Hero(World world) {
+		super(position, world);
 
 		position = new Vector2f(50,50);
 
@@ -161,8 +162,8 @@ public class Hero extends Mob implements Collideable{
 		rect.setLocation((int)position.x,(int)position.y);
 		processInput();
 
-		velocity.x = approach(targetVel.x, velocity.x, dt*accSpeed);
-		velocity.y = approach(targetVel.y, velocity.y, dt*accSpeed);
+		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
+		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		move(dt);
 		
 		head.tick(dt);
@@ -178,33 +179,33 @@ public class Hero extends Mob implements Collideable{
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Screen screen) {
 //		g.drawImage(image, (int)position.x - cam.getCamX(), (int)position.y - cam.getCamY(), null);
 		switch(currentDir){
 			case SOUTH:
-				body.render(g);
-				rightHand.render(g);
-				leftHand.render(g);
-				head.render(g);
+				body.render(screen);
+				rightHand.render(screen);
+				leftHand.render(screen);
+				head.render(screen);
 				break;
 			case EAST:
-				leftHand.render(g);
-				body.render(g);
-				head.render(g);
-				rightHand.render(g);
+				leftHand.render(screen);
+				body.render(screen);
+				head.render(screen);
+				rightHand.render(screen);
 				break;
 			case NORTH:
-				head.render(g);
-				rightHand.render(g);
-				leftHand.render(g);
-				head.render(g);
-				body.render(g);
+				head.render(screen);
+				rightHand.render(screen);
+				leftHand.render(screen);
+				head.render(screen);
+				body.render(screen);
 				break;
 			case WEST:
-				rightHand.render(g);
-				body.render(g);
-				head.render(g);
-				leftHand.render(g);
+				rightHand.render(screen);
+				body.render(screen);
+				head.render(screen);
+				leftHand.render(screen);
 				break;
 		}
 	}
@@ -214,7 +215,7 @@ public class Hero extends Mob implements Collideable{
 		position = position.add(velocity.mul(dt));
 		
 		if(printTimer++ > 3){
-			new FootPrint();
+			//new FootPrint();
 			printTimer = 0;
 		}
 		
@@ -248,8 +249,8 @@ public class Hero extends Mob implements Collideable{
 	}
 	
 	@Override
-	public BufferedImage getImage() {
-		return image;
+	public Sprite getSprite() {
+		return sprite;
 	}
 	
 	public Vector2f getPos(){
