@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.cr.engine.graphics.Screen;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.StatsSheet;
 import com.cr.item.stats.AffectBearerOnHit;
@@ -49,6 +50,12 @@ public class LifeOnHit extends Stat implements AffectBearerOnHit{
 	@Override
 	public void affectMob(Mob mob) {
 		mob.addHealth(amount);
+	}
+
+	@Override
+	public void render(Screen screen, int xPos, int yPos) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
