@@ -32,6 +32,7 @@ public class Hero extends Mob implements Collideable{
 	private static LeftHand leftHand;
 	
 	private float accSpeed = 3.5f;
+	private float speed = 15f;
 
 	private int printTimer;
 
@@ -46,9 +47,11 @@ public class Hero extends Mob implements Collideable{
 	
 	public static Transform t;
 	
+	HeroInput input;
+	
 	public Hero(World world) {
 		super(position, world);
-
+		input = new HeroInput(this);
 		t = new Transform();
 		position = new Vector2f(50,50);
 
@@ -73,99 +76,13 @@ public class Hero extends Mob implements Collideable{
 		materials = new Materials();
 	}
 	
-	private void processInput(){
-		if(KeyInput.shift){
-			if(KeyInput.up){
-				currentDir = Direction.SOUTH;
-				targetVel.y = -15f;
-			}
-			if(KeyInput.down){
-				currentDir = Direction.NORTH;
-				targetVel.y = 15f;
-			}
-			if(KeyInput.right){
-				currentDir = Direction.WEST;
-				targetVel.x = 15f;
-			}
-			if(KeyInput.left){
-				currentDir = Direction.EAST;
-				targetVel.x = -15f;
-			}
-			
-			if(KeyInput.up && KeyInput.left){
-				currentDir = Direction.SOUTH;
-				targetVel.x = -10.6f;
-				targetVel.y = -10.6f;
-			}
-			if(KeyInput.up && KeyInput.right){
-				currentDir = Direction.SOUTH;
-				targetVel.x = 10.6f;
-				targetVel.y = -10.6f;
-			}
-			if(KeyInput.down && KeyInput.left){
-				currentDir = Direction.NORTH;
-				targetVel.x = -10.6f;
-				targetVel.y = 10.6f;
-			}
-			if(KeyInput.down && KeyInput.right){
-				currentDir = Direction.NORTH;
-				targetVel.x = 10.6f;
-				targetVel.y = 10.6f;
-			}
-		}else{
-			if(KeyInput.up){
-				currentDir = Direction.NORTH;
-				targetVel.y = -15f;
-			}
-			if(KeyInput.down){
-				currentDir = Direction.SOUTH;
-				targetVel.y = 15f;
-			}
-			if(KeyInput.right){
-				currentDir = Direction.EAST;
-				targetVel.x = 15f;
-			}
-			if(KeyInput.left){
-				currentDir = Direction.WEST;
-				targetVel.x = -15f;
-			}
-			
-			if(KeyInput.up && KeyInput.left){
-				currentDir = Direction.NORTH;
-				targetVel.x = -10.6f;
-				targetVel.y = -10.6f;
-			}
-			if(KeyInput.up && KeyInput.right){
-				currentDir = Direction.NORTH;
-				targetVel.x = 10.6f;
-				targetVel.y = -10.6f;
-			}
-			if(KeyInput.down && KeyInput.left){
-				currentDir = Direction.SOUTH;
-				targetVel.x = -10.6f;
-				targetVel.y = 10.6f;
-			}
-			if(KeyInput.down && KeyInput.right){
-				currentDir = Direction.SOUTH;
-				targetVel.x = 10.6f;
-				targetVel.y = 10.6f;
-			}
-		}
-		
-		if(!KeyInput.up && !KeyInput.down){
-			targetVel.y = 0f;
-		}
-		if(!KeyInput.right && !KeyInput.left){
-			targetVel.x = 0f;
-		}
 
-	}
 	
 	@Override
 	public void tick(float dt) {
 		rect.setLocation((int)position.x,(int)position.y);
-		processInput();
-
+		
+		input.input();
 
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
@@ -281,6 +198,12 @@ public class Hero extends Mob implements Collideable{
 		return position.y;
 	}
 
+	public float getSpeed() {
+		return speed;
+	}
+
+
+
 	@Override
 	public Rectangle getRect() {
 		return rect;
@@ -308,6 +231,10 @@ public class Hero extends Mob implements Collideable{
 
 	public static Materials getMaterials() {
 		return materials;
+	}
+
+	public static void setCurrentDir(Direction currentDir) {
+		Hero.currentDir = currentDir;
 	}
 	
 	
