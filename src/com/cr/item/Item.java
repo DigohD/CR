@@ -69,8 +69,8 @@ public abstract class Item implements Renderable, Tickable{
 				horXOffset = -this.horXOffset;
 				break;
 		}
-		x0 = drawX + xOffset + horXOffset + tempXOffset - (int) Camera.getCamX();
-		x1 = drawY + yOffset + tempYOffset - (int) Camera.getCamY();
+		x0 = drawX + xOffset + horXOffset + tempXOffset;
+		x1 = drawY + yOffset + tempYOffset;
 		y0 = drawX + width + xOffset + horXOffset + tempXOffset - (int) Camera.getCamX();
 		y1 = drawY + height + yOffset + tempYOffset - (int) Camera.getCamY();
 		
@@ -125,8 +125,8 @@ public abstract class Item implements Renderable, Tickable{
 	}
 
 	public Vector2f getPos() {
-		int x = x0 + (int) Camera.getCamX();
-		int y = x1 + (int) Camera.getCamY();
+		int x = x0;
+		int y = x1;
 		return new Vector2f(x, y);
 	}
 	

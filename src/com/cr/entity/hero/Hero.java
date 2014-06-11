@@ -1,8 +1,8 @@
 package com.cr.entity.hero;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -14,7 +14,6 @@ import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
-import com.cr.game.Game;
 import com.cr.input.KeyInput;
 import com.cr.world.World;
 
@@ -45,9 +44,12 @@ public class Hero extends Mob implements Collideable{
 	
 	public static Direction currentDir;
 	
+	public static Transform t;
+	
 	public Hero(World world) {
 		super(position, world);
 
+		t = new Transform();
 		position = new Vector2f(50,50);
 
 		head = new Head();
