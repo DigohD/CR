@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
@@ -35,10 +36,10 @@ public class PlayState extends GameState{
 		if(KeyInput.esc){
 			bg = true;
 			gsm.push(new PauseState(gsm));
-		}else if(KeyInput.c){
+		}else if(Input.getKey(Input.KEY_C)){
 //			bg = true;
 			gsm.push(new InventoryState(gsm));
-		}else if(KeyInput.v){
+		}else if(Input.getKey(Input.KEY_M)){
 //			bg = true;
 			gsm.push(new MaterialsState(gsm));
 		}else if(KeyInput.q){

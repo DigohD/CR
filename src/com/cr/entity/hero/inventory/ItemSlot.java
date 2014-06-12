@@ -26,9 +26,9 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable{
 	
 	@Override
 	public void render(Screen screen) {
-		screen.renderSprite(slotSprite, xPos, yPos);
+		screen.renderStaticSprite(slotSprite, xPos, yPos);
 		if(item != null)
-			screen.renderSprite(item.getIconSprite(), xPos, yPos);
+			screen.renderStaticSprite(item.getIconSprite(), xPos, yPos);
 		if(item != null && rect.contains(Mouse.getX(), Mouse.getY()))
 			item.renderDescription(screen);
 	}

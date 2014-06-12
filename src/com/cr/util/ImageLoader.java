@@ -56,28 +56,28 @@ public class ImageLoader {
 		imageLib.put("cursor", loadImage("/inventory/cursor.png"));
 		
 //		// Materials UI
-//		imageLib.put("basebutton", loadImage("image/materialui", "basebutton.png"));
-//		imageLib.put("essencesbutton", loadImage("image/materialui", "essencesbutton.png"));
-//		imageLib.put("mineralsbutton", loadImage("image/materialui", "mineralsbutton.png"));
+		imageLib.put("basebutton", loadImage("/materialui/basebutton.png"));
+		imageLib.put("essencesbutton", loadImage("/materialui/essencesbutton.png"));
+		imageLib.put("mineralsbutton", loadImage("/materialui/mineralsbutton.png"));
 //			
 //		// Materials
-//		imageLib.put("copper", loadImage("image", "copper.png"));
-//		imageLib.put("basiccloth", loadImage("image", "basiccloth.png"));
-//		imageLib.put("pyrite", loadImage("image", "pyrite.png"));
-//		imageLib.put("quartz", loadImage("image", "quartz.png"));
-//		imageLib.put("scrapwood", loadImage("image", "scrapwood.png"));
-//		imageLib.put("strangepowder", loadImage("image", "strangepowder.png"));
-//		imageLib.put("turquoise", loadImage("image", "turquoise.png"));
-//		imageLib.put("basicleather", loadImage("image", "basicleather.png"));
-//		imageLib.put("forestsoul", loadImage("image", "forestsoul.png"));
+		imageLib.put("copper", loadImage("/material/copper.png"));
+		imageLib.put("basiccloth", loadImage("/material/basiccloth.png"));
+		imageLib.put("pyrite", loadImage("/material/pyrite.png"));
+		imageLib.put("quartz", loadImage("/material/quartz.png"));
+		imageLib.put("scrapwood", loadImage("/material/scrapwood.png"));
+		imageLib.put("strangepowder", loadImage("/material/strangepowder.png"));
+		imageLib.put("turquoise", loadImage("/material/turquoise.png"));
+		imageLib.put("basicleather", loadImage("/material/basicleather.png"));
+		imageLib.put("forestsoul", loadImage("/material/forestsoul.png"));
 //	
 //		// Crafting UI
-//		imageLib.put("addbutton", loadImage("image/craftingui", "addbutton.png"));
-//		imageLib.put("backbutton", loadImage("image/craftingui", "backbutton.png"));
-//		imageLib.put("craftbutton", loadImage("image/craftingui", "craftbutton.png"));
-//		imageLib.put("sliderarrow", loadImage("image/craftingui", "sliderarrow.png"));
-//		imageLib.put("slider", loadImage("image/craftingui", "slider.png"));
-//		imageLib.put("craftingbg", loadImage("image/craftingui", "craftingbg.png"));
+		imageLib.put("addbutton", loadImage("/craftingui/addbutton.png"));
+		imageLib.put("backbutton", loadImage("/craftingui/backbutton.png"));
+		imageLib.put("craftbutton", loadImage("/craftingui/craftbutton.png"));
+		imageLib.put("sliderarrow", loadImage("/craftingui/sliderarrow.png"));
+		imageLib.put("slider", loadImage("/craftingui/slider.png"));
+		imageLib.put("craftingbg", loadImage("/craftingui/craftingbg.png"));
 //		
 //		// Patterns
 //		imageLib.put("knifepattern", loadImage("image", "knifepattern.png"));

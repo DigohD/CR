@@ -3,6 +3,7 @@ package com.cr.engine.graphics;
 import static org.lwjgl.opengl.GL11.*;
 
 import com.cr.game.GameStateManager;
+import com.cr.util.Camera;
 
 public class Screen {
 	
@@ -51,6 +52,14 @@ public class Screen {
 		sprite.updateTexCoords(row, col);
 		sprite.getTransform().translate(x, y, 0);
 		sprite.getTransform().scale(xScale, yScale, 1);
+		sprite.bind();
+		sprite.getMesh().render();
+		sprite.unbind();
+	}
+	
+	// Renders with coordinates relative to screen, rather than relative to the world
+	public void renderStaticSprite(Sprite sprite, float x, float y){
+		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), 0);
 		sprite.bind();
 		sprite.getMesh().render();
 		sprite.unbind();

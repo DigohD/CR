@@ -32,8 +32,8 @@ public abstract class MaterialSlot extends Button implements Renderable, Tickabl
 	
 	@Override
 	public void render(Screen screen){
-		screen.renderSprite(slotSprite, xPos, yPos);
-		screen.renderSprite(materialSprite, xPos, yPos);
+		screen.renderStaticSprite(slotSprite, xPos, yPos);
+		screen.renderStaticSprite(materialSprite, xPos, yPos);
 		
 //		Font font = new Font("Tahoma", 14, 14);
 //		g.setFont(font);

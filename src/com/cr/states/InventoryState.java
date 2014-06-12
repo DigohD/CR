@@ -3,11 +3,13 @@ package com.cr.states;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
+import com.cr.util.Camera;
 
 public class InventoryState extends GameState{
 
@@ -39,7 +41,7 @@ public class InventoryState extends GameState{
 		
 		Hero.updateInventory();
 		
-		if(KeyInput.space || exit.isClicked()) {
+		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;
@@ -63,9 +65,9 @@ public class InventoryState extends GameState{
 
 	@Override
 	public void render(Screen screen){
-		int xOffset = (Window.getWidth() - 800) / 2;
+		int xOffset =  (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
-		screen.renderSprite(bg, xOffset, yOffset);
+		screen.renderStaticSprite(bg, xOffset, yOffset);
 		inventory.render(screen);
 		exit.render(screen);
 //		g.setColor(Color.RED);

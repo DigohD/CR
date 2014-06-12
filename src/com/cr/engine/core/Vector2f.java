@@ -1,5 +1,7 @@
 package com.cr.engine.core;
 
+import java.awt.Point;
+
 /**
  * Class for representing a vector in a 2d coordinate space
  * 
@@ -194,6 +196,10 @@ public class Vector2f {
 	@Override
 	public String toString() {
 		return "(" + x + " " + y + ")";
+	}
+	
+	public Point toPoint(){
+		return new Point((int) x, (int) y);
 	}
 	
 	public boolean equals(Vector2f v){

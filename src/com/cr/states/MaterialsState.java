@@ -3,6 +3,7 @@ package com.cr.states;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.materials.BaseButton;
@@ -64,7 +65,7 @@ public class MaterialsState extends GameState{
 		
 //		Hero.updateInventory();
 		
-		if(KeyInput.space || exit.isClicked()) {
+		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;

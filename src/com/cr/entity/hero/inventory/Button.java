@@ -2,6 +2,7 @@ package com.cr.entity.hero.inventory;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.input.Input;
 import com.cr.entity.Tickable;
 import com.cr.input.Mouse;
 
@@ -17,11 +18,10 @@ public abstract class Button implements Tickable{
 	
 	@Override
 	public void tick(float dt) {
-		if(Mouse.getButton() == 1){
-			if(rect.contains(Mouse.getX(), Mouse.getY())){
+		if(Input.getMouse(1)){
+			System.out.println("Button clicked!");
+			if(rect.contains(Input.getMousePosition().toPoint())){
 				clicked();
-				if(resetsButton)
-					Mouse.resetButton();
 			}
 		}
 	}
