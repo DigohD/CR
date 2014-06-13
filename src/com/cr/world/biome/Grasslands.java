@@ -25,7 +25,7 @@ public class Grasslands{
 	private final int SAND_COUNT = 1000;
 	
 	private final float GRASS_WEIGHT = 0.9f, GRASS_LOSS = 0.010f;
-	private final int GRASS_COUNT = 25;
+	private final int GRASS_COUNT = 250;
 	
 	private TileLayer bottomLayer, middleLayer, topLayer;
 	
