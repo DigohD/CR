@@ -17,9 +17,8 @@ public abstract class Button implements Tickable{
 	}
 	
 	@Override
-	public void tick(float dt) {
-		if(Input.getMouse(1)){
-			System.out.println("Button clicked!");
+	public void tick(float dt){
+		if(Input.getMouse(0)){
 			if(rect.contains(Input.getMousePosition().toPoint())){
 				clicked();
 			}

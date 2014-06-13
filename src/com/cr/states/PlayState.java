@@ -32,7 +32,6 @@ public class PlayState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-	
 		if(KeyInput.esc){
 			bg = true;
 			gsm.push(new PauseState(gsm));

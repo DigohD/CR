@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Window;
 
 public class Input {
 
@@ -181,7 +182,7 @@ public class Input {
 		}
 
 		public static Vector2f getMousePosition(){
-			return new Vector2f(Mouse.getX(), Mouse.getY());
+			return new Vector2f(Mouse.getX(), Window.getHeight() - Mouse.getY());
 		}
 
 		public static void setMousePosition(Vector2f pos){

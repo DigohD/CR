@@ -21,10 +21,13 @@ public class ImageLoader {
 		imageLib.put("sand", loadImage("/tiles/sand.png"));
 		imageLib.put("stone", loadImage("/tiles/stone.png"));
 		imageLib.put("water", loadImage("/tiles/water.png"));
-		
-		//TileLayers
-		
 
+		// Nature
+		imageLib.put("tree1", loadImage("/prop/nature/tree1.png"));
+		imageLib.put("tree2", loadImage("/prop/nature/tree2.png"));
+		imageLib.put("tree3", loadImage("/prop/nature/tree3.png"));
+		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
+		
 		// Hero
 	//	imageLib.put("hero", loadImage("/hero/hero.png"));
 		imageLib.put("herohead", loadImage("/hero/herohead.png"));
