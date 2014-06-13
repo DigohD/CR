@@ -14,8 +14,8 @@ public class Dummy extends Enemy{
 	public Dummy(Vector2f position, World world) {
 		super(position, world);
 		sprite = new Sprite("hero");
-		width = sprite.getWidth();
-		height = sprite.getHeight();
+		width = sprite.getSpriteWidth();
+		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		EntityManager.addEntity(this);
 	}

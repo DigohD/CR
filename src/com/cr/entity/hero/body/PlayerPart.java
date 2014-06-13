@@ -23,8 +23,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset){
 		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), Hero.t);
 		
-		width = sprite.getWidth();
-		height = sprite.getHeight();
+		width = sprite.getSpriteWidth();
+		height = sprite.getSpriteHeight();
 		
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;

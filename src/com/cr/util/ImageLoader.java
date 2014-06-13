@@ -24,6 +24,8 @@ public class ImageLoader {
 		
 		//TileLayers
 		
+		//Fonts
+		imageLib.put("uppercase", loadImage("/font/uppercase.png"));
 
 		// Hero
 	//	imageLib.put("hero", loadImage("/hero/hero.png"));

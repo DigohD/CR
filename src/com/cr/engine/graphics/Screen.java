@@ -33,6 +33,10 @@ public class Screen {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	
+	public void drawString(String text, float x, float y){
+		
+	}
+	
 	public void renderSprite(Sprite sprite, float x, float y){
 		sprite.getTransform().translate(x, y, 0);
 		sprite.bind();

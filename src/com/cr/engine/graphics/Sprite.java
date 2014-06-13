@@ -112,6 +112,8 @@ public class Sprite {
 		tAtlas = true;
 	}
 	
+	
+	
 	public void calcTexCoords(float row, float col){
 		xLow = col / cols;
 		xHigh = xLow + (1 / cols);
@@ -156,11 +158,11 @@ public class Sprite {
 		return transform;
 	}
 
-	public int getWidth() {
+	public int getSpriteWidth() {
 		return width;
 	}
 
-	public int getHeight() {
+	public int getSpriteHeight() {
 		return height;
 	}
 

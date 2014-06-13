@@ -39,8 +39,8 @@ public abstract class Item implements Renderable, Tickable{
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
 		
-		width = sprite.getWidth() / 4;
-		height = sprite.getHeight();
+		width = sprite.getSpriteWidth() / 4;
+		height = sprite.getSpriteHeight();
 		
 		this.name = name;
 		
