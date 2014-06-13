@@ -251,7 +251,7 @@ public class CraftingState extends GameState{
 		
 //		Hero.updateInventory();
 		
-		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked() || isCrafted) {
+		if(Input.getKey(Input.SPACE) || exit.isClicked() || isCrafted) {
 			gsm.pop();
 		}
 		

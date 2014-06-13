@@ -79,7 +79,7 @@ public class BiomeTestState extends GameState{
 	public void tick(float dt) {
 		exit.tick(dt);
 
-		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked()) {
+		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;
