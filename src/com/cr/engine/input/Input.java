@@ -163,6 +163,11 @@ public class Input {
 			return !getKey(keyCode) && lastKeys[keyCode];
 		}
 
+		/**
+		 * 0 -> left click, 1 -> right click
+		 * @param mouseButton
+		 * @return
+		 */
 		public static boolean getMouse(int mouseButton){
 			return Mouse.isButtonDown(mouseButton);
 		}

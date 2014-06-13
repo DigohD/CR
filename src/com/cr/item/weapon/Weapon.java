@@ -22,12 +22,12 @@ public abstract class Weapon extends Item{
 	public Weapon(String imageString, int horXOffset, int vertXOffset,
 			int xOffset, int yOffset, String name) {
 		super(imageString, horXOffset, vertXOffset, xOffset, yOffset, name);
-		hitBox = new Rectangle(x0 + (int)Camera.getCamX(), x1 + (int)Camera.getCamY(), width, height);
+		hitBox = new Rectangle(x0, x1, width, height);
 	}
 	
 	@Override
 	public void tick(float dt){
-		hitBox.setLocation(x0 + (int)Camera.getCamX(), x1 + (int)Camera.getCamY());
+		hitBox.setLocation(x0, x1);
 		CDTimer--;
 		
 		tickPassives(dt);

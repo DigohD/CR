@@ -71,8 +71,8 @@ public abstract class Item implements Renderable, Tickable{
 		}
 		x0 = drawX + xOffset + horXOffset + tempXOffset;
 		x1 = drawY + yOffset + tempYOffset;
-		y0 = drawX + width + xOffset + horXOffset + tempXOffset - (int) Camera.getCamX();
-		y1 = drawY + height + yOffset + tempYOffset - (int) Camera.getCamY();
+		y0 = drawX + width + xOffset + horXOffset + tempXOffset;
+		y1 = drawY + height + yOffset + tempYOffset;
 		
 		screen.renderSprite(sprite, x0, x1, 0, spriteID);
 	}

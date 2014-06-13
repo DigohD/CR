@@ -15,7 +15,7 @@ import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
-import com.cr.input.KeyInput;
+import com.cr.entity.hero.misc.FootPrint;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
@@ -117,16 +117,16 @@ public class Hero extends Mob implements Collideable{
 		maxHP = StatsSheet.getMaxHP();
 		addHealth(0);
 		
-		//move(dt);
+		move(dt);
 		
 		head.tick(dt);
 		body.tick(dt);
 		rightHand.tick(dt);
 		leftHand.tick(dt);
 		
-		if(rightHand.getItem() != null && Input.getMouse(1)){
+		if(rightHand.getItem() != null && Input.getMouse(0)){
 			rightHand.getItem().activate();
-		}if(leftHand.getItem() != null && Input.getMouse(3)){
+		}if(leftHand.getItem() != null && Input.getMouse(1)){
 			leftHand.getItem().activate();
 		}
 	}
@@ -172,7 +172,7 @@ public class Hero extends Mob implements Collideable{
 	
 	@Override
 	protected void move(float dt){
-		position = position.add(velocity.mul(dt));
+		
 		
 		if(printTimer++ > 3){
 			//new FootPrint();
