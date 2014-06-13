@@ -36,10 +36,10 @@ public class PlayState extends GameState{
 		if(KeyInput.esc){
 			bg = true;
 			gsm.push(new PauseState(gsm));
-		}else if(Input.getKey(Input.KEY_C)){
+		}else if(Input.getKey(Input.C)){
 //			bg = true;
 			gsm.push(new InventoryState(gsm));
-		}else if(Input.getKey(Input.KEY_M)){
+		}else if(Input.getKey(Input.M)){
 //			bg = true;
 			gsm.push(new MaterialsState(gsm));
 		}else if(KeyInput.q){

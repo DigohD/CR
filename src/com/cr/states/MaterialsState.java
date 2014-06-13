@@ -65,7 +65,7 @@ public class MaterialsState extends GameState{
 		
 //		Hero.updateInventory();
 		
-		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked()) {
+		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;

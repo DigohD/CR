@@ -6,6 +6,7 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.engine.input.Input;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.body.Body;
@@ -16,6 +17,7 @@ import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
 import com.cr.input.KeyInput;
 import com.cr.world.World;
+import com.cr.world.tile.Tile;
 
 public class Hero extends Mob implements Collideable{
 	
@@ -76,7 +78,24 @@ public class Hero extends Mob implements Collideable{
 		materials = new Materials();
 	}
 	
-
+	protected boolean collisionWithTile(float x, float y){
+		int xOffset = 4;
+		int yOffset = 25;
+		int nextX = (int)position.x  + (int)x;
+		int nextY = (int)position.y  + (int)y - yOffset;
+		
+		for(int i = 0; i < 4; i++){
+			int xPos =  (nextX + i % 2 * 10) / (Tile.getTileWidth());
+			int yPos =  (nextY + i / 2 * 10 + 32) / (Tile.getTileHeight());
+			if(world.tileExists(xPos, yPos)){
+				if(!world.getTile(xPos, yPos).isWalkable()){
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 	
 	@Override
 	public void tick(float dt) {
@@ -86,22 +105,30 @@ public class Hero extends Mob implements Collideable{
 
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
+		
+		if(!collisionWithTile(targetVel.x, 0)){
+			position.x = position.x + targetVel.x*dt;
+		}
+		
+		if(!collisionWithTile(0, targetVel.y)){
+			position.y = position.y + targetVel.y*dt;
+		}
 
 		maxHP = StatsSheet.getMaxHP();
 		addHealth(0);
 		
-		move(dt);
+		//move(dt);
 		
 		head.tick(dt);
 		body.tick(dt);
 		rightHand.tick(dt);
 		leftHand.tick(dt);
 		
-//		if(rightHand.getItem() != null && Mouse.getButton() == 1){
-//			rightHand.getItem().activate();
-//		}if(leftHand.getItem() != null && Mouse.getButton() == 3){
-//			leftHand.getItem().activate();
-//		}
+		if(rightHand.getItem() != null && Input.getMouse(1)){
+			rightHand.getItem().activate();
+		}if(leftHand.getItem() != null && Input.getMouse(3)){
+			leftHand.getItem().activate();
+		}
 	}
 
 	@Override

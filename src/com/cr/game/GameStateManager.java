@@ -32,8 +32,8 @@ public class GameStateManager {
 		return states.top.next.data;
 	}
 	
-	public Node<GameState> peek(){
-		return states.top;
+	public GameState peek(){
+		return states.peek();
 	}
 	
 	public void tick(float dt){

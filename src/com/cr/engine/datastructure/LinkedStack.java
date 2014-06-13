@@ -25,6 +25,10 @@ public class LinkedStack<E> {
 		}
 	}
 	
+	public E peek(){
+		return top.data;
+	}
+	
 	public E pop(E elem){
 		return elem;
 	}

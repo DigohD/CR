@@ -29,7 +29,7 @@ public class Game extends CoreEngine{
 	@Override
 	public void getInput() {
 		Input.tick();
-		if(Input.getKey(Input.KEY_ESCAPE))
+		if(Input.getKey(Input.ESCAPE))
 			stop();
 	}
 

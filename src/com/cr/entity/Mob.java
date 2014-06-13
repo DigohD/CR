@@ -47,22 +47,7 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		return target;
 	}
 	
-	protected boolean collisionWithTile(float x, float y){
-		int nextX = (int)position.x  + (int)x;
-		int nextY = (int)position.y  + (int)y;
-		
-		for(int i = 0; i < 4; i++){
-			int xPos =  (nextX + i % 2 * 12) / (Tile.getTileWidth());
-			int yPos =  (nextY + i / 2 * 12 + 32) / (Tile.getTileHeight());
-			if(world.tileExists(xPos, yPos)){
-				if(!world.getTile(xPos, yPos).isWalkable()){
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
+	
 
 	protected void move(float dt){
 		distance = velocity.mul(dt);
