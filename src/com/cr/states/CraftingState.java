@@ -15,6 +15,7 @@ import com.cr.crafting.ui.SliderArrow;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
@@ -250,7 +251,7 @@ public class CraftingState extends GameState{
 		
 //		Hero.updateInventory();
 		
-		if(KeyInput.space || exit.isClicked() || isCrafted) {
+		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked() || isCrafted) {
 			gsm.pop();
 		}
 		
@@ -273,7 +274,7 @@ public class CraftingState extends GameState{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
-		screen.renderSprite(bg, xOffset, yOffset);
+		screen.renderStaticSprite(bg, xOffset, yOffset);
 		
 		if(phase == Phase.PATTERN)
 			renderPatternPhase(screen);
@@ -313,8 +314,8 @@ public class CraftingState extends GameState{
 		for(BaseSlot bs : bases)
 			bs.renderHoover(screen);
 		
-		screen.renderSprite(craftingbg, xOffset + 10, yOffset + 400);
-		screen.renderSprite(slider, xOffset + 23, yOffset + 470);
+		screen.renderStaticSprite(craftingbg, xOffset + 10, yOffset + 400);
+		screen.renderStaticSprite(slider, xOffset + 23, yOffset + 470);
 		add.render(screen);
 		back.render(screen);
 		sliderArrow.render(screen);
@@ -344,8 +345,8 @@ public class CraftingState extends GameState{
 			for(MineralSlot ms : mineral)
 				ms.renderHoover(screen);
 		}
-		screen.renderSprite(craftingbg, xOffset + 10, yOffset + 400);
-		screen.renderSprite(slider, xOffset + 23, yOffset + 470);
+		screen.renderStaticSprite(craftingbg, xOffset + 10, yOffset + 400);
+		screen.renderStaticSprite(slider, xOffset + 23, yOffset + 470);
 		craft.render(screen);
 		add.render(screen);
 		back.render(screen);

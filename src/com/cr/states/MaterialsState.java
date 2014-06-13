@@ -91,7 +91,7 @@ public class MaterialsState extends GameState{
 	public void render(Screen screen){
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
-		screen.renderSprite(bg, xOffset, yOffset);
+		screen.renderStaticSprite(bg, xOffset, yOffset);
 //		inventory.render(g);
 		base.render(screen);
 		essences.render(screen);

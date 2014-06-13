@@ -45,10 +45,10 @@ public class PlayState extends GameState{
 		}else if(KeyInput.q){
 //			bg = true;
 			gsm.push(new StatsState(gsm));
-		}else if(KeyInput.shift){
+		}else if(Input.getKey(Input.KEY_F1)){
 //			bg = true;
 			gsm.push(new BiomeTestState(gsm));
-		}else if(KeyInput.f){
+		}else if(Input.getKey(Input.KEY_F)){
 //			bg = true;
 			gsm.push(new CraftingState(gsm));
 		}

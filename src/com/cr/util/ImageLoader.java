@@ -80,12 +80,12 @@ public class ImageLoader {
 		imageLib.put("craftingbg", loadImage("/craftingui/craftingbg.png"));
 //		
 //		// Patterns
-//		imageLib.put("knifepattern", loadImage("image", "knifepattern.png"));
-//		imageLib.put("hammerpattern", loadImage("image", "hammerpattern.png"));
-//		imageLib.put("helmpattern", loadImage("image", "helmpattern.png"));
+		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));
+		imageLib.put("hammerpattern", loadImage("/pattern/hammerpattern.png"));
+		imageLib.put("helmpattern", loadImage("/pattern/helmpattern.png"));
 //		
 //		// Particles
-//		imageLib.put("blood", loadImage("image", "blood.png"));
+		imageLib.put("blood", loadImage("/particle/blood.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String path){

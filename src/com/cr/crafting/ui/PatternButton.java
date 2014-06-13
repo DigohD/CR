@@ -26,7 +26,7 @@ public class PatternButton extends Button implements Renderable{
 
 	@Override
 	public void render(Screen screen) {
-		screen.renderSprite(sprite, xPos, yPos);
+		screen.renderStaticSprite(sprite, xPos, yPos);
 	}
 
 	@Override

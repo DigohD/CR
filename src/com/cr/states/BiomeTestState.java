@@ -3,9 +3,14 @@ package com.cr.states;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.ExitButton;
@@ -74,7 +79,7 @@ public class BiomeTestState extends GameState{
 	public void tick(float dt) {
 		exit.tick(dt);
 
-		if(KeyInput.space || exit.isClicked()) {
+		if(Input.getKey(Input.KEY_SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;
