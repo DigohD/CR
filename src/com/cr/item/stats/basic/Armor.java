@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.item.stats.AffectsDamageTaken;
 import com.cr.item.stats.Stat;
 
@@ -31,7 +31,7 @@ public class Armor extends Stat implements AffectsDamageTaken{
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addArmor(amount);
+		HeroSheet.addArmor(amount);
 	}
 
 	@Override

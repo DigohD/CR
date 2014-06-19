@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.input.Mouse;
@@ -41,8 +42,8 @@ public class SliderArrow extends Button implements Renderable{
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
 		isClicked = true;
-		if(Mouse.getX() < xOffset + 565 && Mouse.getX() > xOffset + 35){
-			xPos = Mouse.getX() - 19;
+		if(Input.getMousePosition().x < xOffset + 565 && Input.getMousePosition().y > xOffset + 35){
+			xPos = (int) (Input.getMousePosition().x - 19);
 			rect = new Rectangle(xPos - 20, yPos, 80, 34);
 			float min = xOffset + 35;
 			float max = xOffset + 565;

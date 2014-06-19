@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.item.stats.Stat;
 
 public class MaxHP extends Stat{
@@ -31,7 +31,7 @@ public class MaxHP extends Stat{
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addMaxHP(amount);
+		HeroSheet.addMaxHP(amount);
 	}
 	
 	@Override

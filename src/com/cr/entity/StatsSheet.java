@@ -1,28 +1,20 @@
-package com.cr.entity.hero;
+package com.cr.entity;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 
 public class StatsSheet {
 
-	private static float armor;
-	private static float maxHP = 15;
-	private static float strength, dexterity, intellect, endurance;
-	private static float lifeRegain;
-	private static float haste;
+	protected float armor;
+	protected float maxHP;
+	protected float lifeRegain;
+	protected float haste;
+	protected float damageBase, damageDice;
 	
-	public static void cleanseSheet(){
+	public StatsSheet(){
 		armor = 0;
-		
 		maxHP = 15;
-		
-		strength = 10;
-		dexterity = 10;
-		intellect = 10;
-		endurance = 10;
-		
 		haste = 0;
-		
 		lifeRegain = 0;
 	}
 	
@@ -71,59 +63,27 @@ public class StatsSheet {
 	}
 	
 	
-	public static void addArmor(float amount){
+	public void addArmor(float amount){
 		armor = armor + amount;
 	}
 	
-	public static void addMaxHP(float amount){
+	public void addMaxHP(float amount){
 		maxHP = maxHP + amount;
 	}
-	
-	public static void addStrength(float amount){
-		strength = strength + amount;
-	}
-	
-	public static void addDexterity(float amount){
-		dexterity = dexterity + amount;
-	}
-	
-	public static void addIntellect(float amount){
-		intellect = intellect + amount;
-	}
-	
-	public static void addEndurance(float amount){
-		endurance = endurance + amount;
-	}
 
-	public static void addHaste(float amount){
+	public void addHaste(float amount){
 		haste = haste + amount;
 	}
 	
-	public static float getArmor() {
+	public float getArmor() {
 		return armor;
 	}
 
-	public static float getMaxHP() {
+	public float getMaxHP() {
 		return maxHP;
 	}
-
-	public static float getStrength() {
-		return strength;
-	}
-
-	public static float getDexterity() {
-		return dexterity;
-	}
-
-	public static float getIntellect() {
-		return intellect;
-	}
-
-	public static float getEndurance() {
-		return endurance;
-	}
 	
-	public static float getHaste(){
+	public float getHaste(){
 		return haste;
 	}
 	

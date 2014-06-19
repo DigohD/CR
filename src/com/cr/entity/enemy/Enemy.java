@@ -10,7 +10,6 @@ import com.cr.world.World;
 public abstract class Enemy extends Mob implements Collideable{
 	
 	protected Rectangle rect;
-	protected float hp = 300;
 	
 	public Enemy(Vector2f position, World world) {
 		super(position, world);
@@ -21,19 +20,9 @@ public abstract class Enemy extends Mob implements Collideable{
 		
 	}
 	
-	public abstract void death();
-	
 	@Override
 	public Rectangle getRect() {
 		return rect;
-	}
-
-	public float getHp() {
-		return hp;
-	}
-
-	public void setHp(float hp) {
-		this.hp = hp;
 	}
 	
 	

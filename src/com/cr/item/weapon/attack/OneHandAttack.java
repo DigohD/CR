@@ -132,7 +132,7 @@ public class OneHandAttack extends Projectile implements Renderable{
 				}
 			}
 			
-			e.setHp(e.getHp() - damage);
+			e.removeHealth(damage);
 			
 			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
 			new DamageText(txtPos, damage);

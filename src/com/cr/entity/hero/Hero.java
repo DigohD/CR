@@ -32,9 +32,6 @@ public class Hero extends Mob implements Collideable{
 	private Body body;
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
-	
-	private float accSpeed = 3.5f;
-	private float speed = 15f;
 
 	private int printTimer;
 
@@ -70,8 +67,8 @@ public class Hero extends Mob implements Collideable{
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		currentDir = Direction.SOUTH;
 		
-		StatsSheet.cleanseSheet();
-		maxHP = StatsSheet.getMaxHP();
+		HeroSheet.cleanseSheet();
+		maxHP = HeroSheet.getMaxHP();
 		currentHP = 1;
 		
 		inventory = new Inventory();
@@ -114,7 +111,7 @@ public class Hero extends Mob implements Collideable{
 			position.y = position.y + targetVel.y*dt;
 		}
 
-		maxHP = StatsSheet.getMaxHP();
+		maxHP = HeroSheet.getMaxHP();
 		addHealth(0);
 		
 		move(dt);
@@ -190,10 +187,16 @@ public class Hero extends Mob implements Collideable{
 		leftHand.setItem(inventory.getlHSlot().getItem());
 		head.setItem(inventory.getHeadSlot().getItem());
 		
-		StatsSheet.cleanseSheet();
+		HeroSheet.cleanseSheet();
 		
 		if(head.getItem() != null)
 			head.getItem().getStats().applyStats();
+	}
+	
+	@Override
+	public void death() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	@Override
@@ -263,6 +266,8 @@ public class Hero extends Mob implements Collideable{
 	public static void setCurrentDir(Direction currentDir) {
 		Hero.currentDir = currentDir;
 	}
+
+	
 	
 	
 

@@ -26,7 +26,11 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	}
 	
 	protected Direction currentDir;
+	
 	protected float maxHP, currentHP;
+	
+	protected float accSpeed = 3.5f;
+	protected float speed = 15f;
 	
 	protected boolean moving = false;
 	
@@ -35,7 +39,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		this.world = world;
 		transform = new Transform();
 		distance = new Vector2f(0,0);
-
 	}
 
 	protected float approachTarget(float target, float current, float dt){
@@ -46,8 +49,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 			return current - dt;
 		return target;
 	}
-	
-	
 
 	protected void move(float dt){
 		distance = velocity.mul(dt);
@@ -98,5 +99,19 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		if(currentHP > maxHP)
 			currentHP = maxHP;
 	}
+
+	public void removeHealth(float amount){
+		currentHP = currentHP - amount;
+		if(currentHP < 0)
+			death();
+	}
+	
+	public float getCurrentHP() {
+		return currentHP;
+	}
+	
+	public abstract void death();
+	
+	
 
 }

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.Mob;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.item.stats.AffectBearerOnHit;
 import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;

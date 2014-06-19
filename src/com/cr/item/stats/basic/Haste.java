@@ -3,7 +3,7 @@ package com.cr.item.stats.basic;
 import java.awt.Color;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.item.stats.Stat;
 
 public class Haste extends Stat{
@@ -32,7 +32,7 @@ public class Haste extends Stat{
 
 	@Override
 	public void applyToSheet() {
-		StatsSheet.addHaste(base);
+		HeroSheet.addHaste(base);
 	}
 	
 	@Override

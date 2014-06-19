@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
@@ -63,7 +63,7 @@ public class StatsState extends GameState{
 		int yOffset = (Window.getHeight() - 600) / 2;
 		screen.renderSprite(bg, xOffset, yOffset);
 		
-		StatsSheet.render(screen);
+		HeroSheet.render(screen);
 		
 		exit.render(screen);
 //		g.setColor(Color.RED);

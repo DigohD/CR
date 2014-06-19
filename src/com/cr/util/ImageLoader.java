@@ -35,7 +35,7 @@ public class ImageLoader {
 		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
 		
 		// Hero
-	//	imageLib.put("hero", loadImage("/hero/hero.png"));
+//		imageLib.put("hero", loadImage("/hero/hero.png"));
 		imageLib.put("herohead", loadImage("/hero/herohead.png"));
 		imageLib.put("herobody", loadImage("/hero/herobody.png"));
 		imageLib.put("herorighthand", loadImage("/hero/herorighthand.png"));
