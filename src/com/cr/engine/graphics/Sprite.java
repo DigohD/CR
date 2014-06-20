@@ -143,7 +143,22 @@ public class Sprite {
 		else textureAtlas.bind();
 	}
 	
+	public void bind2(){
+		shader.bind();
+		shader.setUniform("transformation", transform.getOrthoTransformation2());
+		if(!tAtlas)
+			texture.bind();
+		else textureAtlas.bind();
+	}
+	
 	public void unbind(){
+		if(!tAtlas)
+			texture.unbind();
+		else textureAtlas.unbind();
+		shader.unbind();
+	}
+	
+	public void unbind2(){
 		if(!tAtlas)
 			texture.unbind();
 		else textureAtlas.unbind();
@@ -165,9 +180,21 @@ public class Sprite {
 	public int getSpriteHeight() {
 		return height;
 	}
+	
+	public int getAtlasWidth() {
+		return atlasWidth;
+	}
+
+	public int getAtlasHeight() {
+		return atlasHeight;
+	}
 
 	public Texture getTexture() {
 		return texture;
+	}
+	
+	public Texture getTextureAtlas() {
+		return textureAtlas;
 	}
 
 	public float getRows() {

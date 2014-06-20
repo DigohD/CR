@@ -4,7 +4,7 @@ import com.cr.engine.core.CoreEngine;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.states.PlayState;
+import com.cr.states.MenuState;
 import com.cr.util.ImageLoader;
 import com.cr.world.World;
 
@@ -14,7 +14,7 @@ public class Game extends CoreEngine{
 	private Screen screen;
 	
 	public Game(){
-		boolean fullscreen = true;
+		boolean fullscreen = false;
 		Window.createWindow(1200, 675, fullscreen);
 		init();
 	}
@@ -23,7 +23,7 @@ public class Game extends CoreEngine{
 		new ImageLoader();
 		screen = new Screen();
 		gsm = new GameStateManager();
-		gsm.push(new PlayState(gsm));
+		gsm.push(new MenuState(gsm));
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class Game extends CoreEngine{
 	
 	@Override
 	public void cleanUp() {
-		World.getShader().deleteShader();
+		
 	}
 	
 	public static void main(String[] args){

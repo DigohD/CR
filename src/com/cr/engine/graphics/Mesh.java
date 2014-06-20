@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -177,13 +178,17 @@ public class Mesh {
 	
 	public void render(){
 		glBindVertexArray(vaoID);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
-		
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 		glBindVertexArray(0);
+		
 	}
 
 }

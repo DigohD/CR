@@ -50,6 +50,10 @@ public class Transform {
 		return ortho.mul(getViewMatrix().mul(getModelMatrix()));
 	}
 	
+	public Matrix4f getOrthoTransformation2(){
+		return ortho.mul((getModelMatrix()));
+	}
+	
 	public Matrix4f getPerspectiveTransformation(){
 		return perspective.mul(getModelMatrix());
 	}

@@ -40,7 +40,7 @@ public class Input {
 		public static final int P               = 0x19;
 		public static final int LBRACKET        = 0x1A;
 		public static final int RBRACKET        = 0x1B;
-		public static final int RETURN          = 0x1C; /* Enter on main keyboard */
+		public static final int ENTER          = 0x1C; /* Enter on main keyboard */
 		public static final int LCONTROL        = 0x1D;
 		public static final int A               = 0x1E;
 		public static final int S               = 0x1F;

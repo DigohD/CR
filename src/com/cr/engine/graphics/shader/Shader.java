@@ -119,8 +119,6 @@ public class Shader {
 	}
 	
 	public void deleteShader(){
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
 		glDeleteProgram(shaderProgram);
 	}
 	

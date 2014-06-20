@@ -7,8 +7,12 @@ import com.cr.util.Camera;
 
 public class Screen {
 	
+
+	
 	public Screen(){
 		initGL();
+		
+		
 	}
 	
 	private void initGL(){
@@ -33,8 +37,8 @@ public class Screen {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	
-	public void drawString(String text, float x, float y){
-		
+	public void renderFont(Font font, float x, float y, float scale){
+		font.renderFont(x, y, scale);
 	}
 	
 	public void renderSprite(Sprite sprite, float x, float y){
