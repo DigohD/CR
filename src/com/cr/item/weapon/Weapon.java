@@ -3,7 +3,7 @@ package com.cr.item.weapon;
 import java.awt.Rectangle;
 
 import com.cr.entity.Collideable;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.item.activation.ItemObject;
@@ -52,7 +52,7 @@ public abstract class Weapon extends Item{
 		for(Stat s : stats.getStats()){
 			if(s instanceof CoolDown){
 				CD = (int) ((CoolDown) s).getAmount();
-				CD = (int) (CD - StatsSheet.getHaste());
+				CD = (int) (CD - HeroSheet.getHaste());
 			}	
 		}
 		

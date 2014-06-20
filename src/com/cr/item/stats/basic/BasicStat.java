@@ -3,7 +3,7 @@ package com.cr.item.stats.basic;
 import java.awt.Color;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.entity.hero.StatsSheet;
+import com.cr.entity.hero.HeroSheet;
 import com.cr.item.stats.Stat;
 
 public class BasicStat extends Stat{
@@ -49,16 +49,16 @@ public class BasicStat extends Stat{
 	public void applyToSheet() {
 		switch(type){
 			case STRENGTH:
-				StatsSheet.addStrength(amount);
+				HeroSheet.addStrength(amount);
 				break;
 			case DEXTERITY:
-				StatsSheet.addDexterity(amount);
+				HeroSheet.addDexterity(amount);
 				break;
 			case INTELLECT:
-				StatsSheet.addIntellect(amount);
+				HeroSheet.addIntellect(amount);
 				break;
 			case ENDURANCE:
-				StatsSheet.addEndurance(amount);
+				HeroSheet.addEndurance(amount);
 				break;
 		}
 	}
