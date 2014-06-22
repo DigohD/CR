@@ -1,7 +1,5 @@
 package com.cr.states;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 
 import com.cr.crafting.pattern.Pattern;
@@ -12,9 +10,11 @@ import com.cr.crafting.ui.BackButton;
 import com.cr.crafting.ui.CraftButton;
 import com.cr.crafting.ui.PatternButton;
 import com.cr.crafting.ui.SliderArrow;
+import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
@@ -31,8 +31,6 @@ import com.cr.entity.hero.materials.Materials.Minerals;
 import com.cr.entity.hero.materials.MineralSlot;
 import com.cr.entity.hero.materials.MineralsButton;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoaderOld;
 
 public class CraftingState extends GameState{
 
@@ -79,6 +77,10 @@ public class CraftingState extends GameState{
 	
 	private int xOffset = (Window.getWidth() - 800) / 2;
 	private int yOffset = (Window.getHeight() - 600) / 2;
+	
+	//Font f1 = new Font(activePattern.getName(), FontColor.WHITE);
+	
+	boolean aPattern = false;
 	
 	public CraftingState(GameStateManager gsm){
 		super(gsm);
@@ -269,6 +271,8 @@ public class CraftingState extends GameState{
 //		}
 	}
 
+	
+	
 	@Override
 	public void render(Screen screen){
 		int xOffset = (Window.getWidth() - 800) / 2;
@@ -284,6 +288,8 @@ public class CraftingState extends GameState{
 			renderSecondaryPhase(screen);
 		
 		if(phase != Phase.PATTERN){
+			
+			//screen.renderFont(f1, xOffset + 20, yOffset - 10, 0.25f);
 //			Font bigFont = new Font("Tahoma", 36, 36);
 //			screen.setFont(bigFont);
 //			screen.setColor(Color.WHITE);

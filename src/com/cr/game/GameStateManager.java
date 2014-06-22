@@ -32,6 +32,10 @@ public class GameStateManager {
 		return states.top.next.data;
 	}
 	
+	/**
+	 * Returns the current state
+	 * @return
+	 */
 	public GameState peek(){
 		return states.peek();
 	}

@@ -12,7 +12,7 @@ public class MenuState extends GameState{
 	Font font;
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
-		font = new Font("Hello", FontColor.GREEN);
+		font = new Font("Press Enter to Play!", FontColor.GREEN_DARK);
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class MenuState extends GameState{
 
 	@Override
 	public void render(Screen screen) {
-		screen.renderFont(font, Window.getWidth()/2 - 100, Window.getHeight()/2 - 100, 0.3f);
+		screen.renderFont(font, Window.getWidth()/2 - 300, Window.getHeight()/2 - 100, 0.3f);
 	}
 
 	
