@@ -29,6 +29,8 @@ public class Damage{
 	
 	public void addDamageBase(float damageBase) {
 		this.damageBase += damageBase;
+		if(damageBase < 1)
+			damageBase = 1;
 	}
 
 	public float getDamageDice() {
@@ -37,6 +39,8 @@ public class Damage{
 
 	public void setDamageDice(float damageDice) {
 		this.damageDice = damageDice;
+		if(damageBase < 0)
+			damageDice = 0;
 	}
 	
 	public void addDamageDice(float damageDice) {

@@ -21,6 +21,7 @@ public class Dummy extends Enemy{
 	@Override
 	public void tick(float dt) {
 		rect.setLocation((int)position.x,(int)position.y);
+		behaviour.tick(dt);
 	}
 
 	@Override
