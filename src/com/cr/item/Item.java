@@ -12,6 +12,7 @@ import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.StatsList;
 import com.cr.util.Camera;
+import com.cr.world.World;
 
 public abstract class Item implements Renderable, Tickable{
 	
@@ -32,7 +33,7 @@ public abstract class Item implements Renderable, Tickable{
 	protected Vector2f pos;
 	
 	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset, String name){
-		sprite = new Sprite(imageString);
+		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), Hero.t);
 		iconSprite = new Sprite(imageString + "icon");
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
