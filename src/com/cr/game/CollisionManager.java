@@ -4,10 +4,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cr.combat.Projectile;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
-import com.cr.item.activation.Projectile;
 import com.cr.item.weapon.Weapon;
 import com.cr.engine.core.Vector2f;
 

@@ -3,13 +3,13 @@ package com.cr.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cr.combat.Projectile;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
-import com.cr.item.activation.Projectile;
 import com.cr.world.World;
 
 public class EntityManager {

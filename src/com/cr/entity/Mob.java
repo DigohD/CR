@@ -1,5 +1,9 @@
 package com.cr.entity;
 
+import java.util.ArrayList;
+
+import com.cr.combat.Damage;
+import com.cr.combat.DamagePacket;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.entity.Entity;
@@ -100,10 +104,14 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 			currentHP = maxHP;
 	}
 
-	public void removeHealth(float amount){
-		currentHP = currentHP - amount;
-		if(currentHP < 0)
-			death();
+	public void takeDamage(DamagePacket packet){
+		ArrayList<Damage> dmgs = packet.getDmgs();
+		
+		for(Damage x : dmgs){
+			currentHP = currentHP - x.calculateDamage();
+			if(currentHP < 0)
+				death();
+		}
 	}
 	
 	public float getCurrentHP() {

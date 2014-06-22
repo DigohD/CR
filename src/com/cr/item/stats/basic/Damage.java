@@ -2,12 +2,14 @@ package com.cr.item.stats.basic;
 
 import java.awt.Color;
 
+import com.cr.combat.DamagePacket;
+import com.cr.combat.Damage.DamageType;
 import com.cr.engine.graphics.Screen;
-import com.cr.item.stats.AffectsDamageDone;
+import com.cr.item.stats.AddsDamageDone;
 import com.cr.item.stats.Stat;
 import com.cr.util.Randomizer;
 
-public class Damage extends Stat implements AffectsDamageDone{
+public class Damage extends Stat implements AddsDamageDone{
 
 	private float base, dice;
 	
@@ -35,8 +37,8 @@ public class Damage extends Stat implements AffectsDamageDone{
 	}
 
 	@Override
-	public float affectDamage(float damage) {
-		return damage + (Randomizer.getFloat(base, base + dice));
+	public void affectDamage(DamagePacket packet) {
+		packet.addDamage(new com.cr.combat.Damage(base, dice, DamageType.PHYSICAL));
 	}
 	
 	@Override

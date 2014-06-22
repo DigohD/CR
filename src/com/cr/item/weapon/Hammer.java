@@ -1,9 +1,9 @@
 package com.cr.item.weapon;
 
+import com.cr.combat.attack.OneHandAttack;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.item.weapon.attack.OneHandAttack;
 
 public class Hammer extends Weapon{
 

@@ -10,15 +10,12 @@ import com.cr.world.World;
 public class Dummy extends Enemy{
 	
 	public Dummy(Vector2f position, World world) {
-		super(position, world);
+		super(position, world, Sheets.dummySheet());
 		sprite = new Sprite("tree1");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		EntityManager.addEntity(this);
-		
-		maxHP = 5;
-		currentHP = 5;
 	}
 
 	@Override

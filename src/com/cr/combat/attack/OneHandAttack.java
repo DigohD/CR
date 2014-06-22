@@ -1,5 +1,7 @@
-package com.cr.item.weapon.attack;
+package com.cr.combat.attack;
 
+import com.cr.combat.DamagePacket;
+import com.cr.combat.Projectile;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -11,9 +13,8 @@ import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.EntityManager;
-import com.cr.item.activation.Projectile;
 import com.cr.item.stats.AffectBearerOnHit;
-import com.cr.item.stats.AffectsDamageDone;
+import com.cr.item.stats.AddsDamageDone;
 import com.cr.item.stats.Stat;
 import com.cr.item.weapon.Weapon;
 
@@ -119,26 +120,24 @@ public class OneHandAttack extends Projectile implements Renderable{
 		if(obj instanceof Enemy && !spent){
 			Enemy e = (Enemy) obj;
 			
-			float damage = 0;
+			DamagePacket packet = new DamagePacket();
 			
 			for(Stat s : weapon.getStats().getStats()){
-				if(s instanceof AffectsDamageDone){
-					AffectsDamageDone ad = (AffectsDamageDone) s;
-					damage = ad.affectDamage(damage);
+				if(s instanceof AddsDamageDone){
+					AddsDamageDone ad = (AddsDamageDone) s;
+					ad.affectDamage(packet);
 				}
 				if(s instanceof AffectBearerOnHit){
-					AffectBearerOnHit ad = (AffectBearerOnHit) s;
-					ad.affectMob(EntityManager.getHero());
+					AffectBearerOnHit ab = (AffectBearerOnHit) s;
+					ab.affectMob(EntityManager.getHero());
 				}
 			}
 			
-			e.removeHealth(damage);
+			e.takeDamage(packet);
 			
-			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
-			new DamageText(txtPos, damage);
-			new ImpactEmitter(txtPos, 3, "blood", 20, velocity.add(offset.div(4)), 5);
-			
-			System.out.println(offset);
+//			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
+//			new DamageText(txtPos, damage);
+//			new ImpactEmitter(txtPos, 3, "blood", 20, velocity.add(offset.div(4)), 5);
 			
 			spent = true;
 			live = false;

@@ -2,6 +2,7 @@ package com.cr.item.weapon;
 
 import java.awt.Rectangle;
 
+import com.cr.combat.attack.OneHandAttack;
 import com.cr.entity.Collideable;
 import com.cr.entity.hero.HeroSheet;
 import com.cr.input.Mouse;
@@ -10,7 +11,6 @@ import com.cr.item.activation.ItemObject;
 import com.cr.item.stats.PassiveTicking;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
-import com.cr.item.weapon.attack.OneHandAttack;
 import com.cr.util.Camera;
 
 public abstract class Weapon extends Item{
