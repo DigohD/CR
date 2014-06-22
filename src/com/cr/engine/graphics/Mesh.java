@@ -178,15 +178,13 @@ public class Mesh {
 	
 	public void render(){
 		glBindVertexArray(vaoID);
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
+		
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
+	
 		glBindVertexArray(0);
 		
 	}

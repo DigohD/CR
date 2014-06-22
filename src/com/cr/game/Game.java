@@ -6,7 +6,6 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
 import com.cr.util.ImageLoader;
-import com.cr.world.World;
 
 public class Game extends CoreEngine{
 	
@@ -14,7 +13,7 @@ public class Game extends CoreEngine{
 	private Screen screen;
 	
 	public Game(){
-		boolean fullscreen = false;
+		boolean fullscreen = true;
 		Window.createWindow(1200, 675, fullscreen);
 		init();
 	}

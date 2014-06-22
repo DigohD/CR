@@ -1,7 +1,7 @@
 package com.cr.states;
 
-import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
@@ -12,7 +12,7 @@ public class MenuState extends GameState{
 	Font font;
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
-		font = new Font("HELLO", new Vector3f(1.0f,1.0f,1.0f));
+		font = new Font("Hello", FontColor.GREEN);
 	}
 	
 	@Override

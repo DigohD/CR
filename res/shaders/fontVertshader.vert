@@ -8,9 +8,6 @@ out vec2 texCoord;
 out vec3 outColor;
 
 uniform mat4 transformation;
-uniform float red;
-uniform float green;
-uniform float blue;
 
 void main() 
 {

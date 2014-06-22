@@ -8,13 +8,17 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.core.Vertex;
 import com.cr.engine.graphics.shader.Shader;
-import com.cr.world.World;
 
 public class Font {
 	
 	private static Sprite fontSheet;
 	//private static HashMap<Integer, Integer> fontWidthMap = new HashMap<Integer, Integer>();
-	private String chars = "ABCDEFGHIJKLMNOPQRSTUVWX";
+	private String chars = "                                ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
+	
+	public enum FontColor{
+		BLACK, BLUE, BLUE_DARK, GREEN, GREEN_DARK, MAGENTA, 
+		ORANGE, PINK, PURPLE, RED, RED_DARK, WHITE, YELLOW
+	}
 	
 	private HashMap<Character, Vector2f> charMap;
 
@@ -23,28 +27,34 @@ public class Font {
 	
 	Shader shader;
 	
-	public Font(String text, Vector3f color){
-		
+	public Font(String text, FontColor color){
 		shader = new Shader("fontVertshader", "fontShader");
 		
 		shader.addUniform("transformation");
 		shader.addUniform("sampler");
-		shader.addUniform("red");
-		shader.addUniform("green");
-		shader.addUniform("blue");
-
-		shader.setUniformf("red", color.x);
-		shader.setUniformf("green", color.y);
-		shader.setUniformf("blue",color.z);
-		
 		shader.setUniformi("sampler", 0);
 		
 		t = new Transform();
 		charMap = new HashMap<Character, Vector2f>();
-		fontSheet = new Sprite("uppercase", 3, 8, 0, 0,shader, t);
-		fontSheet.setCols(8);
-		fontSheet.setRows(3);
 		
+		if(color == FontColor.BLACK){
+			fontSheet = new Sprite("black", 25, 8);
+		}else if(color == FontColor.BLUE){
+			fontSheet = new Sprite("blue", 25, 8);
+		}else if(color == FontColor.BLUE_DARK){
+			fontSheet = new Sprite("bluedark", 25, 8);
+		}else if(color == FontColor.GREEN){
+			fontSheet = new Sprite("green", 25, 8);
+		}else if(color == FontColor.GREEN_DARK){
+			fontSheet = new Sprite("greendark", 25, 8);
+		}else if(color == FontColor.MAGENTA){
+			fontSheet = new Sprite("magenta", 25, 8);
+		}else if(color == FontColor.ORANGE){
+			fontSheet = new Sprite("orange", 25, 8);
+		}else if(color == FontColor.PINK){
+			fontSheet = new Sprite("pink", 25, 8);
+		}
+
 		loadFonts();
 		
 		char[] charArray = text.toCharArray();

@@ -26,7 +26,7 @@ public class World {
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
 		
-		map = new TileMap(200, 200);
+		map = new TileMap(100, 100);
 
 		width = map.getWidth();
 		height = map.getHeight();

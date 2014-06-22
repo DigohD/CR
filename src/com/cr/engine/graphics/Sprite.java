@@ -112,6 +112,18 @@ public class Sprite {
 		tAtlas = true;
 	}
 	
+	public Sprite(String name, float rows, float cols){
+		this.rows = rows;
+		this.cols = cols;
+		
+		textureAtlas = new Texture(name);
+		
+		atlasWidth = textureAtlas.getWidth();
+		atlasHeight = textureAtlas.getHeight();
+		width = (int) (atlasWidth / cols);
+		height = (int) (atlasHeight / rows) ;
+	}
+	
 	
 	
 	public void calcTexCoords(float row, float col){

@@ -26,6 +26,19 @@ public class ImageLoader {
 		
 		//Fonts
 		imageLib.put("uppercase", loadImage("/font/uppercase.png"));
+		imageLib.put("black", loadImage("/font/fblack.png"));
+		imageLib.put("blue", loadImage("/font/fblue.png"));
+		imageLib.put("bluedark", loadImage("/font/fbluedark.png"));
+		imageLib.put("green", loadImage("/font/fgreen.png"));
+		imageLib.put("greendark", loadImage("/font/fgreendark.png"));
+		imageLib.put("magenta", loadImage("/font/fmagenta.png"));
+		imageLib.put("orange", loadImage("/font/forange.png"));
+		imageLib.put("pink", loadImage("/font/fpink.png"));
+		imageLib.put("purple", loadImage("/font/fpurple.png"));
+		imageLib.put("red", loadImage("/font/fred.png"));
+		imageLib.put("reddark", loadImage("/font/freddark.png"));
+		imageLib.put("white", loadImage("/font/fwhite.png"));
+		imageLib.put("yellow", loadImage("/font/fyellow.png"));
 
 
 		// Nature
