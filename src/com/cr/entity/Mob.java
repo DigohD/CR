@@ -43,6 +43,7 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		this.world = world;
 		transform = new Transform();
 		distance = new Vector2f(0,0);
+		velocity = new Vector2f(0, 0);
 	}
 
 	protected float approachTarget(float target, float current, float dt){
@@ -117,6 +118,17 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public float getCurrentHP() {
 		return currentHP;
 	}
+	
+	public Vector2f getCenterPos(){
+		System.out.println(position);
+		
+		float x = position.x + (width / 2);
+		float y = position.y + (height / 2);
+		
+		return new Vector2f(x, y);
+	}
+	
+	
 	
 	public abstract void death();
 	

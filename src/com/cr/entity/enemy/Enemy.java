@@ -8,6 +8,7 @@ import com.cr.entity.Mob;
 import com.cr.entity.StatsSheet;
 import com.cr.entity.enemy.behaviour.Behaviour;
 import com.cr.entity.enemy.behaviour.Chasing;
+import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.world.World;
 
 public abstract class Enemy extends Mob implements Collideable{
@@ -23,7 +24,7 @@ public abstract class Enemy extends Mob implements Collideable{
 		maxHP = sheet.getMaxHP();
 		currentHP = maxHP;
 		
-		behaviour = new Chasing(this);
+		behaviour = new Fleeing(this);
 	}
 	
 	@Override

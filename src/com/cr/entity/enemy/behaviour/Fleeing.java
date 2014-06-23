@@ -6,9 +6,9 @@ import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 
-public class Chasing extends Behaviour{
+public class Fleeing extends Behaviour{
 
-	public Chasing(Enemy enemy) {
+	public Fleeing(Enemy enemy) {
 		super(enemy);
 	}
 
@@ -19,7 +19,7 @@ public class Chasing extends Behaviour{
 		
 		range = range.normalize();
 		if(length < 280){
-			enemy.setVelocity(((range.mul(dt).mul(25)).rotate(180)));
+			enemy.setVelocity((range.mul(dt).mul(25)));
 		}else
 			enemy.setVelocity(new Vector2f(0, 0));
 	}
