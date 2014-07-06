@@ -11,7 +11,7 @@ import com.cr.engine.graphics.shader.Shader;
 
 public class Font {
 	
-	private static Sprite fontSheet;
+	private Sprite fontSheet;
 	//private static HashMap<Integer, Integer> fontWidthMap = new HashMap<Integer, Integer>();
 	private String chars = "!              0123456789     ? ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
 	
@@ -27,7 +27,10 @@ public class Font {
 	
 	Shader shader;
 	
+	private String text;
+	
 	public Font(String text, FontColor color){
+		this.text = text;
 		shader = new Shader("fontVertshader", "fontShader");
 		
 		shader.addUniform("transformation");
@@ -146,6 +149,20 @@ public class Font {
 		
 	}
 	
+	public void setFont(String txt){
+		char[] chars = txt.toCharArray();
+		char[] charsOld = text.toCharArray();
+		
+		for(int i = 0; i < charsOld.length; i++){
+			if(i < chars.length){
+				if(charsOld[i] != chars[i]){
+					
+				}
+			}
+		}
+
+	}
+	
 	public void renderFont(float x, float y, float scale){
 		t.translate(x, y, 0);
 		t.scale(scale, scale, 1);
@@ -157,7 +174,7 @@ public class Font {
 		shader.unbind();
 	}
 
-	public static Sprite getFontSheet() {
+	public Sprite getFontSheet() {
 		return fontSheet;
 	}
 

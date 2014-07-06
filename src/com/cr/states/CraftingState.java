@@ -30,6 +30,7 @@ import com.cr.entity.hero.materials.Materials.MaterialType;
 import com.cr.entity.hero.materials.Materials.Minerals;
 import com.cr.entity.hero.materials.MineralSlot;
 import com.cr.entity.hero.materials.MineralsButton;
+import com.cr.game.EntityManager;
 import com.cr.game.GameStateManager;
 
 public class CraftingState extends GameState{
@@ -78,7 +79,9 @@ public class CraftingState extends GameState{
 	private int xOffset = (Window.getWidth() - 800) / 2;
 	private int yOffset = (Window.getHeight() - 600) / 2;
 	
-	//Font f1 = new Font(activePattern.getName(), FontColor.WHITE);
+	Font f1;
+	Font f2 = new Font("PRESS ENTER TO RESUME", FontColor.RED);
+	Font f3 = new Font("PRESS C TO RETURN TO MAIN MENU", FontColor.RED);
 	
 	boolean aPattern = false;
 	
@@ -118,7 +121,7 @@ public class CraftingState extends GameState{
 	public void init() {
 		
 	}
-
+	int counter = 0;
 	@Override
 	public void tick(float dt) {
 //		inventory.tick(dt);
@@ -140,6 +143,9 @@ public class CraftingState extends GameState{
 					phase = Phase.BASE;
 					activePattern = pb.getPattern();
 					activePattern.startNew();
+					aPattern = true;
+					counter++;
+					System.out.println(counter);
 					
 					ArrayList<Base> bases = activePattern.getBases();
 					System.out.println(bases.size() + " size");
@@ -257,14 +263,14 @@ public class CraftingState extends GameState{
 			gsm.pop();
 		}
 		
-//		if(KeyInput.enter) {
-//			if(gsm.next() instanceof PlayState){
-//				PlayState ps = (PlayState) gsm.next();
-//				ps.bg = false;
-//			}
-//			gsm.pop();
-//		}
-//		if(KeyInput.c) {
+		if(Input.getKey(Input.ENTER)) {
+			if(gsm.next() instanceof PlayState){
+				PlayState ps = (PlayState) gsm.next();
+				ps.bg = false;
+			}
+			gsm.pop();
+		}
+//		if(Input.getKey(Input.C)) {
 //			gsm.pop();
 //			EntityManager.clear();
 //			gsm.pop();
@@ -272,7 +278,7 @@ public class CraftingState extends GameState{
 	}
 
 	
-	
+	boolean drawFont = false;
 	@Override
 	public void render(Screen screen){
 		int xOffset = (Window.getWidth() - 800) / 2;
@@ -288,26 +294,31 @@ public class CraftingState extends GameState{
 			renderSecondaryPhase(screen);
 		
 		if(phase != Phase.PATTERN){
+			if(aPattern && counter <= 1 && !drawFont){
+				f1 = new Font(activePattern.getName(), FontColor.WHITE);
+				drawFont = true;
+			}
 			
-			//screen.renderFont(f1, xOffset + 20, yOffset - 10, 0.25f);
-//			Font bigFont = new Font("Tahoma", 36, 36);
-//			screen.setFont(bigFont);
-//			screen.setColor(Color.WHITE);
-//			screen.drawString(activePattern.getName(), 
-//					xOffset + 20, yOffset - 10);
+			if(f1 != null)
+				screen.renderFont(f1, xOffset + 5, yOffset - 50, 0.2f);
 		}
 			
-//		inventory.render(g);
-//		base.render(g);
-//		essences.render(g);
-//		minerals.render(g);
-		exit.render(screen);
+//		inventory.render(screen);
+//		base.render(screen);
+//		essences.render(screen);
+//		minerals.render(screen);
+//		exit.render(screen);
+		
+		screen.renderFont(f2, Window.getWidth()/2-200, Window.getHeight()/2, 0.25f);
+		//screen.renderFont(f3, Window.getWidth()/2-100, Window.getHeight()/2+30, 0.3f);
 		
 //		materials.render(g);
 //		g.setColor(Color.RED);
 //		g.drawString("PRESS ENTER TO RESUME", Window.getWidth()/2-100, Window.getHeight()/2);
 //		g.drawString("PRESS C TO RETURN TO MAIN MENU", Window.getWidth()/2-100, Window.getHeight()/2+30);
 	}
+	
+
 	
 	private void renderPatternPhase(Screen screen){
 		for(PatternButton pb : patterns)
@@ -337,6 +348,8 @@ public class CraftingState extends GameState{
 //		}else
 //			g.drawString("Choose a base material", xOffset + 23, yOffset + 450);
 	}
+	
+	//Font f4 = new Font("Use " + amount + " " + chosenBase.getName(), FontColor.WHITE);
 	
 	private void renderSecondaryPhase(Screen screen){
 		if(tab == Tab.ESSENCES){
