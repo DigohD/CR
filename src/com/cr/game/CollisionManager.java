@@ -7,6 +7,7 @@ import java.util.List;
 import com.cr.combat.Projectile;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
+import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
 import com.cr.item.weapon.Weapon;
 import com.cr.engine.core.Vector2f;
@@ -16,6 +17,8 @@ public class CollisionManager {
 	private static List<Enemy> enemies = new ArrayList<Enemy>();
 	private static List<Projectile> playerProjectiles = 
 			new ArrayList<Projectile>();
+	private static List<EnemyProjectile> enemyProjectiles = 
+			new ArrayList<EnemyProjectile>();
 	
 	public static void addEnemy(Enemy e){
 		enemies.add(e);
@@ -31,6 +34,14 @@ public class CollisionManager {
 	
 	public static void removeProjectile(Projectile e){
 		playerProjectiles.remove(e);
+	}
+	
+	public static void addEnemyProjectile(EnemyProjectile c) {
+		enemyProjectiles.add(c);
+	}
+	
+	public static void removeEnemyProjectile(EnemyProjectile c) {
+		enemyProjectiles.remove(c);
 	}
 	
 	public static void clear(){
@@ -61,7 +72,16 @@ public class CollisionManager {
 				}
 			}
 		}
+		for(int i = 0; i < enemyProjectiles.size(); i++){
+			EnemyProjectile p = enemyProjectiles.get(i);
+			if (collisionBetween(p.getRect(), hero.getRect())){
+				hero.collisionWith(p);
+				p.collisionWith(hero);
+			}
+		}
 		
 	}
+
+	
 
 }

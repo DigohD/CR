@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import com.cr.combat.Damage.DamageType;
+import com.cr.combat.DamagePacket;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.HeroSheet;
 import com.cr.item.stats.AffectsDamageTaken;
@@ -49,8 +51,12 @@ public class Armor extends Stat implements AffectsDamageTaken{
 		// TODO Auto-generated method stub
 	}
 
-	public float affectDamage(float damage) {
-		return damage - amount;
+	public void affectDamage(DamagePacket packet) {
+		for(com.cr.combat.Damage x : packet.getDmgs())
+			if(x.getType() == DamageType.PHYSICAL){
+				x.addDamageBase(-amount / 4);
+				x.addDamageDice(-amount / 4);
+			}
 	}
 
 }

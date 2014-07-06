@@ -195,8 +195,15 @@ public class Hero extends Mob implements Collideable{
 	
 	@Override
 	public void death() {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Vector2f getCenterPos(){
+		float x = position.x + (width / 2);
+		float y = position.y + (height / 2);
+		
+		return new Vector2f(x, y);
 	}
 	
 	@Override
@@ -265,6 +272,11 @@ public class Hero extends Mob implements Collideable{
 
 	public static void setCurrentDir(Direction currentDir) {
 		Hero.currentDir = currentDir;
+	}
+
+	@Override
+	public void push(Vector2f distance) {
+		position = new Vector2f(position.x + distance.x, position.y + distance.y);
 	}
 
 	

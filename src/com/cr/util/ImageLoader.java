@@ -64,6 +64,9 @@ public class ImageLoader {
 		imageLib.put("knife", loadImage("/items/weapons/knife.png"));
 		imageLib.put("knifeicon", loadImage("/items/weapons/knifeicon.png"));
 		
+		// Projectiles
+		imageLib.put("rock1", loadImage("/projectile/rock1.png"));
+		
 		// Armor
 		imageLib.put("copperhelm", loadImage("items/armors/copperhelm.png"));
 		imageLib.put("copperhelmicon", loadImage("items/armors/copperhelmicon.png"));
@@ -106,8 +109,15 @@ public class ImageLoader {
 		imageLib.put("hammerpattern", loadImage("/pattern/hammerpattern.png"));
 		imageLib.put("helmpattern", loadImage("/pattern/helmpattern.png"));
 //		
+		// Enemies
+		imageLib.put("critter", loadImage("/enemy/critter.png"));
+		imageLib.put("melee", loadImage("/enemy/melee.png"));
+		imageLib.put("neutral", loadImage("/enemy/neutral.png"));
+		imageLib.put("ranged", loadImage("/enemy/ranged.png"));
+		
 //		// Particles
 		imageLib.put("blood", loadImage("/particle/blood.png"));
+		imageLib.put("white1", loadImage("/particle/white1.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String path){
