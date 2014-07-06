@@ -274,6 +274,11 @@ public class Hero extends Mob implements Collideable{
 		Hero.currentDir = currentDir;
 	}
 
+	@Override
+	public void push(Vector2f distance) {
+		position = new Vector2f(position.x + distance.x, position.y + distance.y);
+	}
+
 	
 	
 	

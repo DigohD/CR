@@ -19,9 +19,14 @@ public class Chasing extends Behaviour{
 		
 		range = range.normalize();
 		if(length < 280){
-			enemy.setVelocity(((range.mul(dt).mul(25)).rotate(180)));
+			move(dt, range);
 		}else
 			enemy.setVelocity(new Vector2f(0, 0));
+	}
+
+	@Override
+	public void move(float dt, Vector2f direction) {
+		enemy.setVelocity(((direction.mul(dt).mul(50)).rotate(180)));
 	}
 
 }

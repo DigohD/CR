@@ -9,6 +9,7 @@ import com.cr.entity.StatsSheet;
 import com.cr.entity.enemy.behaviour.Behaviour;
 import com.cr.entity.enemy.behaviour.Chasing;
 import com.cr.entity.enemy.behaviour.Fleeing;
+import com.cr.entity.hero.Hero;
 import com.cr.world.World;
 
 public abstract class Enemy extends Mob implements Collideable{
@@ -23,13 +24,13 @@ public abstract class Enemy extends Mob implements Collideable{
 		
 		maxHP = sheet.getMaxHP();
 		currentHP = maxHP;
-		
-		behaviour = new Fleeing(this);
 	}
 	
 	@Override
 	public void collisionWith(Collideable obj) {
-		
+		if(obj instanceof Hero){
+			HeroCollide((Hero) obj);
+		}
 	}
 	
 	@Override
@@ -37,9 +38,16 @@ public abstract class Enemy extends Mob implements Collideable{
 		return rect;
 	}
 
+	@Override
+	public void push(Vector2f distance){
+		position = new Vector2f(position.x + distance.x, position.y + distance.y);
+	}
+	
 	public StatsSheet getSheet() {
 		return sheet;
 	}
+	
+	public abstract void HeroCollide(Hero hero);
 	
 	
 

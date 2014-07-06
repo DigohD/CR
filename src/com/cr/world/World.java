@@ -4,6 +4,8 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.Dummy;
+import com.cr.entity.enemy.test.MeleeTest;
+import com.cr.entity.enemy.test.RangedTest;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
 import com.cr.world.tile.Tile;
@@ -34,7 +36,8 @@ public class World {
 		em = new EntityManager(this);
 		camera = new Camera();
 		
-		Dummy dummy = new Dummy(new Vector2f(400, 400), this);
+		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
+		MeleeTest dummy2 = new MeleeTest(new Vector2f(400, 400), this);
 	}
 	
 	public boolean tileExists(int xp, int yp){

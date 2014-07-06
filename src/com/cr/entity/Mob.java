@@ -120,7 +120,7 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	}
 	
 	public Vector2f getCenterPos(){
-		System.out.println(position);
+//		System.out.println(position);
 		
 		float x = position.x + (width / 2);
 		float y = position.y + (height / 2);
@@ -128,10 +128,7 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		return new Vector2f(x, y);
 	}
 	
-	
-	
 	public abstract void death();
-	
-	
+	public abstract void push(Vector2f distance);
 
 }

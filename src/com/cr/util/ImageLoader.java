@@ -106,8 +106,15 @@ public class ImageLoader {
 		imageLib.put("hammerpattern", loadImage("/pattern/hammerpattern.png"));
 		imageLib.put("helmpattern", loadImage("/pattern/helmpattern.png"));
 //		
+		// Enemies
+		imageLib.put("critter", loadImage("/enemy/critter.png"));
+		imageLib.put("melee", loadImage("/enemy/melee.png"));
+		imageLib.put("neutral", loadImage("/enemy/neutral.png"));
+		imageLib.put("ranged", loadImage("/enemy/ranged.png"));
+		
 //		// Particles
 		imageLib.put("blood", loadImage("/particle/blood.png"));
+		imageLib.put("white1", loadImage("/particle/white1.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String path){
