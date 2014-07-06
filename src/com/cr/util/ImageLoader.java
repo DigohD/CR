@@ -64,6 +64,9 @@ public class ImageLoader {
 		imageLib.put("knife", loadImage("/items/weapons/knife.png"));
 		imageLib.put("knifeicon", loadImage("/items/weapons/knifeicon.png"));
 		
+		// Projectiles
+		imageLib.put("rock1", loadImage("/projectile/rock1.png"));
+		
 		// Armor
 		imageLib.put("copperhelm", loadImage("items/armors/copperhelm.png"));
 		imageLib.put("copperhelmicon", loadImage("items/armors/copperhelmicon.png"));

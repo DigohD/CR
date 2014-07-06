@@ -9,6 +9,7 @@ import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
+import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
 import com.cr.world.World;
 
@@ -54,6 +55,10 @@ public class EntityManager {
 			Projectile c = (Projectile) e;
 			CollisionManager.addProjectile(c);
 		}
+		if(e instanceof EnemyProjectile){
+			EnemyProjectile c = (EnemyProjectile) e;
+			CollisionManager.addEnemyProjectile(c);
+		}
 	}
 	
 	public static void removeEntity(Entity e){
@@ -73,6 +78,10 @@ public class EntityManager {
 			Projectile c = (Projectile) e;
 			CollisionManager.removeProjectile(c);
 		}
+		if(e instanceof EnemyProjectile){
+			EnemyProjectile c = (EnemyProjectile) e;
+			CollisionManager.removeEnemyProjectile(c);
+		}
 	}
 	
 	private void removeDeadEntities(){
@@ -84,6 +93,7 @@ public class EntityManager {
 			if(!e.isLive())
 				removeEntity(e);
 		}
+		System.out.println("Entities:  " + tickableEntities.size());
 	}
 	
 	public void tick(float dt){

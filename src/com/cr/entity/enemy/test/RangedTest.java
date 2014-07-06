@@ -6,12 +6,15 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.Sheets;
+import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.world.World;
 
 public class RangedTest extends Enemy{
+	
+	int counter;
 	
 	public RangedTest(Vector2f position, World world) {
 		super(position, world, Sheets.dummySheet());
@@ -29,6 +32,14 @@ public class RangedTest extends Enemy{
 		rect.setLocation((int)position.x,(int)position.y);
 		behaviour.tick(dt);
 		move(dt);
+		
+		counter++;
+		if(counter > 90){
+			Vector2f projVel;
+			projVel = Hero.position.sub(position).normalize().mul(35);
+			Linear lin = new Linear(position, projVel);
+			counter = 0;
+		}
 	}
 
 	@Override
