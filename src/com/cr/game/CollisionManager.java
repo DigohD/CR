@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cr.combat.Projectile;
-import com.cr.crafting.material.Loot;
+import com.cr.crafting.material.loot.Loot;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;

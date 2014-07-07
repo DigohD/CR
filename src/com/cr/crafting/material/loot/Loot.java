@@ -1,4 +1,4 @@
-package com.cr.crafting.material;
+package com.cr.crafting.material.loot;
 
 import java.awt.Rectangle;
 
@@ -40,7 +40,6 @@ public class Loot extends Entity implements Renderable, Collideable, Tickable{
 	 * 301 - Pyrite
 	 * 302 - Quartz
 	 */
-	
 	
 	private int amount, counter, initY;
 	private Sprite sprite;
@@ -123,8 +122,6 @@ public class Loot extends Entity implements Renderable, Collideable, Tickable{
 		}else{
 			position = position.add(velocity);
 			velocity.y = velocity.y - ((initVel.y/5) * dt);
-//			System.out.println(velocity.y + " : " + initVel.y);
-//			System.out.println(position.y + " > " + initY + " = " + (position.y > initY));
 			if(position.y > initY)
 				landed = true;
 		}
