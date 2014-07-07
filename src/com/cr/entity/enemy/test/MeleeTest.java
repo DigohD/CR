@@ -2,10 +2,12 @@ package com.cr.entity.enemy.test;
 
 import java.awt.Rectangle;
 
+import com.cr.crafting.material.Loot;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.effect.movement.KnockBack;
 import com.cr.entity.emitter.ImpactEmitter;
+import com.cr.entity.emitter.LootEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.Sheets;
 import com.cr.entity.enemy.behaviour.Chasing;
@@ -37,6 +39,7 @@ public class MeleeTest extends Enemy{
 	@Override
 	public void death() {
 		live = false;
+		new LootEmitter(position, 10);
 	}
 
 	@Override
