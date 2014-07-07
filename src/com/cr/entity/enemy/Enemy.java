@@ -22,7 +22,7 @@ public abstract class Enemy extends Mob implements Collideable{
 		super(position, world);
 		this.sheet = sheet;
 		
-		maxHP = 1;
+		maxHP = 15;
 		currentHP = maxHP;
 	}
 	
