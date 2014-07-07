@@ -108,6 +108,8 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public void takeDamage(DamagePacket packet){
 		ArrayList<Damage> dmgs = packet.getDmgs();
 		
+		playHurtSound();
+		
 		for(Damage x : dmgs){
 			currentHP = currentHP - x.calculateDamage();
 			if(currentHP < 0)
@@ -130,5 +132,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	
 	public abstract void death();
 	public abstract void push(Vector2f distance);
+	public abstract void playHurtSound();
 
 }

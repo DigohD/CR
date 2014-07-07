@@ -52,4 +52,10 @@ public class RangedTest extends Enemy{
 		
 	}
 
+	@Override
+	public void playHurtSound() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

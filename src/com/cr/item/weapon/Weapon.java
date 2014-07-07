@@ -61,4 +61,6 @@ public abstract class Weapon extends Item{
 			CDTimer = CD;
 		}
 	}
+	
+	public abstract void playHitSound();
 }

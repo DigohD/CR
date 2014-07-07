@@ -18,6 +18,7 @@ import com.cr.item.stats.AffectBearerOnHit;
 import com.cr.item.stats.AddsDamageDone;
 import com.cr.item.stats.Stat;
 import com.cr.item.weapon.Weapon;
+import com.cr.util.SoundP;
 
 public class OneHandAttack extends Projectile implements Renderable{
 
@@ -137,6 +138,8 @@ public class OneHandAttack extends Projectile implements Renderable{
 			ImpactEmitter ie = new ImpactEmitter(new Vector2f(weapon.getPos().x + width / 2, weapon.getPos().y + height / 2), 3, "blood", 12, velocity, 5);
 			new KnockBack(20, 1, e, null, getVelocity().div(2));
 			e.takeDamage(packet);
+			
+			weapon.playHitSound();
 			
 //			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
 //			new DamageText(txtPos, damage);

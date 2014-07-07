@@ -15,6 +15,7 @@ import com.cr.entity.hero.materials.Materials.Base;
 import com.cr.entity.hero.materials.Materials.Essences;
 import com.cr.entity.hero.materials.Materials.Minerals;
 import com.cr.game.EntityManager;
+import com.cr.util.SoundP;
 
 public class Loot extends Entity implements Renderable, Collideable, Tickable{
 
@@ -103,6 +104,7 @@ public class Loot extends Entity implements Renderable, Collideable, Tickable{
 		if(live && landed && obj instanceof Hero){
 			ImpactEmitter ie = new ImpactEmitter(position, 3, "white1", 8, new Vector2f(0, 0), 10);
 			Hero.getMaterials().addMaterialFromID(lootType, amount);
+			SoundP.playSound("lootpickup");
 			live = false;
 		}
 	}

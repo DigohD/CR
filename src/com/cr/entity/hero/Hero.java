@@ -16,6 +16,8 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.misc.FootPrint;
+import com.cr.util.Randomizer;
+import com.cr.util.SoundP;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
@@ -28,6 +30,7 @@ public class Hero extends Mob implements Collideable{
 
 	public static Vector2f position;
 
+	private int stepCounter;
 	private static Head head;
 	private Body body;
 	private static RightHand rightHand;
@@ -178,8 +181,14 @@ public class Hero extends Mob implements Collideable{
 		
 		if(velocity.length() == 0)
 			setBobing(false);
-		else
+		else{
 			setBobing(true);
+			stepCounter++;
+			if(stepCounter > 18){
+				SoundP.playSound("step" + (Randomizer.getInt(0, 4) + 1));
+				stepCounter = 0;
+			}
+		}
 	}
 	
 	public static void updateInventory(){
@@ -277,6 +286,11 @@ public class Hero extends Mob implements Collideable{
 	@Override
 	public void push(Vector2f distance) {
 		position = new Vector2f(position.x + distance.x, position.y + distance.y);
+	}
+
+	@Override
+	public void playHurtSound() {
+		SoundP.playSound("ouch" + (Randomizer.getInt(0, 3) + 1));
 	}
 
 	
