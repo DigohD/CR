@@ -21,6 +21,7 @@ public class Linear extends EnemyProjectile implements Renderable{
 	protected boolean spent;
 	protected Sprite sprite;
 	protected ImpactEmitter ie;
+	protected int lifetime = 90, counter;
 	
 	public Linear(Vector2f pos, Vector2f velocity) {
 		super(pos);
@@ -54,8 +55,13 @@ public class Linear extends EnemyProjectile implements Renderable{
 		Vector2f distance = velocity.mul(dt);
 		position = position.add(distance);
 		ie.setPosition(position);
+		
 		ie.emit();
 		updateRect();
+		
+		if(counter++ > lifetime){
+			live = false;
+		}
 	}
 
 	@Override

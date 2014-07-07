@@ -1,8 +1,10 @@
 package com.cr.world;
 
+import com.cr.crafting.material.loot.Loot;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.shader.Shader;
+import com.cr.entity.emitter.LootEmitter;
 import com.cr.entity.enemy.Dummy;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.entity.enemy.test.RangedTest;
@@ -36,8 +38,12 @@ public class World {
 		em = new EntityManager(this);
 		camera = new Camera();
 		
-		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
-		MeleeTest dummy2 = new MeleeTest(new Vector2f(400, 400), this);
+//		new LootEmitter(new Vector2f(200,200), 5000);
+		
+//		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
+		new MeleeTest(new Vector2f(400, 400), this);
+		new MeleeTest(new Vector2f(400, 400), this);
+		new MeleeTest(new Vector2f(400, 400), this);
 	}
 	
 	public boolean tileExists(int xp, int yp){

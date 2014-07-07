@@ -11,6 +11,29 @@ import com.cr.entity.hero.inventory.Button;
 
 public class Materials implements Tickable, Renderable{
 
+	/*
+	 * Material ID's
+	 * 
+	 * -----------------------------
+	 * Bases
+	 * -----------------------------
+	 * 101 - Copper
+	 * 102 - Rugged Cloth
+	 * 103 - Scrap Wood
+	 * 
+	 * -----------------------------
+	 * Essences
+	 * -----------------------------
+	 * 201 - Strange Powder
+	 * 202 - Forest Soul
+	 * 
+	 * -----------------------------
+	 * Minerals
+	 * -----------------------------
+	 * 301 - Pyrite
+	 * 302 - Quartz
+	 */
+	
 	public enum MaterialType {BASE, ESSENCES, MINERALS};
 	
 	private static MaterialType activeTab;
@@ -39,15 +62,15 @@ public class Materials implements Tickable, Renderable{
 		for(Minerals mineral : Minerals.values())
 			  mineralsMap.put(mineral, 0);
 		
-		addBase(Base.COPPER, 100);
-		addBase(Base.RUGGED_CLOTH, 15);
-		addBase(Base.SCRAP_WOOD, 10);
-		
-		addEssence(Essences.STRANGE_POWDER, 50);
-		addEssence(Essences.FOREST_SOUL, 50);
-		
-		addMinerals(Minerals.PYRITE, 50);
-		addMinerals(Minerals.QUARTZ, 50);
+//		addBase(Base.COPPER, 100);
+//		addBase(Base.RUGGED_CLOTH, 15);
+//		addBase(Base.SCRAP_WOOD, 10);
+//		
+//		addEssence(Essences.STRANGE_POWDER, 50);
+//		addEssence(Essences.FOREST_SOUL, 50);
+//		
+//		addMinerals(Minerals.PYRITE, 50);
+//		addMinerals(Minerals.QUARTZ, 50);
 	}
 	
 	@Override
@@ -126,6 +149,34 @@ public class Materials implements Tickable, Renderable{
 
 	public static void setActiveTab(MaterialType newTab) {
 		activeTab = newTab;
+	}
+	
+	public void addMaterialFromID(int ID, int amount){
+		switch(ID){
+			case(101):
+				addBase(Base.COPPER, amount);
+				break;
+			case(102):
+				addBase(Base.RUGGED_CLOTH, amount);
+				break;
+			case(103):
+				addBase(Base.SCRAP_WOOD, amount);
+				break;
+				
+			case(201):
+				addEssence(Essences.STRANGE_POWDER, amount);
+				break;
+			case(202):
+				addEssence(Essences.FOREST_SOUL, amount);
+				break;
+				
+			case(301):
+				addMinerals(Minerals.PYRITE, amount);
+				break;
+			case(302):
+				addMinerals(Minerals.QUARTZ, amount);
+				break;
+		}
 	}
 	
 	public void addBase(Base type, int amount){
