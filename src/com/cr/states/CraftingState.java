@@ -80,8 +80,10 @@ public class CraftingState extends GameState{
 	private int yOffset = (Window.getHeight() - 600) / 2;
 	
 	Font f1;
-	Font f2 = new Font("PRESS ENTER TO RESUME", FontColor.RED);
-	Font f3 = new Font("PRESS C TO RETURN TO MAIN MENU", FontColor.RED);
+	Font f2 = new Font("PRESS ENTER TO RESUME", FontColor.RED, false);
+	Font f3 = new Font("PRESS C TO RETURN TO MAIN MENU", FontColor.RED, false);
+	
+	Font f4 = new Font("Choose a base material", FontColor.WHITE, true);
 	
 	boolean aPattern = false;
 	
@@ -295,7 +297,7 @@ public class CraftingState extends GameState{
 		
 		if(phase != Phase.PATTERN){
 			if(aPattern && counter <= 1 && !drawFont){
-				f1 = new Font(activePattern.getName(), FontColor.WHITE);
+				f1 = new Font(activePattern.getName(), FontColor.WHITE, true);
 				drawFont = true;
 			}
 			
@@ -341,15 +343,26 @@ public class CraftingState extends GameState{
 //		g.setFont(headerFont);
 //		g.setColor(Color.WHITE);
 //		
-//		if(chosenBase != null){
-//			int amount = (int) (sliderArrow.getRatio() * Materials.getBaseAmount(chosenBase.getBaseType())) + 1;
-//			g.drawString("Use " + amount + " " + chosenBase.getName(), 
-//					xOffset + 23, yOffset + 450);
-//		}else
-//			g.drawString("Choose a base material", xOffset + 23, yOffset + 450);
+		if(chosenBase != null){
+			int amount = (int) (sliderArrow.getRatio() * Materials.getBaseAmount(chosenBase.getBaseType())) + 1;
+			if(amount < 10){
+				f4.setFont("Use " + amount + "   " + chosenBase.getName());
+				screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+			}else if(amount == 100){
+				f4.setFont("Use " + amount + " " + chosenBase.getName());
+				screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+			}else{
+				f4.setFont("Use " + amount + "  " + chosenBase.getName());
+				screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+			}
+			
+		}else{
+			f4.setFont("Choose a base material");
+			screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+		}
 	}
 	
-	//Font f4 = new Font("Use " + amount + " " + chosenBase.getName(), FontColor.WHITE);
+
 	
 	private void renderSecondaryPhase(Screen screen){
 		if(tab == Tab.ESSENCES){

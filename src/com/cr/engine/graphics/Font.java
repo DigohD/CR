@@ -29,7 +29,7 @@ public class Font {
 	
 	private String text;
 	
-	public Font(String text, FontColor color){
+	public Font(String text, FontColor color, boolean dynamic){
 		this.text = text;
 		shader = new Shader("fontVertshader", "fontShader");
 		
@@ -130,7 +130,9 @@ public class Font {
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
 		
-		mesh = new Mesh(vertexArray, texCoordArray, iArray);
+		
+		if(dynamic) mesh = new Mesh(vertexArray, texCoordArray, iArray, true);
+		else mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
 	}
 	
 	public void loadFonts(){
@@ -151,16 +153,61 @@ public class Font {
 	
 	public void setFont(String txt){
 		char[] chars = txt.toCharArray();
-		char[] charsOld = text.toCharArray();
+		ArrayList<Vector2f> texCoords = new ArrayList<Vector2f>();
+		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
 		
-		for(int i = 0; i < charsOld.length; i++){
-			if(i < chars.length){
-				if(charsOld[i] != chars[i]){
-					
-				}
-			}
-		}
+		int width = fontSheet.getSpriteWidth();
+		int height = fontSheet.getSpriteHeight();
+		
+		float xLow = 0;
+		float xHigh = 0;
+		float yLow = 0;
+		float yHigh = 0;
+		
+		for(int i = 0; i < chars.length; i++){
 
+			xLow = charMap.get(chars[i]).x / fontSheet.getCols();
+			xHigh = xLow + (1 / fontSheet.getCols());
+			yLow = charMap.get(chars[i]).y / fontSheet.getRows();
+			yHigh = yLow + (1 / fontSheet.getRows());
+			
+			indices.add(vertices.size() + 0);
+			indices.add(vertices.size() + 1);
+			indices.add(vertices.size() + 2);
+			
+			indices.add(vertices.size() + 2);
+			indices.add(vertices.size() + 3);
+			indices.add(vertices.size() + 0);
+			
+			vertices.add(new Vertex(new Vector3f(i*width, height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width, height + height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width + width, height + height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width + width, height, 0)));
+					
+			texCoords.add(new Vector2f(xLow, yLow));
+			texCoords.add(new Vector2f(xLow, yHigh));
+			texCoords.add(new Vector2f(xHigh, yHigh));
+			texCoords.add(new Vector2f(xHigh, yLow));
+	
+		}
+		
+		Vertex[] vertexArray = new Vertex[vertices.size()];
+		Integer[] indexArray = new Integer[indices.size()];
+		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
+		
+		vertices.toArray(vertexArray);
+		indices.toArray(indexArray);
+		texCoords.toArray(texCoordArray);
+		
+		int[] iArray = new int[indexArray.length];
+		
+		for(int i = 0; i < indexArray.length; i++)
+			iArray[i] = indexArray[i];
+		
+		mesh.updateVertexData(vertexArray);
+		mesh.updateIndexData(iArray);
+		mesh.updateTexCoordData(texCoordArray);
 	}
 	
 	public void renderFont(float x, float y, float scale){

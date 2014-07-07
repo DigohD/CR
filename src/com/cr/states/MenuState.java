@@ -12,7 +12,7 @@ public class MenuState extends GameState{
 	Font font;
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
-		font = new Font("Press Enter to Play!", FontColor.GREEN_DARK);
+		font = new Font("Press Enter to Play!", FontColor.GREEN_DARK, false);
 	}
 	
 	@Override

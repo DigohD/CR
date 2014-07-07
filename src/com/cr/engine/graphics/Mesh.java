@@ -32,9 +32,12 @@ public class Mesh {
 		sendStaticData(vertices, indices);
 	}
 	
-	public Mesh(Vertex[] vertices, Vector2f[] texCoords, int[] indices){
+	public Mesh(Vertex[] vertices, Vector2f[] texCoords, int[] indices, boolean dynamicData){
 		size = 0;
-		sendData(vertices, texCoords, indices);
+		if(dynamicData){
+			sendDynamicData(vertices, texCoords, indices);
+		}else
+			sendData(vertices, texCoords, indices);
 	}
 	
 	public Mesh(Vertex[] vertices, int[] indices, boolean dynamicData){
@@ -58,6 +61,32 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, texID);
 		//second param is the offset in bytes to where the replacement of the data will start
 		glBufferSubData(GL_ARRAY_BUFFER, 0, texCoordBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+	
+	public void updateVertexData(Vertex[] vertices){
+		vertexBuffer = BufferUtils.createFloatBuffer(3 * vertices.length);
+		
+		for(int i = 0; i < vertices.length; i++){
+			vertexBuffer.put(vertices[i].getPos().x);
+			vertexBuffer.put(vertices[i].getPos().y);
+			vertexBuffer.put(vertices[i].getPos().z);
+		}
+		
+		vertexBuffer.flip();
+		
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+	
+	public void updateIndexData(int[] indices){
+		indexBuffer = BufferUtils.createIntBuffer(indices.length);
+		indexBuffer.put(indices);
+		indexBuffer.flip();
+		
+		glBindBuffer(GL_ARRAY_BUFFER, iboID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, indexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
@@ -105,6 +134,70 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		
+		glBindVertexArray(0);
+	}
+	
+	private void sendDynamicData(Vertex[] vertices, Vector2f[] texCoords,
+			int[] indices) {
+		
+		vertexBuffer = BufferUtils.createFloatBuffer(3 * vertices.length);
+		
+		for(int i = 0; i < vertices.length; i++){
+			vertexBuffer.put(vertices[i].getPos().x);
+			vertexBuffer.put(vertices[i].getPos().y);
+			vertexBuffer.put(vertices[i].getPos().z);
+		}		
+		
+		vertexBuffer.flip();
+		
+		texCoordBuffer = BufferUtils.createFloatBuffer(2 * texCoords.length);
+		
+		for(int i = 0; i < texCoords.length; i++){
+			texCoordBuffer.put(texCoords[i].x);
+			texCoordBuffer.put(texCoords[i].y);
+		}
+		
+		texCoordBuffer.flip();
+		
+		indexBuffer = BufferUtils.createIntBuffer(indices.length);
+		indexBuffer.put(indices);
+		indexBuffer.flip();
+		
+		size = indices.length;
+		
+		vboID = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		
+		texID = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, texID);
+		glBufferData(GL_ARRAY_BUFFER, texCoordBuffer, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		
+		iboID = glGenBuffers();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		
+		vertexBuffer = null;
+		indexBuffer = null;
+		texCoordBuffer = null;
+		
+		vaoID = glGenVertexArrays();
+		glBindVertexArray(vaoID);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, texID);
+		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glEnableVertexAttribArray(0);

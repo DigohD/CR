@@ -108,7 +108,7 @@ public class Sprite {
 		int[] indices = {0,1,2, 
 						 2,3,0};
 		
-		mesh = new Mesh(vertices, texCoords, indices);
+		mesh = new Mesh(vertices, texCoords, indices, false);
 		tAtlas = true;
 	}
 	
