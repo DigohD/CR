@@ -83,7 +83,7 @@ public class CraftingState extends GameState{
 	Font f2 = new Font("PRESS ENTER TO RESUME", FontColor.RED, false);
 	Font f3 = new Font("PRESS C TO RETURN TO MAIN MENU", FontColor.RED, false);
 	
-	Font f4 = new Font("Choose a base material", FontColor.WHITE, true);
+	Font f4 = new Font("Choose a base material       ", FontColor.WHITE, true);
 	
 	boolean aPattern = false;
 	
@@ -346,20 +346,24 @@ public class CraftingState extends GameState{
 		if(chosenBase != null){
 			int amount = (int) (sliderArrow.getRatio() * Materials.getBaseAmount(chosenBase.getBaseType())) + 1;
 			if(amount < 10){
-				f4.setFont("Use " + amount + "   " + chosenBase.getName());
-				screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+				f4.setFont("Use  " + amount + "   " + chosenBase.getName() + " material");
+				
 			}else if(amount == 100){
-				f4.setFont("Use " + amount + " " + chosenBase.getName());
-				screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+				f4.setFont("Use  " + amount + " " + chosenBase.getName() + " material");
+				
 			}else{
-				f4.setFont("Use " + amount + "  " + chosenBase.getName());
-				screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+				f4.setFont("Use  " + amount + "  " + chosenBase.getName() + " material");
+			
 			}
 			
 		}else{
-			f4.setFont("Choose a base material");
-			screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+			f4.setFont("Choose a base material        ");
+			
 		}
+		
+		screen.renderFont(f4, xOffset + 23, yOffset + 410, 0.25f);
+		
+		
 	}
 	
 
