@@ -4,7 +4,6 @@ import com.cr.crafting.material.loot.Loot;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.shader.Shader;
-import com.cr.entity.emitter.LootEmitter;
 import com.cr.entity.enemy.Dummy;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.entity.enemy.test.RangedTest;

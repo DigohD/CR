@@ -38,18 +38,12 @@ public class PlayState extends GameState{
 		}else if(Input.getKey(Input.C)){
 //			bg = true;
 			gsm.push(new InventoryState(gsm));
-		}else if(Input.getKey(Input.M)){
-//			bg = true;
-			gsm.push(new MaterialsState(gsm));
 		}else if(KeyInput.q){
 //			bg = true;
 			gsm.push(new StatsState(gsm));
 		}else if(Input.getKey(Input.F1)){
 //			bg = true;
 			gsm.push(new BiomeTestState(gsm));
-		}else if(Input.getKey(Input.F)){
-//			bg = true;
-			gsm.push(new CraftingState(gsm));
 		}
 		w.tick(dt);
 	}

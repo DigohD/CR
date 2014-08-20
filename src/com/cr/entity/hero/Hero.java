@@ -14,7 +14,6 @@ import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
-import com.cr.entity.hero.materials.Materials;
 import com.cr.entity.hero.misc.FootPrint;
 import com.cr.util.Randomizer;
 import com.cr.util.SoundP;
@@ -39,7 +38,6 @@ public class Hero extends Mob implements Collideable{
 	private int printTimer;
 
 	private static Inventory inventory;
-	private static Materials materials;
 	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
@@ -75,7 +73,6 @@ public class Hero extends Mob implements Collideable{
 		currentHP = 1;
 		
 		inventory = new Inventory();
-		materials = new Materials();
 	}
 	
 	protected boolean collisionWithTile(float x, float y){
@@ -273,10 +270,6 @@ public class Hero extends Mob implements Collideable{
 
 	public static Inventory getInventory() {
 		return inventory;
-	}
-
-	public static Materials getMaterials() {
-		return materials;
 	}
 
 	public static void setCurrentDir(Direction currentDir) {
