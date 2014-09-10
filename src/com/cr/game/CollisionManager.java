@@ -5,18 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cr.combat.Projectile;
-import com.cr.crafting.material.loot.Loot;
-import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
-import com.cr.item.weapon.Weapon;
-import com.cr.engine.core.Vector2f;
 
 public class CollisionManager {
 	
 	private static List<Enemy> enemies = new ArrayList<Enemy>();
-	private static List<Loot> loot = new ArrayList<Loot>();
+//	private static List<Loot> loot = new ArrayList<Loot>();
 	private static List<Projectile> playerProjectiles = 
 			new ArrayList<Projectile>();
 	private static List<EnemyProjectile> enemyProjectiles = 
@@ -30,13 +26,13 @@ public class CollisionManager {
 		enemies.remove(e);
 	}
 	
-	public static void addLoot(Loot e){
-		loot.add(e);
-	}
-	
-	public static void removeLoot(Loot e){
-		loot.remove(e);
-	}
+//	public static void addLoot(Loot e){
+//		loot.add(e);
+//	}
+//	
+//	public static void removeLoot(Loot e){
+//		loot.remove(e);
+//	}
 	
 	public static void addProjectile(Projectile e){
 		playerProjectiles.add(e);
@@ -91,13 +87,13 @@ public class CollisionManager {
 			}
 		}
 		
-		for(int i = 0; i < loot.size(); i++){
-			Loot p = loot.get(i);
-			if (collisionBetween(p.getRect(), hero.getRect())){
-				hero.collisionWith(p);
-				p.collisionWith(hero);
-			}
-		}
+//		for(int i = 0; i < loot.size(); i++){
+//			Loot p = loot.get(i);
+//			if (collisionBetween(p.getRect(), hero.getRect())){
+//				hero.collisionWith(p);
+//				p.collisionWith(hero);
+//			}
+//		}
 		
 	}
 

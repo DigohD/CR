@@ -3,6 +3,7 @@ package com.cr.crafting.v2.material;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.property.Property;
+import com.cr.item.stats.Stat;
 
 public abstract class Material{
 
@@ -22,7 +23,9 @@ public abstract class Material{
 	protected int newHigherTimeLimit;
 	protected int newBalancedValue;
 	
-	protected boolean breakable;
+	protected int amount;
+	
+	protected boolean breakable, isPrimary;
 	
 	protected ArrayList<Property> properties;
 	
@@ -103,6 +106,11 @@ public abstract class Material{
 		return null;
 	}
 	
+	protected void calculateMids(){
+		heatMidPoint = ((higherHeatLimit - lowerHeatLimit) / 2) + lowerHeatLimit;
+		timeMidPoint = ((higherTimeLimit - lowerTimeLimit) / 2) + lowerTimeLimit;
+	}
+	
 	public State calculateUnbrokenState(int heat, int time){
 		boolean left = false, right = false, upper = false, lower = false;
 		
@@ -175,6 +183,8 @@ public abstract class Material{
 			lowerTimeLimit = (int) (lowerTimeLimit - diff);
 		}
 	}
+	
+	public abstract Stat generateStat(boolean isWeapon);
 	
 	public void resetSpans(){
 		newHigherHeatLimit = higherHeatLimit;
@@ -295,6 +305,18 @@ public abstract class Material{
 	}
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public boolean isPrimary() {
+		return isPrimary;
 	}
 	
 	

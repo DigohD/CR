@@ -18,7 +18,6 @@ import com.cr.item.stats.AffectBearerOnHit;
 import com.cr.item.stats.AddsDamageDone;
 import com.cr.item.stats.Stat;
 import com.cr.item.weapon.Weapon;
-import com.cr.util.SoundP;
 
 public class OneHandAttack extends Projectile implements Renderable{
 

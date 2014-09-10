@@ -16,7 +16,6 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.misc.FootPrint;
 import com.cr.util.Randomizer;
-import com.cr.util.SoundP;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
@@ -182,7 +181,6 @@ public class Hero extends Mob implements Collideable{
 			setBobing(true);
 			stepCounter++;
 			if(stepCounter > 18){
-				SoundP.playSound("step" + (Randomizer.getInt(0, 4) + 1));
 				stepCounter = 0;
 			}
 		}
@@ -283,7 +281,7 @@ public class Hero extends Mob implements Collideable{
 
 	@Override
 	public void playHurtSound() {
-		SoundP.playSound("ouch" + (Randomizer.getInt(0, 3) + 1));
+		
 	}
 
 	

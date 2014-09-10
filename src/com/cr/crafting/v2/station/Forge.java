@@ -1,0 +1,50 @@
+package com.cr.crafting.v2.station;
+
+import java.util.ArrayList;
+
+import com.cr.crafting.v2.material.Material;
+import com.cr.crafting.v2.pattern.Pattern;
+
+public class Forge {
+	
+	private Pattern pattern;
+	private ArrayList<Material> materials = new ArrayList<Material>();
+	private int heat, time;
+	private boolean materialAdded = false;
+	
+	public void setPattern(Pattern pattern) {
+		this.pattern = pattern;
+	}
+
+	public void setHeat(int heat) {
+		this.heat = heat;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	public void addMaterial(Material material){
+		if(materials.size() == 0 && material.isPrimary()){
+			materialAdded = true;
+			material.resetSpans();
+			materials.add(material);
+		}else if(materials.size() > 0 && !material.isPrimary()){
+			materialAdded = true;
+			material.resetSpans();
+			materials.add(material);
+		}
+	}
+	
+	public void process(){
+		for(Material x : materials){
+			x.process(heat, time, materials);
+		}
+	}
+	
+	public void craft(){
+		
+	}
+	
+	
+}

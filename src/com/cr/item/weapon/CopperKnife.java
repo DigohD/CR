@@ -4,8 +4,6 @@ import com.cr.combat.attack.OneHandAttack;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.util.Randomizer;
-import com.cr.util.SoundP;
 
 public class CopperKnife extends Weapon{
 
@@ -31,18 +29,16 @@ public class CopperKnife extends Weapon{
 	@Override
 	public void attack() {
 		attack = new OneHandAttack(new Vector2f(x0, x1), width, height, this);
-		SoundP.playSound("bladeswing" + (Randomizer.getInt(0, 3) + 1));
 	}
 
 	@Override
 	public void render(Screen screen) {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
 	public void playHitSound() {
-		SoundP.playSound("bladehit" + (Randomizer.getInt(0, 2) + 1));
+		
 	}
 
 }

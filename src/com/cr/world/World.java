@@ -1,12 +1,9 @@
 package com.cr.world;
 
-import com.cr.crafting.material.loot.Loot;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.shader.Shader;
-import com.cr.entity.enemy.Dummy;
 import com.cr.entity.enemy.test.MeleeTest;
-import com.cr.entity.enemy.test.RangedTest;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
 import com.cr.world.tile.Tile;

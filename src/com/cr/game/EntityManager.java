@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cr.combat.Projectile;
-import com.cr.crafting.material.loot.Loot;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
@@ -52,10 +51,10 @@ public class EntityManager {
 			Enemy c = (Enemy) e;
 			CollisionManager.addEnemy(c);
 		}
-		if(e instanceof Loot){
-			Loot c = (Loot) e;
-			CollisionManager.addLoot(c);
-		}
+//		if(e instanceof Loot){
+//			Loot c = (Loot) e;
+//			CollisionManager.addLoot(c);
+//		}
 		if(e instanceof Projectile){
 			Projectile c = (Projectile) e;
 			CollisionManager.addProjectile(c);
@@ -79,10 +78,10 @@ public class EntityManager {
 			Enemy c = (Enemy) e;
 			CollisionManager.removeEnemy(c);
 		}
-		if(e instanceof Loot){
-			Loot c = (Loot) e;
-			CollisionManager.removeLoot(c);
-		}
+//		if(e instanceof Loot){
+//			Loot c = (Loot) e;
+//			CollisionManager.removeLoot(c);
+//		}
 		if(e instanceof Projectile){
 			Projectile c = (Projectile) e;
 			CollisionManager.removeProjectile(c);
