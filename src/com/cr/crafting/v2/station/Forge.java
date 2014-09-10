@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.pattern.Pattern;
+import com.cr.entity.hero.Hero;
+import com.cr.entity.hero.inventory.Inventory;
+import com.cr.item.Item;
 
 public class Forge {
 	
@@ -43,7 +46,9 @@ public class Forge {
 	}
 	
 	public void craft(){
-		
+		pattern.createStatsFromMaterials(materials);
+		Item i = pattern.generateItem();
+		Inventory.addItem(i);
 	}
 	
 	
