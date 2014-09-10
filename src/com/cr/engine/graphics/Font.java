@@ -82,7 +82,7 @@ public class Font {
 		
 
 		
-		float xOffset = 0f;
+		float xOffset = 5f;
 		float yOffset = 0f;
 		
 		float xLow = 0;
@@ -109,10 +109,10 @@ public class Font {
 			indices.add(vertices.size() + 3);
 			indices.add(vertices.size() + 0);
 			
-			vertices.add(new Vertex(new Vector3f(i*width + xOffset, height + yOffset, 0)));
-			vertices.add(new Vertex(new Vector3f(i*width + xOffset, height + height + yOffset, 0)));
-			vertices.add(new Vertex(new Vector3f(i*width + width + xOffset, height + height + yOffset, 0)));
-			vertices.add(new Vertex(new Vector3f(i*width + width + xOffset, height+ yOffset, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width, height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width, height + height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width + width, height + height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width + width, height, 0)));
 			
 			texCoords.add(new Vector2f(xLow, yLow));
 			texCoords.add(new Vector2f(xLow, yHigh));
