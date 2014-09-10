@@ -1,5 +1,6 @@
 package com.cr.game;
 
+import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.CoreEngine;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;

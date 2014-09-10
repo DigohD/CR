@@ -1,8 +1,10 @@
 package com.cr.crafting.v2.material;
 
+import java.awt.Image;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.property.Property;
+import com.cr.engine.graphics.Sprite;
 import com.cr.item.stats.Stat;
 
 public abstract class Material{
@@ -184,7 +186,11 @@ public abstract class Material{
 		}
 	}
 	
-	public abstract Stat generateStat(boolean isWeapon);
+	public abstract ArrayList<Stat> generateStat(boolean isWeapon);
+	
+	public abstract int getID();
+	
+	public abstract Sprite getMaterialImage();
 	
 	public void resetSpans(){
 		newHigherHeatLimit = higherHeatLimit;

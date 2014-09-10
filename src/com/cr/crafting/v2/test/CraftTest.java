@@ -2,27 +2,19 @@ package com.cr.crafting.v2.test;
 
 import com.cr.crafting.v2.material.Copper;
 import com.cr.crafting.v2.material.Material;
-
-import java.util.ArrayList;
-import java.util.Random;
+import com.cr.crafting.v2.pattern.*;
+import com.cr.crafting.v2.station.Forge;
 
 public class CraftTest {
 
-	public static void main(String[] args){
-		Copper c = new Copper();
-		Random rnd = new Random();
-		int x = 100;
-		while(x-- > 0){
-			int heat = rnd.nextInt(1600);
-			int time = rnd.nextInt(330);
-			
-			c = new Copper();
-			c.resetSpans();
-			c.process(heat, time, new ArrayList<Material>());
-			
-			System.out.println(heat + " - " + time);
-			System.out.println(c.getState());
-		}
+	public void craftTest(){
+		Forge f = new Forge();
+		f.setPattern(new KnifePattern());
+		f.setHeat(800);
+		f.setTime(150);
+		f.addMaterial(new Copper());
+		f.process();
+		f.craft();
 	}
 	
 }
