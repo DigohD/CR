@@ -23,12 +23,6 @@ public class Game extends CoreEngine{
 		screen = new Screen();
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));
-		
-		float x = 25.0f;
-		float y = 3.377652f;
-		float result = x - y;
-		
-		System.out.println(result);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import com.cr.world.tile.Tile;
 public class TileLayer {
 	
 	private int width, height;
+	private float depth;
 
 	private Bitmap bitmap;
 	private Mesh mesh;
@@ -31,7 +32,8 @@ public class TileLayer {
 	
 	private float scaleFactor = 1f;
 	
-	public TileLayer(int width, int height){
+	public TileLayer(int width, int height, float depth){
+		this.depth = depth;
 		bitmap = new Bitmap(width, height);
 		
 		this.width = width;
@@ -104,7 +106,7 @@ public class TileLayer {
 		transform.scale(scaleFactor, scaleFactor, 1);
 	}
 	
-	public void renderTileLayer(float depth){
+	public void renderTileLayer(){
 		transform.translate(0, 0, depth);
 		shader.bind();
 		shader.setUniform("transformation", transform.getOrthoTransformation());

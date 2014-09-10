@@ -34,9 +34,10 @@ public class Grasslands{
 	public Grasslands(int width, int height){
 		this.width = width;
 		this.height = height;
-		bottomLayer = new TileLayer(width, height);
-		middleLayer = new TileLayer(width, height);
-		topLayer    = new TileLayer(width, height);
+		
+		bottomLayer = new TileLayer(width, height, 0.9f);
+		middleLayer = new TileLayer(width, height, 0.7f);
+		topLayer    = new TileLayer(width, height, 0.6f);
 		
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
 		bottomLayer.addTileType(ColorRGBA.GRAY, new StoneTile());

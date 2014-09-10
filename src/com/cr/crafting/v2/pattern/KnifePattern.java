@@ -6,7 +6,8 @@ import com.cr.crafting.v2.material.Material;
 
 class KnifePattern extends Pattern{
 
-	public KnifePattern(){
+	public KnifePattern(boolean isWeapon){
+		super(isWeapon);
 		ASMod = 1.5f;
 		damageMod = 0.5f;
 	}

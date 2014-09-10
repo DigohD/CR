@@ -1,31 +1,17 @@
 package com.cr.states;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.ExitButton;
-import com.cr.entity.hero.inventory.Inventory;
-import com.cr.entity.hero.inventory.InventoryButton;
-import com.cr.game.EntityManager;
-import com.cr.game.Game;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoaderOld;
 import com.cr.world.biome.Grasslands;
 
 public class BiomeTestState extends GameState{
 
-	private BufferedImage bg = ImageLoaderOld.getImage("inventorybg");
+	//private BufferedImage bg = ImageLoaderOld.getImage("inventorybg");
 	private BufferedImage test, test2, test3, finalWorld;
 	private ExitButton exit;
 	private Grasslands grasslands;
