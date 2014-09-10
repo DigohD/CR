@@ -2,6 +2,7 @@ package com.cr.engine.graphics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
@@ -21,15 +22,14 @@ public class Font {
 	}
 	
 	private HashMap<Character, Vector2f> charMap;
-
-	private Mesh mesh;
-	public Transform t;
+	private List<Mesh> meshes;
 	
-	Shader shader;
-	
+	private Transform t;
+	private Shader shader;
 	private String text;
 	
 	public Font(String text, FontColor color, boolean dynamic){
+		meshes = new ArrayList<Mesh>();
 		this.text = text;
 		shader = new Shader("fontVertshader", "fontShader");
 		
@@ -67,7 +67,6 @@ public class Font {
 		}else if(color == FontColor.YELLOW){
 			fontSheet = new Sprite("yellow", 25, 8);
 		}
-		
 
 		loadFonts();
 		
@@ -80,8 +79,6 @@ public class Font {
 		int width = fontSheet.getSpriteWidth();
 		int height = fontSheet.getSpriteHeight();
 		
-
-		
 		float xOffset = 5f;
 		float yOffset = 0f;
 		
@@ -93,7 +90,7 @@ public class Font {
 		for(int i = 0; i < charArray.length; i++){
 		
 			if(Character.isLowerCase(charArray[i])){
-				xOffset = 10;
+				xOffset = 70;
 			}else xOffset = 0;
 
 			xLow = charMap.get(charArray[i]).x / fontSheet.getCols();
@@ -109,33 +106,36 @@ public class Font {
 			indices.add(vertices.size() + 3);
 			indices.add(vertices.size() + 0);
 			
-			vertices.add(new Vertex(new Vector3f(i*width, height, 0)));
-			vertices.add(new Vertex(new Vector3f(i*width, height + height, 0)));
-			vertices.add(new Vertex(new Vector3f(i*width + width, height + height, 0)));
-			vertices.add(new Vertex(new Vector3f(i*width + width, height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width - xOffset, height, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width - xOffset , height + height + 50, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width + width + xOffset, height + height + 50, 0)));
+			vertices.add(new Vertex(new Vector3f(i*width + width + xOffset, height, 0)));
 			
 			texCoords.add(new Vector2f(xLow, yLow));
 			texCoords.add(new Vector2f(xLow, yHigh));
 			texCoords.add(new Vector2f(xHigh, yHigh));
 			texCoords.add(new Vector2f(xHigh, yLow));
+			
+			Vertex[] vertexArray = new Vertex[vertices.size()];
+			Integer[] indexArray = new Integer[indices.size()];
+			Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
+			
+			vertices.toArray(vertexArray);
+			indices.toArray(indexArray);
+			texCoords.toArray(texCoordArray);
+			
+			int[] iArray = new int[indexArray.length];
+			
+			for(int j = 0; j < indexArray.length; j++)
+				iArray[j] = indexArray[j];
+			
+			if(dynamic) meshes.add(new Mesh(vertexArray, texCoordArray, iArray, true));
+			else meshes.add(new Mesh(vertexArray, texCoordArray, iArray, false));
+			
+			vertices.clear();
+			indices.clear();
+			texCoords.clear();
 		}
-		
-		Vertex[] vertexArray = new Vertex[vertices.size()];
-		Integer[] indexArray = new Integer[indices.size()];
-		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
-		
-		vertices.toArray(vertexArray);
-		indices.toArray(indexArray);
-		texCoords.toArray(texCoordArray);
-		
-		int[] iArray = new int[indexArray.length];
-		
-		for(int i = 0; i < indexArray.length; i++)
-			iArray[i] = indexArray[i];
-		
-		
-		if(dynamic) mesh = new Mesh(vertexArray, texCoordArray, iArray, true);
-		else mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
 	}
 	
 	public void loadFonts(){
@@ -192,25 +192,31 @@ public class Font {
 			texCoords.add(new Vector2f(xLow, yHigh));
 			texCoords.add(new Vector2f(xHigh, yHigh));
 			texCoords.add(new Vector2f(xHigh, yLow));
+			
+			Vertex[] vertexArray = new Vertex[vertices.size()];
+			Integer[] indexArray = new Integer[indices.size()];
+			Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
+			
+			vertices.toArray(vertexArray);
+			indices.toArray(indexArray);
+			texCoords.toArray(texCoordArray);
+			
+			int[] iArray = new int[indexArray.length];
+			
+			for(int j = 0; j < indexArray.length; j++)
+				iArray[j] = indexArray[j];
+			
+			
+			for(Mesh m : meshes){
+				m.updateVertexData(vertexArray);
+				m.updateIndexData(iArray);
+				m.updateTexCoordData(texCoordArray);
+			}
+		
 	
 		}
 		
-		Vertex[] vertexArray = new Vertex[vertices.size()];
-		Integer[] indexArray = new Integer[indices.size()];
-		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
 		
-		vertices.toArray(vertexArray);
-		indices.toArray(indexArray);
-		texCoords.toArray(texCoordArray);
-		
-		int[] iArray = new int[indexArray.length];
-		
-		for(int i = 0; i < indexArray.length; i++)
-			iArray[i] = indexArray[i];
-		
-		mesh.updateVertexData(vertexArray);
-		mesh.updateIndexData(iArray);
-		mesh.updateTexCoordData(texCoordArray);
 	}
 	
 	public void renderFont(float x, float y, float scale){
@@ -219,7 +225,8 @@ public class Font {
 		shader.bind();
 		shader.setUniform("transformation", t.getOrthoTransformation2());
 		fontSheet.getTextureAtlas().bind();
-		mesh.render();
+		for(Mesh m : meshes)
+			m.render();
 		fontSheet.getTextureAtlas().unbind();
 		shader.unbind();
 	}
@@ -228,9 +235,7 @@ public class Font {
 		return fontSheet;
 	}
 
-	public Mesh getM() {
-		return mesh;
-	}
+	
 	
 	
 	
