@@ -92,9 +92,9 @@ public class CraftingState extends GameState{
 			gsm.pop();
 		}if(pattern.isClicked()){
 			gsm.push(new PatternState(gsm, forge));
-		}if(add.isClicked()){
+		}if(add.isClicked() && activeMaterial != null){
 			forge.addMaterial(activeMaterial);
-			gsm.push(new AmountState(gsm, forge));
+			gsm.push(new AmountState(gsm, forge, activeMaterial));
 		}
 	}
 

@@ -26,7 +26,7 @@ public class Copper extends Material{
 		
 		calculateMids();
 		
-		amount = 1;
+		amount = 100;
 		
 		breakable = true;
 		
