@@ -9,7 +9,6 @@ import com.cr.game.GameStateManager;
 
 public class MenuState extends GameState{
 
-	int timer;
 	Font font;
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
@@ -23,7 +22,6 @@ public class MenuState extends GameState{
 	
 	@Override
 	public void tick(float dt) {
-		timer++;
 		if(Input.getKey(Input.ENTER)){
 			gsm.push(new PlayState(gsm));
 		}

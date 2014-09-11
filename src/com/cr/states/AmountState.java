@@ -47,7 +47,7 @@ public class AmountState extends GameState{
 		
 		amount = 1;
 		
-		amountFont = new Font(amount + "  ", FontColor.YELLOW, false);
+		amountFont = new Font(amount + "", FontColor.YELLOW, true);
 		materialFont = new Font(activeMaterial.getName() + " Amount", FontColor.WHITE, false);
 		
 		int xOffset =  (Window.getWidth() - 150) / 2;
@@ -115,8 +115,8 @@ public class AmountState extends GameState{
 		xOffset =  (Window.getWidth()) / 2;
 		yOffset = (Window.getHeight()) / 2;
 		
-		String amountS = "" + amount;
-		amountFont.setFont(amountS);;
+	
+		amountFont.setFont(amount + "");
 		
 		materialFont.renderFont(xOffset - 115, yOffset - 80, 0.2f);
 		amountFont.renderFont(xOffset - 60, yOffset - 40, 0.5f);
