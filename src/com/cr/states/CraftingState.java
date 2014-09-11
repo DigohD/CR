@@ -2,6 +2,7 @@ package com.cr.states;
 
 import java.util.ArrayList;
 
+import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.station.AddButton;
 import com.cr.crafting.v2.station.CraftButton;
@@ -15,6 +16,7 @@ import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
+import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
@@ -24,6 +26,7 @@ public class CraftingState extends GameState{
 
 	private Sprite bg = new Sprite("inventorybg");
 	private MaterialsBox materials;
+	private Material activeMaterial;
 	
 	private AddButton add;
 	private ProcessButton process;
@@ -33,6 +36,7 @@ public class CraftingState extends GameState{
 	
 	private Forge forge;
 	
+	ArrayList<MaterialChoice> matsChoices;
 	
 	private Sprite slotSprite;
 	
@@ -45,7 +49,14 @@ public class CraftingState extends GameState{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
+		matsChoices = new ArrayList<MaterialChoice>();
+		
 		this.forge = forge;
+		
+		ArrayList<Material> mats = MaterialsBox.getMaterials();
+		int counter = 0;
+		for(Material x : mats)
+			matsChoices.add(new MaterialChoice(xOffset + 10 + (counter * 60), yOffset + 10, x));
 		
 		pattern = new PatternButton(600 + xOffset, 294 + yOffset);
 		add = new AddButton(600 + xOffset, 354 + yOffset);
@@ -67,6 +78,12 @@ public class CraftingState extends GameState{
 		craft.tick(dt);
 		exit.tick(dt);
 		
+		for(MaterialChoice x : matsChoices){
+			x.tick(dt);
+			if(x.isClicked())
+				activeMaterial = x.getMaterial();
+		}
+		
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
@@ -75,6 +92,9 @@ public class CraftingState extends GameState{
 			gsm.pop();
 		}if(pattern.isClicked()){
 			gsm.push(new PatternState(gsm, forge));
+		}if(add.isClicked()){
+			forge.addMaterial(activeMaterial);
+			gsm.push(new AmountState(gsm, forge));
 		}
 	}
 
@@ -84,18 +104,9 @@ public class CraftingState extends GameState{
 		int yOffset = (Window.getHeight() - 600) / 2;
 		screen.renderStaticSprite(bg, xOffset, yOffset);
 		
-		int counter = 0;
-		for(int i = 1; i <= 1; i++){
-			if(MaterialsBox.getMaterial(i).getAmount() > 0){
-				screen.renderStaticSprite(slotSprite, 
-						xOffset + 10 + counter * 60, 
-						yOffset + 10);
-				screen.renderStaticSprite(MaterialsBox.getMaterial(i).getMaterialImage(), 
-						xOffset + 10 + counter * 60, 
-						yOffset + 10);
-				counter++;
-			}
-		}
+		
+		for(MaterialChoice x : matsChoices)
+			x.render(screen);
 		
 		add.render(screen);
 		process.render(screen);

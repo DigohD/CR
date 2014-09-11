@@ -5,7 +5,7 @@ import com.cr.game.GameStateManager;
 
 public abstract class GameState {
 	
-	protected GameStateManager gsm;
+	public static GameStateManager gsm;
 	protected boolean blockTicking = true;
 	protected boolean blockRendering = true;
 	

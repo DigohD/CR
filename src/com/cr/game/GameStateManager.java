@@ -59,5 +59,9 @@ public class GameStateManager {
 			render(state.next, screen);
 		state.data.render(screen);
 	}
+	
+	public void popup(){
+		
+	}
 
 }
