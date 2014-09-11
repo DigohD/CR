@@ -107,6 +107,11 @@ public class ImageLoader {
 		imageLib.put("slider", loadImage("/craftingui/slider.png"));
 		imageLib.put("craftingbg", loadImage("/craftingui/craftingbg.png"));
 		imageLib.put("patternbg", loadImage("/craftingui/patternbg.png"));
+		
+		imageLib.put("downarrow", loadImage("/craftingui/downarrow.png"));
+		imageLib.put("downarrow2", loadImage("/craftingui/downarrow2.png"));
+		imageLib.put("uparrow", loadImage("/craftingui/uparrow.png"));
+		imageLib.put("uparrow2", loadImage("/craftingui/uparrow2.png"));
 //		
 //		// Patterns
 		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));
