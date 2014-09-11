@@ -99,10 +99,13 @@ public class ImageLoader {
 //		// Crafting UI
 		imageLib.put("addbutton", loadImage("/craftingui/addbutton.png"));
 		imageLib.put("backbutton", loadImage("/craftingui/backbutton.png"));
+		imageLib.put("patternbutton", loadImage("/craftingui/patternbutton.png"));
+		imageLib.put("processbutton", loadImage("/craftingui/processbutton.png"));
 		imageLib.put("craftbutton", loadImage("/craftingui/craftbutton.png"));
 		imageLib.put("sliderarrow", loadImage("/craftingui/sliderarrow.png"));
 		imageLib.put("slider", loadImage("/craftingui/slider.png"));
 		imageLib.put("craftingbg", loadImage("/craftingui/craftingbg.png"));
+		imageLib.put("patternbg", loadImage("/craftingui/patternbg.png"));
 //		
 //		// Patterns
 		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));

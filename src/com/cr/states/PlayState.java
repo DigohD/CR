@@ -2,6 +2,7 @@ package com.cr.states;
 
 import java.awt.image.BufferedImage;
 
+import com.cr.crafting.v2.station.Forge;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
@@ -39,7 +40,7 @@ public class PlayState extends GameState{
 			gsm.push(new InventoryState(gsm));
 		}else if(Input.getKey(Input.M)){
 //			bg = true;
-			gsm.push(new CraftingState(gsm));
+			gsm.push(new CraftingState(gsm, new Forge()));
 		}else if(KeyInput.q){
 //			bg = true;
 			gsm.push(new StatsState(gsm));

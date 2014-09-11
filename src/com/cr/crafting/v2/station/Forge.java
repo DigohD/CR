@@ -3,6 +3,7 @@ package com.cr.crafting.v2.station;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
+import com.cr.crafting.v2.pattern.KnifePattern;
 import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.Inventory;
@@ -25,6 +26,10 @@ public class Forge {
 
 	public void setTime(int time) {
 		this.time = time;
+	}
+	
+	public void fillPossiblePatterns(ArrayList<Pattern> patterns){
+		patterns.add(new KnifePattern());
 	}
 	
 	public void addMaterial(Material material){

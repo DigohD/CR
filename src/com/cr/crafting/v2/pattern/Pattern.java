@@ -3,6 +3,7 @@ package com.cr.crafting.v2.pattern;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
+import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
 import com.cr.item.stats.Stat;
 
@@ -23,5 +24,6 @@ public abstract class Pattern {
 	}
 	
 	public abstract Item generateItem();
+	public abstract Sprite getSprite();
 	
 }
