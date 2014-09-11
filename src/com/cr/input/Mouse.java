@@ -12,6 +12,8 @@ public class Mouse implements MouseListener, MouseMotionListener{
 	private static int mouseY = -1;
 	private static int mouseButton = -1;
 	
+	private static boolean isForcedRelease = false;
+	
 	public static int getX(){
 		return mouseX;
 	}
@@ -59,11 +61,17 @@ public class Mouse implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		mouseButton = e.getButton();
+		if(!isForcedRelease)
+			mouseButton = e.getButton();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		mouseButton = -1;
+		isForcedRelease = false;
+	}
+	
+	public static void forceRelease(){
+		isForcedRelease = true;
 	}
 }

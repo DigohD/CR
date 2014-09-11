@@ -33,7 +33,6 @@ public class ExitButton extends Button implements Renderable{
 	@Override
 	public void clicked() {
 		isClicked = true;
-		Mouse.resetButton();
 	}
 
 	public boolean isClicked() {

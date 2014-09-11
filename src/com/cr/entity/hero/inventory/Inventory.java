@@ -27,6 +27,8 @@ public class Inventory implements Tickable, Renderable{
 			for(int j = 0; j < 3; j++)
 				inventory[i][j] = new InventorySlot(i, j, xOffset, yOffset);
 		
+		inactivateSlots();
+		
 //		b1 = new InventoryButton(600 + xOffset, 430 + yOffset);
 //		b2 = new InventoryButton(600 + xOffset, 482 + yOffset);
 //		b3 = new InventoryButton(600 + xOffset, 534 + yOffset);
@@ -62,6 +64,19 @@ public class Inventory implements Tickable, Renderable{
 		return null;
 	}
 
+	public void activateSlots(){
+		for(int i = 0; i < 11; i++)
+			for(int j = 0; j < 3; j++)
+				inventory[i][j].activateItemSlot();
+	}
+	
+	public void inactivateSlots(){
+		for(int i = 0; i < 11; i++)
+			for(int j = 0; j < 3; j++)
+				inventory[i][j].inactivateItemSlot();
+	}
+	
+	
 	@Override
 	public void tick(float dt) {
 		for(int i = 0; i < 11; i++)

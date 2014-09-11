@@ -9,6 +9,8 @@ import com.cr.crafting.v2.station.CraftButton;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.crafting.v2.station.PatternButton;
 import com.cr.crafting.v2.station.ProcessButton;
+import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
@@ -89,6 +91,16 @@ public class CraftingState extends GameState{
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;
 			}
+			
+			add.removeFromInput();
+			pattern.removeFromInput();
+			process.removeFromInput();
+			craft.removeFromInput();
+			exit.removeFromInput();
+			
+			for(MaterialChoice x : matsChoices)
+				x.removeFromInput();
+			
 			gsm.pop();
 		}if(pattern.isClicked()){
 			gsm.push(new PatternState(gsm, forge));
@@ -103,7 +115,6 @@ public class CraftingState extends GameState{
 		int xOffset =  (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		screen.renderStaticSprite(bg, xOffset, yOffset);
-		
 		
 		for(MaterialChoice x : matsChoices)
 			x.render(screen);

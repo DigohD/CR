@@ -58,6 +58,9 @@ public class PatternState extends GameState{
 				if(gsm.next() instanceof CraftingState){
 					CraftingState cs = (CraftingState) gsm.next();
 				}
+				exit.removeFromInput();
+				for(PatternChoice xs : patternChoices)
+					xs.removeFromInput();
 				gsm.pop();
 			}
 		}
@@ -66,6 +69,9 @@ public class PatternState extends GameState{
 			if(gsm.next() instanceof CraftingState){
 				CraftingState cs = (CraftingState) gsm.next();
 			}
+			exit.removeFromInput();
+			for(PatternChoice x : patternChoices)
+				x.removeFromInput();
 			gsm.pop();
 		}
 	}

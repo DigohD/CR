@@ -36,6 +36,9 @@ public class AmountState extends GameState{
 	
 	private Material activeMaterial;
 	
+	private Font amountFont;
+	private Font materialFont;
+	
 	private Forge forge;
 	
 	public AmountState(GameStateManager gsm, Forge forge, Material activeMaterial) {
@@ -43,6 +46,9 @@ public class AmountState extends GameState{
 		blockRendering = false;
 		
 		amount = 1;
+		
+		amountFont = new Font(amount + "  ", FontColor.YELLOW, false);
+		materialFont = new Font(activeMaterial.getName() + " Amount", FontColor.WHITE, false);
 		
 		int xOffset =  (Window.getWidth() - 150) / 2;
 		int yOffset = (Window.getHeight() - 230);
@@ -67,29 +73,29 @@ public class AmountState extends GameState{
 	}
 
 	@Override
-	public void tick(float dt) {
-		add.tick(dt);
-		
-		if(down1.isClicked() && amount > 1){
-			amount -= 1;
-		}if(down2.isClicked() && amount > 5){
-			amount -= 5;
-		}if(up1.isClicked() && amount < activeMaterial.getAmount()){
-			amount += 1;
-		}if(up2.isClicked() && amount < activeMaterial.getAmount() - 5){
-			amount += 5;
-		}
-		
-		down1.tick(dt);
-		down2.tick(dt);
-		up1.tick(dt);
-		up2.tick(dt);
-		
+	public void tick(float dt) {		
 		if(add.isClicked()) {
 			if(gsm.next() instanceof CraftingState){
 				CraftingState cs = (CraftingState) gsm.next();
 			}
+			
+			add.removeFromInput();
+			down1.removeFromInput();
+			down2.removeFromInput();
+			up1.removeFromInput();
+			up2.removeFromInput();
+			
 			gsm.pop();
+		}
+		
+		if(down1.isClicked() && amount > 1){
+			amount = amount - 1;
+		}else if(down2.isClicked() && amount > 5){
+			amount = amount - 5;
+		}else if(up1.isClicked() && amount < activeMaterial.getAmount()){
+			amount = amount + 1;
+		}else if(up2.isClicked() && amount < activeMaterial.getAmount() - 5){
+			amount = amount + 5;
 		}
 		
 	}
@@ -101,8 +107,6 @@ public class AmountState extends GameState{
 		
 		screen.renderStaticSprite(bg, xOffset, yOffset);
 		
-		Font amountFont = new Font("" + amount, FontColor.YELLOW, false);
-		
 		down1.render(screen);
 		down2.render(screen);
 		up1.render(screen);
@@ -111,7 +115,11 @@ public class AmountState extends GameState{
 		xOffset =  (Window.getWidth()) / 2;
 		yOffset = (Window.getHeight()) / 2;
 		
-		amountFont.renderFont(xOffset - 30, yOffset - 100, 0.5f);
+		String amountS = "" + amount;
+		amountFont.setFont(amountS);;
+		
+		materialFont.renderFont(xOffset - 115, yOffset - 80, 0.2f);
+		amountFont.renderFont(xOffset - 60, yOffset - 40, 0.5f);
 		
 		add.render(screen);
 	}

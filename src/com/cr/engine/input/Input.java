@@ -1,12 +1,18 @@
 package com.cr.engine.input;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Window;
+import com.cr.entity.hero.inventory.Button;
 
-public class Input {
+public class Input extends Observable{
 
 		public static final int NUM_KEYCODES = 256;
 		public static final int NUM_MOUSEBUTTONS = 5;
@@ -164,13 +170,36 @@ public class Input {
 			return !getKey(keyCode) && lastKeys[keyCode];
 		}
 
+		private static boolean isForcedRelease = false;
+		private static ArrayList<Button> buttons = new ArrayList<Button>();
+		
+		public static void addButton(Button b){
+			buttons.add(b);
+		}
+		
+		public static void removeButton(Button b){
+			buttons.remove(b);
+		}
+		
 		/**
 		 * 0 -> left click, 1 -> right click
 		 * @param mouseButton
 		 * @return
 		 */
 		public static boolean getMouse(int mouseButton){
-			return Mouse.isButtonDown(mouseButton);
+			while (Mouse.next()){
+			    if (Mouse.getEventButtonState()) {
+			        if (Mouse.getEventButton() == 0) {
+			        	for(Button x : buttons)
+			        		x.recieveClick(new Point(Mouse.getEventX(), Window.getHeight() - Mouse.getEventY()));
+			        }
+			    }else{
+			        if (Mouse.getEventButton() == 0) {
+			        	
+			        }
+			    }
+			}
+			return false;
 		}
 
 		public static boolean getMouseDown(int mouseButton){
@@ -191,6 +220,15 @@ public class Input {
 
 		public static void setCursor(boolean enabled){
 			Mouse.setGrabbed(!enabled);
+		}
+		
+		public static void forceRelease(){
+			isForcedRelease = true;
+		}
+		
+		public static void release(){
+			isForcedRelease = false;
+			System.out.println("RELEASE");
 		}
 
 }

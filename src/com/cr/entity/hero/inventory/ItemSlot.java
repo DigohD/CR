@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.input.Mouse;
@@ -44,6 +45,14 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable{
 	@Override
 	public void clicked(){
 		Inventory.buttonClicked(this);
+	}
+	
+	public void inactivateItemSlot(){
+		Input.removeButton(this);
+	}
+	
+	public void activateItemSlot(){
+		Input.addButton(this);
 	}
 	
 	public abstract boolean isCompatible(Item item);

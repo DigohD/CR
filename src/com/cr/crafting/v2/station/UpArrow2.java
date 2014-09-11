@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.input.Mouse;
@@ -34,7 +35,7 @@ public class UpArrow2 extends Button implements Renderable{
 	@Override
 	public void clicked() {
 		isClicked = true;
-		Mouse.resetButton();
+		Input.forceRelease();
 	}
 
 	public boolean isClicked() {

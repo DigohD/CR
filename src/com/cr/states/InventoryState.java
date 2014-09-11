@@ -25,6 +25,8 @@ public class InventoryState extends GameState{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
+		inventory.activateSlots();
+		
 		exit = new ExitButton(600 + xOffset, 534 + yOffset);
 	}
 
@@ -46,6 +48,8 @@ public class InventoryState extends GameState{
 				PlayState ps = (PlayState) gsm.next();
 				ps.bg = false;
 			}
+			exit.removeFromInput();
+			inventory.inactivateSlots();
 			gsm.pop();
 		}
 		
