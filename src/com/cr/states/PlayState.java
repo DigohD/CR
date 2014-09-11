@@ -4,12 +4,9 @@ import java.awt.image.BufferedImage;
 
 import com.cr.crafting.v2.station.Forge;
 import com.cr.engine.graphics.Screen;
-import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoaderOld;
 import com.cr.world.World;
 
 public class PlayState extends GameState{
@@ -21,7 +18,7 @@ public class PlayState extends GameState{
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
 		init();
-		img = ImageLoaderOld.getImage("stBG");
+		//img = ImageLoaderOld.getImage("stBG");
 	
 	}
 	

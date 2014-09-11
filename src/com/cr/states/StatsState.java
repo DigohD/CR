@@ -1,7 +1,5 @@
 package com.cr.states;
 
-import java.awt.image.BufferedImage;
-
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
@@ -9,7 +7,6 @@ import com.cr.entity.hero.HeroSheet;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
-import com.cr.resource.ImageLoaderOld;
 
 public class StatsState extends GameState{
 

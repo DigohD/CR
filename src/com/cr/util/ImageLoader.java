@@ -14,6 +14,7 @@ public class ImageLoader {
 	public ImageLoader(){
 		// Tiles
 		imageLib.put("tileatlas", loadImage("/tiles/tileatlas.png"));
+		imageLib.put("tileatlas2", loadImage("/tiles/tileatlas2.png"));
 		imageLib.put("grass", loadImage("/tiles/grass.png"));
 		imageLib.put("grass2", loadImage("/tiles/grass2.png"));
 		imageLib.put("dirt", loadImage("/tiles/dirt.png"));

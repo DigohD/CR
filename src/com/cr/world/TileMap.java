@@ -36,10 +36,14 @@ public class TileMap {
 
 	}
 	
+	public void tick(float dt){
+		
+	}
+	
 	public void renderMap(){
-		bottomLayer.renderTileLayer(0.9f);
-		middleLayer.renderTileLayer(0.7f);
-		topLayer.renderTileLayer(0.6f);
+		bottomLayer.renderTileLayer();
+		middleLayer.renderTileLayer();
+		topLayer.renderTileLayer();
 	}
 	
 	public int getWidth(){

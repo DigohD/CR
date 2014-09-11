@@ -1,8 +1,5 @@
 package com.cr.entity.hero.misc;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -11,8 +8,6 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
-import com.cr.resource.ImageLoaderOld;
-import com.cr.util.Camera;
 
 public class FootPrint extends Entity implements Renderable, Tickable{
 
