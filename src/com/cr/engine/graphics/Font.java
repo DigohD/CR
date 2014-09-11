@@ -220,7 +220,6 @@ public class Font {
 		mesh.updateVertexData(vertexArray);
 		mesh.updateIndexData(iArray);
 		mesh.updateTexCoordData(texCoordArray);
-		
 	}
 	
 	public void renderFont(float x, float y, float scale){

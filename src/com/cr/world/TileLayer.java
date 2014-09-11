@@ -33,32 +33,15 @@ public class TileLayer {
 	
 	private float scaleFactor = 1f;
 	
-	private float amplitudeWave = 0.1f;
-	private float angleWave = 0.0f;
-	private float angleWaveSpeed = 1.0f;
-	public static final float Pi2 = 3.1415926535897932384626433832795f * 2.0f;
-	
-	private boolean shading;
-	
-	public TileLayer(int width, int height, float depth, boolean shading){
+	public TileLayer(int width, int height, float depth){
 		this.depth = depth;
-		this.shading = shading;
 		bitmap = new Bitmap(width, height);
 		
 		this.width = width;
 		this.height = height;
 		this.transform = TileMap.getTransform();
 		
-		if(shading){
-			this.shader = new Shader("waterVert", "fragmentShader");
-			shader.addUniform("transformation");
-			shader.addUniform("waveData");
-			shader.addUniform("sampler");
-			shader.setUniformi("sampler", 0);
-		}else{
-			this.shader = World.getShader();
-		}
-	
+		this.shader = World.getShader();
 		
 		tiles = new HashMap<Integer, Tile>();
 	}
@@ -135,19 +118,9 @@ public class TileLayer {
 
 	
 	public void renderTileLayer(){
-		
-		if(shading){
-			angleWave += Game.dt * angleWaveSpeed;
-			while(angleWave > Pi2)
-				angleWave -= Pi2;
-		}
-	
-		
 		transform.translate(0, 0, depth);
 		shader.bind();
 		
-		if(shading)
-			shader.setUniformf("waveData", new Vector2f(angleWave, amplitudeWave));
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		Tile.getTexture().bind();
 		mesh.render();

@@ -1,14 +1,10 @@
 package com.cr.states;
 
-import java.util.ArrayList;
-
 import com.cr.crafting.v2.material.Material;
-import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.station.AddButton;
 import com.cr.crafting.v2.station.DownArrow;
 import com.cr.crafting.v2.station.DownArrow2;
 import com.cr.crafting.v2.station.Forge;
-import com.cr.crafting.v2.station.PatternChoice;
 import com.cr.crafting.v2.station.UpArrow;
 import com.cr.crafting.v2.station.UpArrow2;
 import com.cr.engine.graphics.Font;
@@ -16,9 +12,6 @@ import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
-import com.cr.engine.input.Input;
-import com.cr.entity.hero.inventory.ExitButton;
-import com.cr.entity.hero.inventory.Inventory;
 import com.cr.game.GameStateManager;
 
 public class AmountState extends GameState{
