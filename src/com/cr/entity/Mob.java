@@ -90,6 +90,12 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public void setCurrentDir(Direction currentDir) {
 		this.currentDir = currentDir;
 	}
+	
+	public void addHealth(float amount){
+		currentHP = currentHP + amount;
+		if(currentHP > maxHP)
+			currentHP = maxHP;
+	}
 
 	public boolean isMoving() {
 		return moving;
@@ -97,12 +103,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 
 	public void setMoving(boolean moving) {
 		this.moving = moving;
-	}
-	
-	public void addHealth(float amount){
-		currentHP = currentHP + amount;
-		if(currentHP > maxHP)
-			currentHP = maxHP;
 	}
 
 	public void takeDamage(DamagePacket packet){

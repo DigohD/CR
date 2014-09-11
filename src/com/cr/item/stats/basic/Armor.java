@@ -46,7 +46,6 @@ public class Armor extends Stat implements AffectsDamageTaken{
 		return amount;
 	}
 
-
 	public void render(Screen screen, int xPos, int yPos) {
 		// TODO Auto-generated method stub
 	}

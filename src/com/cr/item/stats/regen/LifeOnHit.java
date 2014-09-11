@@ -57,5 +57,4 @@ public class LifeOnHit extends Stat implements AffectBearerOnHit{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

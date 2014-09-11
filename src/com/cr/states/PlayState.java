@@ -44,6 +44,9 @@ public class PlayState extends GameState{
 		}else if(Input.getKey(Input.F1)){
 //			bg = true;
 			gsm.push(new BiomeTestState(gsm));
+		}else if(KeyInput.f){
+//			bg = true;
+			gsm.push(new CraftingState(gsm, new Forge()));
 		}
 		w.tick(dt);
 	}

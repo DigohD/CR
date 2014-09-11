@@ -14,10 +14,16 @@ import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.EntityManager;
-import com.cr.item.stats.AffectBearerOnHit;
+import com.cr.item.activation.ItemObject;
 import com.cr.item.stats.AddsDamageDone;
+import com.cr.item.stats.AffectBearerOnHit;
+import com.cr.item.stats.AffectsDamageDone;
 import com.cr.item.stats.Stat;
+import com.cr.item.stats.basic.CoolDown;
+import com.cr.item.stats.basic.Damage;
 import com.cr.item.weapon.Weapon;
+import com.cr.util.Camera;
+import com.cr.util.Randomizer;
 
 public class OneHandAttack extends Projectile implements Renderable{
 
