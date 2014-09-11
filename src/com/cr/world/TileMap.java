@@ -1,7 +1,10 @@
 package com.cr.world;
 
 import com.cr.engine.core.Transform;
+import com.cr.engine.graphics.Window;
 import com.cr.world.biome.Grasslands;
+import com.cr.world.tile.Tile;
+import com.cr.world.tile.WaterTile;
 
 public class TileMap {
 	
@@ -24,8 +27,6 @@ public class TileMap {
 		middleLayer = g.getMiddleLayer();
 		topLayer = g.getTopLayer();
 		
-		
-		
 		bottomLayer.generateTileLayer();
 		middleLayer.generateTileLayer();
 		topLayer.generateTileLayer();
@@ -33,11 +34,6 @@ public class TileMap {
 	
 	public TileMap(){
 		transform = new Transform();
-
-	}
-	
-	public void tick(float dt){
-		
 	}
 	
 	public void renderMap(){

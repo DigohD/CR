@@ -32,6 +32,7 @@ import java.util.HashMap;
 import org.lwjgl.BufferUtils;
 
 import com.cr.engine.core.Matrix4f;
+import com.cr.engine.core.Vector2f;
 
 public class Shader {
 	
@@ -97,6 +98,11 @@ public class Shader {
 	
 	public void setUniformf(String uniformName, float value){
 		glUniform1f(uniforms.get(uniformName), value);
+	}
+	
+	public void setUniformf(String uniformName, Vector2f value){
+		glUniform1f(uniforms.get(uniformName), value.x);
+		glUniform1f(uniforms.get(uniformName), value.y);
 	}
 	
 	public void setUniform(String uniformName, Matrix4f value){

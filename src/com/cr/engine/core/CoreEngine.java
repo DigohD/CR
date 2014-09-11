@@ -5,6 +5,7 @@ import com.cr.engine.graphics.Window;
 public abstract class CoreEngine {
 	
 	public static int TARGET_TPS = 60;
+	public static float dt = (float) ((1.0 / TARGET_TPS) * 10);
 	private volatile boolean running = false;
 	
 	public abstract void getInput();
@@ -29,7 +30,7 @@ public abstract class CoreEngine {
 		double frameCounter = 0;
 		final double OPTIMAL_TICK_TIME = 1.0 / TARGET_TPS;
 		
-		float dt = (float) (OPTIMAL_TICK_TIME * 10);
+		
 		int fps = 0;
 		int tps = 0;
 		boolean shouldRender;

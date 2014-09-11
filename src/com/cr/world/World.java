@@ -68,16 +68,7 @@ public class World {
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
-		
-//		if(camera.getPos().x < 0) camera.getPos().x = 0;
-//		if(camera.getPos().x > ((width*Tile.getTileWidth()) - camera.getWidth()))
-//			camera.getPos().x = (width*Tile.getTileWidth()) - camera.getWidth();
-//		
-//		if(camera.getPos().y < 0) camera.getPos().y = 0;
-//		if(camera.getPos().y > ((height*Tile.getTileHeight()) - camera.getHeight()))
-//			camera.getPos().y = (height*Tile.getTileHeight()) - camera.getHeight();
 
-		
 		camera.tick(dt);
 		em.tick(dt);
 	}

@@ -192,28 +192,26 @@ public class Font {
 			texCoords.add(new Vector2f(xLow, yHigh));
 			texCoords.add(new Vector2f(xHigh, yHigh));
 			texCoords.add(new Vector2f(xHigh, yLow));
-			
-			Vertex[] vertexArray = new Vertex[vertices.size()];
-			Integer[] indexArray = new Integer[indices.size()];
-			Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
-			
-			vertices.toArray(vertexArray);
-			indices.toArray(indexArray);
-			texCoords.toArray(texCoordArray);
-			
-			int[] iArray = new int[indexArray.length];
-			
-			for(int j = 0; j < indexArray.length; j++)
-				iArray[j] = indexArray[j];
-			
-			
-			for(Mesh m : meshes){
-				m.updateVertexData(vertexArray);
-				m.updateIndexData(iArray);
-				m.updateTexCoordData(texCoordArray);
-			}
+
+		}
 		
-	
+		Vertex[] vertexArray = new Vertex[vertices.size()];
+		Integer[] indexArray = new Integer[indices.size()];
+		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
+		
+		vertices.toArray(vertexArray);
+		indices.toArray(indexArray);
+		texCoords.toArray(texCoordArray);
+		
+		int[] iArray = new int[indexArray.length];
+		
+		for(int j = 0; j < indexArray.length; j++)
+			iArray[j] = indexArray[j];
+		
+		for(Mesh m : meshes){
+			m.updateVertexData(vertexArray);
+			m.updateIndexData(iArray);
+			m.updateTexCoordData(texCoordArray);
 		}
 		
 		

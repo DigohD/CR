@@ -9,10 +9,11 @@ import com.cr.game.GameStateManager;
 
 public class MenuState extends GameState{
 
+	int timer;
 	Font font;
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
-		font = new Font("Press Enter to Play!", FontColor.GREEN_DARK, false);
+		font = new Font("Press Enter to Play!", FontColor.RED_DARK, false);
 	}
 	
 	@Override
@@ -22,6 +23,7 @@ public class MenuState extends GameState{
 	
 	@Override
 	public void tick(float dt) {
+		timer++;
 		if(Input.getKey(Input.ENTER)){
 			gsm.push(new PlayState(gsm));
 		}

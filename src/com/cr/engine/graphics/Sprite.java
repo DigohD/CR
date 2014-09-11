@@ -121,7 +121,7 @@ public class Sprite {
 		atlasWidth = textureAtlas.getWidth();
 		atlasHeight = textureAtlas.getHeight();
 		width = (int) (atlasWidth / cols);
-		height = (int) (atlasHeight / rows) ;
+		height = (int) (atlasHeight / rows);
 	}
 	
 	
