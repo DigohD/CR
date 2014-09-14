@@ -3,6 +3,7 @@ package com.cr.world;
 import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;
@@ -71,10 +72,12 @@ public class World {
 
 		camera.tick(dt);
 		em.tick(dt);
+		map.tick((int) (EntityManager.getHero().getX() - Window.getWidth()/2), (int) (EntityManager.getHero().getY() - Window.getHeight()/2));
+		//map.tick((int) EntityManager.getHero().getX(), (int) EntityManager.getHero().getY());
 	}
 
 	public void render(Screen screen) {
-		map.renderMap();
+		map.renderMap(screen, (int) (EntityManager.getHero().getX() - Window.getWidth()/2), (int) (EntityManager.getHero().getY() - Window.getHeight()/2));
 		em.render(screen);
 	}
 

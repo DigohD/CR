@@ -1,6 +1,8 @@
 package com.cr.world;
 
 import com.cr.engine.core.Transform;
+import com.cr.engine.graphics.ColorRGBA;
+import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.world.biome.Grasslands;
 import com.cr.world.tile.Tile;
@@ -27,7 +29,7 @@ public class TileMap {
 		middleLayer = g.getMiddleLayer();
 		topLayer = g.getTopLayer();
 		
-		bottomLayer.generateTileLayer();
+		//bottomLayer.generateTileLayer();
 		middleLayer.generateTileLayer();
 		topLayer.generateTileLayer();
 	}
@@ -36,8 +38,40 @@ public class TileMap {
 		transform = new Transform();
 	}
 	
-	public void renderMap(){
-		bottomLayer.renderTileLayer();
+	public void tick(int xp, int yp){
+		int x0 = xp / 58;
+		int x1 = (xp + Window.getWidth()+58) / 58;
+		int y0 = yp / 38;
+		int y1 = (yp + Window.getHeight()+38) / 38;
+		
+		for(int y = y0; y < y1; y++)
+			for(int x = x0; x < x1; x++)
+				if(bottomLayer.tileExists(x, y))
+					if(bottomLayer.getTile(x, y) instanceof WaterTile){
+						WaterTile tile = (WaterTile) bottomLayer.getTile(x, y);	
+						tile.tick();
+					}
+					
+							
+	}
+	
+	public void renderMap(Screen screen, int xp, int yp){
+		int x0 = xp / 58;
+		int x1 = (xp + Window.getWidth()+58) / 58;
+		int y0 = yp / 38;
+		int y1 = (yp + Window.getHeight()+38) / 38;
+		
+		for(int y = y0; y < y1; y++)
+			for(int x = x0; x < x1; x++)
+				if(bottomLayer.tileExists(x, y)){
+					if(bottomLayer.getTile(x, y) instanceof WaterTile){
+						WaterTile tile = (WaterTile) bottomLayer.getTile(x, y);	
+					
+						tile.render(screen, x, y);
+					}
+			
+				}
+		//bottomLayer.renderTileLayer();
 		middleLayer.renderTileLayer();
 		topLayer.renderTileLayer();
 	}
@@ -65,5 +99,6 @@ public class TileMap {
 	public static Transform getTransform() {
 		return transform;
 	}
+
 
 }

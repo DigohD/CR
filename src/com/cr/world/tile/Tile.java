@@ -24,11 +24,11 @@ public abstract class Tile {
 	}
 	
 	public static int getTileWidth() {
-		return (int) (width/TILE_ATLAS_ROWS);
+		return (int) (width/TILE_ATLAS_COLS);
 	}
 
 	public static int getTileHeight() {
-		return (int) (height / TILE_ATLAS_COLS);
+		return (int) (height / TILE_ATLAS_ROWS);
 	}
 	
 	public static int getAtlasWidth() {
