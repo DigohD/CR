@@ -16,22 +16,22 @@ import com.cr.world.tile.Tile;
 
 public class TileLayer {
 	
-	private int width, height;
-	private float depth;
+	protected int width, height;
+	protected float depth;
 
-	private Bitmap bitmap;
-	private Mesh mesh;
-	private Shader shader;
-	private Transform transform;
+	protected Bitmap bitmap;
+	protected Mesh mesh;
+	protected Shader shader;
+	protected Transform transform;
 	
-	private HashMap<Integer, Tile> tiles;
+	protected HashMap<Integer, Tile> tiles;
 	
-	private float xLow = 0;
-	private float xHigh = 0;
-	private float yLow = 0;
-	private float yHigh = 0;
+	protected float xLow = 0;
+	protected float xHigh = 0;
+	protected float yLow = 0;
+	protected float yHigh = 0;
 	
-	private float scaleFactor = 1f;
+	protected float scaleFactor = 1f;
 	
 	public TileLayer(int width, int height, float depth){
 		this.depth = depth;
@@ -120,7 +120,6 @@ public class TileLayer {
 	public void renderTileLayer(){
 		transform.translate(0, 0, depth);
 		shader.bind();
-		
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		Tile.getTexture().bind();
 		mesh.render();
