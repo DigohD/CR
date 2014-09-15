@@ -52,8 +52,10 @@ public class Forge {
 	}
 	
 	public void process(){
+		System.out.println("Heat " + heat + " : Time " + time);
 		for(Material x : materials){
 			x.process(heat, time, materials);
+			System.out.println(x.getName() + " State " + x.getState());
 		}
 	}
 	
