@@ -65,6 +65,9 @@ public class Mesh {
 	}
 	
 	public void updateTexCoordData(Vector2f[] texCoords, int offset){
+		
+		offset = offset * 8 * 4;
+		
 		texCoordBuffer = BufferUtils.createFloatBuffer(2 * texCoords.length);
 		
 		for(int i = 0; i < texCoords.length; i++){
@@ -75,7 +78,7 @@ public class Mesh {
 		texCoordBuffer.flip();
 		glBindBuffer(GL_ARRAY_BUFFER, texID);
 		//second param is the offset in bytes to where the replacement of the data will start
-		glBufferSubData(GL_ARRAY_BUFFER, 0, texCoordBuffer);
+		glBufferSubData(GL_ARRAY_BUFFER, offset, texCoordBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
