@@ -13,7 +13,6 @@ import com.cr.engine.graphics.shader.Shader;
 public class Font {
 	
 	private Sprite fontSheet;
-	//private static HashMap<Integer, Integer> fontWidthMap = new HashMap<Integer, Integer>();
 	private String chars = "!              0123456789     ? ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
 	
 	public enum FontColor{

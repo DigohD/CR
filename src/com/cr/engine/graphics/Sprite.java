@@ -25,6 +25,11 @@ public class Sprite {
 	
 	private boolean tAtlas = false;
 	
+	public Sprite(Texture texture){
+		this.texture = texture;
+		
+	}
+	
 	public Sprite(String name){
 		shader = new Shader("vertexshader", "fragmentshader");
 		

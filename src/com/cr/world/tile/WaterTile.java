@@ -17,7 +17,7 @@ public class WaterTile extends Tile{
 	
 	public WaterTile() {
 		sprite = new Sprite("water", 1, 6, 0, 0, World.getShader(), TileMap.getTransform());
-		anim = new Animation(sprite, 1500);
+		anim = new Animation(sprite, 12);
 		row = 0f;
 		col = 2f;
 		walkable = false;
@@ -27,12 +27,9 @@ public class WaterTile extends Tile{
 		anim.animateRow(0);
 	}
 	
-	public void render(Screen screen, int xp, int yp){
+	public void render(Screen screen, int xp, int yp, int xOffset, int yOffset){
 		xp = xp * 58;
 		yp = yp * 38;
-		
-//		xp -= (EntityManager.getHero().getX() - Window.getWidth()/2);
-//		yp -= (EntityManager.getHero().getY() - Window.getHeight()/2);
 		
 		screen.renderSprite(sprite, xp, yp);
 	}

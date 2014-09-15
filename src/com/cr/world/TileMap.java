@@ -44,32 +44,27 @@ public class TileMap {
 		int y0 = yp / 38;
 		int y1 = (yp + Window.getHeight()+38) / 38;
 		
-		for(int y = y0; y < y1; y++)
-			for(int x = x0; x < x1; x++)
-				if(bottomLayer.tileExists(x, y))
-					if(bottomLayer.getTile(x, y) instanceof WaterTile){
-						WaterTile tile = (WaterTile) bottomLayer.getTile(x, y);	
-						tile.tick();
-					}
+		
+		WaterTile tile = (WaterTile) bottomLayer.getTile(ColorRGBA.BLUE);	
+		tile.tick();
+					
 					
 							
 	}
 	
 	public void renderMap(Screen screen, int xp, int yp){
-		int x0 = xp / 58;
-		int x1 = (xp + Window.getWidth()+58) / 58;
-		int y0 = yp / 38;
-		int y1 = (yp + Window.getHeight()+38) / 38;
+		int x0 = xp / 58 - 5;
+		int x1 = (xp + Window.getWidth()+58*4) / 58;
+		int y0 = yp / 38 - 7;
+		int y1 = (yp + Window.getHeight()+38*5) / 38;
 		
 		for(int y = y0; y < y1; y++)
 			for(int x = x0; x < x1; x++)
 				if(bottomLayer.tileExists(x, y)){
 					if(bottomLayer.getTile(x, y) instanceof WaterTile){
 						WaterTile tile = (WaterTile) bottomLayer.getTile(x, y);	
-					
-						tile.render(screen, x, y);
+						tile.render(screen, x, y, xp, yp);
 					}
-			
 				}
 		//bottomLayer.renderTileLayer();
 		middleLayer.renderTileLayer();
