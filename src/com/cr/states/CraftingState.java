@@ -104,9 +104,15 @@ public class CraftingState extends GameState{
 			gsm.pop();
 		}if(pattern.isClicked()){
 			gsm.push(new PatternState(gsm, forge));
+		}if(process.isClicked()){
+			gsm.push(new ProcessState(gsm, forge));
 		}if(add.isClicked() && activeMaterial != null){
 			forge.addMaterial(activeMaterial);
 			gsm.push(new AmountState(gsm, forge, activeMaterial));
+		}if(craft.isClicked() && activeMaterial != null){
+			forge.craft();
+			gsm.pop();
+			gsm.push(new InventoryState(gsm));
 		}
 	}
 
