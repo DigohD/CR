@@ -10,7 +10,9 @@ import org.lwjgl.input.Mouse;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Window;
+import com.cr.entity.Tickable;
 import com.cr.entity.hero.inventory.Button;
+import com.cr.entity.hero.inventory.Focusable;
 
 public class Input extends Observable{
 
@@ -156,6 +158,9 @@ public class Input extends Observable{
 
 			for(int i = 0; i < NUM_MOUSEBUTTONS; i++)
 				lastMouse[i] = getMouse(i);
+			
+			if(focus != null)
+				focus.focus();
 		}
 
 		public static boolean getKey(int keyCode){
@@ -170,8 +175,9 @@ public class Input extends Observable{
 			return !getKey(keyCode) && lastKeys[keyCode];
 		}
 
-		private static boolean isForcedRelease = false;
+		private static boolean isForcedRelease = false, lockPress = false;;
 		private static ArrayList<Button> buttons = new ArrayList<Button>();
+		private static Focusable focus;
 		
 		public static void addButton(Button b){
 			buttons.add(b);
@@ -195,13 +201,17 @@ public class Input extends Observable{
 			        }
 			    }else{
 			        if (Mouse.getEventButton() == 0) {
-			        	
+			        	focus = null;
 			        }
 			    }
 			}
 			return false;
 		}
-
+		
+		public static void setFocus(Focusable newFocus){
+			focus = newFocus;
+		}
+		
 		public static boolean getMouseDown(int mouseButton){
 			return getMouse(mouseButton) && !lastMouse[mouseButton];
 		}
@@ -228,7 +238,8 @@ public class Input extends Observable{
 		
 		public static void release(){
 			isForcedRelease = false;
-			System.out.println("RELEASE");
 		}
+
+		
 
 }

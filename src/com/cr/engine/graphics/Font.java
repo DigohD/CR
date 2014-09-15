@@ -28,6 +28,8 @@ public class Font {
 	private Shader shader;
 	private String text;
 	
+	private FontColor color;
+	
 	public Font(String text, FontColor color, boolean dynamic){
 
 		this.text = text;
@@ -39,6 +41,8 @@ public class Font {
 		
 		t = new Transform();
 		charMap = new HashMap<Character, Vector2f>();
+		
+		this.color = color;
 		
 		if(color == FontColor.BLACK){
 			fontSheet = new Sprite("black", 25, 8);
@@ -234,6 +238,10 @@ public class Font {
 
 	public Sprite getFontSheet() {
 		return fontSheet;
+	}
+
+	public FontColor getColor() {
+		return color;
 	}
 
 	

@@ -13,8 +13,15 @@ public class Forge {
 	
 	private Pattern pattern;
 	private ArrayList<Material> materials = new ArrayList<Material>();
-	private int heat, time;
+	private int heat, time, minHeat, minTime, maxHeat, maxTime;
 	private boolean materialAdded = false;
+	
+	public Forge(){
+		minHeat = 300;
+		maxHeat = 2000;
+		minTime = 15;
+		maxTime = 360;
+	}
 	
 	public void setPattern(Pattern pattern) {
 		this.pattern = pattern;
@@ -54,6 +61,22 @@ public class Forge {
 		pattern.createStatsFromMaterials(materials);
 		Item i = pattern.generateItem();
 		Inventory.addItem(i);
+	}
+
+	public int getMinHeat() {
+		return minHeat;
+	}
+
+	public int getMinTime() {
+		return minTime;
+	}
+
+	public int getMaxHeat() {
+		return maxHeat;
+	}
+
+	public int getMaxTime() {
+		return maxTime;
 	}
 	
 	
