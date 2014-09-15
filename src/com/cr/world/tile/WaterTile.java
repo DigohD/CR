@@ -28,8 +28,8 @@ public class WaterTile extends Tile{
 	}
 	
 	public void render(Screen screen, int xp, int yp, int xOffset, int yOffset){
-		xp = xp * 58;
-		yp = yp * 38;
+		xp = xp * 58 + 3;
+		yp = yp * 38 + 3;
 		
 		screen.renderSprite(sprite, xp, yp);
 	}
