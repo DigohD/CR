@@ -6,6 +6,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.game.EntityManager;
+import com.cr.world.TileLayer;
 import com.cr.world.TileMap;
 import com.cr.world.World;
 
@@ -13,25 +14,25 @@ import com.cr.world.World;
 public class WaterTile extends Tile{
 	
 	private Sprite sprite;
-	private Animation anim;
+	private static Animation anim;
 	
 	public WaterTile() {
-		sprite = new Sprite("water", 1, 6, 0, 0, World.getShader(), TileMap.getTransform());
-		anim = new Animation(sprite, 12);
+//		sprite = new Sprite("water", 1, 6, 0, 0, World.getShader(), TileMap.getTransform());
+		anim = new Animation(12);
 		row = 0f;
 		col = 2f;
 		walkable = false;
 	}
 	
-	public void tick(){
-		anim.animateRow(0);
+	public void tick(TileLayer tl, int offset){
+		anim.animateWater(tl.getMesh(), 0, 2, 4, 4, offset);
 	}
 	
-	public void render(Screen screen, int xp, int yp, int xOffset, int yOffset){
-		xp = xp * 58 + 3;
-		yp = yp * 38 + 3;
-		
-		screen.renderSprite(sprite, xp, yp);
-	}
+//	public void render(Screen screen, int xp, int yp, int xOffset, int yOffset){
+//		xp = xp * 58 + 3;
+//		yp = yp * 38 + 3;
+//		
+//		screen.renderSprite(sprite, xp, yp);
+//	}
 
 }
