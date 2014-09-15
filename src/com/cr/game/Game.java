@@ -6,6 +6,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
+import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
 
 public class Game extends CoreEngine{
@@ -21,6 +22,7 @@ public class Game extends CoreEngine{
 	
 	private void init(){
 		new ImageLoader();
+		new FontLoader();
 		screen = new Screen();
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));

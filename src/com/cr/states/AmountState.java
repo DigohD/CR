@@ -13,6 +13,8 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.game.GameStateManager;
+import com.cr.util.CRString;
+import com.cr.util.FontLoader;
 
 public class AmountState extends GameState{
 
@@ -29,8 +31,7 @@ public class AmountState extends GameState{
 	
 	private Material activeMaterial;
 	
-	private Font amountFont;
-	private Font materialFont;
+	private Font whiteFont;
 	
 	private Forge forge;
 	
@@ -40,8 +41,7 @@ public class AmountState extends GameState{
 		
 		amount = 1;
 		
-		amountFont = new Font(amount + "    ", FontColor.YELLOW, true);
-		materialFont = new Font(activeMaterial.getName() + " Amount", FontColor.WHITE, false);
+		whiteFont = FontLoader.aquireFont(FontColor.WHITE);
 		
 		int xOffset =  (Window.getWidth() - 150) / 2;
 		int yOffset = (Window.getHeight() - 230);
@@ -78,6 +78,8 @@ public class AmountState extends GameState{
 			up1.removeFromInput();
 			up2.removeFromInput();
 			
+			FontLoader.releaseFont(whiteFont);
+			
 			gsm.pop();
 		}
 		
@@ -108,11 +110,11 @@ public class AmountState extends GameState{
 		xOffset =  (Window.getWidth()) / 2;
 		yOffset = (Window.getHeight()) / 2;
 		
-	
-		amountFont.setFont(amount + "");
+		whiteFont.setFont(CRString.create(activeMaterial.getName()));
+		whiteFont.renderFont(xOffset - 115, yOffset - 80, 0.2f);
 		
-		materialFont.renderFont(xOffset - 115, yOffset - 80, 0.2f);
-		amountFont.renderFont(xOffset - 60, yOffset - 40, 0.5f);
+		whiteFont.setFont(CRString.create(amount + ""));
+		whiteFont.renderFont(xOffset - 60, yOffset - 40, 0.5f);
 		
 		add.render(screen);
 	}
