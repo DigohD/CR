@@ -37,50 +37,19 @@ public class Camera {
 		
 		Vector3f diff = targetPos.sub(position).div(cameraFollowFactor);
 		
-		xC = xC + diff.x;
-		yC = yC + diff.y;
-		zC = zC + diff.z;
-		
-		while(xC > 1){
-			position = position.add(new Vector3f(1, 0, 0));
-			xC = xC - 1;
-		}
-		while(xC < -1){
-			position = position.add(new Vector3f(-1, 0, 0));
-			xC = xC + 1;
-		}
-		
-		while(yC > 1){
-			position = position.add(new Vector3f(0, 1, 0));
-			yC = yC - 1;
-		}
-		while(yC < -1){
-			position = position.add(new Vector3f(0, -1, 0));
-			yC = yC + 1;
-		}
-		
-		while(zC > 1){
-			position = position.add(new Vector3f(0, 0, 1));
-			zC = zC - 1;
-		}
-		while(zC < -1){
-			position = position.add(new Vector3f(0, 0, -1));
-			zC = zC + 1;
-		}
-		
-//		position = position.add(diff);
+		position = position.add(diff);
 	}
 	
 	public static float getCamX(){
-		return position.x;
+		return (int) position.x;
 	}
 	
 	public static float getCamY(){
-		return position.y;
+		return (int) position.y;
 	}
 	
 	public static float getCamZ(){
-		return position.z;
+		return (int) position.z;
 	}
 	
 	public static Vector3f getPos() {
