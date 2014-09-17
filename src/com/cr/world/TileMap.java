@@ -21,10 +21,10 @@ public class TileMap {
 	
 	private Shader waterShader;
 	
-	private float					amplitudeWave = 3f;
-	private float					angleWave = 45.0f;
-	private float					angleWaveSpeed = 0.1f;
-	public static final float 		PI2 = 3.1415926535897932384626433832795f * 2.0f;
+	private float amplitudeWave = 5f;
+	private float angleWave = 45.0f;
+	private float angleWaveSpeed = 0.2f;
+	public static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
 	
 	public TileMap(int width, int height){
 		this.width = width;
@@ -54,62 +54,7 @@ public class TileMap {
 		transform = new Transform();
 	}
 	
-	public void tick(int xp, int yp){
-//		int x0 = xp / 58;
-//		int x1 = (xp + Window.getWidth()+58) / 58;
-//		int y0 = yp / 38;
-//		int y1 = (yp + Window.getHeight()+38) / 38;
-		
-//		int x0 = xp / 58 - 5;
-//		int x1 = (xp + Window.getWidth()+58*4) / 58;
-//		int y0 = yp / 38 - 7;
-//		int y1 = (yp + Window.getHeight()+38*5) / 38;
-//		
-//		
-		
-//		for(int y = y0; y < y1; y++){
-//			for(int x = x0; x < x1; x++){
-//				if(bottomLayer.tileExists(x, y)){
-//					if(bottomLayer.getTile(x, y) instanceof WaterTile){
-//						WaterTile tile = (WaterTile) bottomLayer.getTile(ColorRGBA.BLUE);
-//						tile.tick(bottomLayer, x + y * width);
-//					}
-//				}
-//				
-//			
-//			}
-//		}
-		
-//		WaterTile tile = (WaterTile) bottomLayer.getTile(ColorRGBA.BLUE);
-//		tile.tick(bottomLayer, 0);
-		
-		
-//		for(int i = 0; i < width*height; i++){
-//			WaterTile tile = (WaterTile) bottomLayer.getTile(ColorRGBA.BLUE);
-//			tile.tick(bottomLayer, i);
-//		}
-	
-		
-		//bottomLayer.getMesh().updateTexCoordData(texCoords)
-					
-							
-	}
-	
 	public void renderMap(Screen screen, int xp, int yp){
-//		int x0 = xp / 58 - 5;
-//		int x1 = (xp + Window.getWidth()+58*4) / 58;
-//		int y0 = yp / 38 - 7;
-//		int y1 = (yp + Window.getHeight()+38*6) / 38;
-//		
-//		for(int y = y0; y < y1; y++)
-//			for(int x = x0; x < x1; x++)
-//				if(bottomLayer.tileExists(x, y)){
-//					if(bottomLayer.getTile(x, y) instanceof WaterTile){
-//						WaterTile tile = (WaterTile) bottomLayer.getTile(x, y);	
-//						tile.render(screen, x, y, xp, yp);
-//					}
-//				}
-		
 		angleWave += Game.dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
