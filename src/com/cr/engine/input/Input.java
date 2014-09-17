@@ -162,7 +162,7 @@ public class Input extends Observable{
 			
 			if(focus != null)
 				focus.focus();
-			
+
 			for(Button x : buttons)
         		if(x instanceof Hooverable && x.getRect().contains(getMousePosition().toPoint()))
         			((Hooverable) x).setHoover(true);
