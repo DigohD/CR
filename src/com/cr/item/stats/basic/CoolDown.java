@@ -43,5 +43,11 @@ public class CoolDown extends Stat{
 	public float getAmount() {
 		return base;
 	}
+
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -40,7 +40,6 @@ public class Grasslands{
 		topLayer    = new TileLayer(width, height, 0.6f);
 		
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
-		bottomLayer.addTileType(ColorRGBA.GRAY, new StoneTile());
 		
 		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());
 		middleLayer.addTileType(ColorRGBA.YELLOW, new SandTile());
@@ -60,7 +59,7 @@ public class Grasslands{
 		int bottomPixels[] = bottomLayer.getBitmap().getPixels();
 		for(int i = 0; i < bottomPixels.length; i++)
 			if(bottomPixels[i] == 0)
-				bottomLayer.setTile(i % width, i / height, ColorRGBA.GRAY);
+				bottomLayer.setTile(i % width, i / height, 0);
 		
 		int middlePixels[] = middleLayer.getBitmap().getPixels();
 		for(int i = 0; i < middlePixels.length; i++)

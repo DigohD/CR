@@ -8,13 +8,13 @@ import com.cr.crafting.v2.station.Forge;
 public class CraftTest {
 
 	public void craftTest(){
-		Forge f = new Forge();
-		f.setPattern(new KnifePattern());
-		f.setHeat(800);
-		f.setTime(150);
-		f.addMaterial(new Copper());
-		f.process();
-		f.craft();
+//		Forge f = new Forge();
+//		f.setPattern(new KnifePattern());
+//		f.setHeat(800);
+//		f.setTime(150);
+//		f.addMaterial(new Copper());
+//		f.process();
+//		f.craft();
 	}
 	
 }

@@ -80,6 +80,8 @@ public class AmountState extends GameState{
 			
 			FontLoader.releaseFont(whiteFont);
 			
+			forge.addMaterial(activeMaterial, amount);
+			
 			gsm.pop();
 		}
 		

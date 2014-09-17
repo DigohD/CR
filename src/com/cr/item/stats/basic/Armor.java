@@ -1,7 +1,6 @@
 package com.cr.item.stats.basic;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.cr.combat.Damage.DamageType;
@@ -56,6 +55,12 @@ public class Armor extends Stat implements AffectsDamageTaken{
 				x.addDamageBase(-amount / 4);
 				x.addDamageDice(-amount / 4);
 			}
+	}
+
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

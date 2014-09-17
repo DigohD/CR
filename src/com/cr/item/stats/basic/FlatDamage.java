@@ -52,5 +52,11 @@ public class FlatDamage extends Stat implements AddsDamageDone{
 		return base;
 	}
 
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

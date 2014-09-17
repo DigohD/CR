@@ -72,12 +72,10 @@ public class World {
 
 		camera.tick(dt);
 		em.tick(dt);
-		//map.tick((int) (EntityManager.getHero().getX() - Window.getWidth()/2), (int) (EntityManager.getHero().getY() - Window.getHeight()/2));
-		map.tick((int) EntityManager.getHero().getX(), (int) EntityManager.getHero().getY());
 	}
 
 	public void render(Screen screen) {
-		map.renderMap(screen, (int) (EntityManager.getHero().getX() - Window.getWidth()/2), (int) (EntityManager.getHero().getY() - Window.getHeight()/2));
+		map.renderMap();
 		em.render(screen);
 	}
 

@@ -122,10 +122,12 @@ public class TileLayer {
 	
 
 	
-	public void renderTileLayer(){
+	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
-		shader.bind();
-		shader.setUniform("transformation", transform.getOrthoTransformation());
+		if(!water){
+			shader.bind();
+			shader.setUniform("transformation", transform.getOrthoTransformation());
+		}
 		Tile.getTexture().bind();
 		mesh.render();
 		Tile.getTexture().unbind();
@@ -179,6 +181,13 @@ public class TileLayer {
 	}
 	
 
+	public void setShader(Shader shader){
+		this.shader = shader;
+	}
+	
+	public Shader getShader( ){
+		return this.shader;
+	}
 	
 	public int getWidth(){
 		return width;

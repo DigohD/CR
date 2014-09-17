@@ -17,6 +17,7 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
+import com.cr.entity.hero.inventory.Hooverable;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
@@ -107,7 +108,6 @@ public class CraftingState extends GameState{
 		}if(process.isClicked()){
 			gsm.push(new ProcessState(gsm, forge));
 		}if(add.isClicked() && activeMaterial != null){
-			forge.addMaterial(activeMaterial);
 			gsm.push(new AmountState(gsm, forge, activeMaterial));
 		}if(craft.isClicked() && activeMaterial != null){
 			forge.craft();
@@ -130,6 +130,10 @@ public class CraftingState extends GameState{
 		pattern.render(screen);
 		craft.render(screen);
 		exit.render(screen);
+		
+		for(MaterialChoice x : matsChoices)
+			if(x instanceof Hooverable && x.isHoover())
+				x.renderHoover(screen);;
 	}
 
 }

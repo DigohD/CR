@@ -64,6 +64,12 @@ public class Damage extends Stat implements AddsDamageDone{
 		return dice;
 	}
 
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 	
