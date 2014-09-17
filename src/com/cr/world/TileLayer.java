@@ -77,7 +77,7 @@ public class TileLayer {
 				
 				float xOffset = 7f;
 				float yOffset = 5f;
-				
+	
 				indices.add(vertices.size() + 0);
 				indices.add(vertices.size() + 1);
 				indices.add(vertices.size() + 2);
@@ -119,8 +119,10 @@ public class TileLayer {
 	
 	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
-		shader.bind();
-		shader.setUniform("transformation", transform.getOrthoTransformation());
+		if(!water){
+			shader.bind();
+			shader.setUniform("transformation", transform.getOrthoTransformation());
+		}
 		Tile.getTexture().bind();
 		mesh.render();
 		Tile.getTexture().unbind();

@@ -45,6 +45,7 @@ public class TileMap {
 		middleLayer = g.getMiddleLayer();
 		topLayer = g.getTopLayer();
 		
+
 		bottomLayer.generateTileLayer();
 		middleLayer.generateTileLayer();
 		topLayer.generateTileLayer();
@@ -54,11 +55,11 @@ public class TileMap {
 		transform = new Transform();
 	}
 	
-	public void renderMap(Screen screen, int xp, int yp){
+	public void renderMap(){
 		angleWave += Game.dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
-		
+
 		waterShader.bind();
 		waterShader.setUniformf("waveDataX", angleWave);
 		waterShader.setUniformf("waveDataY", amplitudeWave);

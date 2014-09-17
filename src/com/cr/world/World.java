@@ -75,7 +75,7 @@ public class World {
 	}
 
 	public void render(Screen screen) {
-		map.renderMap(screen, (int) (EntityManager.getHero().getX() - Window.getWidth()/2), (int) (EntityManager.getHero().getY() - Window.getHeight()/2));
+		map.renderMap();
 		em.render(screen);
 	}
 
