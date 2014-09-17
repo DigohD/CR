@@ -21,10 +21,13 @@ public class World {
 
 	private static Shader shader;
 	
+	private float time = 1f;
+	
 	public World(){
 		shader = new Shader("vertexshader", "fragmentshader");
 		
 		shader.addUniform("transformation");
+		shader.addUniform("time");
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
 		
@@ -66,15 +69,40 @@ public class World {
 		return null;
 	}
 	
+	float targetTimeMax = 2f;
+	float targetTimeMin = 0.2f;
+	
+	boolean day = true, night = false;
+	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
+		
+		if(time <= 2.0f && day){
+			time += targetTimeMax / 60.0f * dt;
+			if(time > 2.0f) {
+				night = true;
+				day = false;
+			}
+		}
+		
+		if(night){
+			time -= targetTimeMax / 60.0f * dt;
+			if(time <= 0.2f){
+				day = true;
+				night = false;
+			}
+		}
+	
 
 		camera.tick(dt);
 		em.tick(dt);
 	}
 
 	public void render(Screen screen) {
+		shader.bind();
+		shader.setUniformf("time", time);
+		shader.unbind();
 		map.renderMap();
 		em.render(screen);
 	}

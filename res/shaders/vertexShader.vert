@@ -8,14 +8,12 @@ out vec2 texCoord;
 out vec3 outColor;
 
 uniform mat4 transformation;
-uniform float red;
-uniform float green;
-uniform float blue;
+uniform float time;
 
 void main() 
 {
 	gl_Position = transformation * vec4(position, 1);
 	texCoord = texCoordIn;
 	
-	outColor = vec3(1,1,1);
+	outColor = vec3(1,1,1) * time;
 }
