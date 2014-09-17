@@ -17,8 +17,8 @@ public class WaterTile extends Tile{
 	private static Animation anim;
 	
 	public WaterTile() {
-//		sprite = new Sprite("water", 1, 6, 0, 0, World.getShader(), TileMap.getTransform());
-		anim = new Animation(12);
+		sprite = new Sprite("water", 1, 6, 0, 0, World.getShader(), TileMap.getTransform());
+		anim = new Animation(sprite, 20);
 		row = 0f;
 		col = 2f;
 		walkable = false;
@@ -26,13 +26,14 @@ public class WaterTile extends Tile{
 	
 	public void tick(TileLayer tl, int offset){
 		anim.animateWater(tl.getMesh(), 0, 2, 4, 4, offset);
+		anim.animateRow(0);
 	}
 	
-//	public void render(Screen screen, int xp, int yp, int xOffset, int yOffset){
-//		xp = xp * 58 + 3;
-//		yp = yp * 38 + 3;
-//		
-//		screen.renderSprite(sprite, xp, yp);
-//	}
+	public void render(Screen screen, int xp, int yp, int xOffset, int yOffset){
+		xp = xp * 58 + 3;
+		yp = yp * 38 + 3;
+		
+		screen.renderSprite(sprite, xp, yp);
+	}
 
 }
