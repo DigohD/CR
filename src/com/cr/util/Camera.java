@@ -11,7 +11,7 @@ public class Camera {
 	
 	private float xC, yC, zC;
 	
-	private float cameraFollowFactor = 60.0f; 
+	private float cameraFollowFactor = 40.0f; 
 	
 	public Camera(){
 		this(new Vector3f(0,0,0));
