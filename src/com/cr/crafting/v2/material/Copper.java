@@ -46,17 +46,6 @@ public class Copper extends Material{
 	}
 
 	@Override
-	public ArrayList<Stat> generateStat(boolean isWeapon){
-		ArrayList<Stat> stats = new ArrayList<Stat>();
-		if(isWeapon){
-			stats.add(new Damage(3, 5));
-			stats.add(new CoolDown(30));
-			return stats;
-		}
-		return stats;
-	}
-
-	@Override
 	public Sprite getMaterialImage() {
 		return new Sprite("copper");
 	}
@@ -68,12 +57,28 @@ public class Copper extends Material{
 
 	@Override
 	protected void newMods() {
-		mod1 = 1f + usedAmount / 50;
-		mod2 = 1f - usedAmount / 50;
-		mod3 = 1f + usedAmount / 25;
-		mod4 = 1f - usedAmount / 35;
+		mod1 = Math.abs(1f + usedAmount / 50.0f);
+		mod2 = Math.abs(1f - usedAmount / 50.0f);
+		mod3 = Math.abs(1f + usedAmount / 25.0f);
+		mod4 = Math.abs(1f - usedAmount / 35.0f);
 		
 		System.out.println(mod1 + " . " + mod2 + " . " + mod3 + " . " + mod4);
+	}
+
+	@Override
+	public ArrayList<Stat> getWeaponStats(ArrayList<Stat> stats) {
+		int span = 1;
+//		if(state == State.BALANCED){
+			span = (int) (span * mod3 * mod2 * 2);
+			stats.add(new Damage(mod1, mod1 + span));
+			stats.add(new CoolDown(60 * mod1 * mod2 * mod3 * mod4));
+//		}
+		return stats;
+	}
+
+	@Override
+	public ArrayList<Stat> getArmorStats(ArrayList<Stat> stats) {
+		return null;
 	}
 	
 }

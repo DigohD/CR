@@ -20,6 +20,7 @@ public abstract class Stat{
 	public abstract void render(Screen screen, int xPos, int yPos);
 
 	public abstract void addAmount(float amount);
+	public abstract void modAmount(float amount);
 	public abstract float getAmount();
 	
 	public String getName() {
@@ -33,6 +34,8 @@ public abstract class Stat{
 	public void setDuplicate(boolean duplicate) {
 		this.duplicate = duplicate;
 	}
+
+	
 	
 	
 	

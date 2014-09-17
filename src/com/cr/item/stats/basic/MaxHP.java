@@ -44,4 +44,10 @@ public class MaxHP extends Stat{
 		return amount;
 	}
 
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

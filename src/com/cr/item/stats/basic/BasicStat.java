@@ -69,6 +69,11 @@ public class BasicStat extends Stat{
 	}
 	
 	@Override
+	public void modAmount(float amount) {
+		this.amount = this.amount * amount;
+	}
+	
+	@Override
 	public float getAmount() {
 		return amount;
 	}

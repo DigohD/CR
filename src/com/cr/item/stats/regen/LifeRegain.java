@@ -49,4 +49,10 @@ public class LifeRegain extends Stat implements PassiveTicking{
 		owner.addHealth(amount / 60);
 	}
 
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
