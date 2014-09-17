@@ -57,4 +57,10 @@ public class LifeOnHit extends Stat implements AffectBearerOnHit{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void modAmount(float amount) {
+		// TODO Auto-generated method stub
+		
+	}
 }

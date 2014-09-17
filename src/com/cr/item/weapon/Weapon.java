@@ -53,7 +53,7 @@ public abstract class Weapon extends Item{
 			if(s instanceof CoolDown){
 				CD = (int) ((CoolDown) s).getAmount();
 				CD = (int) (CD - HeroSheet.getHaste());
-			}	
+			}
 		}
 		
 		if(CDTimer < 0){

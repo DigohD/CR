@@ -39,21 +39,27 @@ public class Forge {
 		patterns.add(new KnifePattern());
 	}
 	
-	public void addMaterial(Material material){
+	public void addMaterial(Material material, int amount){
 		if(materials.size() == 0 && material.isPrimary()){
 			materialAdded = true;
 			material.resetSpans();
 			materials.add(material);
+			material.setAmount(material.getAmount() - amount);
+			material.setUsedAmount(amount);
 		}else if(materials.size() > 0 && !material.isPrimary()){
 			materialAdded = true;
 			material.resetSpans();
 			materials.add(material);
+			material.setAmount(material.getAmount() - amount);
+			material.setUsedAmount(amount);
 		}
 	}
 	
 	public void process(){
+		System.out.println("Heat " + heat + " : Time " + time);
 		for(Material x : materials){
 			x.process(heat, time, materials);
+			System.out.println(x.getName() + " State " + x.getState());
 		}
 	}
 	
@@ -61,6 +67,9 @@ public class Forge {
 		pattern.createStatsFromMaterials(materials);
 		Item i = pattern.generateItem();
 		Inventory.addItem(i);
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
 	}
 
 	public int getMinHeat() {

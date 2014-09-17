@@ -19,8 +19,10 @@ public abstract class Pattern {
 	public void createStatsFromMaterials(ArrayList<Material> materials){
 		stats = new ArrayList<Stat>();
 		for(Material x : materials){
+			System.out.println(x.getName() + ": " + x.generateStat(isWeapon));
 			stats.addAll(x.generateStat(isWeapon));
 		}
+		System.out.println("StatCount: " + stats.size());
 	}
 	
 	public abstract Item generateItem();
