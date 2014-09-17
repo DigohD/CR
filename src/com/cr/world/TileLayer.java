@@ -119,6 +119,7 @@ public class TileLayer {
 	
 	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
+		
 		if(!water){
 			shader.bind();
 			shader.setUniform("transformation", transform.getOrthoTransformation());
