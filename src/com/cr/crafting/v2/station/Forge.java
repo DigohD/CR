@@ -39,15 +39,19 @@ public class Forge {
 		patterns.add(new KnifePattern());
 	}
 	
-	public void addMaterial(Material material){
+	public void addMaterial(Material material, int amount){
 		if(materials.size() == 0 && material.isPrimary()){
 			materialAdded = true;
 			material.resetSpans();
 			materials.add(material);
+			material.setAmount(material.getAmount() - amount);
+			material.setUsedAmount(amount);
 		}else if(materials.size() > 0 && !material.isPrimary()){
 			materialAdded = true;
 			material.resetSpans();
 			materials.add(material);
+			material.setAmount(material.getAmount() - amount);
+			material.setUsedAmount(amount);
 		}
 	}
 	

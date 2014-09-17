@@ -13,6 +13,7 @@ import com.cr.engine.graphics.Window;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.Focusable;
+import com.cr.entity.hero.inventory.Hooverable;
 
 public class Input extends Observable{
 
@@ -161,6 +162,12 @@ public class Input extends Observable{
 			
 			if(focus != null)
 				focus.focus();
+			
+			for(Button x : buttons)
+        		if(x instanceof Hooverable && x.getRect().contains(getMousePosition().toPoint()))
+        			((Hooverable) x).setHoover(true);
+        		else if(x instanceof Hooverable)
+        			((Hooverable) x).setHoover(false);
 		}
 
 		public static boolean getKey(int keyCode){

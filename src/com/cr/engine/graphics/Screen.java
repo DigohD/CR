@@ -72,5 +72,13 @@ public class Screen {
 		sprite.getMesh().render();
 		sprite.unbind();
 	}
+	
+	public void renderStaticSprite(Sprite sprite, float x, float y, float xScale, float yScale){
+		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), 0);
+		sprite.getTransform().scale(xScale, yScale, 1);
+		sprite.bind();
+		sprite.getMesh().render();
+		sprite.unbind();
+	}
 
 }

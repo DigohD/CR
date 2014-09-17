@@ -14,6 +14,8 @@ import com.cr.util.ImageLoader;
 
 public class Copper extends Material{
 
+	private float mod1, mod2, mod3, mod4;
+	
 	public Copper(){
 		properties = new ArrayList<Property>();		
 		lowerHeatLimit = 500;
@@ -21,6 +23,11 @@ public class Copper extends Material{
 		lowerTimeLimit = 30;
 		higherTimeLimit = 300;
 		balancedValue = 50;
+		
+		mod1 = 1f;
+		mod2 = 1f;
+		mod3 = 1f;
+		mod4 = 1f;
 		
 		isPrimary = true;
 		
@@ -57,6 +64,16 @@ public class Copper extends Material{
 	@Override
 	public int getID() {
 		return 1;
+	}
+
+	@Override
+	protected void newMods() {
+		mod1 = 1f + usedAmount / 50;
+		mod2 = 1f - usedAmount / 50;
+		mod3 = 1f + usedAmount / 25;
+		mod4 = 1f - usedAmount / 35;
+		
+		System.out.println(mod1 + " . " + mod2 + " . " + mod3 + " . " + mod4);
 	}
 	
 }

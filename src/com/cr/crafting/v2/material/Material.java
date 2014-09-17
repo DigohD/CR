@@ -25,7 +25,7 @@ public abstract class Material{
 	protected int newHigherTimeLimit;
 	protected int newBalancedValue;
 	
-	protected int amount;
+	protected int amount, usedAmount;
 	
 	protected boolean breakable, isPrimary;
 	
@@ -203,6 +203,13 @@ public abstract class Material{
 		
 	}
 	
+	public void setUsedAmount(int usedAmount) {
+		this.usedAmount = usedAmount;
+		newMods();
+	}
+	
+	protected abstract void newMods();
+	
 	public int getLowerHeatLimit() {
 		return lowerHeatLimit;
 	}
@@ -324,9 +331,9 @@ public abstract class Material{
 	public boolean isPrimary() {
 		return isPrimary;
 	}
-	
-	
-	
-	
+
+	public int getUsedAmount() {
+		return usedAmount;
+	}
 	
 }

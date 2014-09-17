@@ -40,4 +40,8 @@ public abstract class Button implements Tickable{
 			clicked();
 	}
 	
+	public Rectangle getRect(){
+		return rect;
+	}
+	
 }

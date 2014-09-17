@@ -113,6 +113,9 @@ public class ImageLoader {
 		imageLib.put("downarrow2", loadImage("/craftingui/downarrow2.png"));
 		imageLib.put("uparrow", loadImage("/craftingui/uparrow.png"));
 		imageLib.put("uparrow2", loadImage("/craftingui/uparrow2.png"));
+		
+		imageLib.put("flatblack", loadImage("/craftingui/black.png"));
+		imageLib.put("flatwhite", loadImage("/craftingui/white.png"));
 //		
 //		// Patterns
 		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));
