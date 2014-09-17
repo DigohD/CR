@@ -67,6 +67,9 @@ public class Forge {
 		pattern.createStatsFromMaterials(materials);
 		Item i = pattern.generateItem();
 		Inventory.addItem(i);
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
 	}
 
 	public int getMinHeat() {

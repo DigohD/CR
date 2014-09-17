@@ -191,7 +191,7 @@ public abstract class Material{
 	public ArrayList<Stat> generateStat(boolean isWeapon){
 		ArrayList<Stat> stats = new ArrayList<Stat>();
 		if(isWeapon){
-			
+			getWeaponStats(stats);
 			return stats;
 		}
 		return stats;

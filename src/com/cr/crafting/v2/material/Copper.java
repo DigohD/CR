@@ -57,10 +57,10 @@ public class Copper extends Material{
 
 	@Override
 	protected void newMods() {
-		mod1 = Math.abs(1f + usedAmount / 50.0f);
-		mod2 = Math.abs(1f - usedAmount / 50.0f);
-		mod3 = Math.abs(1f + usedAmount / 25.0f);
-		mod4 = Math.abs(1f - usedAmount / 35.0f);
+		mod1 = 1f + usedAmount / 75.0f;
+		mod2 = 1f + usedAmount / 65.0f;
+		mod3 = 1f + usedAmount / 60.0f;
+		mod4 = 1f + usedAmount / 55.0f;
 		
 		System.out.println(mod1 + " . " + mod2 + " . " + mod3 + " . " + mod4);
 	}
@@ -68,11 +68,27 @@ public class Copper extends Material{
 	@Override
 	public ArrayList<Stat> getWeaponStats(ArrayList<Stat> stats) {
 		int span = 1;
-//		if(state == State.BALANCED){
+		if(state == State.BALANCED){
 			span = (int) (span * mod3 * mod2 * 2);
 			stats.add(new Damage(mod1, mod1 + span));
-			stats.add(new CoolDown(60 * mod1 * mod2 * mod3 * mod4));
-//		}
+			stats.add(new CoolDown(10 * mod3 * mod4));
+		}else if(state == State.BLASTED){
+			span = (int) (span * mod1 * mod2 * mod3 * 1);
+			stats.add(new Damage(mod2 * mod3, (mod2 * mod3) + span));
+			stats.add(new CoolDown(5 * mod1 * mod3 * mod4));
+		}else if(state == State.FLASHED){
+			span = (int) (span * mod1 * mod4 * mod3 * 1);
+			stats.add(new Damage(mod1 * mod3, (mod1 * mod3) + span));
+			stats.add(new CoolDown(5 * mod2 * mod3 * mod4));
+		}else if(state == State.HARDENED){
+			span = (int) (span * mod1 * 2);
+			stats.add(new Damage(mod3, mod3 + span));
+			stats.add(new CoolDown(10 * mod2 * mod4));
+		}else if(state == State.TEMPERED){
+			span = (int) (span * mod4 * 2);
+			stats.add(new Damage(mod1, mod1 + span));
+			stats.add(new CoolDown(10 * mod3 * mod2));
+		}
 		return stats;
 	}
 

@@ -220,11 +220,11 @@ public class Input extends Observable{
 		}
 		
 		public static boolean getMouseDown(int mouseButton){
-			return getMouse(mouseButton) && !lastMouse[mouseButton];
+			return Mouse.isButtonDown(mouseButton) /*&& !lastMouse[mouseButton]*/;
 		}
 
 		public static boolean getMouseUp(int mouseButton){
-			return !getMouse(mouseButton) && lastMouse[mouseButton];
+			return !getMouse(mouseButton) /*&& lastMouse[mouseButton]*/;
 		}
 
 		public static Vector2f getMousePosition(){

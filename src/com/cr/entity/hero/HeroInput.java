@@ -69,6 +69,11 @@ public class HeroInput {
 			hero.setMoving(true);
 		}
 		
+		if(Input.getMouseDown(1) && Hero.getLeftHand().getItem() != null)
+			Hero.getLeftHand().getItem().activate();
+		if(Input.getMouseDown(0) && Hero.getRightHand().getItem() != null)
+			Hero.getRightHand().getItem().activate();
+		
 		if(!Input.getKey(Input.W) && !Input.getKey(Input.S))
 			hero.getTargetVel().y  = 0;
 		if(!Input.getKey(Input.D) && !Input.getKey(Input.A))
