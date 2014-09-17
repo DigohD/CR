@@ -46,9 +46,9 @@ public class TileMap {
 		topLayer = g.getTopLayer();
 		
 
-		bottomLayer.generateTileLayer(true);
-		middleLayer.generateTileLayer(false);
-		topLayer.generateTileLayer(false);
+		bottomLayer.generateTileLayer();
+		middleLayer.generateTileLayer();
+		topLayer.generateTileLayer();
 	}
 	
 	public TileMap(){

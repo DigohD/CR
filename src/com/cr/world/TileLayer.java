@@ -58,7 +58,7 @@ public class TileLayer {
 		tiles = new HashMap<Integer, Tile>();
 	}
 	
-	public void generateTileLayer(boolean water){
+	public void generateTileLayer(){
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
 		List<Vector2f> texCoords = new ArrayList<Vector2f>();
@@ -77,12 +77,7 @@ public class TileLayer {
 				
 				float xOffset = 7f;
 				float yOffset = 5f;
-				
-				if(water){
-					xOffset = 0;
-					yOffset = 0;
-				}
-				
+	
 				indices.add(vertices.size() + 0);
 				indices.add(vertices.size() + 1);
 				indices.add(vertices.size() + 2);
