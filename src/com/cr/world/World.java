@@ -22,6 +22,7 @@ public class World {
 	private static Shader shader;
 	
 	private float time = 1f;
+	private float dayNightCycleTime = 100.0f;
 	
 	public World(){
 		shader = new Shader("vertexshader", "fragmentshader");
@@ -79,7 +80,7 @@ public class World {
 		else timer = 0;
 		
 		if(time <= 2.0f && day){
-			time += targetTimeMax / 60.0f * dt;
+			time += targetTimeMax / dayNightCycleTime * dt;
 			if(time > 2.0f) {
 				night = true;
 				day = false;
@@ -87,14 +88,13 @@ public class World {
 		}
 		
 		if(night){
-			time -= targetTimeMax / 60.0f * dt;
+			time -= targetTimeMax / dayNightCycleTime * dt;
 			if(time <= 0.2f){
 				day = true;
 				night = false;
 			}
 		}
 	
-
 		camera.tick(dt);
 		em.tick(dt);
 	}
