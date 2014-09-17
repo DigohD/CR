@@ -3,27 +3,20 @@ package com.cr.states;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
-import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.station.AddButton;
 import com.cr.crafting.v2.station.CraftButton;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.crafting.v2.station.PatternButton;
 import com.cr.crafting.v2.station.ProcessButton;
-import com.cr.engine.graphics.Font;
-import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Hooverable;
-import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
-import com.cr.util.Camera;
 
 public class CraftingState extends GameState{
 

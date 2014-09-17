@@ -68,26 +68,64 @@ public class Copper extends Material{
 	@Override
 	public ArrayList<Stat> getWeaponStats(ArrayList<Stat> stats) {
 		int span = 1;
+		
+		Damage dmg;
+		CoolDown CD;
 		if(state == State.BALANCED){
 			span = (int) (span * mod3 * mod2 * 2);
-			stats.add(new Damage(mod1, mod1 + span));
-			stats.add(new CoolDown(10 * mod3 * mod4));
+			
+			dmg = new Damage(mod1, mod1 + span);
+			CD = new CoolDown(10 * mod3 * mod4);
+			
+			dmg.modAmount(1.25f);
+			CD.modAmount(0.75f);
+			
+			stats.add(dmg);
+			stats.add(CD);
 		}else if(state == State.BLASTED){
 			span = (int) (span * mod1 * mod2 * mod3 * 1);
-			stats.add(new Damage(mod2 * mod3, (mod2 * mod3) + span));
-			stats.add(new CoolDown(5 * mod1 * mod3 * mod4));
+			
+			dmg = new Damage(mod2 * mod3, (mod2 * mod3) + span);
+			CD = new CoolDown(5 * mod1 * mod3 * mod4);
+			
+			dmg.modAmount(1.5f);
+			CD.modAmount(1f);
+			
+			stats.add(dmg);
+			stats.add(CD);
 		}else if(state == State.FLASHED){
 			span = (int) (span * mod1 * mod4 * mod3 * 1);
-			stats.add(new Damage(mod1 * mod3, (mod1 * mod3) + span));
-			stats.add(new CoolDown(5 * mod2 * mod3 * mod4));
+
+			dmg = new Damage(mod1 * mod3, (mod1 * mod3) + span);
+			CD = new CoolDown(5 * mod2 * mod3 * mod4);
+			
+			dmg.modAmount(1f);
+			CD.modAmount(0.5f);
+			
+			stats.add(dmg);
+			stats.add(CD);
 		}else if(state == State.HARDENED){
 			span = (int) (span * mod1 * 2);
-			stats.add(new Damage(mod3, mod3 + span));
-			stats.add(new CoolDown(10 * mod2 * mod4));
+
+			dmg = new Damage(mod3, mod3 + span);
+			CD = new CoolDown(10 * mod2 * mod4);
+			
+			dmg.modAmount(1.35f);
+			CD.modAmount(0.85f);
+			
+			stats.add(dmg);
+			stats.add(CD);
 		}else if(state == State.TEMPERED){
 			span = (int) (span * mod4 * 2);
-			stats.add(new Damage(mod1, mod1 + span));
-			stats.add(new CoolDown(10 * mod3 * mod2));
+
+			dmg = new Damage(mod1, mod1 + span);
+			CD = new CoolDown(10 * mod3 * mod2);
+			
+			dmg.modAmount(1.15f);
+			CD.modAmount(0.65f);
+			
+			stats.add(dmg);
+			stats.add(CD);
 		}
 		return stats;
 	}

@@ -41,6 +41,5 @@ public class Haste extends Stat{
 	@Override
 	public void modAmount(float amount) {
 		// TODO Auto-generated method stub
-		
 	}
 }

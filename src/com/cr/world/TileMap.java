@@ -21,9 +21,9 @@ public class TileMap {
 	
 	private Shader waterShader;
 	
-	private float					amplitudeWave = 3f;
-	private float					angleWave = 45.0f;
-	private float					angleWaveSpeed = 0.1f;
+	private float					amplitudeWave = 2f;
+	private float					angleWave = 2.86f;
+	private float					angleWaveSpeed = 0.3f;
 	public static final float 		PI2 = 3.1415926535897932384626433832795f * 2.0f;
 	
 	public TileMap(int width, int height){

@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.pattern.Pattern;
+import com.cr.crafting.v2.property.Property;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -71,9 +72,19 @@ public class MaterialChoice extends Button implements Hooverable{
 	public void renderHoover(Screen screen) {
 		Font matText = FontLoader.aquireFont(FontColor.WHITE);
 		matText.setFont(CRString.create(material.getName()));
-		screen.renderStaticSprite(flatWhite, Input.getMousePosition().x + 6, Input.getMousePosition().y, 10.4f, 3.4f);
-		screen.renderStaticSprite(flatBlack, Input.getMousePosition().x + 8, Input.getMousePosition().y + 2, 10, 3);
+		int ySizeMod = material.getProperties().size() * 2;
+		screen.renderStaticSprite(flatWhite, Input.getMousePosition().x + 6, Input.getMousePosition().y, 10.4f, 6f + ySizeMod);
+		screen.renderStaticSprite(flatBlack, Input.getMousePosition().x + 8, Input.getMousePosition().y + 2, 10, 5.6f + ySizeMod);
+
 		screen.renderFont(matText, Input.getMousePosition().x + 14, Input.getMousePosition().y - 14, 0.2f);
+		
+		int row = 0;
+		for(Property x : material.getProperties()){
+			matText.setFont(CRString.create(x.getName()));
+			screen.renderFont(matText, Input.getMousePosition().x + 22, Input.getMousePosition().y + 30 + row * 20, 0.2f);
+			row++;
+		}
+		
 		FontLoader.releaseFont(matText);
 	}
 
