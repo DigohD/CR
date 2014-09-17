@@ -100,9 +100,9 @@ public class Shader {
 		glUniform1f(uniforms.get(uniformName), value);
 	}
 	
-	public void setUniformf(String uniformName, Vector2f value){
-		glUniform1f(uniforms.get(uniformName), value.x);
-		glUniform1f(uniforms.get(uniformName), value.y);
+	public void setUniformf(String uniformName, float v1, float v2){
+		glUniform1f(uniforms.get(uniformName), v1);
+		glUniform1f(uniforms.get(uniformName), v2);
 	}
 	
 	public void setUniform(String uniformName, Matrix4f value){

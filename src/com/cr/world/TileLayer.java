@@ -58,7 +58,7 @@ public class TileLayer {
 		tiles = new HashMap<Integer, Tile>();
 	}
 	
-	public void generateTileLayer(boolean water){
+	public void generateTileLayer(){
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
 		List<Vector2f> texCoords = new ArrayList<Vector2f>();
@@ -77,11 +77,6 @@ public class TileLayer {
 				
 				float xOffset = 7f;
 				float yOffset = 5f;
-				
-				if(water){
-					xOffset = 0;
-					yOffset = 0;
-				}
 				
 				indices.add(vertices.size() + 0);
 				indices.add(vertices.size() + 1);
@@ -122,10 +117,13 @@ public class TileLayer {
 	
 
 	
-	public void renderTileLayer(){
+	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
-		shader.bind();
-		shader.setUniform("transformation", transform.getOrthoTransformation());
+		if(!water){
+			shader.bind();
+			shader.setUniform("transformation", transform.getOrthoTransformation());
+		}
+		
 		Tile.getTexture().bind();
 		mesh.render();
 		Tile.getTexture().unbind();
@@ -179,6 +177,13 @@ public class TileLayer {
 	}
 	
 
+	public void setShader(Shader shader){
+		this.shader = shader;
+	}
+	
+	public Shader getShader( ){
+		return this.shader;
+	}
 	
 	public int getWidth(){
 		return width;
