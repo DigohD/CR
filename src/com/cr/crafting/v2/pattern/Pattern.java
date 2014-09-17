@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import com.cr.crafting.v2.material.Material;
 import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
-import com.cr.item.statsMods.Stat;
+import com.cr.stats.StatMod;
 
 public abstract class Pattern {
 
-	protected ArrayList<Stat> stats;
+	protected ArrayList<StatMod> stats;
 	protected boolean isWeapon;
 	
 	public Pattern(boolean isWeapon){
@@ -17,7 +17,7 @@ public abstract class Pattern {
 	}
 	
 	public void createStatsFromMaterials(ArrayList<Material> materials){
-		stats = new ArrayList<Stat>();
+		stats = new ArrayList<StatMod>();
 		for(Material x : materials){
 			System.out.println(x.getName() + ": " + x.generateStat(isWeapon));
 			stats.addAll(x.generateStat(isWeapon));

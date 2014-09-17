@@ -3,7 +3,6 @@ package com.cr.states;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
-import com.cr.entity.hero.HeroSheet;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
@@ -59,8 +58,6 @@ public class StatsState extends GameState{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		screen.renderSprite(bg, xOffset, yOffset);
-		
-		HeroSheet.render(screen);
 		
 		exit.render(screen);
 //		g.setColor(Color.RED);

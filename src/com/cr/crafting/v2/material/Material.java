@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 import com.cr.crafting.v2.property.Property;
 import com.cr.engine.graphics.Sprite;
-import com.cr.item.statsMods.Stat;
-import com.cr.item.statsMods.basic.CoolDown;
-import com.cr.item.statsMods.basic.Damage;
+import com.cr.stats.Stat;
+import com.cr.stats.StatMod;
 
 public abstract class Material{
 
@@ -188,8 +187,8 @@ public abstract class Material{
 		}
 	}
 	
-	public ArrayList<Stat> generateStat(boolean isWeapon){
-		ArrayList<Stat> stats = new ArrayList<Stat>();
+	public ArrayList<StatMod> generateStat(boolean isWeapon){
+		ArrayList<StatMod> stats = new ArrayList<StatMod>();
 		if(isWeapon){
 			getWeaponStats(stats);
 			return stats;
@@ -200,8 +199,8 @@ public abstract class Material{
 	public abstract int getID();
 	
 	public abstract Sprite getMaterialImage();
-	public abstract ArrayList<Stat> getWeaponStats(ArrayList<Stat> stats);
-	public abstract ArrayList<Stat> getArmorStats(ArrayList<Stat> stats);
+	public abstract ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats);
+	public abstract ArrayList<StatMod> getArmorStats(ArrayList<StatMod> stats);
 	
 	public void resetSpans(){
 		newHigherHeatLimit = higherHeatLimit;

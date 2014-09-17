@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.enemy.Enemy;
-import com.cr.entity.enemy.Sheets;
 import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.entity.hero.Hero;
@@ -17,7 +16,7 @@ public class RangedTest extends Enemy{
 	int counter;
 	
 	public RangedTest(Vector2f position, World world) {
-		super(position, world, Sheets.dummySheet());
+		super(position, world);
 		sprite = new Sprite("ranged");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();

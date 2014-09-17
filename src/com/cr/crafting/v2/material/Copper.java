@@ -1,16 +1,14 @@
 package com.cr.crafting.v2.material;
 
-import java.awt.Image;
 import java.util.ArrayList;
 
-import com.cr.crafting.v2.property.Fragile;
+import com.cr.combat.Damage;
 import com.cr.crafting.v2.property.Property;
 import com.cr.crafting.v2.property.Solid;
 import com.cr.engine.graphics.Sprite;
-import com.cr.item.statsMods.Stat;
-import com.cr.item.statsMods.basic.CoolDown;
-import com.cr.item.statsMods.basic.Damage;
-import com.cr.util.ImageLoader;
+import com.cr.stats.Stat;
+import com.cr.stats.StatMod;
+import com.cr.stats.StatsSheet.StatID;
 
 public class Copper extends Material{
 
@@ -66,72 +64,80 @@ public class Copper extends Material{
 	}
 
 	@Override
-	public ArrayList<Stat> getWeaponStats(ArrayList<Stat> stats) {
+	public ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats) {
 		int span = 1;
-		
-		Damage dmg;
-		CoolDown CD;
+
 		if(state == State.BALANCED){
 			span = (int) (span * mod3 * mod2 * 2);
 			
-			dmg = new Damage(mod1, mod1 + span);
-			CD = new CoolDown(10 * mod3 * mod4);
+			StatMod damageMod = new StatMod(mod1, StatID.DAMAGE_BASE, "weapon", true);
+			StatMod diceMod = new StatMod(mod1 + span, StatID.DAMAGE_DICE, "weapon", true);
+			StatMod cooldownMod = new StatMod(10 * mod3 * mod4, StatID.COOLDOWN, "weapon", true);
 			
-			dmg.modAmount(1.25f);
-			CD.modAmount(0.75f);
+			damageMod.mulAmount(1.25f);
+			diceMod.mulAmount(0.75f);
 			
-			stats.add(dmg);
-			stats.add(CD);
+			stats.add(damageMod);
+			stats.add(diceMod);
+			stats.add(cooldownMod);
 		}else if(state == State.BLASTED){
 			span = (int) (span * mod1 * mod2 * mod3 * 1);
 			
-			dmg = new Damage(mod2 * mod3, (mod2 * mod3) + span);
-			CD = new CoolDown(5 * mod1 * mod3 * mod4);
+			StatMod damageMod = new StatMod(mod2 * mod3, StatID.DAMAGE_BASE, "weapon", true);
+			StatMod diceMod = new StatMod((mod2 * mod3) + span, StatID.DAMAGE_DICE, "weapon", true);
+			StatMod cooldownMod = new StatMod(5 * mod1 * mod3 * mod4, StatID.COOLDOWN, "weapon", true);
 			
-			dmg.modAmount(1.5f);
-			CD.modAmount(1f);
+			damageMod.mulAmount(1.5f);
+			diceMod.mulAmount(1f);
 			
-			stats.add(dmg);
-			stats.add(CD);
+			stats.add(damageMod);
+			stats.add(diceMod);
+			stats.add(cooldownMod);
 		}else if(state == State.FLASHED){
 			span = (int) (span * mod1 * mod4 * mod3 * 1);
 
-			dmg = new Damage(mod1 * mod3, (mod1 * mod3) + span);
-			CD = new CoolDown(5 * mod2 * mod3 * mod4);
+			StatMod damageMod = new StatMod(mod1 * mod3, StatID.DAMAGE_BASE, "weapon", true);
+			StatMod diceMod = new StatMod((mod1 * mod3) + span, StatID.DAMAGE_DICE, "weapon", true);
+			StatMod cooldownMod = new StatMod(5 * mod2 * mod3 * mod4, StatID.COOLDOWN, "weapon", true);
 			
-			dmg.modAmount(1f);
-			CD.modAmount(0.5f);
+			damageMod.mulAmount(1f);
+			diceMod.mulAmount(0.5f);
 			
-			stats.add(dmg);
-			stats.add(CD);
+			stats.add(damageMod);
+			stats.add(diceMod);
+			stats.add(cooldownMod);
 		}else if(state == State.HARDENED){
 			span = (int) (span * mod1 * 2);
 
-			dmg = new Damage(mod3, mod3 + span);
-			CD = new CoolDown(10 * mod2 * mod4);
+			StatMod damageMod = new StatMod(mod3, StatID.DAMAGE_BASE, "weapon", true);
+			StatMod diceMod = new StatMod(mod3 + span, StatID.DAMAGE_DICE, "weapon", true);
+			StatMod cooldownMod = new StatMod(10 * mod2 * mod4, StatID.COOLDOWN, "weapon", true);
 			
-			dmg.modAmount(1.35f);
-			CD.modAmount(0.85f);
+			damageMod.mulAmount(1.35f);
+			diceMod.mulAmount(0.85f);
 			
-			stats.add(dmg);
-			stats.add(CD);
+			stats.add(damageMod);
+			stats.add(diceMod);
+			stats.add(cooldownMod);
 		}else if(state == State.TEMPERED){
 			span = (int) (span * mod4 * 2);
 
-			dmg = new Damage(mod1, mod1 + span);
-			CD = new CoolDown(10 * mod3 * mod2);
+			StatMod damageMod = new StatMod(mod1, StatID.DAMAGE_BASE, "weapon", true);
+			StatMod diceMod = new StatMod(mod1 + span, StatID.DAMAGE_DICE, "weapon", true);
+			StatMod cooldownMod = new StatMod(10 * mod3 * mod2, StatID.COOLDOWN, "weapon", true);
 			
-			dmg.modAmount(1.15f);
-			CD.modAmount(0.65f);
+			damageMod.mulAmount(1.15f);
+			diceMod.mulAmount(0.65f);
 			
-			stats.add(dmg);
-			stats.add(CD);
+			stats.add(damageMod);
+			stats.add(diceMod);
+			stats.add(cooldownMod);
 		}
 		return stats;
 	}
 
 	@Override
-	public ArrayList<Stat> getArmorStats(ArrayList<Stat> stats) {
+	public ArrayList<StatMod> getArmorStats(ArrayList<StatMod> stats) {
 		return null;
 	}
 	

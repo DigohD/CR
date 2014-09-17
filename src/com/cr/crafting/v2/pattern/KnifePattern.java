@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.engine.graphics.Sprite;
+import com.cr.entity.hero.Hero;
 import com.cr.item.Item;
-import com.cr.item.statsMods.Stat;
-import com.cr.item.statsMods.basic.CoolDown;
-import com.cr.item.statsMods.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
+import com.cr.stats.StatMod;
 
 public class KnifePattern extends Pattern{
 
@@ -23,14 +22,16 @@ public class KnifePattern extends Pattern{
 	@Override
 	public Item generateItem(){
 		CopperKnife ck = new CopperKnife();
-		for(Stat x : stats){
-			if(x instanceof CoolDown)
-				((CoolDown) x).modAmount(ASMod);
-			else if(x instanceof Damage)
-				((Damage) x).modAmount(damageMod);
-			ck.addStat(x);
-			
-			System.out.println(x.getName() + ": " + x.getAmount());
+		
+		for(StatMod x : stats){
+			if(x.getAffectedStat().equals("Damage_Base"))
+				ck.getDamageBase().setNewBase(x.getAmount() * damageMod);
+			else if(x.getAffectedStat().equals("Damage_Dice"))
+				ck.getDamageDice().setNewBase(x.getAmount() * damageMod);
+			else if(x.getAffectedStat().equals("Cooldown"))
+				ck.getCooldown().setNewBase(x.getAmount() * ASMod);
+			else
+				Hero.getSheet().addMod(x);;
 		}
 		return ck;
 	}

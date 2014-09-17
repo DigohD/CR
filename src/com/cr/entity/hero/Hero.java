@@ -16,6 +16,7 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.entity.hero.misc.FootPrint;
+import com.cr.stats.StatsSheet;
 import com.cr.util.Randomizer;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
@@ -39,6 +40,8 @@ public class Hero extends Mob implements Collideable{
 
 	private static Inventory inventory;
 	private static MaterialsBox materialsBox;
+	
+	private static StatsSheet sheet = new StatsSheet();
 	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;
@@ -68,10 +71,6 @@ public class Hero extends Mob implements Collideable{
 		height = 28+19;
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		currentDir = Direction.SOUTH;
-		
-		HeroSheet.cleanseSheet();
-		maxHP = HeroSheet.getMaxHP();
-		currentHP = 1;
 		
 		inventory = new Inventory();
 		materialsBox = new MaterialsBox();
@@ -112,9 +111,6 @@ public class Hero extends Mob implements Collideable{
 		if(!collisionWithTile(0, targetVel.y)){
 			position.y = position.y + targetVel.y*dt;
 		}
-
-		maxHP = HeroSheet.getMaxHP();
-		addHealth(0);
 		
 		move(dt);
 		
@@ -193,11 +189,6 @@ public class Hero extends Mob implements Collideable{
 		rightHand.setItem(inventory.getrHSlot().getItem());
 		leftHand.setItem(inventory.getlHSlot().getItem());
 		head.setItem(inventory.getHeadSlot().getItem());
-		
-		HeroSheet.cleanseSheet();
-		
-		if(head.getItem() != null)
-			head.getItem().getStats().applyStats();
 	}
 	
 	@Override
@@ -285,6 +276,10 @@ public class Hero extends Mob implements Collideable{
 	@Override
 	public void playHurtSound() {
 		
+	}
+
+	public static StatsSheet getSheet() {
+		return sheet;
 	}
 
 	

@@ -7,7 +7,6 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.effect.movement.KnockBack;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.enemy.Enemy;
-import com.cr.entity.enemy.Sheets;
 import com.cr.entity.enemy.behaviour.Chasing;
 import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.entity.hero.Hero;
@@ -20,7 +19,7 @@ public class MeleeTest extends Enemy{
 //	private LootTable lt;
 	
 	public MeleeTest(Vector2f position, World world) {
-		super(position, world, Sheets.dummySheet());
+		super(position, world);
 		sprite = new Sprite("melee");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();

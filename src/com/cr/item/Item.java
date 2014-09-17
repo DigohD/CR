@@ -8,9 +8,8 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.item.statsMods.PassiveTicking;
-import com.cr.item.statsMods.Stat;
-import com.cr.item.statsMods.StatsList;
+import com.cr.stats.StatMod;
+import com.cr.stats.StatModList;
 import com.cr.util.Camera;
 import com.cr.world.World;
 
@@ -26,7 +25,7 @@ public abstract class Item implements Renderable, Tickable{
 	protected String name;
 	protected int width, height;
 	
-	protected StatsList stats;
+	protected StatModList stats;
 	
 	public int x0, x1, y0, y1;
 	
@@ -45,7 +44,7 @@ public abstract class Item implements Renderable, Tickable{
 		
 		this.name = name;
 		
-		stats = new StatsList();
+		stats = new StatModList();
 	}
 	
 	public void render(Screen screen, int drawX, int drawY, int spriteID){
@@ -87,16 +86,16 @@ public abstract class Item implements Renderable, Tickable{
 //		g.setColor(Color.WHITE);
 //		g.drawString(name, xOffset + 20, yOffset + 40);
 		
-		stats.render(screen, xOffset + 20, yOffset + 80);
+//		stats.render(screen, xOffset + 20, yOffset + 80);
 	}
 	
 	protected void tickPassives(float dt){
-		for(Stat s : stats.getStats())
-			if(s instanceof PassiveTicking)
-				((PassiveTicking) s).tick(dt);
+//		for(Stat s : stats.getStats())
+//			if(s instanceof PassiveTicking)
+//				((PassiveTicking) s).tick(dt);
 	}
 	
-	public StatsList getStats(){
+	public StatModList getStatMods(){
 		return stats;
 	}
 	
@@ -113,8 +112,8 @@ public abstract class Item implements Renderable, Tickable{
 		return iconSprite;
 	}
 	
-	public void addStat(Stat stat){
-		stats.addStat(stat);
+	public void addStat(StatMod mod){
+		stats.addMod(mod);
 	}
 
 	public int getTempXOffset() {

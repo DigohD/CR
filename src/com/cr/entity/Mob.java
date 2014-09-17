@@ -31,8 +31,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	
 	protected Direction currentDir;
 	
-	protected float maxHP, currentHP;
-	
 	protected float accSpeed = 3.5f;
 	protected float speed = 15f;
 	
@@ -91,11 +89,11 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		this.currentDir = currentDir;
 	}
 	
-	public void addHealth(float amount){
-		currentHP = currentHP + amount;
-		if(currentHP > maxHP)
-			currentHP = maxHP;
-	}
+//	public void addHealth(float amount){
+//		currentHP = currentHP + amount;
+//		if(currentHP > maxHP)
+//			currentHP = maxHP;
+//	}
 
 	public boolean isMoving() {
 		return moving;
@@ -105,21 +103,21 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		this.moving = moving;
 	}
 
-	public void takeDamage(DamagePacket packet){
-		ArrayList<Damage> dmgs = packet.getDmgs();
-		
-		playHurtSound();
-		
-		for(Damage x : dmgs){
-			currentHP = currentHP - x.calculateDamage();
-			if(currentHP < 0)
-				death();
-		}
-	}
+//	public void takeDamage(DamagePacket packet){
+//		ArrayList<Damage> dmgs = packet.getDmgs();
+//		
+//		playHurtSound();
+//		
+//		for(Damage x : dmgs){
+//			currentHP = currentHP - x.calculateDamage();
+//			if(currentHP < 0)
+//				death();
+//		}
+//	}
 	
-	public float getCurrentHP() {
-		return currentHP;
-	}
+//	public float getCurrentHP() {
+//		return currentHP;
+//	}
 	
 	public Vector2f getCenterPos(){
 //		System.out.println(position);
