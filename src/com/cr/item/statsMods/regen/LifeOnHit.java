@@ -1,4 +1,4 @@
-package com.cr.item.stats.regen;
+package com.cr.item.statsMods.regen;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.Mob;
 import com.cr.entity.hero.HeroSheet;
-import com.cr.item.stats.AffectBearerOnHit;
-import com.cr.item.stats.PassiveTicking;
-import com.cr.item.stats.Stat;
+import com.cr.item.statsMods.AffectBearerOnHit;
+import com.cr.item.statsMods.PassiveTicking;
+import com.cr.item.statsMods.Stat;
 
 public class LifeOnHit extends Stat implements AffectBearerOnHit{
 

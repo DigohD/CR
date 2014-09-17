@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.cr.crafting.v2.material.Material;
 import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
-import com.cr.item.stats.Stat;
+import com.cr.item.statsMods.Stat;
 
 public abstract class Pattern {
 

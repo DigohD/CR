@@ -8,9 +8,9 @@ import com.cr.entity.hero.HeroSheet;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.item.activation.ItemObject;
-import com.cr.item.stats.PassiveTicking;
-import com.cr.item.stats.Stat;
-import com.cr.item.stats.basic.CoolDown;
+import com.cr.item.statsMods.PassiveTicking;
+import com.cr.item.statsMods.Stat;
+import com.cr.item.statsMods.basic.CoolDown;
 import com.cr.util.Camera;
 
 public abstract class Weapon extends Item{
