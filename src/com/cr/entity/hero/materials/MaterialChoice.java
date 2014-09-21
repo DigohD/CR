@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.property.Property;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -13,6 +14,7 @@ import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.Hooverable;
+import com.cr.game.Game;
 import com.cr.input.Mouse;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
@@ -24,12 +26,12 @@ public class MaterialChoice extends Button implements Hooverable{
 	private boolean isClicked, isHoover;
 	private Material material;
 	
-	private Sprite flatBlack = new Sprite("flatblack");
-	private Sprite flatWhite = new Sprite("flatwhite");
+	private Sprite flatBlack = new Sprite("flatblack", Game.shader, new Transform());
+	private Sprite flatWhite = new Sprite("flatwhite", Game.shader, new Transform());
 	
 	public MaterialChoice(int xPos, int yPos, Material material) {
 		super(new Rectangle(xPos, yPos, 50, 50));
-		sprite = new Sprite("slot");
+		sprite = new Sprite("slot", Game.shader, new Transform());
 		matSprite = material.getMaterialImage();
 		this.material = material;
 		this.xPos = xPos;

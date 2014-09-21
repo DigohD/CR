@@ -111,7 +111,7 @@ public class TileLayer {
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
 		
-		mesh = new Mesh(vertexArray, texCoordArray, iArray, true);
+		mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
 		transform.scale(scaleFactor, scaleFactor, 1);
 	}
 	
@@ -126,7 +126,8 @@ public class TileLayer {
 		Tile.getTexture().bind();
 		mesh.render();
 		Tile.getTexture().unbind();
-		shader.unbind();
+		if(!water)
+			shader.unbind();
 	}
 	
 	private void calcTexCoords(float row, float col){

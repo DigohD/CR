@@ -5,17 +5,19 @@ import java.util.ArrayList;
 import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.crafting.v2.station.PatternChoice;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 
 public class PatternState extends GameState{
 
-	private Sprite bg = new Sprite("patternbg");
+	private Sprite bg = new Sprite("patternbg", Game.shader, new Transform());
 	private ExitButton exit;
 	private ArrayList<PatternChoice> patternChoices = new ArrayList<PatternChoice>();
 	

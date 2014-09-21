@@ -1,26 +1,24 @@
 package com.cr.states;
 
 import com.cr.crafting.v2.material.Material;
-import com.cr.crafting.v2.station.AddButton;
-import com.cr.crafting.v2.station.DownArrow;
-import com.cr.crafting.v2.station.DownArrow2;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.crafting.v2.station.ProcessButton;
 import com.cr.crafting.v2.station.SliderArrow;
-import com.cr.crafting.v2.station.UpArrow;
-import com.cr.crafting.v2.station.UpArrow2;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
 public class ProcessState extends GameState{
 
-	private Sprite bg = new Sprite("patternbg");
+	Transform t = new Transform();
+	private Sprite bg = new Sprite("patternbg", Game.shader, t);
 	private Sprite slider = new Sprite("slider");
 	
 	private ProcessButton process;

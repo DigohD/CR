@@ -8,11 +8,13 @@ out vec3 outColor;
 
 uniform float waveDataX;
 uniform float waveDataY;
+uniform float time;
+
 uniform mat4 transformation;
 
 void main() 
 {
-	outColor = vec3(1,1,1);
+	outColor = vec3(1,1,1) * time;
 	texCoord = texCoordIn;
 	
 	vec4 a_position = vec4(position, 1);

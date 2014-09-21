@@ -2,11 +2,13 @@ package com.cr.entity.hero.inventory;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.game.Game;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
 
@@ -20,7 +22,7 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable{
 	
 	public ItemSlot(int xPos, int yPos){
 		super(new Rectangle(xPos, yPos, 50, 50));
-		slotSprite = new Sprite("slot");
+		slotSprite = new Sprite("slot", Game.shader, new Transform());
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}

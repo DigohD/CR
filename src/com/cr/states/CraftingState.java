@@ -8,6 +8,7 @@ import com.cr.crafting.v2.station.CraftButton;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.crafting.v2.station.PatternButton;
 import com.cr.crafting.v2.station.ProcessButton;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
@@ -16,11 +17,15 @@ import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Hooverable;
 import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 
-public class CraftingState extends GameState{
 
-	private Sprite bg = new Sprite("inventorybg");
+public class CraftingState extends GameState{
+	
+	Transform t = new Transform();
+
+	private Sprite bg = new Sprite("inventorybg", Game.shader, t);
 	private MaterialsBox materials;
 	private Material activeMaterial;
 	
@@ -40,7 +45,7 @@ public class CraftingState extends GameState{
 		super(gsm);
 		blockRendering = false;
 		
-		slotSprite = new Sprite("slot");
+		slotSprite = new Sprite("slot", Game.shader, t);
 		
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;

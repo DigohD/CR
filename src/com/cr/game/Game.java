@@ -4,6 +4,7 @@ import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.CoreEngine;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
+import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
 import com.cr.util.FontLoader;
@@ -13,6 +14,7 @@ public class Game extends CoreEngine{
 	
 	private GameStateManager gsm;
 	private Screen screen;
+	public static Shader shader;
 	
 	public Game(){
 		boolean fullscreen = true;
@@ -24,6 +26,12 @@ public class Game extends CoreEngine{
 		new ImageLoader();
 		new FontLoader();
 		screen = new Screen();
+		
+		shader = new Shader("defaultVertShader", "defaultFragShader");
+		shader.addUniform("transformation");
+		shader.addUniform("sampler");
+		shader.setUniformi("sampler", 0);
+		
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));
 	}

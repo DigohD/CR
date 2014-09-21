@@ -21,10 +21,17 @@ public class TileMap {
 	
 	private Shader waterShader;
 	
-	private float					amplitudeWave = 2f;
-	private float					angleWave = 2.86f;
-	private float					angleWaveSpeed = 0.3f;
-	public static final float 		PI2 = 3.1415926535897932384626433832795f * 2.0f;
+	private float amplitudeWave = 2f;
+	private float angleWave = 2.86f;
+	private float angleWaveSpeed = 0.3f;
+	public static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
+	
+	private float time = 1f;
+	private float dayNightCycleTime = 100.0f;
+	private float targetTimeMax = 2f;
+	private float targetTimeMin = 0.2f;
+	
+	private boolean day = true, night = false;
 	
 	public TileMap(int width, int height){
 		this.width = width;
@@ -34,6 +41,7 @@ public class TileMap {
 		waterShader.addUniform("transformation");
 		waterShader.addUniform("waveDataX");
 		waterShader.addUniform("waveDataY");
+		waterShader.addUniform("time");
 		waterShader.addUniform("sampler");
 		waterShader.setUniformi("sampler", 0);
 		
@@ -55,16 +63,36 @@ public class TileMap {
 		transform = new Transform();
 	}
 	
+	public void tick(float dt){
+		if(time <= 2.0f && day){
+			time += targetTimeMax / dayNightCycleTime * dt;
+			if(time > 2.0f) {
+				night = true;
+				day = false;
+			}
+		}
+		
+		if(night){
+			time -= targetTimeMax / dayNightCycleTime * dt;
+			if(time <= 0.2f){
+				day = true;
+				night = false;
+			}
+		}
+	}
+	
 	public void renderMap(){
 		angleWave += Game.dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
 
 		waterShader.bind();
+		waterShader.setUniformf("time", time);
 		waterShader.setUniformf("waveDataX", angleWave);
 		waterShader.setUniformf("waveDataY", amplitudeWave);
 		waterShader.setUniform("transformation", transform.getOrthoTransformation());
 		bottomLayer.renderTileLayer(true);
+		
 		waterShader.unbind();
 		middleLayer.renderTileLayer(false);
 		topLayer.renderTileLayer(false);

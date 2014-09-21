@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import com.cr.crafting.v2.property.Fragile;
 import com.cr.crafting.v2.property.Property;
 import com.cr.crafting.v2.property.Solid;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
+import com.cr.game.Game;
 import com.cr.item.stats.Stat;
 import com.cr.item.stats.basic.CoolDown;
 import com.cr.item.stats.basic.Damage;
@@ -47,7 +49,7 @@ public class Copper extends Material{
 
 	@Override
 	public Sprite getMaterialImage() {
-		return new Sprite("copper");
+		return new Sprite("copper", Game.shader, new Transform());
 	}
 
 	@Override
