@@ -1,4 +1,4 @@
-package com.cr.item.stats.basic;
+package com.cr.item.statsMods.basic;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,8 +7,8 @@ import com.cr.combat.Damage.DamageType;
 import com.cr.combat.DamagePacket;
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.HeroSheet;
-import com.cr.item.stats.AffectsDamageTaken;
-import com.cr.item.stats.Stat;
+import com.cr.item.statsMods.AffectsDamageTaken;
+import com.cr.item.statsMods.Stat;
 
 public class Armor extends Stat implements AffectsDamageTaken{
 

@@ -1,10 +1,10 @@
-package com.cr.item.stats.basic;
+package com.cr.item.statsMods.basic;
 
 import java.awt.Color;
 
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.HeroSheet;
-import com.cr.item.stats.Stat;
+import com.cr.item.statsMods.Stat;
 
 public class BasicStat extends Stat{
 

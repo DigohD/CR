@@ -1,4 +1,4 @@
-package com.cr.item.stats;
+package com.cr.item.statsMods;
 
 import com.cr.entity.Mob;
 import com.cr.item.weapon.Weapon;

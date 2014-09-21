@@ -7,9 +7,9 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.game.Game;
 import com.cr.item.Item;
-import com.cr.item.stats.Stat;
-import com.cr.item.stats.basic.CoolDown;
-import com.cr.item.stats.basic.Damage;
+import com.cr.item.statsMods.Stat;
+import com.cr.item.statsMods.basic.CoolDown;
+import com.cr.item.statsMods.basic.Damage;
 import com.cr.item.weapon.CopperKnife;
 
 public class KnifePattern extends Pattern{

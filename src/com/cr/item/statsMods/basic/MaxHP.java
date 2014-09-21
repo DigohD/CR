@@ -1,21 +1,21 @@
-package com.cr.item.stats.regen;
+package com.cr.item.statsMods.basic;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import com.cr.engine.graphics.Screen;
-import com.cr.entity.Mob;
-import com.cr.item.stats.PassiveTicking;
-import com.cr.item.stats.Stat;
+import com.cr.entity.hero.HeroSheet;
+import com.cr.item.statsMods.Stat;
 
-public class LifeRegain extends Stat implements PassiveTicking{
+public class MaxHP extends Stat{
 
 	private float amount;
-	private Mob owner;
 	
-	public LifeRegain(float amount, Mob owner) {
-		super("Life Regain", new Color(180, 180, 180));
+	public MaxHP(float amount) {
+		super("Maximum HP", new Color(180, 180, 180));
 		this.amount = amount;
-		this.owner = owner;
 	}
 
 	public void render(Screen screen, int xPos, int yPos) {
@@ -24,29 +24,24 @@ public class LifeRegain extends Stat implements PassiveTicking{
 //		
 //		String statS = String.format("%.1f", amount);
 //		g.setColor(Color.BLACK);
-//		g.drawString("" + name + ": " + statS, xPos - 1, yPos - 1);
+//		g.drawString("" + name + ": +" + statS, xPos - 1, yPos - 1);
 //		g.setColor(color);
-//		g.drawString("" + name + ": " + statS, xPos, yPos);
+//		g.drawString("" + name + ": +" + statS, xPos, yPos);
 	}
 
 	@Override
 	public void applyToSheet() {
-		
+		HeroSheet.addMaxHP(amount);
 	}
-
+	
 	@Override
 	public void addAmount(float amount) {
 		this.amount = this.amount + amount;
 	}
 	
 	@Override
-	public float getAmount(){
+	public float getAmount() {
 		return amount;
-	}
-
-	@Override
-	public void tick(float dt) {
-		owner.addHealth(amount / 60);
 	}
 
 	@Override

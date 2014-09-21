@@ -8,9 +8,9 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
-import com.cr.item.stats.PassiveTicking;
-import com.cr.item.stats.Stat;
-import com.cr.item.stats.StatsList;
+import com.cr.item.statsMods.PassiveTicking;
+import com.cr.item.statsMods.Stat;
+import com.cr.item.statsMods.StatsList;
 import com.cr.util.Camera;
 import com.cr.world.World;
 
