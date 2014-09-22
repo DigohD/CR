@@ -23,9 +23,10 @@ public class Game extends CoreEngine{
 	}
 	
 	private void init(){
+		screen = new Screen();
 		new ImageLoader();
 		new FontLoader();
-		screen = new Screen();
+		
 		
 		shader = new Shader("defaultVertShader", "defaultFragShader");
 		shader.addUniform("transformation");

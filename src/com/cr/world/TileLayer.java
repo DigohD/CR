@@ -16,22 +16,23 @@ import com.cr.world.tile.Tile;
 
 public class TileLayer {
 	
-	protected int width, height;
-	protected float depth;
+	private int width, height;
+	private float depth;
 
-	protected Bitmap bitmap;
-	protected Mesh mesh;
-	protected Shader shader;
-	protected Transform transform;
+	private Bitmap bitmap;
+	private Mesh mesh;
+	private List<Mesh> meshes; 
+	private Shader shader;
+	private Transform transform;
 	
-	protected HashMap<Integer, Tile> tiles;
+	private HashMap<Integer, Tile> tiles;
 	
-	protected float xLow = 0;
-	protected float xHigh = 0;
-	protected float yLow = 0;
-	protected float yHigh = 0;
+	private float xLow = 0;
+	private float xHigh = 0;
+	private float yLow = 0;
+	private float yHigh = 0;
 	
-	protected float scaleFactor = 1f;
+	private float scaleFactor = 1f;
 	
 	public TileLayer(int width, int height, float depth){
 		this.depth = depth;
@@ -42,6 +43,8 @@ public class TileLayer {
 		this.transform = TileMap.getTransform();
 		
 		this.shader = World.getShader();
+		
+		meshes = new ArrayList<Mesh>();
 		
 		tiles = new HashMap<Integer, Tile>();
 	}
@@ -55,10 +58,20 @@ public class TileLayer {
 		this.transform = transform;
 		this.shader = World.getShader();
 		
+		meshes = new ArrayList<Mesh>();
+		
 		tiles = new HashMap<Integer, Tile>();
 	}
 	
 	public void generateTileLayer(){
+		generateTileLayer(0, 0, width/2, height/2);
+		generateTileLayer(width/2, 0, width, height/2);
+		generateTileLayer(0, height/2, width/2, height);
+		generateTileLayer(width/2, height/2, width, height);
+	}
+	
+	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
+
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
 		List<Vector2f> texCoords = new ArrayList<Vector2f>();
@@ -66,8 +79,8 @@ public class TileLayer {
 		float tWidth = Tile.getTileWidth();
 		float tHeight = Tile.getTileHeight();
 		
-		for(int y = 0; y < height; y++){
-			for(int x = 0; x < width; x++){
+		for(int y = yStart; y < yEnd; y++){
+			for(int x = xStart; x < xEnd; x++){
 				if(bitmap.getPixel(x, y) == 0) continue;
 				
 				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
@@ -111,11 +124,9 @@ public class TileLayer {
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
 		
-		mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
+		meshes.add(new Mesh(vertexArray, texCoordArray, iArray, false));
 		transform.scale(scaleFactor, scaleFactor, 1);
 	}
-	
-
 	
 	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
@@ -124,7 +135,8 @@ public class TileLayer {
 			shader.setUniform("transformation", transform.getOrthoTransformation());
 		}
 		Tile.getTexture().bind();
-		mesh.render();
+		for(Mesh m : meshes)
+			m.render();
 		Tile.getTexture().unbind();
 		if(!water)
 			shader.unbind();

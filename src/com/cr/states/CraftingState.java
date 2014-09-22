@@ -88,7 +88,6 @@ public class CraftingState extends GameState{
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
-				ps.bg = false;
 			}
 			
 			add.removeFromInput();

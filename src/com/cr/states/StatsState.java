@@ -35,7 +35,7 @@ public class StatsState extends GameState{
 		if(KeyInput.space || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
-				ps.bg = false;
+		
 			}
 			gsm.pop();
 		}
