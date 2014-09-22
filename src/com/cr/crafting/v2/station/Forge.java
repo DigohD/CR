@@ -63,13 +63,14 @@ public class Forge {
 		}
 	}
 	
-	public void craft(){
+	public Item craft(){
 		pattern.createStatsFromMaterials(materials);
 		Item i = pattern.generateItem();
 		Inventory.addItem(i);
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
+		return i;
 	}
 
 	public int getMinHeat() {
@@ -88,5 +89,7 @@ public class Forge {
 		return maxTime;
 	}
 	
-	
+	public Material getBase(){
+		return materials.get(0);
+	}
 }

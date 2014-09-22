@@ -51,9 +51,11 @@ public class Stat{
 	
 	public void setNewBase(float newBase){
 		base = newBase;
+		calculateTotal();
 	}
 
 	public float getTotal() {
+		calculateTotal();
 		return total;
 	}
 	

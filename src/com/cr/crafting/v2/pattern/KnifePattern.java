@@ -8,6 +8,7 @@ import com.cr.entity.hero.Hero;
 import com.cr.item.Item;
 import com.cr.item.weapon.CopperKnife;
 import com.cr.stats.StatMod;
+import com.cr.stats.StatsSheet.StatID;
 
 public class KnifePattern extends Pattern{
 
@@ -15,24 +16,28 @@ public class KnifePattern extends Pattern{
 	
 	public KnifePattern(){
 		super(true);
-		ASMod = 1.5f;
+		ASMod = 0.5f;
 		damageMod = 0.5f;
 	}
 
 	@Override
 	public Item generateItem(){
 		CopperKnife ck = new CopperKnife();
-		
 		for(StatMod x : stats){
-			if(x.getAffectedStat().equals("Damage_Base"))
+			System.out.println("Stat applying: " + x.getAffectedStat() + " : " + x.getAmount());
+			if(x.getAffectedStat() == StatID.DAMAGE_BASE)
 				ck.getDamageBase().setNewBase(x.getAmount() * damageMod);
-			else if(x.getAffectedStat().equals("Damage_Dice"))
+			else if(x.getAffectedStat() == StatID.DAMAGE_DICE)
 				ck.getDamageDice().setNewBase(x.getAmount() * damageMod);
-			else if(x.getAffectedStat().equals("Cooldown"))
+			else if(x.getAffectedStat() == StatID.COOLDOWN)
 				ck.getCooldown().setNewBase(x.getAmount() * ASMod);
 			else
-				Hero.getSheet().addMod(x);;
+				ck.addStat(x);
 		}
+		
+		System.out.println(ck.getDamageBase().getTotal() + " - " + ck.getDamageDice().getTotal());
+		System.out.println(ck.getCooldown().getTotal());
+		
 		return ck;
 	}
 
