@@ -26,7 +26,8 @@ public class World {
 	private float targetTimeMax = 2f;
 	private float targetTimeMin = 0.2f;
 	
-	private boolean day = true, night = false, start = true;
+	private boolean day = true, night = false;
+	public static boolean start = true;
 	
 	public World(){
 		shader = new Shader("vertexshader", "fragmentshader");
@@ -79,17 +80,16 @@ public class World {
 		else timer = 0;
 		
 		if(start)
-			time += targetTimeMax / 30 * dt;
+			time += targetTimeMax / 80 * dt;
 		
 		if(time >= 1f || !start){
 			start = false;
 			dayNightCycle(dt);
 			map.tick(dt);
-		
-			camera.tick(dt);
-			em.tick(dt);
 		}
-		
+
+		camera.tick(dt);
+		em.tick(dt);
 	}
 	
 	private void dayNightCycle(float dt){

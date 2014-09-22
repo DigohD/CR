@@ -1,5 +1,6 @@
 package com.cr.item;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -8,6 +9,7 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
+import com.cr.game.Game;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatModList;
 import com.cr.util.Camera;
@@ -33,7 +35,7 @@ public abstract class Item implements Renderable, Tickable{
 	
 	public Item(String imageString, int horXOffset, int vertXOffset, int xOffset, int yOffset, String name){
 		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), Hero.t);
-		iconSprite = new Sprite(imageString + "icon");
+		iconSprite = new Sprite(imageString + "icon", Game.shader, new Transform());
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.horXOffset = horXOffset;

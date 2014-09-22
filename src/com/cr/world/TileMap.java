@@ -43,7 +43,9 @@ public class TileMap {
 		waterShader.addUniform("waveDataY");
 		waterShader.addUniform("time");
 		waterShader.addUniform("sampler");
+		waterShader.addUniform("sampler2");
 		waterShader.setUniformi("sampler", 0);
+		waterShader.setUniformi("sampler2", 1);
 		
 		transform = new Transform();
 		
