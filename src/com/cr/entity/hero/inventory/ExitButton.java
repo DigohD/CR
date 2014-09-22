@@ -2,9 +2,11 @@ package com.cr.entity.hero.inventory;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
+import com.cr.game.Game;
 import com.cr.input.Mouse;
 
 public class ExitButton extends Button implements Renderable{
@@ -15,7 +17,7 @@ public class ExitButton extends Button implements Renderable{
 	
 	public ExitButton(int xPos, int yPos) {
 		super(new Rectangle(xPos, yPos, 150, 50));
-		sprite = new Sprite("exitbutton");
+		sprite = new Sprite("exitbutton", Game.shader, new Transform());
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}

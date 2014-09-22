@@ -7,17 +7,9 @@ import com.cr.util.Camera;
 
 public class Screen {
 	
-
-	
 	public Screen(){
-		initGL();
-		
-		
-	}
-	
-	private void initGL(){
 		glClearColor(0f,0f,0f,0f);
-	
+		
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_ALPHA);
 		glEnable(GL_BLEND);

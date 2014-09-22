@@ -57,8 +57,18 @@ public class Hero extends Mob implements Collideable{
 		super(position, world);
 		input = new HeroInput(this);
 		t = new Transform();
-		position = new Vector2f(50,50);
+		position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
 
+		if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+			while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
+				position.y += Tile.getTileHeight();
+				if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+					break;
+				}
+			}
+		}
+				
+		
 		head = new Head();
 		body = new Body();
 		rightHand = new RightHand();

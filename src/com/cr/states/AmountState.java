@@ -7,18 +7,20 @@ import com.cr.crafting.v2.station.DownArrow2;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.crafting.v2.station.UpArrow;
 import com.cr.crafting.v2.station.UpArrow2;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
 public class AmountState extends GameState{
 
-	private Sprite bg = new Sprite("patternbg");
+	private Sprite bg = new Sprite("patternbg", Game.shader, new Transform());
 	
 	private AddButton add;
 	

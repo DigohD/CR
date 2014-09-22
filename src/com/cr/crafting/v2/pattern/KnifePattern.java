@@ -3,8 +3,10 @@ package com.cr.crafting.v2.pattern;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.hero.Hero;
+import com.cr.game.Game;
 import com.cr.item.Item;
 import com.cr.item.weapon.CopperKnife;
 import com.cr.stats.StatMod;
@@ -43,7 +45,7 @@ public class KnifePattern extends Pattern{
 
 	@Override
 	public Sprite getSprite() {
-		return new Sprite("knifepattern");
+		return new Sprite("knifepattern", Game.shader, new Transform());
 	}
 	
 }

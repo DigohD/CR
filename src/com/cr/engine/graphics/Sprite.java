@@ -25,11 +25,6 @@ public class Sprite {
 	
 	private boolean tAtlas = false;
 	
-	public Sprite(Texture texture){
-		this.texture = texture;
-		
-	}
-	
 	public Sprite(String name){
 		shader = new Shader("vertexshader", "fragmentshader");
 		
@@ -74,6 +69,7 @@ public class Sprite {
 		
 		mesh = new Mesh(vertices, indices);
 	}
+
 	
 	/**
 	 * Creates a sprite from a sprite atlas. A sprite atlas simply is a collection of sprites tucked together in one texture.

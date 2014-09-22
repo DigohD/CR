@@ -1,5 +1,6 @@
 package com.cr.states;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
@@ -7,13 +8,14 @@ import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.input.KeyInput;
 import com.cr.util.Camera;
 
 public class InventoryState extends GameState{
 
-	private Sprite bg = new Sprite("inventorybg");
+	private Sprite bg = new Sprite("inventorybg", Game.shader, new Transform());
 	private Inventory inventory;
 	private ExitButton exit;
 	
@@ -46,7 +48,7 @@ public class InventoryState extends GameState{
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
-				ps.bg = false;
+		
 			}
 			exit.removeFromInput();
 			inventory.inactivateSlots();

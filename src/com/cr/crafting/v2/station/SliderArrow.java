@@ -3,12 +3,14 @@ package com.cr.crafting.v2.station;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.Focusable;
+import com.cr.game.Game;
 
 public class SliderArrow extends Button implements Renderable, Focusable{
 
@@ -22,7 +24,7 @@ public class SliderArrow extends Button implements Renderable, Focusable{
 		super(new Rectangle(xPos, yPos, 37, 34));
 		minX = xPos;
 		maxX = minX + 400;
-		sprite = new Sprite("sliderarrow");
+		sprite = new Sprite("sliderarrow", Game.shader, new Transform());
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}

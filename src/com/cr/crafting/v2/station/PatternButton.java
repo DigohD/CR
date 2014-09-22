@@ -2,10 +2,12 @@ package com.cr.crafting.v2.station;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
+import com.cr.game.Game;
 import com.cr.input.Mouse;
 
 public class PatternButton extends Button implements Renderable{
@@ -16,7 +18,7 @@ public class PatternButton extends Button implements Renderable{
 	
 	public PatternButton(int xPos, int yPos) {
 		super(new Rectangle(xPos, yPos, 150, 50));
-		sprite = new Sprite("patternbutton");
+		sprite = new Sprite("patternbutton", Game.shader, new Transform());
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
