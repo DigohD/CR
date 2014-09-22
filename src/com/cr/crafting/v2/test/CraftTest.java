@@ -6,6 +6,7 @@ import com.cr.crafting.v2.material.Copper;
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.material.Material.State;
 import com.cr.crafting.v2.pattern.*;
+import com.cr.crafting.v2.pattern.weapon.KnifePattern;
 import com.cr.crafting.v2.station.Forge;
 import com.cr.item.Item;
 import com.cr.item.weapon.CopperKnife;

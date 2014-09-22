@@ -39,7 +39,8 @@ public class StatMod {
 	public boolean isAddMod() {
 		return isAddMod;
 	}
-	
-	
-	
+
+	public void setSourceID(String sourceID) {
+		this.sourceID = sourceID;
+	}
 }

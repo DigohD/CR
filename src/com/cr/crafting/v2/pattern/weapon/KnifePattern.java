@@ -1,8 +1,9 @@
-package com.cr.crafting.v2.pattern;
+package com.cr.crafting.v2.pattern.weapon;
 
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
+import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.hero.Hero;
@@ -26,7 +27,7 @@ public class KnifePattern extends Pattern{
 	public Item generateItem(){
 		CopperKnife ck = new CopperKnife();
 		for(StatMod x : stats){
-			System.out.println("Stat applying: " + x.getAffectedStat() + " : " + x.getAmount());
+			x.setSourceID("weapon");
 			if(x.getAffectedStat() == StatID.DAMAGE_BASE)
 				ck.getDamageBase().setNewBase(x.getAmount() * damageMod);
 			else if(x.getAffectedStat() == StatID.DAMAGE_DICE)
@@ -36,10 +37,7 @@ public class KnifePattern extends Pattern{
 			else
 				ck.addStat(x);
 		}
-		
-		System.out.println(ck.getDamageBase().getTotal() + " - " + ck.getDamageDice().getTotal());
-		System.out.println(ck.getCooldown().getTotal());
-		
+
 		return ck;
 	}
 

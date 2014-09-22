@@ -9,8 +9,12 @@ import com.cr.engine.core.Vector2f;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.enemy.EnemySheet;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.stats.Stat;
+import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
@@ -22,6 +26,8 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	protected Vector2f velocity;
 	protected Vector2f distance;
 	protected Sprite sprite;
+	
+	protected StatsSheet sheet;
 	
 	protected Transform transform;
 	
@@ -103,17 +109,15 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 		this.moving = moving;
 	}
 
-//	public void takeDamage(DamagePacket packet){
-//		ArrayList<Damage> dmgs = packet.getDmgs();
-//		
-//		playHurtSound();
-//		
-//		for(Damage x : dmgs){
-//			currentHP = currentHP - x.calculateDamage();
-//			if(currentHP < 0)
-//				death();
-//		}
-//	}
+	public void takeDamage(float damage){
+		playHurtSound();
+		
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		hpNow.setNewBase(hpNow.getTotal() - damage);
+		
+		if(hpNow.getTotal() < 0)
+			death();
+	}
 	
 //	public float getCurrentHP() {
 //		return currentHP;
@@ -131,5 +135,5 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public abstract void death();
 	public abstract void push(Vector2f distance);
 	public abstract void playHurtSound();
-
+	
 }

@@ -15,7 +15,6 @@ import com.cr.world.World;
 public abstract class Enemy extends Mob implements Collideable{
 	
 	protected Rectangle rect;
-	protected EnemySheet sheet;
 	protected Behaviour behaviour;
 	
 	public Enemy(Vector2f position, World world) {
@@ -40,7 +39,7 @@ public abstract class Enemy extends Mob implements Collideable{
 		position = new Vector2f(position.x + distance.x, position.y + distance.y);
 	}
 	
-	public EnemySheet getSheet() {
+	public StatsSheet getSheet() {
 		return sheet;
 	}
 	

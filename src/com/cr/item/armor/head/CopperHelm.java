@@ -10,18 +10,18 @@ public class CopperHelm extends Head{
 	}
 
 	@Override
-	public void tick(float dt) {
-		System.out.println("TICK COPPERHELM");
-		tickPassives(dt);
-	}
-
-	@Override
 	public void activate() {
 		
 	}
 
 	@Override
 	public void render(Screen screen) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void tick(float dt) {
 		// TODO Auto-generated method stub
 		
 	}

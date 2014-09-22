@@ -126,11 +126,7 @@ public class OneHandAttack extends Projectile implements Renderable{
 			ImpactEmitter ie = new ImpactEmitter(new Vector2f(weapon.getPos().x + width / 2, weapon.getPos().y + height / 2), 3, "blood", 12, velocity, 5);
 			new KnockBack(20, 1, e, null, getVelocity().div(2));
 			
-			Stat hpNow = e.getSheet().getStat(StatID.HP_NOW);
-			float damage = weapon.getDamage();
-			hpNow.setNewBase(hpNow.getTotal() - damage);
-			
-			System.out.println("weapon admage: " + damage + " - Enemy hp: " + hpNow.getTotal());
+			e.takeDamage(weapon.getDamage());
 			
 			weapon.playHitSound();
 			

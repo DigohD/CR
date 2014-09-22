@@ -1,5 +1,6 @@
 package com.cr.entity.hero.inventory;
 
+import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
 import com.cr.item.weapon.Weapon;
@@ -25,4 +26,6 @@ public class InventorySlot extends ItemSlot{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 }

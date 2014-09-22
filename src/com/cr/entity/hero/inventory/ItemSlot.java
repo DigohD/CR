@@ -12,11 +12,13 @@ import com.cr.game.Game;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
 
-public abstract class ItemSlot extends Button implements Renderable, Tickable{
+public abstract class ItemSlot extends Button implements Renderable, Tickable, Hooverable{
 
 	protected Sprite slotSprite;
 	protected Sprite itemSprite;
 	protected int xPos, yPos;
+	
+	protected boolean isHoover;
 	
 	protected Item item;
 	
@@ -34,6 +36,8 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable{
 			screen.renderStaticSprite(item.getIconSprite(), xPos, yPos);
 		if(item != null && rect.contains(Mouse.getX(), Mouse.getY()))
 			item.renderDescription(screen);
+		if(isHoover && item != null)
+			renderHoover(screen);
 	}
 
 	public Item getItem() {
@@ -59,5 +63,18 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable{
 	
 	public abstract boolean isCompatible(Item item);
 
-	
+	@Override
+	public void renderHoover(Screen screen) {
+		item.renderDescription(screen);
+	}
+
+	@Override
+	public void setHoover(boolean bool) {
+		isHoover = bool;
+	}
+
+	@Override
+	public boolean isHoover() {
+		return isHoover;
+	}
 }

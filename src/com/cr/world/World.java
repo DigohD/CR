@@ -52,8 +52,8 @@ public class World {
 //		new MeleeTest(new Vector2f(400, 400), this);
 		new MeleeTest(new Vector2f(400, 400), this);
 		
-		CraftTest test = new CraftTest();
-		test.craftTest();
+//		CraftTest test = new CraftTest();
+//		test.craftTest();
 	}
 	
 	public boolean tileExists(int xp, int yp){

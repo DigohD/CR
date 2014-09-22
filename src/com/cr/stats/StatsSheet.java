@@ -7,7 +7,7 @@ public abstract class StatsSheet {
 	protected HashMap<StatID, Stat> sheet = new HashMap<StatID, Stat>();
 	
 	public enum StatID {STRENGTH, AGILITY, INTELLIGENCE, TOUGHNESS,
-						HP_NOW, HP_MAX,
+						HP_NOW, HP_MAX, ARMOR,
 						
 	
 						/* Non-character Stats*/

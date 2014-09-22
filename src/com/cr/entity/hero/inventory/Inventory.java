@@ -10,7 +10,6 @@ import com.cr.item.Item;
 public class Inventory implements Tickable, Renderable{
 
 	private static InventorySlot[][] inventory = new InventorySlot[11][3];
-	private InventoryButton b1, b2, b3;
 	private Contour contour;
 	
 	private RightHandSlot rHSlot;
@@ -28,10 +27,6 @@ public class Inventory implements Tickable, Renderable{
 				inventory[i][j] = new InventorySlot(i, j, xOffset, yOffset);
 		
 		inactivateSlots();
-		
-//		b1 = new InventoryButton(600 + xOffset, 430 + yOffset);
-//		b2 = new InventoryButton(600 + xOffset, 482 + yOffset);
-//		b3 = new InventoryButton(600 + xOffset, 534 + yOffset);
 		
 		contour = new Contour(xOffset, yOffset);
 		

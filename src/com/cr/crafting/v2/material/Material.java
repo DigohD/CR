@@ -192,8 +192,11 @@ public abstract class Material{
 		if(isWeapon){
 			getWeaponStats(stats);
 			return stats;
+		}else{
+			getArmorStats(stats);
+			return stats;
 		}
-		return stats;
+		
 	}
 	
 	public abstract int getID();

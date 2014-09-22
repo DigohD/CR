@@ -2,6 +2,8 @@ package com.cr.item;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
@@ -10,9 +12,12 @@ import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.Game;
+import com.cr.item.weapon.Weapon;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatModList;
+import com.cr.util.CRString;
 import com.cr.util.Camera;
+import com.cr.util.FontLoader;
 import com.cr.world.World;
 
 public abstract class Item implements Renderable, Tickable{
@@ -83,18 +88,50 @@ public abstract class Item implements Renderable, Tickable{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
+		Font f = FontLoader.aquireFont(FontColor.WHITE);
+		
+		f.setFont(CRString.create(name));
+		f.renderFont(xOffset + 12, yOffset - 20, 0.3f);
+		
+		int counter = 0;
+		if(this instanceof Weapon){
+			Weapon w = (Weapon) this;
+			
+			String amount = w.getDamageBase().getTotal() + "";
+			String amount2 = w.getDamageDice().getTotal() + w.getDamageBase().getTotal() + "";
+			String s = CRString.create("Damage " + amount.substring(0, 1) + " to " + amount2.substring(0, 1));
+			f.setFont(s);
+			f.renderFont(xOffset + 12, yOffset + 24, 0.3f);
+			
+			amount = w.getCooldown().getTotal()/60 + "";
+			s = CRString.create("Cooldown " + amount.substring(0, 3));
+			s = s.replace(".", "p");
+			f.setFont(s);
+			f.renderFont(xOffset + 12, yOffset + 44, 0.3f);
+			counter = 2;
+		}
+		
+		for(StatMod x : stats.getStatMods()){
+			String amount = x.getAmount() + "";
+			String s = CRString.create(x.getAffectedStat().toString() + " " + amount.substring(0, 1));
+			s = s.replace("_", " ");
+			f.setFont(s);
+			f.renderFont(xOffset + 12, yOffset + 24 + (counter * 20), 0.3f);
+			counter++;
+		}
+		
 //		Font font = new Font("Tahoma", 18, 18);
 //		g.setFont(font);
 //		g.setColor(Color.WHITE);
 //		g.drawString(name, xOffset + 20, yOffset + 40);
 		
 //		stats.render(screen, xOffset + 20, yOffset + 80);
+		
+		FontLoader.releaseFont(f);
 	}
 	
 	protected void tickPassives(float dt){
-//		for(Stat s : stats.getStats())
-//			if(s instanceof PassiveTicking)
-//				((PassiveTicking) s).tick(dt);
+		
 	}
 	
 	public StatModList getStatMods(){
