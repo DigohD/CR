@@ -19,7 +19,7 @@ public class ProcessState extends GameState{
 
 	Transform t = new Transform();
 	private Sprite bg = new Sprite("patternbg", Game.shader, t);
-	private Sprite slider = new Sprite("slider");
+	private Sprite slider = new Sprite("slider", Game.shader, t);
 	
 	private ProcessButton process;
 	private SliderArrow heatArrow, timeArrow;

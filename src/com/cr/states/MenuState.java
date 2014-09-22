@@ -29,7 +29,7 @@ public class MenuState extends GameState{
 
 	@Override
 	public void render(Screen screen) {
-		screen.renderFont(font, Window.getWidth()/2 - 300, Window.getHeight()/2 - 100, 0.3f);
+		screen.renderFont(font, Window.getWidth()/2 - 300, Window.getHeight()/2 - 100, 0.5f);
 	}
 
 	

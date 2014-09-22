@@ -70,6 +70,63 @@ public class TileLayer {
 		generateTileLayer(width/2, height/2, width, height);
 	}
 	
+	public void generateTileLayer2(){
+		List<Vertex> vertices = new ArrayList<Vertex>();
+		List<Integer> indices = new ArrayList<Integer>();
+		List<Vector2f> texCoords = new ArrayList<Vector2f>();
+		
+		float tWidth = Tile.getTileWidth();
+		float tHeight = Tile.getTileHeight();
+		
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				if(bitmap.getPixel(x, y) == 0) continue;
+				
+				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
+			
+				float xPos = x * tWidth;
+				float yPos = y * tHeight;
+				
+				float xOffset = 7f;
+				float yOffset = 5f;
+	
+				indices.add(vertices.size() + 0);
+				indices.add(vertices.size() + 1);
+				indices.add(vertices.size() + 2);
+				
+				indices.add(vertices.size() + 2);
+				indices.add(vertices.size() + 3);
+				indices.add(vertices.size() + 0);
+				
+				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0)));
+				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0)));
+				
+				texCoords.add(new Vector2f(xLow, yLow));
+				texCoords.add(new Vector2f(xLow, yHigh));
+				texCoords.add(new Vector2f(xHigh, yHigh));
+				texCoords.add(new Vector2f(xHigh, yLow));
+			}
+		}
+		
+		Vertex[] vertexArray = new Vertex[vertices.size()];
+		Integer[] indexArray = new Integer[indices.size()];
+		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
+		
+		vertices.toArray(vertexArray);
+		indices.toArray(indexArray);
+		texCoords.toArray(texCoordArray);
+		
+		int[] iArray = new int[indexArray.length];
+		
+		for(int i = 0; i < indexArray.length; i++)
+			iArray[i] = indexArray[i];
+		
+		mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
+		transform.scale(scaleFactor, scaleFactor, 1);
+	}
+	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
 
 		List<Vertex> vertices = new ArrayList<Vertex>();
@@ -135,8 +192,11 @@ public class TileLayer {
 			shader.setUniform("transformation", transform.getOrthoTransformation());
 		}
 		Tile.getTexture().bind();
+		
 		for(Mesh m : meshes)
 			m.render();
+		
+		//mesh.render();
 		Tile.getTexture().unbind();
 		if(!water)
 			shader.unbind();
