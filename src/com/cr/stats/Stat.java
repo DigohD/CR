@@ -58,6 +58,8 @@ public class Stat{
 		calculateTotal();
 		return total;
 	}
-	
-	
+
+	public float getBase() {
+		return base;
+	}
 }

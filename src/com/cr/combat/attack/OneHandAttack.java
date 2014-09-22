@@ -16,6 +16,8 @@ import com.cr.entity.hero.Hero.Direction;
 import com.cr.game.EntityManager;
 import com.cr.item.activation.ItemObject;
 import com.cr.item.weapon.Weapon;
+import com.cr.stats.Stat;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 
@@ -121,21 +123,14 @@ public class OneHandAttack extends Projectile implements Renderable{
 		if(obj instanceof Enemy && !spent){
 			Enemy e = (Enemy) obj;
 			
-			DamagePacket packet = new DamagePacket();
-			
-//			for(Stat s : weapon.getStats().getStats()){
-//				if(s instanceof AddsDamageDone){
-//					AddsDamageDone ad = (AddsDamageDone) s;
-//					ad.affectDamage(packet);
-//				}
-//				if(s instanceof AffectBearerOnHit){
-//					AffectBearerOnHit ab = (AffectBearerOnHit) s;
-//					ab.affectMob(EntityManager.getHero());
-//				}
-//			}
-			
 			ImpactEmitter ie = new ImpactEmitter(new Vector2f(weapon.getPos().x + width / 2, weapon.getPos().y + height / 2), 3, "blood", 12, velocity, 5);
 			new KnockBack(20, 1, e, null, getVelocity().div(2));
+			
+			Stat hpNow = e.getSheet().getStat(StatID.HP_NOW);
+			float damage = weapon.getDamage();
+			hpNow.setNewBase(hpNow.getTotal() - damage);
+			
+			System.out.println("weapon admage: " + damage + " - Enemy hp: " + hpNow.getTotal());
 			
 			weapon.playHitSound();
 			

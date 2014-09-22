@@ -15,11 +15,12 @@ import com.cr.world.World;
 public abstract class Enemy extends Mob implements Collideable{
 	
 	protected Rectangle rect;
-	protected StatsSheet sheet;
+	protected EnemySheet sheet;
 	protected Behaviour behaviour;
 	
 	public Enemy(Vector2f position, World world) {
 		super(position, world);
+		sheet = new EnemySheet();
 	}
 	
 	@Override
@@ -39,7 +40,7 @@ public abstract class Enemy extends Mob implements Collideable{
 		position = new Vector2f(position.x + distance.x, position.y + distance.y);
 	}
 	
-	public StatsSheet getSheet() {
+	public EnemySheet getSheet() {
 		return sheet;
 	}
 	

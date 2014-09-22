@@ -41,7 +41,7 @@ public class Hero extends Mob implements Collideable{
 	private static Inventory inventory;
 	private static MaterialsBox materialsBox;
 	
-	private static StatsSheet sheet = new StatsSheet();
+	private static StatsSheet sheet;
 	
 	public enum Direction{
 		NORTH, SOUTH, EAST, WEST;

@@ -47,8 +47,8 @@ public class World {
 //		new LootEmitter(new Vector2f(200,200), 5000);
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
-		new MeleeTest(new Vector2f(400, 400), this);
-		new MeleeTest(new Vector2f(400, 400), this);
+//		new MeleeTest(new Vector2f(400, 400), this);
+//		new MeleeTest(new Vector2f(400, 400), this);
 		new MeleeTest(new Vector2f(400, 400), this);
 		
 		CraftTest test = new CraftTest();

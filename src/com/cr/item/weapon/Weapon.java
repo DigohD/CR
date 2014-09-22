@@ -9,6 +9,7 @@ import com.cr.item.Item;
 import com.cr.item.activation.ItemObject;
 import com.cr.stats.Stat;
 import com.cr.util.Camera;
+import com.cr.util.Randomizer;
 
 public abstract class Weapon extends Item{
 	
@@ -62,6 +63,11 @@ public abstract class Weapon extends Item{
 	
 	public abstract void playHitSound();
 
+	public float getDamage(){
+		float total = damageBase.getTotal() + Randomizer.getFloat(0, damageDice.getTotal());
+		return total;
+	}
+	
 	public Stat getDamageBase() {
 		return damageBase;
 	}
