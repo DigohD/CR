@@ -5,6 +5,7 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.core.Vertex;
 import com.cr.engine.graphics.shader.Shader;
+import com.cr.world.World;
 
 public class Sprite {
 	
@@ -26,11 +27,7 @@ public class Sprite {
 	private boolean tAtlas = false;
 	
 	public Sprite(String name){
-		shader = new Shader("vertexshader", "fragmentshader");
-		
-		shader.addUniform("transformation");
-		shader.addUniform("sampler");
-		shader.setUniformi("sampler", 0);
+		shader = World.getShader();
 		
 		transform = new Transform();
 		
