@@ -73,7 +73,7 @@ public class Shader {
 		glCompileShader(fragmentShader);
 		
 		if(glGetShaderi(fragmentShader, GL_COMPILE_STATUS) == GL_FALSE)
-			System.err.println("Couldn't compile fragmentShader correctly");
+			System.err.println("Couldn't compile fragmentShader: "  + fileName + " correctly");
 		
 		glAttachShader(shaderProgram, fragmentShader);
 		glDeleteShader(fragmentShader);

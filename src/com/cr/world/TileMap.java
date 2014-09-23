@@ -5,15 +5,15 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 import com.cr.engine.core.Transform;
-import com.cr.engine.graphics.ColorRGBA;
+import com.cr.engine.core.Vector2f;
+import com.cr.engine.core.Vector3f;
+import com.cr.engine.core.Vertex;
+import com.cr.engine.graphics.Mesh;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Texture;
-import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.game.Game;
 import com.cr.world.biome.Grasslands;
-import com.cr.world.tile.Tile;
-import com.cr.world.tile.WaterTile;
 
 public class TileMap {
 	
@@ -37,7 +37,8 @@ public class TileMap {
 	private float targetTimeMin = 0.2f;
 	
 	private boolean day = true, night = false;
-	
+	Texture mask = new Texture("ripple");
+	Mesh m;
 	public TileMap(int width, int height){
 		this.width = width;
 		this.height = height;
@@ -51,6 +52,17 @@ public class TileMap {
 		waterShader.addUniform("sampler2");
 		waterShader.setUniformi("sampler", 0);
 		waterShader.setUniformi("sampler2", 1);
+		
+		
+		Vertex[] vertices = {new Vertex(new Vector3f(0, 0, 0), new Vector2f(0,0)), 
+				 new Vertex(new Vector3f(0, 0 + mask.getHeight(), 0), new Vector2f(0,1)),
+				 new Vertex(new Vector3f(0 + mask.getWidth() , 0 + mask.getHeight(), 0), new Vector2f(1,1)),
+				 new Vertex(new Vector3f(0 + mask.getWidth(), 0, 0), new Vector2f(1,0))};
+
+		int[] indices = {0,1,2, 
+			 2,3,0};
+		
+		m = new Mesh(vertices, indices);
 		
 		transform = new Transform();
 		
@@ -92,8 +104,15 @@ public class TileMap {
 		angleWave += Game.dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
+		
+		
 
 		waterShader.bind();
+		glActiveTexture(GL_TEXTURE1);
+		mask.bind();
+		m.render();
+		mask.unbind();
+		glActiveTexture(GL_TEXTURE0);
 		waterShader.setUniformf("time", time);
 		waterShader.setUniformf("waveDataX", angleWave);
 		waterShader.setUniformf("waveDataY", amplitudeWave);
