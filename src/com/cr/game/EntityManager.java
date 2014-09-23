@@ -12,6 +12,7 @@ import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
 import com.cr.world.World;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 public class EntityManager {
 	
@@ -143,25 +144,28 @@ public class EntityManager {
 	}
 
 	private void depthSort(){
-		int n = renderableEntities.size();
-		boolean swapped = false;
-		System.out.println("size: " + n + " Init");
-		int swapCount = 0;
-		do{
-			swapped = false;
-			for(int i = 1; i < n-1; i++){
-				Entity current = (Entity) renderableEntities.get(i);
-				Entity next = (Entity) renderableEntities.get(i-1);
-				if(current.getPosition().y + renderableEntities.get(i).getSprite().getSpriteHeight() < 
-						next.getPosition().y + renderableEntities.get(i-1).getSprite().getSpriteHeight()){
-					renderableEntities.set(i, (Renderable) next);
-					renderableEntities.set(i-1, (Renderable) current);
-					
-					swapped = true;
-					System.out.println("swaps: " + swapCount++);
-				}
-			}
-		}while(swapped);
+		
+		java.util.Collections.sort(renderableEntities, new DepthComp());
+		
+//		int n = renderableEntities.size();
+//		boolean swapped = false;
+//		System.out.println("size: " + n + " Init");
+//		int swapCount = 0;
+//		do{
+//			swapped = false;
+//			for(int i = 1; i < n-1; i++){
+//				Entity current = (Entity) renderableEntities.get(i);
+//				Entity next = (Entity) renderableEntities.get(i-1);
+//				if(current.getPosition().y + renderableEntities.get(i).getSprite().getSpriteHeight() < 
+//						next.getPosition().y + renderableEntities.get(i-1).getSprite().getSpriteHeight()){
+//					renderableEntities.set(i, (Renderable) next);
+//					renderableEntities.set(i-1, (Renderable) current);
+//					
+//					swapped = true;
+//					System.out.println("swaps: " + swapCount++);
+//				}
+//			}
+//		}while(swapped);
 	}
 	
 }
