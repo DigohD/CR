@@ -14,7 +14,13 @@ uniform mat4 transformation;
 
 void main() 
 {
-	outColor = vec3(1,1,1)  * time;
+
+	if(time > 1) {
+		outColor = vec3(1,1,1.7f) * time * 0.7f;
+	}else{
+		outColor = vec3(1,1,1.7f) *  (0.7f  /  time) * time;
+	}
+
 	texCoord = texCoordIn;
 	
 	vec4 a_position = vec4(position, 1);
