@@ -2,12 +2,16 @@ package com.cr.world;
 
 import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
+import com.cr.util.Randomizer;
+import com.cr.world.terrain.Tree;
+import com.cr.world.tile.GrassTile;
 import com.cr.world.tile.Tile;
 
 public class World {
@@ -51,6 +55,21 @@ public class World {
 //		new MeleeTest(new Vector2f(400, 400), this);
 //		new MeleeTest(new Vector2f(400, 400), this);
 		new MeleeTest(new Vector2f(400, 400), this);
+		
+		for(int i = 0; i < 400; i++){
+			Tree t;
+			boolean generated = false;
+			while(!generated){
+				t = new Tree(-1000, -1000);
+				int x = Randomizer.getInt(0, 5800) + 40;
+				int y = Randomizer.getInt(0, 3800) + t.getSprite().getSpriteHeight();
+				System.out.println(x + " : " + y);
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					t.setPosition(new Vector2f(x, y));
+					generated = true;
+				}
+			}
+		}
 		
 //		CraftTest test = new CraftTest();
 //		test.craftTest();

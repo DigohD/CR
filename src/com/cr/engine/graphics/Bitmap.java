@@ -73,7 +73,11 @@ public class Bitmap {
 	 * @return the pixel located at (x,y)
 	 */
 	public int getPixel(int x, int y){
-		return pixels[x + (y*width)];
+		try{
+			return pixels[x + (y*width)];
+		}catch(ArrayIndexOutOfBoundsException e){
+			return -1;
+		}
 	}
 	
 	/**

@@ -109,7 +109,9 @@ public class EntityManager {
 			tickableEntities.add(t);
 		for(Renderable d : deToAdd)
 			renderableEntities.add(d);
-				
+		if(deToAdd.size() > 0)
+			depthSort();		
+		
 		teToAdd.clear();
 		deToAdd.clear();
 		
@@ -124,14 +126,42 @@ public class EntityManager {
 	}
 	
 	public void render(Screen screen){
-		for(Renderable r : renderableEntities)
+		boolean heroRendered = false;
+		for(Renderable r : renderableEntities){
 			r.render(screen);
-		if(hero.isLive())
-			hero.render(screen);
+			if(!heroRendered && ((Entity) r).getPosition().y + r.getSprite().getSpriteHeight() > hero.getRect().y + hero.getRect().height)
+				if(hero.isLive()){
+					hero.render(screen);
+					heroRendered = true;
+				}
+		}
+		
 	}
 
 	public static Hero getHero() {
 		return hero;
 	}
 
+	private void depthSort(){
+		int n = renderableEntities.size();
+		boolean swapped = false;
+		System.out.println("size: " + n + " Init");
+		int swapCount = 0;
+		do{
+			swapped = false;
+			for(int i = 1; i < n-1; i++){
+				Entity current = (Entity) renderableEntities.get(i);
+				Entity next = (Entity) renderableEntities.get(i-1);
+				if(current.getPosition().y + renderableEntities.get(i).getSprite().getSpriteHeight() < 
+						next.getPosition().y + renderableEntities.get(i-1).getSprite().getSpriteHeight()){
+					renderableEntities.set(i, (Renderable) next);
+					renderableEntities.set(i-1, (Renderable) current);
+					
+					swapped = true;
+					System.out.println("swaps: " + swapCount++);
+				}
+			}
+		}while(swapped);
+	}
+	
 }
