@@ -8,6 +8,8 @@ uniform sampler2D sampler2;
 
 void main() 
 {
+	vec2 a2DVectorTemp = vec2(-0.3f, 0);
+	vec2 a2DVector = texCoord + a2DVectorTemp;
 	
-	gl_FragColor =( texture2D(sampler, texCoord.xy) + texture2D(sampler2, texCoord.xy) ) * vec4(outColor, 1);
+	gl_FragColor =( texture2D(sampler, texCoord.xy) + texture2D(sampler2, a2DVector.xy) ) * vec4(outColor, 1);
 }
