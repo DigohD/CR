@@ -82,6 +82,7 @@ public class Shader {
 	private void createShaderProgram(){
 		glBindAttribLocation(shaderProgram, 0, "position");
 		glBindAttribLocation(shaderProgram, 1, "texCoordIn");
+		glBindAttribLocation(shaderProgram, 2, "normal");
 
 		glLinkProgram(shaderProgram);
 		glValidateProgram(shaderProgram);

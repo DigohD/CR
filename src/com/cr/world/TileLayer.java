@@ -132,6 +132,7 @@ public class TileLayer {
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
 		List<Vector2f> texCoords = new ArrayList<Vector2f>();
+		List<Vector3f> normals = new ArrayList<Vector3f>();
 		
 		float tWidth = Tile.getTileWidth();
 		float tHeight = Tile.getTileHeight();
@@ -156,10 +157,21 @@ public class TileLayer {
 				indices.add(vertices.size() + 3);
 				indices.add(vertices.size() + 0);
 				
-				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0)));
+				Vertex v1 = new Vertex(new Vector3f(xPos, yPos, 0));
+				Vertex v2 = new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0));
+				Vertex v3 = new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0));
+				Vertex v4 = new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0));
+				
+				Vector3f u = v1.getPos().sub(v2.getPos());
+				Vector3f v = v1.getPos().sub(v4.getPos());
+				
+				Vector3f normal = u.cross(v).normalize();
+				normals.add(normal);
+				
+				vertices.add(v1);
+				vertices.add(v2);
+				vertices.add(v3);
+				vertices.add(v4);
 				
 				texCoords.add(new Vector2f(xLow, yLow));
 				texCoords.add(new Vector2f(xLow, yHigh));
@@ -171,17 +183,19 @@ public class TileLayer {
 		Vertex[] vertexArray = new Vertex[vertices.size()];
 		Integer[] indexArray = new Integer[indices.size()];
 		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
+		Vector3f[] normalArray = new Vector3f[normals.size()];
 		
 		vertices.toArray(vertexArray);
 		indices.toArray(indexArray);
 		texCoords.toArray(texCoordArray);
+		normals.toArray(normalArray);
 		
 		int[] iArray = new int[indexArray.length];
 		
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
 		
-		meshes.add(new Mesh(vertexArray, texCoordArray, iArray, false));
+		meshes.add(new Mesh(vertexArray, normalArray, texCoordArray, iArray, false));
 		transform.scale(scaleFactor, scaleFactor, 1);
 	}
 	
