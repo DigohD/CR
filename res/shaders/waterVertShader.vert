@@ -17,7 +17,7 @@ void main()
 	if(time > 1) {
 		outColor = vec3(1f,1f,1.7f) * time * 0.7f;
 	}else{
-		outColor = vec3(1f,1f,1.7f) * 0.7f / time;
+		outColor = vec3(1f,1f,1.5f) * 0.7f / time;
 	}
 
 	texCoord = texCoordIn;
