@@ -15,10 +15,10 @@ uniform mat4 transformation;
 void main() 
 {
 	if(time > 1) {
-		outColor = vec3(1f,1f,1.7f) * time * 0.7f;
-	}else{
-		outColor = vec3(1f,1f,1.5f) * 0.7f / time;
-	}
+  		outColor = vec3(1,1,1.7f) * time * 0.7f;
+ 	}else{
+ 	 	outColor = vec3(1,1,1.5f) * 0.7f / time;
+ 	}
 
 	texCoord = texCoordIn;
 	
@@ -26,4 +26,6 @@ void main()
 	vec4 newPos = vec4(a_position.x + waveDataY * sin(waveDataX+a_position.x+a_position.y), a_position.y + waveDataY * cos(waveDataX+a_position.x+a_position.y), a_position.z, a_position.w);
 	
 	gl_Position = transformation * newPos;
+	
+	
 }

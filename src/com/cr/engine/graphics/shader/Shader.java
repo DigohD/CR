@@ -58,6 +58,8 @@ public class Shader {
 		glShaderSource(vertexShader, vertexShaderSource);
 		glCompileShader(vertexShader);
 		
+		System.out.println(":: " + fileName);
+		
 		if(glGetShaderi(vertexShader, GL_COMPILE_STATUS) == GL_FALSE)
 			System.err.println("Couldn't compile vertexshader correctly");
 		
