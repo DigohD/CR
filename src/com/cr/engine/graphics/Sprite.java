@@ -47,6 +47,26 @@ public class Sprite {
 		mesh = new Mesh(vertices, indices);
 	}
 	
+	public Sprite(String name, Shader shader){
+		this.shader = shader;
+		this.transform = new Transform();
+		
+		texture = new Texture(name);
+		
+		width = texture.getWidth();
+		height = texture.getHeight();
+		
+		Vertex[] vertices = {new Vertex(new Vector3f(0, 0, 0), new Vector2f(0,0)), 
+							 new Vertex(new Vector3f(0, 0 + height, 0), new Vector2f(0,1)),
+							 new Vertex(new Vector3f(0 + width , 0 + height, 0), new Vector2f(1,1)),
+							 new Vertex(new Vector3f(0 + width, 0, 0), new Vector2f(1,0))};
+		
+		int[] indices = {0,1,2, 
+						 2,3,0};
+		
+		mesh = new Mesh(vertices, indices);
+	}
+	
 	public Sprite(String name, Shader shader, Transform transform){
 		this.shader = shader;
 		this.transform = transform;

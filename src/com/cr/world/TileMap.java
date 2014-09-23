@@ -1,8 +1,13 @@
 package com.cr.world;
 
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.game.Game;
@@ -19,7 +24,7 @@ public class TileMap {
 	
 	private static Transform transform;
 	
-	private Shader waterShader;
+	private static Shader waterShader;
 	
 	private float amplitudeWave = 2f;
 	private float angleWave = 2.86f;
@@ -83,7 +88,7 @@ public class TileMap {
 		}
 	}
 	
-	public void renderMap(){
+	public void renderMap(Screen screen){
 		angleWave += Game.dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
@@ -122,6 +127,11 @@ public class TileMap {
 	
 	public static Transform getTransform() {
 		return transform;
+	}
+	
+
+	public static Shader getWaterShader(){
+		return waterShader;
 	}
 
 

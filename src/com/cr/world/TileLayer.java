@@ -196,7 +196,7 @@ public class TileLayer {
 		for(Mesh m : meshes)
 			m.render();
 		
-		//mesh.render();
+//		mesh.render();
 		Tile.getTexture().unbind();
 		if(!water)
 			shader.unbind();
