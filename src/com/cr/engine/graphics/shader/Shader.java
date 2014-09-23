@@ -59,7 +59,7 @@ public class Shader {
 		glCompileShader(vertexShader);
 		
 		if(glGetShaderi(vertexShader, GL_COMPILE_STATUS) == GL_FALSE)
-			System.err.println("Couldn't compile vertexshader correctly");
+			System.err.println("Couldn't compile vertexshader: " + fileName +  " correctly");
 		
 		glAttachShader(shaderProgram, vertexShader);
 		glDeleteShader(vertexShader);
