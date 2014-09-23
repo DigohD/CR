@@ -114,7 +114,7 @@ public class World {
 		shader.bind();
 		shader.setUniformf("time", time);
 		shader.unbind();
-		map.renderMap();
+		map.renderMap(screen);
 		em.render(screen);
 	}
 

@@ -22,6 +22,7 @@ public class ImageLoader {
 		imageLib.put("stone", loadImage("/tiles/stone.png"));
 		imageLib.put("water", loadImage("/tiles/water.png"));
 		imageLib.put("water2", loadImage("/tiles/water2.png"));
+		imageLib.put("ripple", loadImage("/tiles/ripple.png"));
 		
 		//TileLayers
 		imageLib.put("waterlayer", loadBitmap("/tilelayers/waterlayer.png"));
