@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.PixelFormat;
 
 public class Window {
 	
@@ -16,7 +17,7 @@ public class Window {
 			try {
 				Display.setFullscreen(true);
 				Display.setVSyncEnabled(true);
-				Display.create();
+				Display.create(new PixelFormat(8, 8, 0, 8));
 				Keyboard.create();
 				Mouse.create();
 			} catch (LWJGLException e) {

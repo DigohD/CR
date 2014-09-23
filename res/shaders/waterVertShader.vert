@@ -15,10 +15,10 @@ uniform mat4 transformation;
 void main() 
 {
 
-	if(time > 1) {
-		outColor = vec3(1,1,1.7f) * time * 0.7f;
+	if(time >= 1) {
+		outColor = vec3(1,1,3) *  (0.7f  /  time);
 	}else{
-		outColor = vec3(1,1,1.7f) *  (0.7f  /  time) * time;
+		outColor = vec3(1,1,3) *  (0.7f  /  time) * time;
 	}
 
 	texCoord = texCoordIn;
