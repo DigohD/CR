@@ -15,7 +15,7 @@ uniform vec3 material_specular_color;
 uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light = vec3(0.2, 0.2, 0.2);
-uniform vec3 scene_light = vec3(2, 2, 2);
+uniform vec3 scene_light = vec3(1.6, 1.6, 1.6);
 
 vec4 calculateAmbient(vec3 ambientLight, vec4 materialAmbient){
 	return (vec4(ambientLight,1.0) * materialAmbient);
