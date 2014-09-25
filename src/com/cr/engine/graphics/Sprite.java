@@ -27,44 +27,11 @@ public class Sprite {
 	private boolean tAtlas = false;
 	
 	public Sprite(String name){
-		shader = World.getShader();
-		
-		transform = new Transform();
-		
-		texture = new Texture(name);
-		
-		width = texture.getWidth();
-		height = texture.getHeight();
-		
-		Vertex[] vertices = {new Vertex(new Vector3f(0, 0, 0), new Vector2f(0,0)), 
-				 new Vertex(new Vector3f(0, 0 + height, 0), new Vector2f(0,1)),
-				 new Vertex(new Vector3f(0 + width , 0 + height, 0), new Vector2f(1,1)),
-				 new Vertex(new Vector3f(0 + width, 0, 0), new Vector2f(1,0))};
-
-		int[] indices = {0,1,2, 
-			 2,3,0};
-
-		mesh = new Mesh(vertices, indices);
+		this(name, World.getShader());
 	}
 	
 	public Sprite(String name, Shader shader){
-		this.shader = shader;
-		this.transform = new Transform();
-		
-		texture = new Texture(name);
-		
-		width = texture.getWidth();
-		height = texture.getHeight();
-		
-		Vertex[] vertices = {new Vertex(new Vector3f(0, 0, 0), new Vector2f(0,0)), 
-							 new Vertex(new Vector3f(0, 0 + height, 0), new Vector2f(0,1)),
-							 new Vertex(new Vector3f(0 + width , 0 + height, 0), new Vector2f(1,1)),
-							 new Vertex(new Vector3f(0 + width, 0, 0), new Vector2f(1,0))};
-		
-		int[] indices = {0,1,2, 
-						 2,3,0};
-		
-		mesh = new Mesh(vertices, indices);
+		this(name, shader, new Transform());
 	}
 	
 	public Sprite(String name, Shader shader, Transform transform){

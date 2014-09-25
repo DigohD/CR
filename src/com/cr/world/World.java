@@ -1,9 +1,12 @@
 package com.cr.world;
 
 import com.cr.crafting.v2.test.CraftTest;
+import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.Screen;
-import com.cr.engine.graphics.Window;
+import com.cr.engine.graphics.shader.BaseLight;
+import com.cr.engine.graphics.shader.DirectionalLight;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;
@@ -20,6 +23,7 @@ public class World {
 	private EntityManager em;
 
 	private static Shader shader;
+	private Transform transform;
 	
 	private float time = 0f;
 	private float dayNightCycleTime = 100.0f;
@@ -29,13 +33,38 @@ public class World {
 	private boolean day = true, night = false;
 	public static boolean start = true;
 	
+
+	float light_theta = 0.0f;
+	float light_phi = 3.14f/4.0f; 
+	float light_r = 20.0f; 
+	
+	public Vector3f sphericalToCartesian(float theta, float phi, float r){
+		float x = (float) (r * Math.sin(theta) * Math.sin(phi));
+		float y = (float) (r * Math.cos(phi));
+		float z = (float) (r * Math.cos(theta) * Math.sin(phi));
+		
+		return new Vector3f(x,y,z);
+	}
+	
+	private Vector3f lightPos;
+	private Vector3f viewSpaceLightPos;
+	
 	public World(){
+		transform = new Transform();
+		
+		
+		
 		shader = new Shader("vertexshader", "fragmentshader");
 		
 		shader.addUniform("transformation");
+		shader.addUniform("modelViewMatrix");
+		shader.addUniform("normalMatrix");
+	
+
 		shader.addUniform("time");
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
+		
 		
 		map = new TileMap(100, 100);
 
@@ -44,6 +73,14 @@ public class World {
 		
 		em = new EntityManager(this);
 		camera = new Camera();
+		
+		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
+		viewSpaceLightPos = transform.getViewMatrix().mul(lightPos);
+		
+		System.out.println(viewSpaceLightPos.toString());
+		
+		shader.addUniform("viewSpaceLightPos");
+		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
 		
 //		new LootEmitter(new Vector2f(200,200), 5000);
 		
@@ -112,6 +149,8 @@ public class World {
 
 	public void render(Screen screen) {
 		shader.bind();
+		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
+	
 		shader.setUniformf("time", time);
 		shader.unbind();
 		map.renderMap(screen);

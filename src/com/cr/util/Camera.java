@@ -14,7 +14,7 @@ public class Camera {
 	private float cameraFollowFactor = 40.0f; 
 	
 	public Camera(){
-		this(new Vector3f(0,0,0));
+		this(new Vector3f(0,0,-1));
 		targetPos = new Vector3f(0,0,0);
 		position.x = EntityManager.getHero().getX() - (Window.getWidth()/2 - EntityManager.getHero().getWidth());
 		position.y = EntityManager.getHero().getY() - (Window.getHeight()/2 - EntityManager.getHero().getHeight());
@@ -34,9 +34,9 @@ public class Camera {
 		
 		targetPos.x = EntityManager.getHero().getX() - (Window.getWidth()/2 - EntityManager.getHero().getWidth());
 		targetPos.y = EntityManager.getHero().getY() - (Window.getHeight()/2 - EntityManager.getHero().getHeight());
-		
+	
 		Vector3f diff = targetPos.sub(position).div(cameraFollowFactor);
-		
+		position.z = -1;
 		position = position.add(diff);
 	}
 	
