@@ -111,7 +111,7 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
-		glVertexAttribPointer(2, 2, GL_FLOAT, false, Vertex.SIZE * 4, 20);
+		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glBindVertexArray(0);

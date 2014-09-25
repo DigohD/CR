@@ -5,8 +5,6 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.Screen;
-import com.cr.engine.graphics.shader.BaseLight;
-import com.cr.engine.graphics.shader.DirectionalLight;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;

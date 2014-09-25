@@ -5,14 +5,14 @@ in vec3 viewSpaceNormal;
 in vec3 viewSpacePos;
 out vec4 fragColor;
 
-uniform float material_shininess = 25.0;
-uniform vec3 material_diffuse_color = vec3(0.6); 
-uniform vec3 material_specular_color = vec3(0.1); 
-uniform vec3 material_emissive_color = vec3(0.6); 
+uniform float material_shininess = 65.0;
+uniform vec3 material_diffuse_color = vec3(2.6); 
+uniform vec3 material_specular_color = vec3(3); 
+uniform vec3 material_emissive_color = vec3(1.6); 
 
 uniform sampler2D sampler;
 //uniform vec3 viewSpaceLightPos;
-uniform vec3 scene_ambient_light = vec3(0.01, 0.01, 0.01);
+uniform vec3 scene_ambient_light = vec3(0.1, 0.1, 0.1);
 uniform vec3 scene_light = vec3(1.6, 1.6, 1.6);
 
 vec4 calculateAmbient(vec3 ambientLight, vec4 materialAmbient){
@@ -30,8 +30,8 @@ vec4 calculateSpecular(vec3 specularLight, vec3 materialSpecular, float material
 }
 
 void main() {
-	vec3 viewSpaceLightPos = vec3(0, 0, -1);
-	vec3 vsp = -vec3(-1,0, 0.6);
+	vec3 viewSpaceLightPos = vec3(-1, 1, -1);
+	vec3 vsp = -vec3(-1, 1, 1);
 	vec3 normal = normalize(viewSpaceNormal);
 	vec3 directionToLight = normalize(viewSpaceLightPos - vsp);
 	vec3 directionFromEye = normalize(vsp);

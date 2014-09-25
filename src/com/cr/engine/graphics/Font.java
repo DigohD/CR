@@ -138,8 +138,8 @@ public class Font {
 		for(int j = 0; j < indexArray.length; j++)
 			iArray[j] = indexArray[j];
 		
-		mesh = new Mesh(vertexArray, texCoordArray, iArray, true);
-		//else mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
+		if(dynamic) mesh = new Mesh(vertexArray, texCoordArray, iArray, true);
+		else mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
 		
 	}
 	
