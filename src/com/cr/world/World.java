@@ -3,7 +3,6 @@ package com.cr.world;
 import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
-import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
@@ -21,47 +20,36 @@ public class World {
 	private EntityManager em;
 
 	private static Shader shader;
-	private Transform transform;
+	private static Transform transform;
 	
-	private float time = 0f;
+	private float currentTime = 0f;
+	private float targetTime = 2f;
 	private float dayNightCycleTime = 100.0f;
-	private float targetTimeMax = 2f;
-	private float targetTimeMin = 0.2f;
+	private float amplitudeWave = 2f;
+	private float angleWave = 2.86f;
+	private float angleWaveSpeed = 0.3f;
+	private static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
 	
 	private boolean day = true, night = false;
-	public static boolean start = true;
-	
-
-	float light_theta = 0.0f;
-	float light_phi = 3.14f/4.0f; 
-	float light_r = 20.0f; 
-	
-	public Vector3f sphericalToCartesian(float theta, float phi, float r){
-		float x = (float) (r * Math.sin(theta) * Math.sin(phi));
-		float y = (float) (r * Math.cos(phi));
-		float z = (float) (r * Math.cos(theta) * Math.sin(phi));
-		
-		return new Vector3f(x,y,z);
-	}
-	
-	private Vector3f lightPos;
-	private Vector3f viewSpaceLightPos;
+	private static boolean start = true;
 	
 	public World(){
 		transform = new Transform();
 		
-		
-		
-		shader = new Shader("vertexshader", "fragmentshader");
+		shader = new Shader("vertexShader", "fragmentShader");
 		
 		shader.addUniform("transformation");
 		shader.addUniform("modelViewMatrix");
-		shader.addUniform("normalMatrix");
-	
-
 		shader.addUniform("time");
 		shader.addUniform("sampler");
+		shader.addUniform("sampler2");
+		shader.addUniform("waveDataX");
+		shader.addUniform("waveDataY");
+		shader.addUniform("isWater");
+
+
 		shader.setUniformi("sampler", 0);
+		shader.setUniformi("sampler2", 1);
 		
 		
 		map = new TileMap(100, 100);
@@ -72,14 +60,6 @@ public class World {
 		em = new EntityManager(this);
 		camera = new Camera();
 		
-		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
-		viewSpaceLightPos = transform.getViewMatrix().mul(lightPos);
-		
-		System.out.println(viewSpaceLightPos.toString());
-		
-		shader.addUniform("viewSpaceLightPos");
-		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
-		
 //		new LootEmitter(new Vector2f(200,200), 5000);
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
@@ -89,6 +69,58 @@ public class World {
 		
 		CraftTest test = new CraftTest();
 		test.craftTest();
+	}
+	
+	public void tick(float dt){
+		if(timer < 7500) timer++;
+		else timer = 0;
+		
+		angleWave += dt * angleWaveSpeed;
+		while(angleWave > PI2)
+			angleWave -= PI2;
+		
+		if(start)
+			currentTime += targetTime / 80 * dt;
+		
+		if(currentTime >= 1f || !start){
+			start = false;
+			dayNightCycle(dt);
+		}
+
+		camera.tick(dt);
+		em.tick(dt);
+	}
+	
+	private void dayNightCycle(float dt){
+		if(currentTime <= 2.0f && day){
+			currentTime += targetTime / dayNightCycleTime * dt;
+			if(currentTime > 2.0f) {
+				night = true;
+				day = false;
+			}
+		}
+		
+		if(night){
+			currentTime -= targetTime / dayNightCycleTime * dt;
+			if(currentTime <= 0.2f){
+				day = true;
+				night = false;
+			}
+		}
+	}
+
+	public void render(Screen screen) {
+		shader.bind();
+		
+		shader.setUniformf("waveDataX", angleWave);
+		shader.setUniformf("waveDataY", amplitudeWave);
+		shader.setUniform("transformation", transform.getOrthoTransformation());
+		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
+		shader.setUniformf("time", currentTime);
+	
+		map.renderMap();
+		shader.unbind();
+		em.render(screen);
 	}
 	
 	public boolean tileExists(int xp, int yp){
@@ -109,54 +141,13 @@ public class World {
 			
 		return null;
 	}
-	
-	public void tick(float dt){
-		if(timer < 7500) timer++;
-		else timer = 0;
-		
-		if(start)
-			time += targetTimeMax / 80 * dt;
-		
-		if(time >= 1f || !start){
-			start = false;
-			dayNightCycle(dt);
-			map.tick(dt);
-		}
-
-		camera.tick(dt);
-		em.tick(dt);
-	}
-	
-	private void dayNightCycle(float dt){
-		if(time <= 2.0f && day){
-			time += targetTimeMax / dayNightCycleTime * dt;
-			if(time > 2.0f) {
-				night = true;
-				day = false;
-			}
-		}
-		
-		if(night){
-			time -= targetTimeMax / dayNightCycleTime * dt;
-			if(time <= 0.2f){
-				day = true;
-				night = false;
-			}
-		}
-	}
-
-	public void render(Screen screen) {
-		shader.bind();
-		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
-	
-		shader.setUniformf("time", time);
-		shader.unbind();
-		map.renderMap(screen);
-		em.render(screen);
-	}
 
 	public static Shader getShader() {
 		return shader;
+	}
+
+	public static Transform getTransform() {
+		return transform;
 	}
 
 	public int getWidth() {
