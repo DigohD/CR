@@ -22,7 +22,7 @@ void main()
 
 	gl_Position = transformation * vec4(position, 1);
    	viewSpaceNormal = (modelViewMatrix * vec4(normalIn, 0.0)).xyz;
-   	viewSpacePos = (modelViewMatrix * vec4(position, 1.0)).xyz;
+   //	viewSpacePos = (modelViewMatrix * vec4(position, 1.0)).xyz;
 	texCoord = texCoordIn;
 	
 }

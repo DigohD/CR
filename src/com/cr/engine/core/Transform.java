@@ -14,7 +14,7 @@ public class Transform {
 		translation = new Vector3f(0,0,0);
 		rotation = new Vector3f(0,0,0);
 		scaling = new Vector3f(1,1,1);
-		ortho = new Matrix4f().initOrthographicProjection(0, Window.getWidth(), Window.getHeight(), 0, -1f, 1f);
+		ortho = new Matrix4f().initOrthographicProjection(0, Window.getWidth(), Window.getHeight(), 0, -100f, 100f);
 		perspective = new Matrix4f().initPerspectiveProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
 	}
 	

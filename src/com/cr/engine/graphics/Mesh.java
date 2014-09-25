@@ -119,7 +119,9 @@ public class Mesh {
 	
 	private void sendData(Vertex[] vertices, Vector2f[] texCoords, int[] indices) {
 		
-		if(!allDynamic) calcNormals(vertices, indices);
+		calcNormals(vertices, indices);
+		
+		//if(!allDynamic) calcNormals(vertices, indices);
 		
 		vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
 		
