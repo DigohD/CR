@@ -21,7 +21,7 @@ import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 
-public class OneHandAttack extends Projectile implements Renderable{
+public class OneHandAttack extends Projectile{
 
 	private Vector2f velocity;
 	private boolean horizontal;
@@ -109,10 +109,6 @@ public class OneHandAttack extends Projectile implements Renderable{
 		offset = offset.add(velocity);
 		updateRect();
 	}
-	
-	@Override
-	public void render(Screen screen){
-	}
 
 	public Vector2f getVelocity() {
 		return velocity;
@@ -142,11 +138,6 @@ public class OneHandAttack extends Projectile implements Renderable{
 	@Override
 	public void updateRect() {
 		rect = weapon.getRect();
-	}
-
-	@Override
-	public Sprite getSprite() {
-		return null;
 	}
 	
 }

@@ -10,6 +10,7 @@ import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
+import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 import com.cr.world.tile.GrassTile;
 import com.cr.world.tile.Tile;
@@ -56,14 +57,27 @@ public class World {
 //		new MeleeTest(new Vector2f(400, 400), this);
 		new MeleeTest(new Vector2f(400, 400), this);
 		
-		for(int i = 0; i < 400; i++){
+		for(int i = 0; i < 100; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
 				t = new Tree(-1000, -1000);
 				int x = Randomizer.getInt(0, 5800) + 40;
 				int y = Randomizer.getInt(0, 3800) + t.getSprite().getSpriteHeight();
-				System.out.println(x + " : " + y);
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					t.setPosition(new Vector2f(x, y));
+					generated = true;
+				}
+			}
+		}
+		
+		for(int i = 0; i < 50; i++){
+			Stone t;
+			boolean generated = false;
+			while(!generated){
+				t = new Stone(-1000, -1000);
+				int x = Randomizer.getInt(0, 5800) + 40;
+				int y = Randomizer.getInt(0, 3800) + t.getSprite().getSpriteHeight();
 				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x, y));
 					generated = true;
