@@ -46,11 +46,14 @@ public class World {
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
-
+		
+		shader.addUniform("material_shininess");
+		shader.addUniform("material_diffuse_color");
+		shader.addUniform("material_specular_color");
+		shader.addUniform("material_emissive_color");
 
 		shader.setUniformi("sampler", 0);
 		shader.setUniformi("sampler2", 1);
-		
 		
 		map = new TileMap(100, 100);
 

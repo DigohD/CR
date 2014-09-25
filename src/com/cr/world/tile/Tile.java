@@ -1,5 +1,6 @@
 package com.cr.world.tile;
 
+import com.cr.engine.graphics.Material;
 import com.cr.engine.graphics.Texture;
 
 public abstract class Tile {
@@ -13,7 +14,10 @@ public abstract class Tile {
 	protected float row, col;
 	protected boolean walkable;
 	
+	protected Material material;
+	
 	public Tile(){
+		material = new Material();
 		width = texture.getWidth();
 		height = texture.getHeight();
 		walkable = true;
@@ -23,6 +27,14 @@ public abstract class Tile {
 		return texture;
 	}
 	
+	public Material getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(Material material) {
+		this.material = material;
+	}
+
 	public static int getTileWidth() {
 		return (int) (width/TILE_ATLAS_COLS);
 	}

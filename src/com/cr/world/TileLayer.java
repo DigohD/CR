@@ -119,6 +119,13 @@ public class TileLayer {
 	
 	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
+		
+		for(Integer i : tiles.keySet()){
+			shader.setUniformf("material_shininess", tiles.get(i).getMaterial().getMaterialShininess());
+			shader.setUniformf("material_diffuse_color", tiles.get(i).getMaterial().getDiffuseColor());
+			shader.setUniformf("material_specular_color", tiles.get(i).getMaterial().getSpecularColor());
+			shader.setUniformf("material_emissive_color", tiles.get(i).getMaterial().getEmissiveColor());
+		}
 	
 		if(water){
 			shader.setUniformf("isWater", 1.0f);

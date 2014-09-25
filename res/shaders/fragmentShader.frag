@@ -9,10 +9,10 @@ out vec4 fragColor;
 uniform sampler2D sampler;
 uniform sampler2D sampler2;
 
-uniform float material_shininess = 25.0;
-uniform vec3 material_diffuse_color = vec3(1, 1, 1); 
-uniform vec3 material_specular_color = vec3(5, 2.3, 4); 
-uniform vec3 material_emissive_color = vec3(1, 0, 0); 
+uniform float material_shininess;
+uniform vec3 material_diffuse_color; 
+uniform vec3 material_specular_color; 
+uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light = vec3(0.2, 0.2, 0.2);
 uniform vec3 scene_light = vec3(2, 2, 2);
@@ -61,7 +61,7 @@ void main()
 	vec4 diffuseTotal = calculateDiffuse(scene_light, diffuse, normal, directionToLight);
 	vec4 specularTotal = calculateSpecular(scene_light, specular, material_shininess, normal, directionToLight, directionFromEye);
 	
-	vec4 shading = ambientTotal + diffuseTotal;
+	vec4 shading = ambientTotal + diffuseTotal + specularTotal + emissive;
 
 	fragColor = shading;
 }
