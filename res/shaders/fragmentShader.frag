@@ -13,13 +13,15 @@ out vec4 fragColor;
 uniform sampler2D sampler;
 uniform sampler2D normalMap;
 
+uniform vec3 viewSpaceLightPos;
+
 uniform float material_shininess;
 uniform vec3 material_diffuse_color; 
 uniform vec3 material_specular_color; 
 uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light = vec3(0.2, 0.2, 0.2);
-uniform vec3 scene_light = vec3(2.6, 2.6, 2.6);
+uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
 
 vec3 calcBumpedNormal(){
 	vec3 normal = normalize(viewSpaceNormal);
@@ -63,7 +65,7 @@ vec4 calculateFresnel(vec3 materialSpecular, vec3 normal, vec3 directionFromEye)
 
 void main() 
 {
-	vec3 viewSpaceLightPos = vec3(-100, -100, 0);
+	//vec3 viewSpaceLightPos = vec3(600, 500, -100);
 	//vec3 viewSpacePos = vec3(-100, 100, 0);
 	vec3 normal = calcBumpedNormal();
 	vec3 directionToLight = normalize(viewSpaceLightPos - viewSpacePos);

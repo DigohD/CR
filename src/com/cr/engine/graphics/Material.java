@@ -10,7 +10,7 @@ public class Material {
 	private Vector3f emissiveColor;
 	
 	public Material(){
-		this(25.0f, new Vector3f(1,1,1), new Vector3f(1,1,1), new Vector3f(0,0,0));
+		this(1.0f, new Vector3f(1,1,1), new Vector3f(1,1,1), new Vector3f(0,0,0));
 	}
 	
 	public Material(float material_shininess, Vector3f diffuseColor,

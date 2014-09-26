@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.shader.Shader;
@@ -39,10 +40,27 @@ public class World {
 	private boolean day = true, night = false;
 	private static boolean start = true;
 	
+	float light_theta = 0.0f;
+	float light_phi = (PI2/2.0f) / 4.0f; 
+	float light_r = 20.0f; 
+	
+	public Vector3f sphericalToCartesian(float theta, float phi, float r){
+		float x = (float) (r * Math.sin(theta) * Math.sin(phi));
+		float y = (float) (r * Math.cos(phi));
+		float z = (float) (r * Math.cos(theta) * Math.sin(phi));
+		
+		return new Vector3f(x,y,z);
+	}
+	
+	private Vector3f lightPos, viewSpaceLightPos;
+	
 	private Texture normalMap;
 	
 	public World(){
 		transform = new Transform();
+		
+		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
+		viewSpaceLightPos = transform.getViewMatrix().mul(lightPos);
 		
 		normalMap = new Texture("normalMap1");
 		
@@ -56,6 +74,7 @@ public class World {
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
+		shader.addUniform("viewSpaceLightPos");
 		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");
@@ -135,6 +154,7 @@ public class World {
 		shader.setUniformf("waveDataY", amplitudeWave);
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
+		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos.mul(currentTime));
 		shader.setUniformf("time", currentTime);
 		
 		glActiveTexture(GL_TEXTURE1);
