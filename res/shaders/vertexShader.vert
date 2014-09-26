@@ -3,10 +3,13 @@
 in vec3 position;
 in vec2 texCoordIn;
 in vec3 normalIn;
+in vec3 tangentIn;
 
 out vec3 viewSpaceNormal;
+out vec3 viewSpaceTangent;
 out vec2 texCoord; 
 out float isWater_out;
+out mat4 modelview;
 
 uniform float isWater;
 
@@ -19,9 +22,11 @@ uniform mat4 modelViewMatrix;
 
 void main() 
 {
+	modelview = modelViewMatrix;
 	isWater_out = isWater;
 	texCoord = texCoordIn;
 	viewSpaceNormal = (modelViewMatrix * vec4(normalIn, 0.0)).xyz;
+	viewSpaceTangent = (modelViewMatrix * vec4(tangentIn, 0.0)).xyz;
 	
 	if(isWater == 1.0){
 		vec4 a_position = vec4(position, 1);

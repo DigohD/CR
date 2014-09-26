@@ -115,11 +115,11 @@ public class Hero extends Mob implements Collideable{
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		
-		if(!collisionWithTile(targetVel.x, 0))
+		//if(!collisionWithTile(targetVel.x, 0))
 			position.x = position.x + targetVel.x*dt;
 		
 		
-		if(!collisionWithTile(0, targetVel.y))
+		//if(!collisionWithTile(0, targetVel.y))
 			position.y = position.y + targetVel.y*dt;
 		
 

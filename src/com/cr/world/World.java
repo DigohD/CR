@@ -1,9 +1,15 @@
 package com.cr.world;
 
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
 import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;
@@ -33,8 +39,12 @@ public class World {
 	private boolean day = true, night = false;
 	private static boolean start = true;
 	
+	private Texture normalMap;
+	
 	public World(){
 		transform = new Transform();
+		
+		normalMap = new Texture("normalMap1");
 		
 		shader = new Shader("vertexShader", "fragmentShader");
 		
@@ -43,6 +53,7 @@ public class World {
 		shader.addUniform("time");
 		shader.addUniform("sampler");
 		shader.addUniform("sampler2");
+		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
@@ -51,9 +62,16 @@ public class World {
 		shader.addUniform("material_diffuse_color");
 		shader.addUniform("material_specular_color");
 		shader.addUniform("material_emissive_color");
+		
+	
 
 		shader.setUniformi("sampler", 0);
-		shader.setUniformi("sampler2", 1);
+		shader.setUniformi("normalMap", 1);
+		shader.setUniformi("sampler2", 2);
+		
+		
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
 		
 		map = new TileMap(100, 100);
 
@@ -120,7 +138,9 @@ public class World {
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
 		shader.setUniformf("time", currentTime);
-	
+		
+
+		
 		map.renderMap();
 		shader.unbind();
 		em.render(screen);

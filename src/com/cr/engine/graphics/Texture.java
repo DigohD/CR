@@ -28,6 +28,12 @@ public class Texture {
 	}
 	
 	public void bind(){
+		bind(0);
+	}
+	
+	public void bind(int samplerSlot){
+		assert(samplerSlot >= 0 && samplerSlot <= 31);
+		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 	
@@ -60,7 +66,6 @@ public class Texture {
 			
 		int id = glGenTextures();
 		
-		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, id);
 			
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

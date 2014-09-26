@@ -7,7 +7,7 @@ public class GrassTile extends Tile{
 
 	public GrassTile() {
 		super();
-		material = new Material(50.0f, new Vector3f(0.2f,0.7f,0.2f), new Vector3f(0.4f,1.6f,0.4f), new Vector3f(0.2f,0.2f,0.2f));
+		material = new Material(50.0f, new Vector3f(1.6f,2.7f,1.6f), new Vector3f(1.8f,3.6f,1.8f), new Vector3f(0.2f,0.2f,0.2f));
 		row = 0f;
 		col = 1f;
 	}
