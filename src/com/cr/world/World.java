@@ -52,7 +52,6 @@ public class World {
 		shader.addUniform("modelViewMatrix");
 		shader.addUniform("time");
 		shader.addUniform("sampler");
-		shader.addUniform("sampler2");
 		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
@@ -67,11 +66,10 @@ public class World {
 
 		shader.setUniformi("sampler", 0);
 		shader.setUniformi("normalMap", 1);
-		shader.setUniformi("sampler2", 2);
 		
 		
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
+		
+		
 		
 		map = new TileMap(100, 100);
 
@@ -139,7 +137,8 @@ public class World {
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
 		shader.setUniformf("time", currentTime);
 		
-
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
 		
 		map.renderMap();
 		shader.unbind();

@@ -3,6 +3,7 @@
 in vec2 texCoord;
 in vec3 viewSpaceNormal;
 in vec3 viewSpaceTangent;
+in vec3 viewSpacePos;
 
 in float isWater_out;
 in mat4 modelview;
@@ -10,7 +11,6 @@ in mat4 modelview;
 out vec4 fragColor;
 
 uniform sampler2D sampler;
-uniform sampler2D sampler2;
 uniform sampler2D normalMap;
 
 uniform float material_shininess;
@@ -19,7 +19,7 @@ uniform vec3 material_specular_color;
 uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light = vec3(0.2, 0.2, 0.2);
-uniform vec3 scene_light = vec3(15.6, 15.6, 15.6);
+uniform vec3 scene_light = vec3(2.6, 2.6, 2.6);
 
 vec3 calcBumpedNormal(){
 	vec3 normal = normalize(viewSpaceNormal);
@@ -63,8 +63,8 @@ vec4 calculateFresnel(vec3 materialSpecular, vec3 normal, vec3 directionFromEye)
 
 void main() 
 {
-	vec3 viewSpaceLightPos = vec3(-100, 100, -100);
-	vec3 viewSpacePos = vec3(-100, 100, 0);
+	vec3 viewSpaceLightPos = vec3(-100, -100, 0);
+	//vec3 viewSpacePos = vec3(-100, 100, 0);
 	vec3 normal = calcBumpedNormal();
 	vec3 directionToLight = normalize(viewSpaceLightPos - viewSpacePos);
 	vec3 directionFromEye = normalize(viewSpacePos);
@@ -78,7 +78,7 @@ void main()
 		vec2 a2DVector = texCoord + a2DVectorTemp;
 		vec2 a2DVector2 = texCoord + a2DVectorTemp2;
 	
-		texColor = (texture2D(sampler, texCoord.xy) * 0.3f) + (texture2D(sampler2, a2DVector.xy) * 0.2f) + (texture2D(sampler2, a2DVector2.xy) * 0.8f);
+		texColor = (texture2D(sampler, texCoord.xy) * 0.3f) + (texture2D(sampler, a2DVector.xy) * 0.2f) + (texture2D(sampler, a2DVector2.xy) * 0.8f);
 	}else{
 		texColor = texture2D(sampler, texCoord.xy);
 	}

@@ -7,6 +7,7 @@ in vec3 tangentIn;
 
 out vec3 viewSpaceNormal;
 out vec3 viewSpaceTangent;
+out vec3 viewSpacePos;
 out vec2 texCoord; 
 out float isWater_out;
 out mat4 modelview;
@@ -25,6 +26,7 @@ void main()
 	modelview = modelViewMatrix;
 	isWater_out = isWater;
 	texCoord = texCoordIn;
+	viewSpacePos = (modelViewMatrix * vec4(position, 1.0)).xyz;
 	viewSpaceNormal = (modelViewMatrix * vec4(normalIn, 0.0)).xyz;
 	viewSpaceTangent = (modelViewMatrix * vec4(tangentIn, 0.0)).xyz;
 	
