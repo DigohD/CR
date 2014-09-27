@@ -57,7 +57,7 @@ public class CraftingState extends GameState{
 		ArrayList<Material> mats = MaterialsBox.getMaterials();
 		int counter = 0;
 		for(Material x : mats)
-			matsChoices.add(new MaterialChoice(xOffset + 10 + (counter * 60), yOffset + 10, x));
+			matsChoices.add(new MaterialChoice(xOffset + 10 + (counter++ * 60), yOffset + 10, x));
 		
 		pattern = new PatternButton(600 + xOffset, 294 + yOffset);
 		add = new AddButton(600 + xOffset, 354 + yOffset);

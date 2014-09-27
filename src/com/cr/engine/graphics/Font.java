@@ -13,7 +13,7 @@ import com.cr.engine.graphics.shader.Shader;
 public class Font {
 	
 	private Sprite fontSheet;
-	private String chars = "!              0123456789     ? ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
+	private String chars = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
 	
 	public enum FontColor{
 		BLACK, BLUE, BLUE_DARK, GREEN, GREEN_DARK, MAGENTA, 
