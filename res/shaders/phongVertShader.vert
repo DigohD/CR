@@ -16,7 +16,7 @@ uniform float isWater;
 
 uniform float waveDataX;
 uniform float waveDataY;
-uniform float time;
+
 
 uniform mat4 transformation;
 uniform mat4 modelViewMatrix;

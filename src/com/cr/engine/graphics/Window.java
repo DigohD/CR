@@ -17,7 +17,7 @@ public class Window {
 			try {
 				Display.setFullscreen(true);
 				Display.setVSyncEnabled(true);
-				Display.create(new PixelFormat(8, 8, 0, 8));
+				Display.create();
 				Keyboard.create();
 				Mouse.create();
 			} catch (LWJGLException e) {

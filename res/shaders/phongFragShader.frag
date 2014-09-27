@@ -13,6 +13,8 @@ out vec4 fragColor;
 uniform sampler2D sampler;
 uniform sampler2D normalMap;
 
+uniform float time;
+
 uniform vec3 viewSpaceLightPos;
 
 uniform float material_shininess;
@@ -20,8 +22,8 @@ uniform vec3 material_diffuse_color;
 uniform vec3 material_specular_color; 
 uniform vec3 material_emissive_color; 
 
-uniform vec3 scene_ambient_light = vec3(0.2, 0.2, 0.2);
-uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
+uniform vec3 scene_ambient_light;
+uniform vec3 scene_light = vec3(0.9, 0.9, 0.9);
 
 vec3 calcBumpedNormal(){
 	vec3 normal = normalize(viewSpaceNormal);
@@ -63,12 +65,48 @@ vec4 calculateFresnel(vec3 materialSpecular, vec3 normal, vec3 directionFromEye)
 	return vec4(materialSpecular, 1.0) + vec4((vec3(1.0) - materialSpecular), 1.0) * pow(clamp(1.0 + dot(directionFromEye, normal), 0.0, 1.0), 5.0);
 }
 
+vec3 rotateY(vec3 v, float angle){
+	vec3 x = vec3(cos(angle), 0, -1.0 * sin(angle));
+	vec3 y = vec3(0, 1.0, 0);
+	vec3 z = vec3(sin(angle), 0, cos(angle));
+	
+	mat3 RM = mat3(x, y, z);
+	vec3 result = v * RM;
+	return result;
+}
+
+vec3 rotateX(vec3 v, float angle){
+	vec3 x = vec3(1.0, 0, 0);
+	vec3 y = vec3(0, cos(angle), sin(angle));
+	vec3 z = vec3(0, -1.0*sin(angle), cos(angle));
+	
+	mat3 RM = mat3(x, y, z);
+	vec3 result = v * RM;
+	return result;
+}
+
+vec3 rotateZ(vec3 v, float angle){
+	vec3 x = vec3(cos(angle), 0, sin(angle));
+	vec3 y = vec3(-1.0*sin(angle), 0, cos(angle));
+	vec3 z = vec3(0,0,1.0);
+	
+	mat3 RM = mat3(x, y, z);
+	vec3 result = v * RM;
+	return result;
+}
+
 void main() 
 {
 	//vec3 viewSpaceLightPos = vec3(600, 500, -100);
 	//vec3 viewSpacePos = vec3(-100, 100, 0);
+	
+	
+	
+	
 	vec3 normal = calcBumpedNormal();
+	
 	vec3 directionToLight = normalize(viewSpaceLightPos - viewSpacePos);
+	directionToLight = normalize(rotateY(directionToLight, time));
 	vec3 directionFromEye = normalize(viewSpacePos);
 	vec3 reflectionVec = (modelview * vec4(reflect(directionFromEye, normal), 0.0)).xyz;
 	

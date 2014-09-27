@@ -6,6 +6,7 @@ import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Texture;
+import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.entity.hero.misc.HealthBall;
@@ -28,9 +29,9 @@ public class World {
 	private static Shader shader;
 	private static Transform transform;
 	
-	private float currentTime = 0f;
+	private float currentTime = 0.2f;
 	private float targetTime = 2f;
-	private float dayNightCycleTime = 100.0f;
+	private float dayNightCycleTime = 6.0f;
 	private float amplitudeWave = 2f;
 	private float angleWave = 2.86f;
 	private float angleWaveSpeed = 0.3f;
@@ -51,7 +52,7 @@ public class World {
 		return new Vector3f(x,y,z);
 	}
 	
-	private Vector3f lightPos, viewSpaceLightPos;
+	private Vector3f lightPos, viewSpaceLightPos, ambientLight;
 	
 	private Texture normalMap;
 	
@@ -59,8 +60,8 @@ public class World {
 		transform = new Transform();
 		
 		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
-		viewSpaceLightPos = transform.getViewMatrix().mul(lightPos);//new Vector3f(-0.1f, -100, 100);
-		
+		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, Window.getHeight()/2, -10000)); // transform.getViewMatrix().mul(lightPos);//
+		ambientLight = new Vector3f(currentTime, currentTime, currentTime);
 		normalMap = new Texture("normalMap1");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
@@ -74,6 +75,7 @@ public class World {
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
 		shader.addUniform("viewSpaceLightPos");
+		shader.addUniform("scene_ambient_light");
 		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");
@@ -111,7 +113,7 @@ public class World {
 				t = new Tree(-1000, -1000);
 				int x = Randomizer.getInt(0, width * 51) + 40;
 				int y = Randomizer.getInt(0, height * 33) + t.getSprite().getSpriteHeight();
-				System.out.println(t.getSprite().getSpriteHeight());
+				//System.out.println(t.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					generated = true;
@@ -139,21 +141,47 @@ public class World {
 //		test.craftTest();
 	}
 	
+	float t = 0;
+	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
+		
+		t += (dt*angleWaveSpeed*0.3f)/ dayNightCycleTime;
+		
+		if(t >= PI2*2) t = 0;
+		
+		if(currentTime <= 1.6f && day){
+			currentTime += (dt*angleWaveSpeed*0.3f)/dayNightCycleTime;
+			if(currentTime > 1.6f) {
+				night = true;
+				day = false;
+			}
+		}
+		
+		if(night){
+			currentTime -= (dt*angleWaveSpeed*0.3f)/dayNightCycleTime;
+			if(currentTime <= 0.2f){
+				day = true;
+				night = false;
+			}
+		}
+		
+		ambientLight.x = currentTime;
+		ambientLight.y = currentTime;
+		ambientLight.z = currentTime;
 		
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
 		
-		if(start)
-			currentTime += targetTime / 80 * dt;
-		
-		if(currentTime >= 1f || !start){
-			start = false;
-			dayNightCycle(dt);
-		}
+//		if(start)
+//			currentTime += targetTime / 80 * dt;
+//		
+//		if(currentTime >= 1f || !start){
+//			start = false;
+//			//dayNightCycle(dt);
+//		}
 
 		camera.tick(dt);
 		em.tick(dt);
@@ -185,7 +213,8 @@ public class World {
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
 		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
-		shader.setUniformf("time", currentTime);
+		shader.setUniformf("scene_ambient_light", ambientLight);
+		shader.setUniformf("time", t);
 		
 //		glActiveTexture(GL_TEXTURE1);
 //		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
