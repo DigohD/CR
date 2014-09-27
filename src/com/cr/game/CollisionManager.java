@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cr.combat.Projectile;
+import com.cr.entity.Collideable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
@@ -12,6 +13,7 @@ import com.cr.entity.hero.Hero;
 public class CollisionManager {
 	
 	private static List<Enemy> enemies = new ArrayList<Enemy>();
+	private static List<Collideable> misc = new ArrayList<Collideable>();
 //	private static List<Loot> loot = new ArrayList<Loot>();
 	private static List<Projectile> playerProjectiles = 
 			new ArrayList<Projectile>();
@@ -40,6 +42,14 @@ public class CollisionManager {
 	
 	public static void removeProjectile(Projectile e){
 		playerProjectiles.remove(e);
+	}
+	
+	public static void addHitable(Collideable c){
+		misc.add(c);
+	}
+	
+	public static void removeHitable(Collideable c){
+		misc.remove(c);
 	}
 	
 	public static void addEnemyProjectile(EnemyProjectile c) {
@@ -84,6 +94,17 @@ public class CollisionManager {
 			if (collisionBetween(p.getRect(), hero.getRect())){
 				hero.collisionWith(p);
 				p.collisionWith(hero);
+			}
+		}
+		
+		for(int i = 0; i < misc.size(); i++){
+			Collideable c = misc.get(i);
+			for(int j = 0; j < playerProjectiles.size(); j++){
+				Projectile p = playerProjectiles.get(j);
+				if (collisionBetween(p.getRect(), c.getRect())){
+					c.collisionWith(p);
+					p.collisionWith(c);
+				}
 			}
 		}
 		

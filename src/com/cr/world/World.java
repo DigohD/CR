@@ -1,20 +1,18 @@
 package com.cr.world;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
-
-import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
+import com.cr.util.Randomizer;
+import com.cr.world.terrain.Stone;
+import com.cr.world.terrain.Tree;
 import com.cr.world.tile.Tile;
 
 public class World {
@@ -104,6 +102,35 @@ public class World {
 //		new MeleeTest(new Vector2f(400, 400), this);
 //		new MeleeTest(new Vector2f(400, 400), this);
 		new MeleeTest(new Vector2f(400, 400), this);
+		
+		for(int i = 0; i < 100; i++){
+			Tree t;
+			boolean generated = false;
+			while(!generated){
+				t = new Tree(-1000, -1000);
+				int x = Randomizer.getInt(0, width * 51) + 40;
+				int y = Randomizer.getInt(0, height * 33) + t.getSprite().getSpriteHeight();
+				System.out.println(t.getSprite().getSpriteHeight());
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
+					generated = true;
+				}
+			}
+		}
+		
+		for(int i = 0; i < 50; i++){
+			Stone s;
+			boolean generated = false;
+			while(!generated){
+				s = new Stone(-1000, -1000);
+				int x = Randomizer.getInt(0, width * 51) + 40;
+				int y = Randomizer.getInt(0, height * 33) + s.getSprite().getSpriteHeight();
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+					generated = true;
+				}
+			}
+		}
 		
 //		CraftTest test = new CraftTest();
 //		test.craftTest();

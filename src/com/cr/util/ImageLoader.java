@@ -19,7 +19,6 @@ public class ImageLoader {
 		imageLib.put("dirt", loadImage("/tiles/dirt.png"));
 		imageLib.put("dirt2", loadImage("/tiles/dirt2.png"));
 		imageLib.put("sand", loadImage("/tiles/sand.png"));
-		imageLib.put("stone", loadImage("/tiles/stone.png"));
 		imageLib.put("water", loadImage("/tiles/water.png"));
 		imageLib.put("water2", loadImage("/tiles/water2.png"));
 		imageLib.put("ripple", loadImage("/tiles/ripple.png"));
@@ -53,6 +52,8 @@ public class ImageLoader {
 		imageLib.put("tree2", loadImage("/prop/nature/tree2.png"));
 		imageLib.put("tree3", loadImage("/prop/nature/tree3.png"));
 		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
+		
+		imageLib.put("stone", loadImage("/prop/nature/stone.png"));
 		
 		// Hero
 //		imageLib.put("hero", loadImage("/hero/hero.png"));
