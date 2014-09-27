@@ -11,7 +11,6 @@ import com.cr.engine.core.Vertex;
 import com.cr.engine.graphics.Bitmap;
 import com.cr.engine.graphics.Mesh;
 import com.cr.engine.graphics.shader.Shader;
-import com.cr.game.Game;
 import com.cr.world.tile.Tile;
 
 public class TileLayer {
@@ -20,11 +19,10 @@ public class TileLayer {
 	private float depth;
 
 	private Bitmap bitmap;
-	private Mesh mesh;
-	private List<Mesh> meshes; 
 	private Shader shader;
 	private Transform transform;
 	
+	private List<Mesh> meshes; 
 	private HashMap<Integer, Tile> tiles;
 	
 	private float xLow = 0;
@@ -40,7 +38,7 @@ public class TileLayer {
 		
 		this.width = width;
 		this.height = height;
-		this.transform = TileMap.getTransform();
+		this.transform = World.getTransform();
 		
 		this.shader = World.getShader();
 		
@@ -70,68 +68,9 @@ public class TileLayer {
 		generateTileLayer(width/2, height/2, width, height);
 	}
 	
-	public void generateTileLayer2(){
-		List<Vertex> vertices = new ArrayList<Vertex>();
-		List<Integer> indices = new ArrayList<Integer>();
-		List<Vector2f> texCoords = new ArrayList<Vector2f>();
-		
-		float tWidth = Tile.getTileWidth();
-		float tHeight = Tile.getTileHeight();
-		
-		for(int y = 0; y < height; y++){
-			for(int x = 0; x < width; x++){
-				if(bitmap.getPixel(x, y) == 0) continue;
-				
-				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
-			
-				float xPos = x * tWidth;
-				float yPos = y * tHeight;
-				
-				float xOffset = 7f;
-				float yOffset = 5f;
-	
-				indices.add(vertices.size() + 0);
-				indices.add(vertices.size() + 1);
-				indices.add(vertices.size() + 2);
-				
-				indices.add(vertices.size() + 2);
-				indices.add(vertices.size() + 3);
-				indices.add(vertices.size() + 0);
-				
-				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0)));
-				
-				texCoords.add(new Vector2f(xLow, yLow));
-				texCoords.add(new Vector2f(xLow, yHigh));
-				texCoords.add(new Vector2f(xHigh, yHigh));
-				texCoords.add(new Vector2f(xHigh, yLow));
-			}
-		}
-		
-		Vertex[] vertexArray = new Vertex[vertices.size()];
-		Integer[] indexArray = new Integer[indices.size()];
-		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
-		
-		vertices.toArray(vertexArray);
-		indices.toArray(indexArray);
-		texCoords.toArray(texCoordArray);
-		
-		int[] iArray = new int[indexArray.length];
-		
-		for(int i = 0; i < indexArray.length; i++)
-			iArray[i] = indexArray[i];
-		
-		mesh = new Mesh(vertexArray, texCoordArray, iArray, false);
-		transform.scale(scaleFactor, scaleFactor, 1);
-	}
-	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
-
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
-		List<Vector2f> texCoords = new ArrayList<Vector2f>();
 		
 		float tWidth = Tile.getTileWidth();
 		float tHeight = Tile.getTileHeight();
@@ -155,51 +94,50 @@ public class TileLayer {
 				indices.add(vertices.size() + 2);
 				indices.add(vertices.size() + 3);
 				indices.add(vertices.size() + 0);
-				
-				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0)));
-				
-				texCoords.add(new Vector2f(xLow, yLow));
-				texCoords.add(new Vector2f(xLow, yHigh));
-				texCoords.add(new Vector2f(xHigh, yHigh));
-				texCoords.add(new Vector2f(xHigh, yLow));
+	
+				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0), new Vector2f(xLow, yLow)));
+				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0), new Vector2f(xLow, yHigh)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0), new Vector2f(xHigh, yHigh)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0), new Vector2f(xHigh, yLow)));
 			}
 		}
 		
 		Vertex[] vertexArray = new Vertex[vertices.size()];
 		Integer[] indexArray = new Integer[indices.size()];
-		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
-		
+	
 		vertices.toArray(vertexArray);
 		indices.toArray(indexArray);
-		texCoords.toArray(texCoordArray);
 		
 		int[] iArray = new int[indexArray.length];
 		
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
-		
-		meshes.add(new Mesh(vertexArray, texCoordArray, iArray, false));
+	
+		meshes.add(new Mesh(vertexArray, iArray));
 		transform.scale(scaleFactor, scaleFactor, 1);
 	}
 	
 	public void renderTileLayer(boolean water){
 		transform.translate(0, 0, depth);
-		if(!water){
-			shader.bind();
-			shader.setUniform("transformation", transform.getOrthoTransformation());
+		
+		for(Integer i : tiles.keySet()){
+			shader.setUniformf("material_shininess", tiles.get(i).getMaterial().getMaterialShininess());
+			shader.setUniformf("material_diffuse_color", tiles.get(i).getMaterial().getDiffuseColor());
+			shader.setUniformf("material_specular_color", tiles.get(i).getMaterial().getSpecularColor());
+			shader.setUniformf("material_emissive_color", tiles.get(i).getMaterial().getEmissiveColor());
 		}
+	
+		if(water){
+			shader.setUniformf("isWater", 1.0f);
+		}else shader.setUniformf("isWater", 0.0f);
+		
 		Tile.getTexture().bind();
 		
 		for(Mesh m : meshes)
 			m.render();
 		
-//		mesh.render();
 		Tile.getTexture().unbind();
-		if(!water)
-			shader.unbind();
+	
 	}
 	
 	private void calcTexCoords(float row, float col){
@@ -267,10 +205,6 @@ public class TileLayer {
 
 	public Bitmap getBitmap() {
 		return bitmap;
-	}
-
-	public Mesh getMesh() {
-		return mesh;
 	}
 
 }

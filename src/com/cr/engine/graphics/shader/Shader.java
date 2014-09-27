@@ -11,13 +11,13 @@ import static org.lwjgl.opengl.GL20.glCreateProgram;
 import static org.lwjgl.opengl.GL20.glCreateShader;
 import static org.lwjgl.opengl.GL20.glDeleteProgram;
 import static org.lwjgl.opengl.GL20.glDeleteShader;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glGetShaderi;
 import static org.lwjgl.opengl.GL20.glGetUniformLocation;
 import static org.lwjgl.opengl.GL20.glLinkProgram;
 import static org.lwjgl.opengl.GL20.glShaderSource;
 import static org.lwjgl.opengl.GL20.glUniform1f;
 import static org.lwjgl.opengl.GL20.glUniform1i;
+import static org.lwjgl.opengl.GL20.glUniform3f;
 import static org.lwjgl.opengl.GL20.glUniformMatrix4;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL20.glValidateProgram;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import org.lwjgl.BufferUtils;
 
 import com.cr.engine.core.Matrix4f;
-import com.cr.engine.core.Vector2f;
+import com.cr.engine.core.Vector3f;
 
 public class Shader {
 	
@@ -61,7 +61,7 @@ public class Shader {
 		System.out.println(":: " + fileName);
 		
 		if(glGetShaderi(vertexShader, GL_COMPILE_STATUS) == GL_FALSE)
-			System.err.println("Couldn't compile vertexshader correctly");
+			System.err.println("Couldn't compile vertexshader: " + fileName +  " correctly");
 		
 		glAttachShader(shaderProgram, vertexShader);
 		glDeleteShader(vertexShader);
@@ -75,7 +75,7 @@ public class Shader {
 		glCompileShader(fragmentShader);
 		
 		if(glGetShaderi(fragmentShader, GL_COMPILE_STATUS) == GL_FALSE)
-			System.err.println("Couldn't compile fragmentShader correctly");
+			System.err.println("Couldn't compile fragmentShader: "  + fileName + " correctly");
 		
 		glAttachShader(shaderProgram, fragmentShader);
 		glDeleteShader(fragmentShader);
@@ -84,6 +84,8 @@ public class Shader {
 	private void createShaderProgram(){
 		glBindAttribLocation(shaderProgram, 0, "position");
 		glBindAttribLocation(shaderProgram, 1, "texCoordIn");
+		glBindAttribLocation(shaderProgram, 2, "normalIn");
+		glBindAttribLocation(shaderProgram, 3, "tangentIn");
 
 		glLinkProgram(shaderProgram);
 		glValidateProgram(shaderProgram);
@@ -102,9 +104,8 @@ public class Shader {
 		glUniform1f(uniforms.get(uniformName), value);
 	}
 	
-	public void setUniformf(String uniformName, float v1, float v2){
-		glUniform1f(uniforms.get(uniformName), v1);
-		glUniform1f(uniforms.get(uniformName), v2);
+	public void setUniformf(String uniformName, Vector3f v){
+		glUniform3f(uniforms.get(uniformName), v.x, v.y, v.z);
 	}
 	
 	public void setUniform(String uniformName, Matrix4f value){

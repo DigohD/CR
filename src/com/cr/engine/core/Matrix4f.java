@@ -149,6 +149,13 @@ public class Matrix4f {
 		return res;
 	}
 	
+	public Vector3f mul(Vector3f r)
+	{
+		return new Vector3f(matrix[0][0] * r.x + matrix[0][1] * r.y + matrix[0][2] * r.z + matrix[0][3],
+		                    matrix[1][0] * r.x + matrix[1][1] * r.y + matrix[1][2] * r.z + matrix[1][3],
+		                    matrix[2][0] * r.x + matrix[2][1] * r.y + matrix[2][2] * r.z + matrix[2][3]);
+	}
+	
 	public float[][] getMatrix(){
 		float[][] res = new float[4][4];
 

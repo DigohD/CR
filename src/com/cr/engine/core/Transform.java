@@ -1,5 +1,7 @@
 package com.cr.engine.core;
 
+
+
 import com.cr.engine.graphics.Window;
 import com.cr.util.Camera;
 
@@ -12,7 +14,7 @@ public class Transform {
 		translation = new Vector3f(0,0,0);
 		rotation = new Vector3f(0,0,0);
 		scaling = new Vector3f(1,1,1);
-		ortho = new Matrix4f().initOrthographicProjection(0, Window.getWidth(), Window.getHeight(), 0, -1f, 1f);
+		ortho = new Matrix4f().initOrthographicProjection(0, Window.getWidth(), Window.getHeight(), 0, -100f, 100f);
 		perspective = new Matrix4f().initPerspectiveProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
 	}
 	
@@ -41,6 +43,10 @@ public class Transform {
 		return modelMatrix;
 	}
 	
+	public Matrix4f getModelViewMatrix(){
+		return getViewMatrix().mul(getModelMatrix());
+	}
+	
 	public Matrix4f getViewMatrix(){
 		Matrix4f cameraTranslation = new Matrix4f().initTranslationMatrix(-Camera.getCamX(), -Camera.getCamY(), -Camera.getCamZ());
 		return (cameraTranslation);
@@ -55,7 +61,7 @@ public class Transform {
 	}
 	
 	public Matrix4f getPerspectiveTransformation(){
-		return perspective.mul(getModelMatrix());
+		return perspective.mul(getViewMatrix().mul(getModelMatrix()));
 	}
 
 	public void translate(float x, float y, float z) {

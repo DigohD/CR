@@ -24,6 +24,10 @@ public class ImageLoader {
 		imageLib.put("water2", loadImage("/tiles/water2.png"));
 		imageLib.put("ripple", loadImage("/tiles/ripple.png"));
 		
+		//normal maps
+		imageLib.put("normalMap0", loadImage("/tiles/normalMap0.png"));
+		imageLib.put("normalMap1", loadImage("/tiles/normalMap1.png"));
+		
 		//TileLayers
 		imageLib.put("waterlayer", loadBitmap("/tilelayers/waterlayer.png"));
 		

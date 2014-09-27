@@ -58,7 +58,7 @@ public class Hero extends Mob implements Collideable{
 		input = new HeroInput(this);
 		t = new Transform();
 		position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
-
+	
 		if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
 			while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
 				position.y += Tile.getTileHeight();
@@ -114,13 +114,12 @@ public class Hero extends Mob implements Collideable{
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		
-		if(!collisionWithTile(targetVel.x, 0)){
+		//if(!collisionWithTile(targetVel.x, 0))
 			position.x = position.x + targetVel.x*dt;
-		}
 		
-		if(!collisionWithTile(0, targetVel.y)){
+		
+		//if(!collisionWithTile(0, targetVel.y))
 			position.y = position.y + targetVel.y*dt;
-		}
 		
 		move(dt);
 		
@@ -138,7 +137,6 @@ public class Hero extends Mob implements Collideable{
 
 	@Override
 	public void render(Screen screen) {
-//		g.drawImage(image, (int)position.x - cam.getCamX(), (int)position.y - cam.getCamY(), null);
 		switch(currentDir){
 			case SOUTH:
 				body.render(screen);
