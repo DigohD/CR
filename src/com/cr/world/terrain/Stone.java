@@ -63,7 +63,6 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 	
 	@Override
 	public void collisionWith(Collideable coll) {
-		System.out.println("OST");
 		if(v.x == 0 && v.y == 0){
 			if(v.x >= 0)
 				v = v.add(new Vector2f(3.6f, 0));
