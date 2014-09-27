@@ -13,6 +13,7 @@ import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
 import com.cr.world.World;
+import com.cr.world.tile.Tile;
 
 public class MeleeTest extends Enemy{
 	
@@ -35,6 +36,15 @@ public class MeleeTest extends Enemy{
 //		lt.addEntry(new LootEntry(202, 5));
 //		lt.addEntry(new LootEntry(301, 5));
 //		lt.addEntry(new LootEntry(302, 5));
+		
+		if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+			while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
+				position.y += Tile.getTileHeight();
+				if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+					break;
+				}
+			}
+		}
 		
 		behaviour = new Chasing(this);
 	}

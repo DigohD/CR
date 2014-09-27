@@ -146,7 +146,11 @@ public class EntityManager {
 	}
 
 	private void depthSort(){
-		java.util.Collections.sort(renderableEntities, new DepthComp());
+		try{
+			java.util.Collections.sort(renderableEntities, new DepthComp());
+		}catch(IllegalArgumentException e){
+			
+		}
 	}
 	
 }

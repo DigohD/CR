@@ -21,11 +21,13 @@ public class DepthComp implements Comparator<Renderable>{
 		if((((Entity) current).getPosition().y + yOffset + current.getSprite().getSpriteHeight() > 
 				((Entity) next).getPosition().y + next.getSprite().getSpriteHeight()))
 			return 1;
-		else if((((Entity) current).getPosition().y + yOffset  + current.getSprite().getSpriteHeight() <
+		if((((Entity) current).getPosition().y + yOffset  + current.getSprite().getSpriteHeight() <
 				((Entity) next).getPosition().y + next.getSprite().getSpriteHeight()))
 			return -1;
-		else 
+		if((((Entity) current).getPosition().y + yOffset  + current.getSprite().getSpriteHeight() ==
+				((Entity) next).getPosition().y + next.getSprite().getSpriteHeight()))
 			return 0;
+		return 0;
 	}
 
 }
