@@ -62,6 +62,10 @@ public class ImageLoader {
 		imageLib.put("herorighthand", loadImage("/hero/herorighthand.png"));
 		imageLib.put("herolefthand", loadImage("/hero/herolefthand.png"));
 		
+		imageLib.put("healthball", loadImage("/hero/ball.png"));
+		imageLib.put("healthfill", loadImage("/hero/fill.png"));
+		imageLib.put("healthfillbm", loadImage("/hero/fillbm.png"));
+		
 		
 		// Hero Footprints
 //		imageLib.put("footprintgrass", loadImage("image", "footprintgrass.png"));

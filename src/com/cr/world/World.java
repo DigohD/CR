@@ -8,6 +8,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
+import com.cr.entity.hero.misc.HealthBall;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
@@ -131,6 +132,8 @@ public class World {
 				}
 			}
 		}
+		
+		new HealthBall();
 		
 //		CraftTest test = new CraftTest();
 //		test.craftTest();
