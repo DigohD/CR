@@ -1,4 +1,4 @@
-package com.cr.crafting.material.loot;
+package com.cr.combat.loot;
 
 public class LootEntry {
 

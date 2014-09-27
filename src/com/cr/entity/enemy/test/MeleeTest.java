@@ -2,10 +2,13 @@ package com.cr.entity.enemy.test;
 
 import java.awt.Rectangle;
 
+import com.cr.combat.loot.Loot;
+import com.cr.combat.loot.LootEntry;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.effect.movement.KnockBack;
 import com.cr.entity.emitter.ImpactEmitter;
+import com.cr.entity.emitter.LootEmitter;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.behaviour.Chasing;
 import com.cr.entity.enemy.behaviour.Fleeing;
@@ -46,6 +49,11 @@ public class MeleeTest extends Enemy{
 			}
 		}
 		
+		lt.addEntry(new LootEntry(1, 10));
+		lt.addEntry(new LootEntry(2, 5));
+		lt.addEntry(new LootEntry(3, 5));
+		lt.addEntry(new LootEntry(4, 2));
+		
 		behaviour = new Chasing(this);
 	}
 
@@ -58,6 +66,7 @@ public class MeleeTest extends Enemy{
 
 	@Override
 	public void death() {
+		new LootEmitter(position, 10, lt);
 		live = false;
 	}
 
