@@ -40,9 +40,9 @@ public class World {
 	private boolean day = true, night = false;
 	private static boolean start = true;
 	
-	float light_theta = 0.0f;
+	float light_theta = -10.0f;
 	float light_phi = (PI2/2.0f) / 4.0f; 
-	float light_r = 20.0f; 
+	float light_r = -2000.0f; 
 	
 	public Vector3f sphericalToCartesian(float theta, float phi, float r){
 		float x = (float) (r * Math.sin(theta) * Math.sin(phi));
@@ -60,11 +60,11 @@ public class World {
 		transform = new Transform();
 		
 		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
-		viewSpaceLightPos = transform.getViewMatrix().mul(lightPos);
+		viewSpaceLightPos = transform.getViewMatrix().mul(lightPos);//new Vector3f(-0.1f, -100, 100);
 		
 		normalMap = new Texture("normalMap1");
 		
-		shader = new Shader("vertexShader", "fragmentShader");
+		shader = new Shader("phongVertShader", "phongFragShader");
 		
 		shader.addUniform("transformation");
 		shader.addUniform("modelViewMatrix");
@@ -154,11 +154,11 @@ public class World {
 		shader.setUniformf("waveDataY", amplitudeWave);
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
-		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos.mul(currentTime));
+		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
 		shader.setUniformf("time", currentTime);
 		
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
+//		glActiveTexture(GL_TEXTURE1);
+//		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
 		
 		map.renderMap();
 		shader.unbind();

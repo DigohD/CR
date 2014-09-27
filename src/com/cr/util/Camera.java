@@ -6,7 +6,7 @@ import com.cr.game.EntityManager;
 
 public class Camera {
 	
-	private static Vector3f position = new Vector3f(0,0, 50);
+	private static Vector3f position = new Vector3f(0,0, 0);
 	private Vector3f targetPos;
 	
 	private float xC, yC, zC;

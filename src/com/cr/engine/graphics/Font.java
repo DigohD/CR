@@ -33,7 +33,7 @@ public class Font {
 	public Font(String text, FontColor color, boolean dynamic){
 
 		this.text = text;
-		shader = new Shader("fontVertshader", "fontShader");
+		shader = new Shader("basicVertShader", "basicFragShader");
 		
 		shader.addUniform("transformation");
 		shader.addUniform("sampler");
