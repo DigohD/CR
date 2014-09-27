@@ -29,8 +29,10 @@ public class Game extends CoreEngine{
 		
 		shader = new Shader("basicVertShader", "basicFragShader");
 		shader.addUniform("transformation");
+		shader.addUniform("envMap");
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
+		
 		
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));

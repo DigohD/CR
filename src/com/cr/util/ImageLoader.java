@@ -27,6 +27,12 @@ public class ImageLoader {
 		imageLib.put("normalMap0", loadImage("/tiles/normalMap0.png"));
 		imageLib.put("normalMap1", loadImage("/tiles/normalMap1.png"));
 		
+		//cube maps
+		imageLib.put("cubemap0", loadImage("/tiles/cubemap0.png"));
+		imageLib.put("cubemap1", loadImage("/tiles/cubemap1.png"));
+		
+		imageLib.put("mask", loadImage("/tiles/mask.png"));
+		
 		//TileLayers
 		imageLib.put("waterlayer", loadBitmap("/tilelayers/waterlayer.png"));
 		

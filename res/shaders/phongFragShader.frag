@@ -4,6 +4,7 @@ in vec2 texCoord;
 in vec3 viewSpaceNormal;
 in vec3 viewSpaceTangent;
 in vec3 viewSpacePos;
+in vec3 outColor;
 
 in float isWater_out;
 in mat4 modelview;
@@ -12,10 +13,12 @@ out vec4 fragColor;
 
 uniform sampler2D sampler;
 uniform sampler2D normalMap;
+uniform sampler2D envMap;
 
 uniform float time;
 
 uniform vec3 viewSpaceLightPos;
+uniform vec3 viewSpaceLightPos2;
 
 uniform float material_shininess;
 uniform vec3 material_diffuse_color; 
@@ -32,7 +35,7 @@ vec3 calcBumpedNormal(){
 	tangent = normalize(tangent - dot(tangent, normal) * normal);
 	
 	vec3 biTangent = cross(tangent, normal);
-	vec3 bumpMapNormal = (texture2D(normalMap, texCoord)).xyz;
+	vec3 bumpMapNormal = (texture2D(sampler, texCoord)).xyz;
 	
 	bumpMapNormal = 2.0 * bumpMapNormal - vec3(1.0, 1.0, 1.0);
 	
@@ -106,7 +109,8 @@ void main()
 	vec3 normal = calcBumpedNormal();
 	
 	vec3 directionToLight = normalize(viewSpaceLightPos - viewSpacePos);
-	directionToLight = normalize(rotateY(directionToLight, time));
+	//vec3 directionToLight2 = normalize(viewSpaceLightPos2 - viewSpacePos);
+	directionToLight = rotateZ(directionToLight, time);
 	vec3 directionFromEye = normalize(viewSpacePos);
 	vec3 reflectionVec = (modelview * vec4(reflect(directionFromEye, normal), 0.0)).xyz;
 	
@@ -119,6 +123,7 @@ void main()
 		vec2 a2DVector2 = texCoord + a2DVectorTemp2;
 	
 		texColor = (texture2D(sampler, texCoord.xy) * 0.3f) + (texture2D(sampler, a2DVector.xy) * 0.2f) + (texture2D(sampler, a2DVector2.xy) * 0.8f);
+		texColor = texColor * texture2D(envMap, texCoord.xy); 
 	}else{
 		texColor = texture2D(sampler, texCoord.xy);
 	}
@@ -128,12 +133,24 @@ void main()
 	vec4 ambient = texColor * vec4(material_diffuse_color,1.0);
 	vec4 emissive = texColor * vec4(material_emissive_color, 1.0);
 	
+	vec4 diffuseTotal;
+	vec4 specularTotal;
+	
 	vec4 ambientTotal = calculateAmbient(scene_ambient_light, ambient);
-	vec4 diffuseTotal = calculateDiffuse(scene_light, diffuse, normal, directionToLight);
-	vec4 specularTotal = calculateSpecular(scene_light, specular, material_shininess, normal, directionToLight, directionFromEye);
+	
+	
+	
+	diffuseTotal = calculateDiffuse(scene_light, diffuse, normal, directionToLight);
+	specularTotal = calculateSpecular(scene_light, specular, material_shininess, normal, directionToLight, directionFromEye);
+	
 	//vec4 fresnel = calculateFresnel(specular, normal, directionFromEye);
 	
 	vec4 shading = ambientTotal + diffuseTotal + specularTotal + emissive;
+	//vec4 shading2 = ambientTotal + diffuseTotal2 + specularTotal + emissive;
+	
+	if(texture2D(sampler, texCoord.xy).w == 0){
+		shading = vec4(0);
+	}
 	
 	fragColor = shading;
 }

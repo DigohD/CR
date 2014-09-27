@@ -1,16 +1,22 @@
 package com.cr.world;
 
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
-import com.cr.entity.hero.misc.HealthBall;
 import com.cr.game.EntityManager;
+import com.cr.game.Game;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.terrain.Stone;
@@ -32,7 +38,7 @@ public class World {
 	private float currentTime = 0.2f;
 	private float targetTime = 2f;
 	private float dayNightCycleTime = 6.0f;
-	private float amplitudeWave = 2f;
+	private float amplitudeWave = 5f;
 	private float angleWave = 2.86f;
 	private float angleWaveSpeed = 0.3f;
 	private static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
@@ -52,17 +58,21 @@ public class World {
 		return new Vector3f(x,y,z);
 	}
 	
-	private Vector3f lightPos, viewSpaceLightPos, ambientLight;
+	private Vector3f lightPos, viewSpaceLightPos, viewSpaceLightPos2, ambientLight;
 	
-	private Texture normalMap;
+	private Texture normalMap, cubeMap;
+	Sprite sprite, sprite1;
 	
 	public World(){
 		transform = new Transform();
 		
 		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
-		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, Window.getHeight()/2, -10000)); // transform.getViewMatrix().mul(lightPos);//
+		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, -Window.getHeight(), -800));
+		//viewSpaceLightPos2 = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, 100, -10));
 		ambientLight = new Vector3f(currentTime, currentTime, currentTime);
 		normalMap = new Texture("normalMap1");
+		
+	
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
@@ -70,11 +80,13 @@ public class World {
 		shader.addUniform("modelViewMatrix");
 		shader.addUniform("time");
 		shader.addUniform("sampler");
+		shader.addUniform("envMap");
 		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
 		shader.addUniform("viewSpaceLightPos");
+		//shader.addUniform("viewSpaceLightPos2");
 		shader.addUniform("scene_ambient_light");
 		
 		shader.addUniform("material_shininess");
@@ -85,10 +97,12 @@ public class World {
 	
 
 		shader.setUniformi("sampler", 0);
-		shader.setUniformi("normalMap", 1);
+		shader.setUniformi("normalMap", 2);
+
 		
-		
-		
+	
+		sprite = new Sprite("mask", Game.shader, new Transform(), 1);
+		//sprite1 = new Sprite("mask", Game.shader, new Transform(), 1);
 		
 		
 		map = new TileMap(100, 100);
@@ -135,7 +149,7 @@ public class World {
 			}
 		}
 		
-		new HealthBall();
+		
 		
 //		CraftTest test = new CraftTest();
 //		test.craftTest();
@@ -149,11 +163,11 @@ public class World {
 		
 		t += (dt*angleWaveSpeed*0.3f)/ dayNightCycleTime;
 		
-		if(t >= PI2*2) t = 0;
+		if(t >= PI2) t = 0;
 		
-		if(currentTime <= 1.6f && day){
+		if(currentTime <= 1.2f && day){
 			currentTime += (dt*angleWaveSpeed*0.3f)/dayNightCycleTime;
-			if(currentTime > 1.6f) {
+			if(currentTime > 1.2f || (t >= PI2/2 && t <= PI2)) {
 				night = true;
 				day = false;
 			}
@@ -161,7 +175,7 @@ public class World {
 		
 		if(night){
 			currentTime -= (dt*angleWaveSpeed*0.3f)/dayNightCycleTime;
-			if(currentTime <= 0.2f){
+			if(currentTime <= 0.18f || (t >= 0 && t <= PI2/2) ){
 				day = true;
 				night = false;
 			}
@@ -206,6 +220,18 @@ public class World {
 	}
 
 	public void render(Screen screen) {
+		
+	
+		
+		
+		
+		
+		
+		
+		
+//		glActiveTexture(GL_TEXTURE1);
+//		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
+		
 		shader.bind();
 		
 		shader.setUniformf("waveDataX", angleWave);
@@ -213,14 +239,15 @@ public class World {
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
 		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
+		//shader.setUniformf("viewSpaceLightPos2", viewSpaceLightPos2);
 		shader.setUniformf("scene_ambient_light", ambientLight);
 		shader.setUniformf("time", t);
 		
-//		glActiveTexture(GL_TEXTURE1);
-//		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
 		
 		map.renderMap();
 		shader.unbind();
+		screen.renderStaticSprite(sprite, 0, 0, 1);
+		
 		em.render(screen);
 	}
 	

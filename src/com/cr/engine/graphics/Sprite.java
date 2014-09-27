@@ -35,10 +35,14 @@ public class Sprite {
 	}
 	
 	public Sprite(String name, Shader shader, Transform transform){
+		this(name, shader, transform, 0);
+	}
+	
+	public Sprite(String name, Shader shader, Transform transform, int unit){
 		this.shader = shader;
 		this.transform = transform;
 		
-		texture = new Texture(name);
+		texture = new Texture(name, unit);
 		
 		width = texture.getWidth();
 		height = texture.getHeight();
@@ -133,29 +137,20 @@ public class Sprite {
 	}
 	
 	public void bind(){
-		shader.bind();
-		shader.setUniform("transformation", transform.getOrthoTransformation());
-		if(!tAtlas)
-			texture.bind();
-		else textureAtlas.bind();
+		bind(0);
 	}
 	
-	public void bind2(){
+	public void bind(int unit){
 		shader.bind();
-		shader.setUniform("transformation", transform.getOrthoTransformation2());
+		if(unit == 1)
+			shader.setUniformi("envMap", unit);
+		shader.setUniform("transformation", transform.getOrthoTransformation());
 		if(!tAtlas)
-			texture.bind();
-		else textureAtlas.bind();
+			texture.bind(unit);
+		else textureAtlas.bind(unit);
 	}
 	
 	public void unbind(){
-		if(!tAtlas)
-			texture.unbind();
-		else textureAtlas.unbind();
-		shader.unbind();
-	}
-	
-	public void unbind2(){
 		if(!tAtlas)
 			texture.unbind();
 		else textureAtlas.unbind();

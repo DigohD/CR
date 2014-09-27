@@ -17,14 +17,19 @@ public class Texture {
 	
 	private BufferedImage img;
 	
-	private int id;
+	private int id, unit;
 	private int width, height;
 	
 	public Texture(String name){
+		this(name, 0);
+	}
+	
+	public Texture(String name, int unit){
+		this.unit = unit;
 		img = ImageLoader.getImage(name);
 		width = img.getWidth();
 		height = img.getHeight();
-		id = loadTexture(name);
+		id = loadTexture(name, unit);
 	}
 	
 	public void bind(){
@@ -41,7 +46,7 @@ public class Texture {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	
-	private int loadTexture(String name){
+	private int loadTexture(String name, int unit){
 		int[] pixels = new int[width*height];
 			
 		img.getRGB(0, 0, width, height, pixels, 0, width);
@@ -89,6 +94,10 @@ public class Texture {
 
 	public int getID() {
 		return id;
+	}
+
+	public int getUnit() {
+		return unit;
 	}
 
 	public int getWidth() {

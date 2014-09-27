@@ -34,8 +34,12 @@ public class Screen {
 	}
 	
 	public void renderSprite(Sprite sprite, float x, float y){
+		renderSprite(sprite, x, y, 0);
+	}
+	
+	public void renderSprite(Sprite sprite, float x, float y, int unit){
 		sprite.getTransform().translate(x, y, 0);
-		sprite.bind();
+		sprite.bind(unit);
 		sprite.getMesh().render();
 		sprite.unbind();
 	}
@@ -59,8 +63,12 @@ public class Screen {
 	
 	// Renders with coordinates relative to screen, rather than relative to the world
 	public void renderStaticSprite(Sprite sprite, float x, float y){
+		renderStaticSprite(sprite, x, y, 0);
+	}
+	
+	public void renderStaticSprite(Sprite sprite, float x, float y, int unit){
 		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), 0);
-		sprite.bind();
+		sprite.bind(unit);
 		sprite.getMesh().render();
 		sprite.unbind();
 	}
