@@ -60,8 +60,8 @@ public class World {
 	
 	private Vector3f lightPos, viewSpaceLightPos, viewSpaceLightPos2, ambientLight;
 	
-	private Texture normalMap, cubeMap;
-	Sprite sprite, sprite1;
+	private Texture normalMap, cubeMap, mask;
+	Sprite sprite;
 	
 	public World(){
 		transform = new Transform();
@@ -101,9 +101,16 @@ public class World {
 
 		
 	
-		sprite = new Sprite("mask", Game.shader, new Transform(), 1);
-		//sprite1 = new Sprite("mask", Game.shader, new Transform(), 1);
+//		sprite = new Sprite("mask", Game.shader, new Transform(), 1);
+//		sprite.bind(1);
+//		sprite.unbind();
 		
+		mask = new Texture("mask", 1);
+		shader.bind();
+		shader.setUniformi("envMap", 1);
+		mask.bind(1);
+		mask.unbind();
+		shader.unbind();
 		
 		map = new TileMap(100, 100);
 
@@ -220,18 +227,6 @@ public class World {
 	}
 
 	public void render(Screen screen) {
-		
-	
-		
-		
-		
-		
-		
-		
-		
-//		glActiveTexture(GL_TEXTURE1);
-//		glBindTexture(GL_TEXTURE_2D, normalMap.getID());
-		
 		shader.bind();
 		
 		shader.setUniformf("waveDataX", angleWave);
@@ -243,10 +238,9 @@ public class World {
 		shader.setUniformf("scene_ambient_light", ambientLight);
 		shader.setUniformf("time", t);
 		
-		
 		map.renderMap();
+		
 		shader.unbind();
-		screen.renderStaticSprite(sprite, 0, 0, 1);
 		
 		em.render(screen);
 	}

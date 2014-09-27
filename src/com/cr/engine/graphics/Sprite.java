@@ -142,8 +142,8 @@ public class Sprite {
 	
 	public void bind(int unit){
 		shader.bind();
-		if(unit == 1)
-			shader.setUniformi("envMap", unit);
+//		if(unit == 1)
+//			shader.setUniformi("envMap", unit);
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		if(!tAtlas)
 			texture.bind(unit);
