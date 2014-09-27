@@ -9,7 +9,13 @@ public class StatsSheet {
 	public enum StatID {STRENGTH, AGILITY, INTELLIGENCE, TOUGHNESS,
 						HP_NOW, HP_MAX, ARMOR,
 						
+						
+						/*On hit Effects*/
+						LIFE_ON_HIT,
 	
+						/*Passive*/
+						LIFE_REGEN,
+						
 						/* Non-character Stats*/
 						DAMAGE_BASE, DAMAGE_DICE, COOLDOWN
 	}
@@ -21,9 +27,12 @@ public class StatsSheet {
 		sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 10));
 		sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10));
 		
-		sheet.put(StatID.HP_NOW, new Stat("Current HP", 100));
-		sheet.put(StatID.HP_MAX, new Stat("Max HP", 100));
+		sheet.put(StatID.HP_NOW, new Stat("Current Hp", 100));
+		sheet.put(StatID.HP_MAX, new Stat("Max Hp", 100));
 		sheet.put(StatID.ARMOR, new Stat("Armor", 0));
+		
+		sheet.put(StatID.LIFE_ON_HIT, new Stat("Life On Hit", 0));
+		sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen", 0));
 	}
 	
 	public void addMod(StatMod mod){
@@ -62,6 +71,10 @@ public class StatsSheet {
 				return "Max HP";
 			case ARMOR:
 				return "Armor";
+			case LIFE_ON_HIT:
+				return "Life On Hit";
+			case LIFE_REGEN:
+				return "Life Regen";
 			default:
 				break;
 		}

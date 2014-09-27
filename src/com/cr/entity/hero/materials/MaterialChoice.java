@@ -75,8 +75,9 @@ public class MaterialChoice extends Button implements Hooverable{
 		Font matText = FontLoader.aquireFont(FontColor.WHITE);
 		matText.setFont(CRString.create(material.getName()));
 		int ySizeMod = material.getProperties().size() * 2;
-		screen.renderStaticSprite(flatWhite, Input.getMousePosition().x + 6, Input.getMousePosition().y, 10.4f, 6f + ySizeMod);
-		screen.renderStaticSprite(flatBlack, Input.getMousePosition().x + 8, Input.getMousePosition().y + 2, 10, 5.6f + ySizeMod);
+		int xSizeMod = (material.getName().length() * 5) / 10;
+		screen.renderStaticSprite(flatWhite, Input.getMousePosition().x + 6, Input.getMousePosition().y, 10.4f + xSizeMod, 6f + ySizeMod);
+		screen.renderStaticSprite(flatBlack, Input.getMousePosition().x + 8, Input.getMousePosition().y + 2, 10 + xSizeMod, 5.6f + ySizeMod);
 
 		screen.renderFont(matText, Input.getMousePosition().x + 14, Input.getMousePosition().y - 14, 0.2f);
 		
