@@ -113,8 +113,8 @@ public abstract class Item implements Renderable, Tickable{
 		
 		for(StatMod x : stats.getStatMods()){
 			String amount = x.getAmount() + "";
-			String s = CRString.create(StatsSheet.getStatString(x.getAffectedStat()) + " " + amount.substring(0, 1));
-			s = s.replace("_", " ");
+			int end = amount.lastIndexOf('.');
+			String s = CRString.create(StatsSheet.getStatString(x.getAffectedStat()) + " " + amount.substring(0, end));
 			f.setFont(s);
 			f.renderFont(xOffset + 12, yOffset + 24 + (counter * 28), 0.3f);
 			counter++;

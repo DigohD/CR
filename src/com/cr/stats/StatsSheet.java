@@ -34,6 +34,14 @@ public class StatsSheet {
 			affected.addMulmod(mod.getSourceID(), mod.getAmount());
 	}
 	
+	public void removeMod(StatMod mod){
+		Stat affected = sheet.get(mod.getAffectedStat());
+		if(mod.isAddMod())
+			affected.removeAddmod(mod.getSourceID(), mod.getAmount());
+		else
+			affected.removeMulmod(mod.getSourceID(), mod.getAmount());
+	}
+	
 	public Stat getStat(StatID ID){
 		return sheet.get(ID);
 	}

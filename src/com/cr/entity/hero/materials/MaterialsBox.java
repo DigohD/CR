@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.cr.crafting.v2.material.Copper;
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.material.Pyrite;
+import com.cr.crafting.v2.material.Quartz;
 import com.cr.states.GameState;
 
 public class MaterialsBox {
@@ -15,6 +16,7 @@ public class MaterialsBox {
 		materials = new HashMap<Integer, Material>();
 		materials.put(1, new Copper());
 		materials.put(2, new Pyrite());
+		materials.put(3, new Quartz());
 	}
 	
 	public static Material getMaterial(int ID){
@@ -24,7 +26,7 @@ public class MaterialsBox {
 	public static ArrayList<Material> getMaterials(){
 		ArrayList<Material> materialsList = new ArrayList<Material>();
 		
-		for(int i = 1; i <= 2; i++)
+		for(int i = 1; i <= 3; i++)
 			if(materials.get(i).getAmount() > 0)
 				materialsList.add(materials.get(i));
 		

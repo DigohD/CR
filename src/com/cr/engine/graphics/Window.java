@@ -15,8 +15,8 @@ public class Window {
 		Window.fullscreenMode = fullscreenMode;
 		if(fullscreenMode){
 			try {
-				Display.setFullscreen(true);
-				Display.setVSyncEnabled(true);
+				Display.setFullscreen(false);
+				Display.setVSyncEnabled(false);
 				Display.create(new PixelFormat(8, 8, 0, 8));
 				Keyboard.create();
 				Mouse.create();
