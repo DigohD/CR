@@ -15,11 +15,13 @@ public class Client implements Runnable{
 	private DatagramSocket socket;
 	private Thread thread;
 	
+	private volatile boolean running = false;
+	
 	public Client(String ip){
 	
 		
 		try {
-			socket = new DatagramSocket(4678);
+			socket = new DatagramSocket();
 			this.ip = InetAddress.getByName(ip);
 		} catch (SocketException e) {
 			e.printStackTrace();
@@ -27,15 +29,28 @@ public class Client implements Runnable{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public synchronized void start(){
+		running = true;
 		thread = new Thread(this, "client-thread");
 		thread.start();
-		
+	}
+	
+	public synchronized void stop(){
+		running = false;
+		socket.close();
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void run() {
 		
-		while(true){
+		while(running){
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data, data.length);
 			
@@ -45,7 +60,8 @@ public class Client implements Runnable{
 				e.printStackTrace();
 			}
 			
-			System.out.println("Server: " + new String(packet.getData()));
+			String message = new String(packet.getData());
+			System.out.println("Server: " + message);
 			
 		}
 		
@@ -53,7 +69,7 @@ public class Client implements Runnable{
 	
 	public void sendData(byte[] data){
 		
-		DatagramPacket packet = new DatagramPacket(data, data.length, ip, 4678);
+		DatagramPacket packet = new DatagramPacket(data, data.length, ip, 1331);
 		try {
 			socket.send(packet);
 		} catch (IOException e) {

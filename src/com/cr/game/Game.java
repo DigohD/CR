@@ -22,7 +22,7 @@ public class Game extends CoreEngine{
 	private Client client;
 	
 	public Game(){
-		boolean fullscreen = true;
+		boolean fullscreen = false;
 		Window.createWindow(1200, 675, fullscreen);
 		init();
 	}
@@ -30,7 +30,9 @@ public class Game extends CoreEngine{
 	private void init(){
 		
 		server = new Server();
-		client = new Client("localHost");
+		server.start();
+		client = new Client("localhost");
+		client.start();
 		
 		client.sendData("ping".getBytes());
 		
@@ -82,9 +84,13 @@ public class Game extends CoreEngine{
 	
 	@Override
 	public void cleanUp() {
+		
 		shader.deleteShader();
 		if(World.getShader() != null)
 			World.getShader().deleteShader();
+		
+		server.stop();
+		client.stop();
 	}
 	
 	public static void main(String[] args){

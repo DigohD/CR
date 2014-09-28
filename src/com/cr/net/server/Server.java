@@ -11,23 +11,38 @@ public class Server implements Runnable{
 	private DatagramSocket socket;
 	private Thread thread;
 	
+	private boolean running = false;
+	
 	public Server(){
 		
 		try {
-			socket = new DatagramSocket(4678);
+			socket = new DatagramSocket(1331);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void start(){
+		running = true;
 		thread = new Thread(this, "server-thread");
 		thread.start();
-		
+	}
+	
+	public void stop(){
+		running = false;
+		socket.close();
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void run() {
 		
-		while(true){
+		while(running){
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data, data.length);
 			
@@ -39,8 +54,10 @@ public class Server implements Runnable{
 			
 			String message = new String(packet.getData());
 			System.out.println("Client: " + message);
-			if(message.equalsIgnoreCase("ping"))
-				sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
+			
+				
+			sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
+			
 		}
 		
 	}
