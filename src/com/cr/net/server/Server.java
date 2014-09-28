@@ -1,24 +1,56 @@
 package com.cr.net.server;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 
-public class Server {
+public class Server implements Runnable{
 	
-	private Thread receiveThread, sendThread;
-	private InetAddress ip;
 	private DatagramSocket socket;
-	private int port;
+	private Thread thread;
 	
-	public Server(InetAddress ip, int port){
-		this.ip = ip;
-		this.port = port;
+	public Server(){
 		
 		try {
-			socket = new DatagramSocket(port);
+			socket = new DatagramSocket(4678);
 		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		
+		thread = new Thread(this, "server-thread");
+		thread.start();
+		
+	}
+
+	@Override
+	public void run() {
+		
+		while(true){
+			byte[] data = new byte[1024];
+			DatagramPacket packet = new DatagramPacket(data, data.length);
+			
+			try {
+				socket.receive(packet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			String message = new String(packet.getData());
+			System.out.println("Client: " + message);
+			if(message.equalsIgnoreCase("ping"))
+				sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
+		}
+		
+	}
+	
+	public void sendData(byte[] data, InetAddress ip, int port){
+		
+		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+		try {
+			socket.send(packet);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
