@@ -34,6 +34,9 @@ public class ImageLoader {
 		imageLib.put("mask", loadImage("/tiles/mask.png"));
 		imageLib.put("mask1", loadImage("/tiles/mask1.png"));
 		
+		imageLib.put("yellowMask", loadImage("/tiles/yellowMask.png"));
+		imageLib.put("blueMask", loadImage("/tiles/blueMask.png"));
+		
 		//TileLayers
 		imageLib.put("waterlayer", loadBitmap("/tilelayers/waterlayer.png"));
 		

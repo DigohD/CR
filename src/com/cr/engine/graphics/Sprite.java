@@ -138,10 +138,10 @@ public class Sprite {
 	
 	public void bind(int unit){
 		shader.bind();
-		if(unit == 2)
-			shader.setUniformi("sampler2", unit);
+//		if(unit == 2)
+//			shader.setUniformi("sampler2", unit);
 		if(unit == 1)
-			shader.setUniformi("sampler1", unit);
+			shader.setUniformi("normalMap", unit);
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		if(!tAtlas)
 			texture.bind(unit);
