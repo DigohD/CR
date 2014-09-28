@@ -61,7 +61,8 @@ public class Client implements Runnable{
 			}
 			
 			String message = new String(packet.getData());
-			System.out.println("Server: " + message);
+			if(message.trim().equalsIgnoreCase("pong"))
+				System.out.println("Server: " + message);
 			
 		}
 		

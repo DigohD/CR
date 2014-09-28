@@ -54,10 +54,8 @@ public class Server implements Runnable{
 			
 			String message = new String(packet.getData());
 			System.out.println("Client: " + message);
-			
-				
-			sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
-			
+			if(message.trim().equalsIgnoreCase("ping"))
+				sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
 		}
 		
 	}
