@@ -10,15 +10,15 @@ public class FontLoader {
 	private static LinkedStack<Font> yellowFonts = new LinkedStack<Font>();
 	
 	public FontLoader(){
-		whiteFonts.push(new Font("                        ", FontColor.WHITE, true));
-		whiteFonts.push(new Font("                        ", FontColor.WHITE, true));
-		whiteFonts.push(new Font("                        ", FontColor.WHITE, true));
-		whiteFonts.push(new Font("                        ", FontColor.WHITE, true));
+		whiteFonts.push(new Font("                               ", FontColor.WHITE, true));
+		whiteFonts.push(new Font("                               ", FontColor.WHITE, true));
+		whiteFonts.push(new Font("                               ", FontColor.WHITE, true));
+		whiteFonts.push(new Font("                               ", FontColor.WHITE, true));
 		
-		yellowFonts.push(new Font("                        ", FontColor.YELLOW, true));
-		yellowFonts.push(new Font("                        ", FontColor.YELLOW, true));
-		yellowFonts.push(new Font("                        ", FontColor.YELLOW, true));
-		yellowFonts.push(new Font("                        ", FontColor.YELLOW, true));
+		yellowFonts.push(new Font("                               ", FontColor.WHITE, true));
+		yellowFonts.push(new Font("                               ", FontColor.WHITE, true));
+		yellowFonts.push(new Font("                               ", FontColor.WHITE, true));
+		yellowFonts.push(new Font("                               ", FontColor.WHITE, true));
 	}
 	
 	public static Font aquireFont(FontColor color){

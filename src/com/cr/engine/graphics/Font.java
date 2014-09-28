@@ -241,6 +241,10 @@ public class Font {
 		return color;
 	}
 
+	public String getText() {
+		return text;
+	}
+
 	
 	
 	

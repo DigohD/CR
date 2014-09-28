@@ -1,12 +1,14 @@
 package com.cr.game;
 
-import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.CoreEngine;
+import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
+import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
 import com.cr.world.World;
