@@ -136,6 +136,8 @@ public class ImageLoader {
 		
 		imageLib.put("flatblack", loadImage("/craftingui/black.png"));
 		imageLib.put("flatwhite", loadImage("/craftingui/white.png"));
+		imageLib.put("flatdarkred", loadImage("/craftingui/darkred.png"));
+		imageLib.put("flatgreen", loadImage("/craftingui/green.png"));
 //		
 //		// Patterns
 		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));
@@ -154,6 +156,7 @@ public class ImageLoader {
 //		// Particles
 		imageLib.put("blood", loadImage("/particle/blood.png"));
 		imageLib.put("white1", loadImage("/particle/white1.png"));
+		imageLib.put("wispp", loadImage("/particle/wispp.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String path){

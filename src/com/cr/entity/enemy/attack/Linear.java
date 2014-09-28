@@ -22,14 +22,15 @@ public class Linear extends EnemyProjectile implements Renderable{
 	protected Sprite sprite;
 	protected ImpactEmitter ie;
 	protected int lifetime = 90, counter;
+	protected float damage = 10f;
 	
 	public Linear(Vector2f pos, Vector2f velocity) {
 		super(pos);
 		this.velocity = velocity;
 		
-		sprite = new Sprite("rock1");
+		sprite = new Sprite("wispp");
 		rect = new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		ie = new ImpactEmitter(position, 1, "white1", 5, velocity.normalize().mul(-1), 1);
+		ie = new ImpactEmitter(position.add(new Vector2f(3.5f, 3.5f)), 1, "wispp", 15, velocity.normalize().mul(-1), 3);
 		
 		EntityManager.addEntity(this);
 	}
@@ -42,8 +43,12 @@ public class Linear extends EnemyProjectile implements Renderable{
 			Vector2f CenterOffset = Hero.position.sub(this.position);
 			CollisionPoint = CenterOffset.add(position);
 			
+			Hero h = (Hero) obj;
+			
 			ImpactEmitter ie = new ImpactEmitter(CollisionPoint, 1, "white1", 5, velocity, 5);
 			KnockBack kb = new KnockBack(20, 1, ((Hero) obj), null, this.getVelocity().div(2));
+			
+			h.takeDamage(damage);
 			
 			spent = true;
 			live = false;

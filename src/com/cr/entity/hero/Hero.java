@@ -16,7 +16,9 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.entity.hero.misc.FootPrint;
+import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Randomizer;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
@@ -224,6 +226,17 @@ public class Hero extends Mob implements Collideable{
 		body.getBob().setActive(isBobing);
 		rightHand.getBob().setActive(isBobing);
 		leftHand.getBob().setActive(isBobing);
+	}
+	
+	@Override
+	public void takeDamage(float damage){
+		playHurtSound();
+		
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		hpNow.setNewBase(hpNow.getTotal() - damage);
+		
+		if(hpNow.getTotal() < 0)
+			death();
 	}
 	
 	@Override

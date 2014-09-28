@@ -9,11 +9,13 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.emitter.Particle;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
+import com.cr.util.Randomizer;
 import com.cr.world.World;
 
 public class Wisp extends Enemy{
@@ -21,13 +23,14 @@ public class Wisp extends Enemy{
 	private class WispLimb extends Entity implements Renderable{
 
 		private Vector2f v, offset;
-		private int counter;
-		private Sprite limbSprite;
+		private float counter;
+		private Sprite limbSprite, particle;
 		private boolean dir;
 		
 		public WispLimb(Vector2f position, boolean dir) {
 			super(position);
 			limbSprite = new Sprite("wisplimb");
+			particle = new Sprite("wispp");
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
 			EntityManager.addEntity(this);
@@ -37,7 +40,7 @@ public class Wisp extends Enemy{
 			if(dir)
 				offset = new Vector2f(-10.5f, 3f);
 			else
-				offset = new Vector2f(10.5f, -3f);
+				offset = new Vector2f(25.5f, 3f);
 		}
 
 		@Override
@@ -51,15 +54,20 @@ public class Wisp extends Enemy{
 		}
 
 		public void tick(Wisp parent, float dt) {
-			counter++;
+			counter = counter + 0.5f;
 			
 			if(dir)
-				v = new Vector2f((float) Math.sin(counter / 5) * 4, (float) Math.cos(counter / 5) * 3f);
+				v = new Vector2f((float) Math.sin(counter / 2.5f) * 4f, (float) Math.cos(counter / 2.5f) * 3f);
 			else
-				v = new Vector2f((float) -Math.sin(counter / 5) * 4, (float) -Math.cos(counter / 5) * 3f);
+				v = new Vector2f((float) -Math.sin(counter / 2.5f) * 4f, (float) -Math.cos(counter / 2.5f) * 3f);
 			
 			offset = offset.add(v);
 			position = offset.add(parent.position);
+			
+			if(Randomizer.getBinary() == 0)
+				new Particle(offset.add(parent.position), v.rotate(180).add(new Vector2f(0, 3f)), particle, 20);
+			if(Randomizer.getInt(0, 5) == 0)
+				new Particle(offset.add(parent.position), new Vector2f(0, 5f), particle, 40);
 		}
 		
 		@Override
@@ -81,7 +89,7 @@ public class Wisp extends Enemy{
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		EntityManager.addEntity(this);
 		
-//		wl1 = new WispLimb(position, true);
+		wl1 = new WispLimb(position, true);
 		wl2 = new WispLimb(position, false);
 		
 		behaviour = new Fleeing(this);
@@ -108,7 +116,7 @@ public class Wisp extends Enemy{
 			}
 		}
 		
-//		wl1.tick(this, dt);
+		wl1.tick(this, dt);
 		wl2.tick(this, dt);
 	}
 

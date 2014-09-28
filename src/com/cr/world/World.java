@@ -104,7 +104,7 @@ public class World {
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
 
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < 5; i++){
 			Wisp e = null;
 			boolean generated = false;
 			while(!generated){
@@ -121,7 +121,7 @@ public class World {
 		
 		
 		
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 100; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
@@ -137,7 +137,7 @@ public class World {
 			}
 		}
 		
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 100; i++){
 			Stone s;
 			boolean generated = false;
 			while(!generated){
