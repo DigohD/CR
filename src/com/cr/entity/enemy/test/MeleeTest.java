@@ -20,8 +20,6 @@ import com.cr.world.tile.Tile;
 
 public class MeleeTest extends Enemy{
 	
-//	private LootTable lt;
-	
 	public MeleeTest(Vector2f position, World world) {
 		super(position, world);
 		sprite = new Sprite("melee");
@@ -29,16 +27,6 @@ public class MeleeTest extends Enemy{
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		EntityManager.addEntity(this);
-		
-//		lt = new LootTable();
-//		
-//		lt.addEntry(new LootEntry(101, 20));
-//		lt.addEntry(new LootEntry(102, 20));
-//		lt.addEntry(new LootEntry(103, 20));
-//		lt.addEntry(new LootEntry(201, 5));
-//		lt.addEntry(new LootEntry(202, 5));
-//		lt.addEntry(new LootEntry(301, 5));
-//		lt.addEntry(new LootEntry(302, 5));
 		
 		if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
 			while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
