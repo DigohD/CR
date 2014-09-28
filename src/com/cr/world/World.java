@@ -15,6 +15,7 @@ import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.test.MeleeTest;
+import com.cr.entity.enemy.wisp.Wisp;
 import com.cr.game.EntityManager;
 import com.cr.game.Game;
 import com.cr.util.Camera;
@@ -103,11 +104,11 @@ public class World {
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
 
-		for(int i = 0; i < 100; i++){
-			MeleeTest e = null;
+		for(int i = 0; i < 10; i++){
+			Wisp e = null;
 			boolean generated = false;
 			while(!generated){
-				e = new MeleeTest(new Vector2f(-1000, -1000), this);
+				e = new Wisp(new Vector2f(-1000, -1000), this);
 				int x = Randomizer.getInt(0, width * 51) + 40;
 				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
 				System.out.println(e.getSprite().getSpriteHeight());
@@ -120,7 +121,7 @@ public class World {
 		
 		
 		
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 1000; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
@@ -130,12 +131,13 @@ public class World {
 				//System.out.println(t.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
+					t.updateRect();
 					generated = true;
 				}
 			}
 		}
 		
-		for(int i = 0; i < 50; i++){
+		for(int i = 0; i < 1000; i++){
 			Stone s;
 			boolean generated = false;
 			while(!generated){

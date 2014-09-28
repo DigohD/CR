@@ -17,7 +17,7 @@ public class RangedTest extends Enemy{
 	
 	public RangedTest(Vector2f position, World world) {
 		super(position, world);
-		sprite = new Sprite("ranged");
+		sprite = new Sprite("wispbody");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);

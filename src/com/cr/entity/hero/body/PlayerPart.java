@@ -1,5 +1,7 @@
 package com.cr.entity.hero.body;
 
+import java.awt.Rectangle;
+
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
@@ -81,6 +83,17 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		bob.tick(dt);
 		if(item != null)
 			item.tick(dt);
+	}
+	
+	@Override
+	public Rectangle getRect() {
+		int x = (int) Hero.position.x;
+		int y = (int) Hero.position.y;
+		
+		int drawX = x + (int)bob.getOffset().x + horXOffset + xOffset;
+		int drawY = y + (int)bob.getOffset().y + yOffset;
+		
+		return new Rectangle((int) drawX, (int) drawY, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 	}
 	
 	@Override

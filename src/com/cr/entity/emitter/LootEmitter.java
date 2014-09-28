@@ -18,7 +18,7 @@ public class LootEmitter extends Emitter{
 
 	@Override
 	public void emit() {
-		new Loot(position, new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), lt.getLootID(), Randomizer.getInt(1, 5));
+		new Loot(position, new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), lt.getLootID(), 1);
 	}
 
 }

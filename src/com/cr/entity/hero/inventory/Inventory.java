@@ -1,5 +1,7 @@
 package com.cr.entity.hero.inventory;
 
+import java.awt.Rectangle;
+
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
@@ -127,6 +129,11 @@ public class Inventory implements Tickable, Renderable{
 	
 	public HeadSlot getHeadSlot() {
 		return headSlot;
+	}
+
+	@Override
+	public Rectangle getRect() {
+		return null;
 	}
 
 	

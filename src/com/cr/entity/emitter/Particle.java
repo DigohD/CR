@@ -1,5 +1,7 @@
 package com.cr.entity.emitter;
 
+import java.awt.Rectangle;
+
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -40,6 +42,11 @@ public class Particle extends Entity implements Tickable, Renderable{
 	@Override
 	public Sprite getSprite() {
 		return sprite;
+	}
+
+	@Override
+	public Rectangle getRect() {
+		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 	}
 
 	

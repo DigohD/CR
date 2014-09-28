@@ -148,6 +148,9 @@ public class ImageLoader {
 		imageLib.put("neutral", loadImage("/enemy/neutral.png"));
 		imageLib.put("ranged", loadImage("/enemy/ranged.png"));
 		
+		imageLib.put("wispbody", loadImage("/enemy/wispbody.png"));
+		imageLib.put("wisplimb", loadImage("/enemy/wisplimb.png"));
+		
 //		// Particles
 		imageLib.put("blood", loadImage("/particle/blood.png"));
 		imageLib.put("white1", loadImage("/particle/white1.png"));

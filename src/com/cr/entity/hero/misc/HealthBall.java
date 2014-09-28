@@ -1,5 +1,7 @@
 package com.cr.entity.hero.misc;
 
+import java.awt.Rectangle;
+
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -25,6 +27,12 @@ public class HealthBall extends Entity implements Renderable{
 	@Override
 	public Sprite getSprite() {
 		return sprite;
+	}
+
+	@Override
+	public Rectangle getRect() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

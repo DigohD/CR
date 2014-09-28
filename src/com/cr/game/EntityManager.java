@@ -1,11 +1,13 @@
 package com.cr.game;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.cr.combat.Projectile;
 import com.cr.combat.loot.Loot;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Window;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
@@ -13,6 +15,7 @@ import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
 import com.cr.stats.StatsSheet;
+import com.cr.util.Camera;
 import com.cr.world.World;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
@@ -128,10 +131,16 @@ public class EntityManager {
 			hero.tick(dt);
 	}
 	
+	int clipCount;
+	
 	public void render(Screen screen){
 		boolean heroRendered = false;
+		Rectangle ScreenRect = new Rectangle((int) Camera.getCamX(), (int) Camera.getCamY(), Window.getWidth(), Window.getHeight());
 		for(Renderable r : renderableEntities){
-			r.render(screen);
+			if(r.getRect() != null){
+				if(ScreenRect.contains(r.getRect()) || ScreenRect.intersects(r.getRect()))
+					r.render(screen);
+			}
 			if(!heroRendered && ((Entity) r).getPosition().y + r.getSprite().getSpriteHeight() > hero.getRect().y + hero.getRect().height)
 				if(hero.isLive()){
 					hero.render(screen);

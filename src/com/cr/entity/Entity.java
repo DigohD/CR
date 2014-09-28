@@ -1,6 +1,7 @@
 package com.cr.entity;
 
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Material;
 
 public abstract class Entity {
 
@@ -51,5 +52,4 @@ public abstract class Entity {
 	public boolean isLive() {
 		return live;
 	}
-
 }

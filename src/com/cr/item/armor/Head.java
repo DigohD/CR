@@ -1,5 +1,7 @@
 package com.cr.item.armor;
 
+import java.awt.Rectangle;
+
 import com.cr.entity.hero.Hero.Direction;
 import com.cr.item.Item;
 
@@ -23,6 +25,11 @@ public abstract class Head extends Item{
 				return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public Rectangle getRect() {
+		return null;
 	}
 
 }

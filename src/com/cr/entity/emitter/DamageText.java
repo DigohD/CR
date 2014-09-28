@@ -1,5 +1,7 @@
 package com.cr.entity.emitter;
 
+import java.awt.Rectangle;
+
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -52,6 +54,12 @@ public class DamageText extends Entity implements Tickable, Renderable{
 
 	@Override
 	public Sprite getSprite() {
+		return null;
+	}
+
+	@Override
+	public Rectangle getRect() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

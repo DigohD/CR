@@ -1,5 +1,7 @@
 package com.cr.entity.hero.inventory;
 
+import java.awt.Rectangle;
+
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -31,6 +33,11 @@ public class Contour implements Renderable{
 	@Override
 	public Sprite getSprite() {
 		return sprite;
+	}
+
+	@Override
+	public Rectangle getRect() {
+		return null;
 	}
 	
 }

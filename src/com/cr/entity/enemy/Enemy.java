@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.combat.loot.LootEntry;
 import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Material;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.enemy.behaviour.Behaviour;
@@ -48,7 +49,6 @@ public abstract class Enemy extends Mob implements Collideable{
 	}
 	
 	public abstract void HeroCollide(Hero hero);
-	
 	
 
 	

@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.cr.combat.loot.LootEntry;
 import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Material;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
@@ -72,6 +73,8 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 			shiverCount = 0;
 		}
 		position = position.add(v);
+		rect.x = (int) position.x;
+		rect.y = (int) position.y;
 	}
 	
 	@Override
@@ -97,7 +100,7 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 
 	@Override
 	public Rectangle getRect() {
-		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		return rect;
 	}
 
 	
