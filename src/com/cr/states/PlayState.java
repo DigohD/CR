@@ -29,7 +29,7 @@ public class PlayState extends GameState{
 			gsm.push(new InventoryState(gsm));
 		}else if(Input.getKey(Input.M)){
 			gsm.push(new CraftingState(gsm, new Forge()));
-		}else if(KeyInput.q){
+		}else if(Input.getKey(Input.Q)){
 			gsm.push(new StatsState(gsm));
 		}else if(Input.getKey(Input.F1)){
 			gsm.push(new BiomeTestState(gsm));

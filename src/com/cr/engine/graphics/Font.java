@@ -14,7 +14,7 @@ import com.cr.game.Game;
 public class Font {
 	
 	private Sprite fontSheet;
-	private String chars = "!              0123456789     ? ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
+	private String chars = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ      abcdefghijklmnopqrstuvwxyz      ";
 	
 	public enum FontColor{
 		BLACK, BLUE, BLUE_DARK, GREEN, GREEN_DARK, MAGENTA, 

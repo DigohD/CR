@@ -5,10 +5,9 @@ import java.util.Random;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.material.Material.State;
+import com.cr.util.Randomizer;
 
 public class Volatile extends Property{
-	
-	Random rnd;
 	
 	@Override
 	public void affectParentMaterialPreState(Material material, State state, ArrayList<Material> materials) {
@@ -22,7 +21,7 @@ public class Volatile extends Property{
 	
 	@Override
 	public void affectParentMaterialPostState(Material material, State state, ArrayList<Material> materials) {
-		if(rnd.nextInt(5) == 0)
+		if(Randomizer.getInt(0, 4) == 0)
 			material.setState(State.BROKEN);
 	}
 	

@@ -5,10 +5,9 @@ import java.util.Random;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.material.Material.State;
+import com.cr.util.Randomizer;
 
 public class Fragile extends Property{
-	
-	Random rnd;
 	
 	@Override
 	public void affectParentMaterialPreState(Material material, State state, ArrayList<Material> materials) {
@@ -23,7 +22,7 @@ public class Fragile extends Property{
 	@Override
 	public void affectParentMaterialPostState(Material material, State state, ArrayList<Material> materials) {
 		if(state == State.BLASTED || state == State.FLASHED)
-			if(rnd.nextInt(2) == 0)
+			if(Randomizer.getInt(0, 1) == 0)
 				material.setState(State.BROKEN);
 	}
 	

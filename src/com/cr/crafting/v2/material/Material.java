@@ -340,6 +340,10 @@ public abstract class Material{
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
+	public void addAmount(int amount) {
+		this.amount = this.amount + amount;
+	}
 
 	public boolean isPrimary() {
 		return isPrimary;

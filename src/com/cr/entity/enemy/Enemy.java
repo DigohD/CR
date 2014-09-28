@@ -2,6 +2,8 @@ package com.cr.entity.enemy;
 
 import java.awt.Rectangle;
 
+import com.cr.combat.loot.LootEntry;
+import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Vector2f;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
@@ -16,6 +18,8 @@ public abstract class Enemy extends Mob implements Collideable{
 	
 	protected Rectangle rect;
 	protected Behaviour behaviour;
+	
+	protected LootTable lt = new LootTable();
 	
 	public Enemy(Vector2f position, World world) {
 		super(position, world);

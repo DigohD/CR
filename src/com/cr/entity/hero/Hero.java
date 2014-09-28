@@ -84,6 +84,8 @@ public class Hero extends Mob implements Collideable{
 		
 		inventory = new Inventory();
 		materialsBox = new MaterialsBox();
+		
+		sheet = new StatsSheet();
 	}
 	
 	protected boolean collisionWithTile(float x, float y){

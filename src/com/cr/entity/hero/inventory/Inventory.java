@@ -89,11 +89,20 @@ public class Inventory implements Tickable, Renderable{
 			if(selectedItem != null && is.isCompatible(selectedItem) && 
 					is.getItem() == null){
 				is.setItem(selectedItem);
-				//Display.standardCursor();
+				
+				if(is instanceof LeftHandSlot ||
+						is instanceof RightHandSlot ||
+						is instanceof HeadSlot)
+					is.applyStats();
+				
 				selectedItem = null;
 			}else if(selectedItem == null && is.getItem() != null){
+				if(is instanceof LeftHandSlot ||
+						is instanceof RightHandSlot ||
+						is instanceof HeadSlot)
+					is.unApplyStats();
+				
 				selectedItem = is.getItem();
-				//Display.setCursor(selectedItem.getIconImage());
 				is.setItem(null);
 			}
 		}

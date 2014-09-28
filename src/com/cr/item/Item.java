@@ -15,6 +15,7 @@ import com.cr.game.Game;
 import com.cr.item.weapon.Weapon;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatModList;
+import com.cr.stats.StatsSheet;
 import com.cr.util.CRString;
 import com.cr.util.Camera;
 import com.cr.util.FontLoader;
@@ -99,24 +100,23 @@ public abstract class Item implements Renderable, Tickable{
 			
 			String amount = w.getDamageBase().getTotal() + "";
 			String amount2 = w.getDamageDice().getTotal() + w.getDamageBase().getTotal() + "";
-			String s = CRString.create("Damage " + amount.substring(0, 1) + " to " + amount2.substring(0, 1));
+			String s = CRString.create("Damage " + amount.substring(0, 1) + " - " + amount2.substring(0, 1));
 			f.setFont(s);
 			f.renderFont(xOffset + 12, yOffset + 24, 0.3f);
 			
 			amount = w.getCooldown().getTotal()/60 + "";
 			s = CRString.create("Cooldown " + amount.substring(0, 3));
-			s = s.replace(".", "p");
 			f.setFont(s);
-			f.renderFont(xOffset + 12, yOffset + 44, 0.3f);
-			counter = 2;
+			f.renderFont(xOffset + 12, yOffset + 52, 0.3f);
+			counter = 3;
 		}
 		
 		for(StatMod x : stats.getStatMods()){
 			String amount = x.getAmount() + "";
-			String s = CRString.create(x.getAffectedStat().toString() + " " + amount.substring(0, 1));
-			s = s.replace("_", " ");
+			int end = amount.lastIndexOf('.');
+			String s = CRString.create(StatsSheet.getStatString(x.getAffectedStat()) + " " + amount.substring(0, end));
 			f.setFont(s);
-			f.renderFont(xOffset + 12, yOffset + 24 + (counter * 20), 0.3f);
+			f.renderFont(xOffset + 12, yOffset + 24 + (counter * 28), 0.3f);
 			counter++;
 		}
 		

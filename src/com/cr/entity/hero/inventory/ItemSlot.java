@@ -8,9 +8,11 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.hero.Hero;
 import com.cr.game.Game;
 import com.cr.input.Mouse;
 import com.cr.item.Item;
+import com.cr.stats.StatMod;
 
 public abstract class ItemSlot extends Button implements Renderable, Tickable, Hooverable{
 
@@ -18,7 +20,7 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable, H
 	protected Sprite itemSprite;
 	protected int xPos, yPos;
 	
-	protected boolean isHoover;
+	protected boolean isHoover, isStatsApplied;
 	
 	protected Item item;
 	
@@ -63,6 +65,18 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable, H
 	
 	public abstract boolean isCompatible(Item item);
 
+	public void applyStats(){
+		for(StatMod x : item.getStatMods().getStatMods())
+			Hero.getSheet().addMod(x);
+		isStatsApplied = true;
+	}
+	
+	public void unApplyStats(){
+		for(StatMod x : item.getStatMods().getStatMods())
+			Hero.getSheet().removeMod(x);
+		isStatsApplied = false;
+	}
+	
 	@Override
 	public void renderHoover(Screen screen) {
 		item.renderDescription(screen);
@@ -77,4 +91,6 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable, H
 	public boolean isHoover() {
 		return isHoover;
 	}
+	
+	
 }

@@ -15,7 +15,7 @@ public class Window {
 		Window.fullscreenMode = fullscreenMode;
 		if(fullscreenMode){
 			try {
-				Display.setFullscreen(true);
+				Display.setFullscreen(fullscreenMode);
 				Display.setVSyncEnabled(true);
 				Display.create();
 				Keyboard.create();
