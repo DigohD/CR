@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.pattern.Pattern;
+import com.cr.crafting.v2.pattern.armor.BreastplatePattern;
 import com.cr.crafting.v2.pattern.armor.HelmPattern;
 import com.cr.crafting.v2.pattern.weapon.KnifePattern;
 import com.cr.entity.hero.Hero;
@@ -39,6 +40,7 @@ public class Forge {
 	public void fillPossiblePatterns(ArrayList<Pattern> patterns){
 		patterns.add(new KnifePattern());
 		patterns.add(new HelmPattern());
+		patterns.add(new BreastplatePattern());
 	}
 	
 	public void addMaterial(Material material, int amount){

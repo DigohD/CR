@@ -34,7 +34,7 @@ public class Hero extends Mob implements Collideable{
 
 	private int stepCounter;
 	private static Head head;
-	private Body body;
+	private static Body body;
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
 
@@ -201,6 +201,7 @@ public class Hero extends Mob implements Collideable{
 		rightHand.setItem(inventory.getrHSlot().getItem());
 		leftHand.setItem(inventory.getlHSlot().getItem());
 		head.setItem(inventory.getHeadSlot().getItem());
+		body.setItem(inventory.getUpperBodySlot().getItem());
 	}
 	
 	@Override

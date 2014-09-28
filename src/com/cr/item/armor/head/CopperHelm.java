@@ -16,13 +16,11 @@ public class CopperHelm extends Head{
 
 	@Override
 	public void render(Screen screen) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void tick(float dt) {
-		// TODO Auto-generated method stub
 		
 	}
 
