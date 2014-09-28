@@ -37,7 +37,7 @@ public class World {
 	
 	private float currentTime = 0.2f;
 	private float targetTime = 2f;
-	private float dayNightCycleTime = 6.0f;
+	private float dayNightCycleTime = 10.0f;
 	private float amplitudeWave = 5f;
 	private float angleWave = 2.86f;
 	private float angleWaveSpeed = 0.3f;
@@ -46,19 +46,7 @@ public class World {
 	private boolean day = true, night = false;
 	private static boolean start = true;
 	
-	float light_theta = -10.0f;
-	float light_phi = (PI2/2.0f) / 4.0f; 
-	float light_r = -2000.0f; 
-	
-	public Vector3f sphericalToCartesian(float theta, float phi, float r){
-		float x = (float) (r * Math.sin(theta) * Math.sin(phi));
-		float y = (float) (r * Math.cos(phi));
-		float z = (float) (r * Math.cos(theta) * Math.sin(phi));
-		
-		return new Vector3f(x,y,z);
-	}
-	
-	private Vector3f lightPos, viewSpaceLightPos, viewSpaceLightPos2, ambientLight;
+	private Vector3f viewSpaceLightPos, viewSpaceLightPos2, ambientLight;
 	
 	private Texture cubeMap, mask, normalMap;
 	Sprite sprite, sprite1;
@@ -66,7 +54,6 @@ public class World {
 	public World(){
 		transform = new Transform();
 		
-		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
 		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, Window.getHeight()/2, -1000));
 		//viewSpaceLightPos2 = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, 100, -10));
 		ambientLight = new Vector3f(currentTime, currentTime, currentTime);
