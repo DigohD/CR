@@ -35,14 +35,10 @@ public class Sprite {
 	}
 	
 	public Sprite(String name, Shader shader, Transform transform){
-		this(name, shader, transform, 0);
-	}
-	
-	public Sprite(String name, Shader shader, Transform transform, int unit){
 		this.shader = shader;
 		this.transform = transform;
 		
-		texture = new Texture(name, unit);
+		texture = new Texture(name);
 		
 		width = texture.getWidth();
 		height = texture.getHeight();
@@ -142,8 +138,10 @@ public class Sprite {
 	
 	public void bind(int unit){
 		shader.bind();
-//		if(unit == 1)
-//			shader.setUniformi("envMap", unit);
+		if(unit == 2)
+			shader.setUniformi("sampler2", unit);
+		if(unit == 1)
+			shader.setUniformi("sampler1", unit);
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		if(!tAtlas)
 			texture.bind(unit);

@@ -56,7 +56,7 @@ public class Transform {
 		return ortho.mul(getViewMatrix().mul(getModelMatrix()));
 	}
 	
-	public Matrix4f getOrthoTransformation2(){
+	public Matrix4f getWorldProjection(){
 		return ortho.mul(getModelMatrix());
 	}
 	

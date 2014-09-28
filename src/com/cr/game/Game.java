@@ -9,6 +9,7 @@ import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
 import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
+import com.cr.world.World;
 
 public class Game extends CoreEngine{
 	
@@ -25,13 +26,16 @@ public class Game extends CoreEngine{
 	private void init(){
 		screen = new Screen();
 		new ImageLoader();
-		new FontLoader();
+	
 		
 		shader = new Shader("basicVertShader", "basicFragShader");
 		shader.addUniform("transformation");
-		shader.addUniform("envMap");
+//		shader.addUniform("sampler1");
+//		shader.addUniform("sampler2");
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
+		
+		new FontLoader();
 		
 		
 		gsm = new GameStateManager();
@@ -66,7 +70,9 @@ public class Game extends CoreEngine{
 	
 	@Override
 	public void cleanUp() {
-		
+		shader.deleteShader();
+		if(World.getShader() != null)
+			World.getShader().deleteShader();
 	}
 	
 	public static void main(String[] args){

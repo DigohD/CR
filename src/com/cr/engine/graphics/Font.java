@@ -9,6 +9,7 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.core.Vertex;
 import com.cr.engine.graphics.shader.Shader;
+import com.cr.game.Game;
 
 public class Font {
 	
@@ -33,11 +34,7 @@ public class Font {
 	public Font(String text, FontColor color, boolean dynamic){
 
 		this.text = text;
-		shader = new Shader("basicVertShader", "basicFragShader");
-		
-		shader.addUniform("transformation");
-		shader.addUniform("sampler");
-		shader.setUniformi("sampler", 0);
+		this.shader = Game.shader;
 		
 		t = new Transform();
 		charMap = new HashMap<Character, Vector2f>();
@@ -229,7 +226,7 @@ public class Font {
 		t.translate(x, y, 0);
 		t.scale(scale, scale, 1);
 		shader.bind();
-		shader.setUniform("transformation", t.getOrthoTransformation2());
+		shader.setUniform("transformation", t.getWorldProjection());
 		fontSheet.getTextureAtlas().bind();
 		mesh.render();
 		fontSheet.getTextureAtlas().unbind();

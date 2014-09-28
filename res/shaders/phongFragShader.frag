@@ -100,16 +100,8 @@ vec3 rotateZ(vec3 v, float angle){
 
 void main() 
 {
-	//vec3 viewSpaceLightPos = vec3(600, 500, -100);
-	//vec3 viewSpacePos = vec3(-100, 100, 0);
-	
-	
-	
-	
 	vec3 normal = calcBumpedNormal();
-	
 	vec3 directionToLight = normalize(viewSpaceLightPos - viewSpacePos);
-	//vec3 directionToLight2 = normalize(viewSpaceLightPos2 - viewSpacePos);
 	directionToLight = rotateZ(directionToLight, time);
 	vec3 directionFromEye = normalize(viewSpacePos);
 	vec3 reflectionVec = (modelview * vec4(reflect(directionFromEye, normal), 0.0)).xyz;
@@ -123,7 +115,6 @@ void main()
 		vec2 a2DVector2 = texCoord + a2DVectorTemp2;
 	
 		texColor = (texture2D(sampler, texCoord.xy) * 0.3f) + (texture2D(sampler, a2DVector.xy) * 0.2f) + (texture2D(sampler, a2DVector2.xy) * 0.8f);
-		texColor = texColor * texture2D(envMap, texCoord.xy); 
 	}else{
 		texColor = texture2D(sampler, texCoord.xy);
 	}
@@ -133,20 +124,11 @@ void main()
 	vec4 ambient = texColor * vec4(material_diffuse_color,1.0);
 	vec4 emissive = texColor * vec4(material_emissive_color, 1.0);
 	
-	vec4 diffuseTotal;
-	vec4 specularTotal;
-	
 	vec4 ambientTotal = calculateAmbient(scene_ambient_light, ambient);
-	
-	
-	
-	diffuseTotal = calculateDiffuse(scene_light, diffuse, normal, directionToLight);
-	specularTotal = calculateSpecular(scene_light, specular, material_shininess, normal, directionToLight, directionFromEye);
-	
-	//vec4 fresnel = calculateFresnel(specular, normal, directionFromEye);
+	vec4 diffuseTotal = calculateDiffuse(scene_light, diffuse, normal, directionToLight);
+	vec4 specularTotal = calculateSpecular(scene_light, specular, material_shininess, normal, directionToLight, directionFromEye);
 	
 	vec4 shading = ambientTotal + diffuseTotal + specularTotal + emissive;
-	//vec4 shading2 = ambientTotal + diffuseTotal2 + specularTotal + emissive;
 	
 	if(texture2D(sampler, texCoord.xy).w == 0){
 		shading = vec4(0);

@@ -60,17 +60,17 @@ public class World {
 	
 	private Vector3f lightPos, viewSpaceLightPos, viewSpaceLightPos2, ambientLight;
 	
-	private Texture normalMap, cubeMap, mask;
-	Sprite sprite;
+	private Texture cubeMap, mask;
+	Sprite sprite, sprite1;
 	
 	public World(){
 		transform = new Transform();
 		
 		lightPos = sphericalToCartesian(light_theta, light_phi, light_r);
-		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, -Window.getHeight(), -800));
+		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, Window.getHeight()/2, -100));
 		//viewSpaceLightPos2 = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, 100, -10));
 		ambientLight = new Vector3f(currentTime, currentTime, currentTime);
-		normalMap = new Texture("normalMap1");
+		//normalMap = new Texture("normalMap1");
 		
 	
 		
@@ -80,8 +80,8 @@ public class World {
 		shader.addUniform("modelViewMatrix");
 		shader.addUniform("time");
 		shader.addUniform("sampler");
-		shader.addUniform("envMap");
-		shader.addUniform("normalMap");
+//		shader.addUniform("envMap");
+//		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
@@ -97,20 +97,19 @@ public class World {
 	
 
 		shader.setUniformi("sampler", 0);
-		shader.setUniformi("normalMap", 2);
-
+//		shader.setUniformi("normalMap", 2);
+//		shader.setUniformi("envMap", 1);
 		
 	
-//		sprite = new Sprite("mask", Game.shader, new Transform(), 1);
-//		sprite.bind(1);
+//		sprite = new Sprite("mask", Game.shader, new Transform());
+//		sprite1 = new Sprite("mask1", Game.shader, new Transform());
+//		sprite.bind(2);
 //		sprite.unbind();
-		
-		mask = new Texture("mask", 1);
-		shader.bind();
-		shader.setUniformi("envMap", 1);
-		mask.bind(1);
-		mask.unbind();
-		shader.unbind();
+//		
+//		mask = new Texture("mask1", 2);
+//		mask.bind(2);
+//		mask.unbind();
+	
 		
 		map = new TileMap(100, 100);
 
@@ -171,6 +170,7 @@ public class World {
 		t += (dt*angleWaveSpeed*0.3f)/ dayNightCycleTime;
 		
 		if(t >= PI2) t = 0;
+		viewSpaceLightPos = viewSpaceLightPos.rotate(new Vector3f(0,0,1), (t*dt*angleWaveSpeed*0.3f)/ dayNightCycleTime);
 		
 		if(currentTime <= 1.2f && day){
 			currentTime += (dt*angleWaveSpeed*0.3f)/dayNightCycleTime;
@@ -227,6 +227,8 @@ public class World {
 	}
 
 	public void render(Screen screen) {
+//		screen.renderStaticSprite(sprite, 0, 0, 1);
+//		screen.renderStaticSprite(sprite1, 200, 0, 2);
 		shader.bind();
 		
 		shader.setUniformf("waveDataX", angleWave);
@@ -234,15 +236,14 @@ public class World {
 		shader.setUniform("transformation", transform.getOrthoTransformation());
 		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
 		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
-		//shader.setUniformf("viewSpaceLightPos2", viewSpaceLightPos2);
 		shader.setUniformf("scene_ambient_light", ambientLight);
 		shader.setUniformf("time", t);
 		
 		map.renderMap();
 		
 		shader.unbind();
-		
-		em.render(screen);
+	
+		//em.render(screen);
 	}
 	
 	public boolean tileExists(int xp, int yp){
