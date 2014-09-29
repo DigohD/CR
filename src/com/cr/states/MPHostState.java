@@ -1,9 +1,14 @@
 package com.cr.states;
 
 import com.cr.engine.graphics.Screen;
+import com.cr.entity.hero.Hero;
 import com.cr.game.GameStateManager;
+import com.cr.world.World;
 
 public class MPHostState extends GameState{
+	
+	
+
 
 	public MPHostState(GameStateManager gsm) {
 		super(gsm);
@@ -12,7 +17,8 @@ public class MPHostState extends GameState{
 
 	@Override
 	public void init() {
-		
+	
+	
 	}
 
 	@Override

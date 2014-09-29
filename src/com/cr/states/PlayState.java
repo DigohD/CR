@@ -9,7 +9,7 @@ import com.cr.world.World;
 
 public class PlayState extends GameState{
 
-	private World w;
+	private static World w;
 
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -42,6 +42,10 @@ public class PlayState extends GameState{
 	@Override
 	public void render(Screen screen) {
 		w.render(screen);
+	}
+
+	public static World getWorld() {
+		return w;
 	}
 
 }

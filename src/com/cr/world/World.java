@@ -111,7 +111,7 @@ public class World {
 				e = new Wisp(new Vector2f(-1000, -1000), this);
 				int x = Randomizer.getInt(0, width * 51) + 40;
 				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				System.out.println(e.getSprite().getSpriteHeight());
+				//System.out.println(e.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
 					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
 					generated = true;
@@ -121,7 +121,7 @@ public class World {
 		
 		
 		
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 100; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
@@ -137,7 +137,7 @@ public class World {
 			}
 		}
 		
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 100; i++){
 			Stone s;
 			boolean generated = false;
 			while(!generated){
