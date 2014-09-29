@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.entity.hero.HeroMP;
 import com.cr.net.packets.ConnectPacket01;
 import com.cr.net.packets.MovePacket02;
@@ -90,7 +91,9 @@ public class Client implements Runnable{
 				packet = new MovePacket02(data);
 				
 				for(int i = 0; i < connectedClients.size(); i++){
-					
+					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
+						heroMockups.get(i).setPosition(new Vector2f(((MovePacket02) packet).getX(), ((MovePacket02) packet).getY()));
+					}
 				}
 				
 				break;
