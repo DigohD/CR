@@ -51,7 +51,8 @@ public class MPHostState extends GameState{
 		world.tick(dt);
 		
 		for(int i = 0; i < mockUps.size(); i++){
-			mockUps.get(i).init();
+			if(mockUps.get(i).getSprite() == null)
+				mockUps.get(i).init();
 		}
 		
 		MovePacket02 mp = new MovePacket02(hero.getUserName(), hero.getPos());
