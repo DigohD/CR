@@ -19,6 +19,7 @@ import com.cr.item.weapon.Weapon;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Camera;
+import com.cr.util.RPCalc;
 import com.cr.util.Randomizer;
 
 public class OneHandAttack extends Projectile{
@@ -122,7 +123,11 @@ public class OneHandAttack extends Projectile{
 			ImpactEmitter ie = new ImpactEmitter(new Vector2f(weapon.getPos().x + width / 2, weapon.getPos().y + height / 2), 3, "blood", 12, velocity, 5);
 			new KnockBack(20, 1, e, null, getVelocity().div(2));
 			
-			e.takeDamage(weapon.getDamage());
+			float damage = RPCalc.calculateDamage(weapon.getDamage(), Hero.getSheet(), e.getSheet());
+			e.takeDamage(damage);
+			System.out.println("Flat Damage done: " + weapon.getDamage());
+			System.out.println("Final Damage done: " + damage);
+			System.out.println("");
 			
 			weapon.playHitSound();
 			
