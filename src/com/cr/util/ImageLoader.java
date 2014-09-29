@@ -94,6 +94,8 @@ public class ImageLoader {
 		imageLib.put("copperhelmicon", loadImage("items/armors/copperhelmicon.png"));
 		imageLib.put("copperplate", loadImage("items/armors/copperplate.png"));
 		imageLib.put("copperplateicon", loadImage("items/armors/copperplateicon.png"));
+		imageLib.put("copperleggings", loadImage("items/armors/copperleggings.png"));
+		imageLib.put("copperleggingsicon", loadImage("items/armors/copperleggingsicon.png"));
 		
 		// Inventory UI
 		//imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
@@ -140,12 +142,14 @@ public class ImageLoader {
 		imageLib.put("flatwhite", loadImage("/craftingui/white.png"));
 		imageLib.put("flatdarkred", loadImage("/craftingui/darkred.png"));
 		imageLib.put("flatgreen", loadImage("/craftingui/green.png"));
+		imageLib.put("blank", loadImage("/craftingui/blank.png"));
 //		
 //		// Patterns
 		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));
 		imageLib.put("hammerpattern", loadImage("/pattern/hammerpattern.png"));
 		imageLib.put("helmpattern", loadImage("/pattern/helmpattern.png"));
 		imageLib.put("breastplatepattern", loadImage("/pattern/breastplatepattern.png"));
+		imageLib.put("leggingspattern", loadImage("/pattern/leggingspattern.png"));
 //		
 		// Enemies
 		imageLib.put("critter", loadImage("/enemy/critter.png"));

@@ -74,6 +74,7 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		else
 			screen.renderSprite(sprite, drawX,drawY, 0, spriteID);
 		
+		
 		if(item != null && !item.renderPrePart(dir))
 			item.render(screen, drawX, drawY, spriteID);
 	}

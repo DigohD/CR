@@ -18,6 +18,7 @@ public class Inventory implements Tickable, Renderable{
 	private LeftHandSlot lHSlot;
 	private HeadSlot headSlot;
 	private UpperBodySlot upperBodySlot;
+	private LowerBodySlot lowerBodySlot;
 	
 	private static Item selectedItem;
 	
@@ -39,6 +40,7 @@ public class Inventory implements Tickable, Renderable{
 		lHSlot = new LeftHandSlot(xOffset, yOffset);
 		headSlot = new HeadSlot(xOffset, yOffset);
 		upperBodySlot = new UpperBodySlot(xOffset, yOffset);
+		lowerBodySlot = new LowerBodySlot(xOffset, yOffset);
 	}
 	
 	@Override
@@ -57,6 +59,7 @@ public class Inventory implements Tickable, Renderable{
 		lHSlot.render(screen);
 		headSlot.render(screen);
 		upperBodySlot.render(screen);
+		lowerBodySlot.render(screen);
 	}
 
 	@Override
@@ -87,6 +90,7 @@ public class Inventory implements Tickable, Renderable{
 		rHSlot.tick(dt);
 		headSlot.tick(dt);
 		upperBodySlot.tick(dt);
+		lowerBodySlot.tick(dt);
 	}
 
 	public static void buttonClicked(Button button){
@@ -99,7 +103,8 @@ public class Inventory implements Tickable, Renderable{
 				if(is instanceof LeftHandSlot ||
 						is instanceof RightHandSlot ||
 						is instanceof HeadSlot ||
-						is instanceof UpperBodySlot)
+						is instanceof UpperBodySlot ||
+						is instanceof LowerBodySlot)
 					is.applyStats();
 				
 				selectedItem = null;
@@ -107,7 +112,8 @@ public class Inventory implements Tickable, Renderable{
 				if(is instanceof LeftHandSlot ||
 						is instanceof RightHandSlot ||
 						is instanceof HeadSlot ||
-						is instanceof UpperBodySlot)
+						is instanceof UpperBodySlot ||
+						is instanceof LowerBodySlot)
 					is.unApplyStats();
 				
 				selectedItem = is.getItem();
@@ -139,6 +145,10 @@ public class Inventory implements Tickable, Renderable{
 	
 	public UpperBodySlot getUpperBodySlot() {
 		return upperBodySlot;
+	}
+	
+	public LowerBodySlot getLowerBodySlot() {
+		return lowerBodySlot;
 	}
 
 	@Override
