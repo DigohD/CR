@@ -160,6 +160,11 @@ public class ImageLoader {
 		imageLib.put("wispbody", loadImage("/enemy/wispbody.png"));
 		imageLib.put("wisplimb", loadImage("/enemy/wisplimb.png"));
 		
+		imageLib.put("felfbody", loadImage("/enemy/forestelf/felfbody.png"));
+		imageLib.put("felfhead", loadImage("/enemy/forestelf/felfhead.png"));
+		imageLib.put("felflefthand", loadImage("/enemy/forestelf/felflefthand.png"));
+		imageLib.put("felfrighthand", loadImage("/enemy/forestelf/felfrighthand.png"));
+		
 //		// Particles
 		imageLib.put("blood", loadImage("/particle/blood.png"));
 		imageLib.put("white1", loadImage("/particle/white1.png"));

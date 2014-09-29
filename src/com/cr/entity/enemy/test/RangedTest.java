@@ -36,7 +36,7 @@ public class RangedTest extends Enemy{
 		if(counter > 90){
 			Vector2f projVel;
 			projVel = Hero.position.sub(position).normalize().mul(35);
-			Linear lin = new Linear(position, projVel);
+			Linear lin = new Linear(position, projVel, this);
 			counter = 0;
 		}
 	}

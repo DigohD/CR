@@ -14,6 +14,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
+import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.test.MeleeTest;
 import com.cr.entity.enemy.wisp.Wisp;
 import com.cr.game.EntityManager;
@@ -104,11 +105,11 @@ public class World {
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
 
-		for(int i = 0; i < 5; i++){
-			Wisp e = null;
+		for(int i = 0; i < 50; i++){
+			ForestElf e = null;
 			boolean generated = false;
 			while(!generated){
-				e = new Wisp(new Vector2f(-1000, -1000), this);
+				e = new ForestElf(new Vector2f(-1000, -1000), this);
 				int x = Randomizer.getInt(0, width * 51) + 40;
 				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
 				System.out.println(e.getSprite().getSpriteHeight());
