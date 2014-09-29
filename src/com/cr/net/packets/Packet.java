@@ -6,7 +6,7 @@ import com.cr.net.server.Server;
 public abstract class Packet {
 	
 	public static enum PacketTypes{
-		INVALID(-1), LOGIN(00), DISCONNECT(01), MOVE(02);
+		INVALID(-1), LOGIN(00), CONNECT(01), MOVE(02), DISCONNECT(03);
 		
 		private int packetID;
 		

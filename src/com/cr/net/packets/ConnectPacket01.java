@@ -4,24 +4,22 @@ import com.cr.engine.core.Vector2f;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class MovePacket02 extends Packet{
+public class ConnectPacket01 extends Packet{
 
-	private Vector2f pos = new Vector2f(0, 0);
 	private String userName;
-	
-	public MovePacket02(byte[] data) {
-	    super(02);
-	    
-	    String[] dataArray = readData(data).split(":");
-	  
-	    this.userName = dataArray[1];
-	    this.pos.x = Float.parseFloat(dataArray[2]);
-	    this.pos.y = Float.parseFloat(dataArray[3]);
-	}
+	private Vector2f pos = new Vector2f(0, 0);
 
-	public MovePacket02(String userName, Vector2f pos) {
-		super(02);
-		
+	public ConnectPacket01(byte[] data) {
+		super(01);
+		String[] dataArray = readData(data).split(":");
+		  
+		this.userName = dataArray[1];
+		this.pos.x = Float.parseFloat(dataArray[2]);
+		this.pos.y = Float.parseFloat(dataArray[3]);
+	}
+	
+	public ConnectPacket01(String userName,Vector2f pos) {
+		super(01);
 		this.userName = userName;
 		this.pos = pos;
 	}
@@ -34,17 +32,19 @@ public class MovePacket02 extends Packet{
 	@Override
 	public void writeData(Server server) {
 		server.sendDataToAllClients(getData());
-	}
-
-	@Override
-	public byte[] getData() {
-		return ("02" + ":" + userName + ":" + pos.x + ":" + pos.y).getBytes();
+		
 	}
 	
+	@Override
+	public byte[] getData() {
+		return ("01" + ":" + userName + ":" + pos.x + ":" + pos.y).getBytes();
+	}
+	
+
 	public Vector2f getPos() {
 		return pos;
 	}
-
+	
 	public float getX() {
 		return pos.x;
 	}

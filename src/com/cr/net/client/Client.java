@@ -6,14 +6,23 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cr.entity.hero.HeroMP;
+import com.cr.net.packets.ConnectPacket01;
+import com.cr.net.packets.MovePacket02;
+import com.cr.net.packets.Packet;
+import com.cr.net.packets.Packet.PacketTypes;
 
 public class Client implements Runnable{
-	
 
-	
 	private InetAddress ip;
 	private DatagramSocket socket;
 	private Thread thread;
+	
+	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
+	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
 	
 	private volatile boolean running = false;
 	
@@ -59,9 +68,33 @@ public class Client implements Runnable{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 		}
 		
+	}
+	
+	private void parsePacket(byte[] data, InetAddress address, int port) {
+		String message = new String(data).trim();
+		
+		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
+		Packet packet = null;
+		
+		switch(type){
+			case CONNECT:
+				packet = new ConnectPacket01(data);
+				HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos());
+				heroMockups.add(hostHero);
+				connectedClients.add(new ClientInfo(((ConnectPacket01)packet).getUserName(), address, port));
+				break;
+			case MOVE:
+				packet = new MovePacket02(data);
+				
+				for(int i = 0; i < connectedClients.size(); i++){
+					
+				}
+				
+				break;
+		}
 	}
 	
 	public void sendData(byte[] data){
@@ -73,6 +106,14 @@ public class Client implements Runnable{
 			e.printStackTrace();
 		}
 		
+	}
+
+	public List<ClientInfo> getConnectedClients() {
+		return connectedClients;
+	}
+
+	public List<HeroMP> getHeroMockups() {
+		return heroMockups;
 	}
 	
 

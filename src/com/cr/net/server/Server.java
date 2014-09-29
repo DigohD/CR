@@ -10,8 +10,10 @@ import java.util.List;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.entity.hero.HeroMP;
+import com.cr.game.EntityManager;
 import com.cr.net.client.ClientInfo;
 import com.cr.net.packets.AcceptPacket03;
+import com.cr.net.packets.ConnectPacket01;
 import com.cr.net.packets.LoginPacket00;
 import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
@@ -92,16 +94,13 @@ public class Server implements Runnable{
 				packet = new LoginPacket00(data);
 				System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((LoginPacket00) packet).getUserName() + " has connected");
 				ClientInfo client = new ClientInfo(((LoginPacket00) packet).getUserName(), address, port);
-				HeroMP hero = new HeroMP(client.getUserName(), new Vector2f(10,10));
+				HeroMP hero = new HeroMP(client.getUserName(), EntityManager.getHero().getPos());
 				addConnection(client, hero, (LoginPacket00) packet);
 				break;
 			case MOVE:
 				packet = new MovePacket02(data);
-				System.out.println("Packet move recieved");
 				for(int i = 0; i < connectedClients.size(); i++){
-					System.out.println("Test Usernames... " + connectedClients.get(i).getUserName() + " =? " + ((MovePacket02)packet).getUserName());
 					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						System.out.println("HeoMP found!");
 						heroMockups.get(i).setPosition(new Vector2f(((MovePacket02) packet).getX(), ((MovePacket02) packet).getY()));
 					}
 				}
@@ -114,7 +113,7 @@ public class Server implements Runnable{
 		
 	}
 	
-	public void addConnection(ClientInfo client, HeroMP hero, LoginPacket00 packet) {
+	public void addConnection(ClientInfo client, HeroMP hero, Packet packet) {
     	boolean alreadyConnected = false;
     	//loop through all the connected players 
         for (ClientInfo c : this.connectedClients) {
@@ -138,6 +137,10 @@ public class Server implements Runnable{
                 sendData(packet.getData(), client.getInetAddress(), client.getPort());
             }
         }
+        
+        packet = new ConnectPacket01(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
+        sendData(packet.getData(), client.getInetAddress(), client.getPort());
+        
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
         	sendData(new AcceptPacket03(client.getUserName()).getData(), client.getInetAddress(), client.getPort());
