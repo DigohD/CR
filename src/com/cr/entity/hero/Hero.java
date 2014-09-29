@@ -70,7 +70,6 @@ public class Hero extends Mob implements Collideable{
 			}
 		}
 				
-		
 		head = new Head();
 		body = new Body();
 		rightHand = new RightHand();
@@ -114,7 +113,7 @@ public class Hero extends Mob implements Collideable{
 		rect.setLocation((int)position.x,(int)position.y);
 		
 		input.input();
-
+		
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		
@@ -137,6 +136,8 @@ public class Hero extends Mob implements Collideable{
 		}if(leftHand.getItem() != null && Input.getMouse(1)){
 			leftHand.getItem().activate();
 		}
+		
+		passiveRegen(dt);
 	}
 
 	@Override
@@ -179,8 +180,6 @@ public class Hero extends Mob implements Collideable{
 	
 	@Override
 	protected void move(float dt){
-		
-		
 		if(printTimer++ > 3){
 			//new FootPrint();
 			printTimer = 0;
@@ -206,7 +205,7 @@ public class Hero extends Mob implements Collideable{
 	
 	@Override
 	public void death() {
-		
+		live = false;
 	}
 	
 	@Override
@@ -238,6 +237,25 @@ public class Hero extends Mob implements Collideable{
 		
 		if(hpNow.getTotal() < 0)
 			death();
+	}
+	
+	private void passiveRegen(float dt){
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		Stat hpRegen = sheet.getStat(StatID.LIFE_REGEN);
+		System.out.println("Regen: " + (hpRegen.getTotal() / 300f));
+		hpNow.setNewBase(hpNow.getTotal() + (hpRegen.getTotal() / 300f));
+		
+		if(hpNow.getTotal() > sheet.getStat(StatID.HP_MAX).getTotal())
+			hpNow.setNewBase(sheet.getStat(StatID.HP_MAX).getTotal());
+	}
+	
+	public static void onHittingSomething(){
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		Stat hpOnHit = sheet.getStat(StatID.LIFE_ON_HIT);
+		hpNow.setNewBase(hpNow.getTotal() + hpOnHit.getTotal());
+		
+		if(hpNow.getTotal() > sheet.getStat(StatID.HP_MAX).getTotal())
+			hpNow.setNewBase(sheet.getStat(StatID.HP_MAX).getTotal());
 	}
 	
 	@Override
