@@ -7,13 +7,16 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
+import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.effect.movement.KnockBack;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.emitter.ParticleEmitter;
+import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.item.weapon.Weapon;
+import com.cr.util.RPCalc;
 
 public class Linear extends EnemyProjectile implements Renderable{
 
@@ -24,8 +27,8 @@ public class Linear extends EnemyProjectile implements Renderable{
 	protected int lifetime = 90, counter;
 	protected float damage = 10f;
 	
-	public Linear(Vector2f pos, Vector2f velocity) {
-		super(pos);
+	public Linear(Vector2f pos, Vector2f velocity, Enemy owner) {
+		super(pos, owner);
 		this.velocity = velocity;
 		
 		sprite = new Sprite("wispp");
@@ -48,7 +51,8 @@ public class Linear extends EnemyProjectile implements Renderable{
 			ImpactEmitter ie = new ImpactEmitter(CollisionPoint, 1, "white1", 5, velocity, 5);
 			KnockBack kb = new KnockBack(20, 1, ((Hero) obj), null, this.getVelocity().div(2));
 			
-			h.takeDamage(damage);
+			float finalDamage = RPCalc.calculateDamage(damage, owner.getSheet(), Hero.getSheet());
+			h.takeDamage(finalDamage);
 			
 			spent = true;
 			live = false;
