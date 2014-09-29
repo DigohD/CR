@@ -6,7 +6,7 @@ import com.cr.net.server.Server;
 
 public class MovePacket02 extends Packet{
 
-	private Vector2f pos;
+	private Vector2f pos = new Vector2f(0, 0);
 	private String userName;
 	
 	public MovePacket02(byte[] data) {
@@ -14,9 +14,11 @@ public class MovePacket02 extends Packet{
 	    
 	    String[] dataArray = readData(data).split(":");
 	    
+	    System.out.println("REcieved String: " + readData(data));
 	    this.userName = dataArray[1];
-	    this.pos.x = Integer.parseInt(dataArray[2]);
-	    this.pos.y = Integer.parseInt(dataArray[3]);
+	    System.out.println("REcieved name: " + userName);
+	    this.pos.x = Float.parseFloat(dataArray[2]);
+	    this.pos.y = Float.parseFloat(dataArray[3]);
 	}
 
 	public MovePacket02(String userName, Vector2f pos) {

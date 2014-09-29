@@ -13,7 +13,6 @@ import com.cr.game.EntityManager;
 public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	private String userName;
-	private Vector2f position;
 	private Sprite sprite;
 	
 	public HeroMP(String userName, Vector2f position){
@@ -30,6 +29,12 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	@Override
 	public void tick(float dt) {
 	
+	}
+	
+	@Override
+	public void setPosition(Vector2f position) {
+		System.out.println("POS SET!");
+		this.position = position;
 	}
 	
 	@Override

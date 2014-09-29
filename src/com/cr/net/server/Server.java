@@ -97,9 +97,12 @@ public class Server implements Runnable{
 				break;
 			case MOVE:
 				packet = new MovePacket02(data);
+				System.out.println("Packet move recieved");
 				for(int i = 0; i < connectedClients.size(); i++){
+					System.out.println("Test Usernames... " + connectedClients.get(i).getUserName() + " =? " + ((MovePacket02)packet).getUserName());
 					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						heroMockups.get(i).setPosition(new Vector2f(((MovePacket02) packet).getX(), ((MovePacket02) packet).getX()));
+						System.out.println("HeoMP found!");
+						heroMockups.get(i).setPosition(new Vector2f(((MovePacket02) packet).getX(), ((MovePacket02) packet).getY()));
 					}
 				}
 				
