@@ -136,5 +136,11 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public abstract void death();
 	public abstract void push(Vector2f distance);
 	public abstract void playHurtSound();
+
+	public StatsSheet getSheet() {
+		return sheet;
+	}
+	
+	
 	
 }

@@ -5,10 +5,13 @@ import java.awt.Rectangle;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.entity.Collideable;
 import com.cr.entity.Entity;
+import com.cr.entity.Mob;
 import com.cr.entity.Renderable;
 import com.cr.entity.emitter.Particle;
 import com.cr.entity.enemy.Enemy;
+import com.cr.entity.enemy.attack.EntityProjectile;
 import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Chasing;
 import com.cr.entity.enemy.behaviour.Fleeing;
@@ -27,10 +30,10 @@ public class ForestElf extends Enemy{
 		public ForestElfSheet(){
 			super();
 			sheet.put(StatID.LEVEL, new Stat("Level", 1));
-			sheet.put(StatID.STRENGTH, new Stat("Strength", 5));
+			sheet.put(StatID.STRENGTH, new Stat("Strength", 15));
 			sheet.put(StatID.AGILITY, new Stat("Agility", 5));
-			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 20));
-			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10));
+			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 5));
+			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 1));
 			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 5));
 			
 			sheet.put(StatID.ARMOR, new Stat("Armor", 15));
@@ -49,7 +52,6 @@ public class ForestElf extends Enemy{
 	}
 	
 	private class ForestElfHead extends Entity implements Renderable{
-
 		private Sprite headSprite;
 		private float counter;
 		private Vector2f v, offset;
@@ -66,15 +68,16 @@ public class ForestElf extends Enemy{
 		}
 
 		public void tick(ForestElf parent, float dt) {
-			counter = counter + 0.2f;
+			if(parent.isMoving){
+				counter = counter + 0.2f;
+				v = new Vector2f(0, (float) Math.sin(counter));
+			}else{
+				counter = counter + 0.05f;
+				v = new Vector2f(0, (float) Math.sin(counter) / 4);
+			}
 			
-			v = new Vector2f(0, (float) Math.sin(counter));
 			
 			offset = offset.add(v);
-			
-			System.out.println(offset.toString());
-			System.out.println(v.toString());
-			System.out.println();
 			
 			position = offset.add(parent.position);
 		}
@@ -93,12 +96,108 @@ public class ForestElf extends Enemy{
 		public Rectangle getRect() {
 			return new Rectangle((int) position.x, (int) position.y + 1, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		}
+	}
+	
+	private class ForestElfRightHand extends Entity{
+		
+		private Sprite handSprite;
+		private float counter;
+		private Vector2f v, offset;
+		private Enemy parent;
+		private EntityProjectile ep;
+		
+		public ForestElfRightHand(Vector2f position, Enemy parent) {
+			super(position);
+			handSprite = new Sprite("felfrighthand");
+			this.parent = parent;
+			
+			v = new Vector2f(0, 0);
+			offset = new Vector2f(0f, 0f);
+			
+			width = sprite.getSpriteWidth();
+			height = sprite.getSpriteHeight();
+			
+			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5);
+		}
+
+		public void tick(ForestElf parent, float dt) {
+			if(parent.isMoving){
+				counter = counter + 0.2f;
+				v = new Vector2f(0, (float) Math.cos(counter));
+			}else{
+				counter = counter + 0.05f;
+				v = new Vector2f(0, (float) Math.cos(counter) / 4);
+			}
+			offset = offset.add(v);
+			
+			ep.activate();
+			ep.tick(dt);
+			
+			position = offset.add(parent.position.add(ep.getDistance()));
+		}
+		
+		public void render(Screen screen) {
+			screen.renderSprite(handSprite, position.x, position.y);
+		}
+
+		public Sprite getSprite() {
+			return handSprite;
+		}
+
+		public Rectangle getRect() {
+			return new Rectangle((int) position.x, (int) position.y + 1, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		}
+	}
+	
+	private class ForestElfLeftHand extends Entity{
+		
+		private Sprite handSprite;
+		private float counter;
+		private Vector2f v, offset;
+		
+		public ForestElfLeftHand(Vector2f position) {
+			super(position);
+			handSprite = new Sprite("felflefthand");
+
+			v = new Vector2f(0, 0);
+			offset = new Vector2f(0f, 0f);
+			
+			width = sprite.getSpriteWidth();
+			height = sprite.getSpriteHeight();
+		}
+
+		public void tick(ForestElf parent, float dt) {
+			if(parent.isMoving){
+				counter = counter + 0.2f;
+				v = new Vector2f(0, (float) -Math.cos(counter));
+			}else{
+				counter = counter + 0.05f;
+				v = new Vector2f(0, (float) -Math.cos(counter) / 4);
+			}
+			offset = offset.add(v);
+			
+			position = offset.add(parent.position);
+		}
+		
+		public void render(Screen screen) {
+			screen.renderSprite(handSprite, position.x, position.y);
+		}
+
+		public Sprite getSprite() {
+			return handSprite;
+		}
+
+		public Rectangle getRect() {
+			return new Rectangle((int) position.x, (int) position.y + 1, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		}
 		
 	}
 	
 	private float counter;
 	private Vector2f v, offset;
 	private ForestElfHead head;
+	private ForestElfRightHand rightHand;
+	private ForestElfLeftHand leftHand;
 	
 	public ForestElf(Vector2f position, World world) {
 		super(position, world);
@@ -108,6 +207,8 @@ public class ForestElf extends Enemy{
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
 		
 		head = new ForestElfHead(position);
+		rightHand = new ForestElfRightHand(position, this);
+		leftHand = new ForestElfLeftHand(position);
 		EntityManager.addEntity(this);
 		
 		behaviour = new Chasing(this);
@@ -120,18 +221,28 @@ public class ForestElf extends Enemy{
 		behaviour.tick(dt);
 		move(dt);
 		
-		counter = counter + 0.2f;
+		counter = counter + 0.4f;
 		
-		offset = new Vector2f((float) Math.cos(counter / 2f) * 5, (float) Math.sin(counter) * 10);
+		if(isMoving()){
+			offset = new Vector2f((float) Math.cos(counter / 2f), (float) Math.sin(counter) * 2);
+		}else{
+			counter = 0;
+			offset = new Vector2f(0, 0);
+		}
+		
 		position = position.add(offset);
 		
 		head.tick(this, dt);
+		rightHand.tick(this, dt);
+		leftHand.tick(this, dt);
 	}
 
 	@Override
 	public void render(Screen screen) {
 		screen.renderSprite(sprite, position.x , position.y);
 		head.render(screen);
+		rightHand.render(screen);
+		leftHand.render(screen);
 	}
 	
 	@Override

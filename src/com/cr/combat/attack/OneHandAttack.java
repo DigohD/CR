@@ -123,7 +123,7 @@ public class OneHandAttack extends Projectile{
 			ImpactEmitter ie = new ImpactEmitter(new Vector2f(weapon.getPos().x + width / 2, weapon.getPos().y + height / 2), 3, "blood", 12, velocity, 5);
 			new KnockBack(20, 1, e, null, getVelocity().div(2));
 			
-			float damage = RPCalc.calculateDamage(weapon.getDamage(), Hero.getSheet(), e.getSheet());
+			float damage = RPCalc.calculateDamage(weapon.getDamage(), Hero.getHeroSheet(), e.getSheet());
 			e.takeDamage(damage);
 			
 			weapon.playHitSound();
