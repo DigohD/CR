@@ -32,7 +32,7 @@ public class StatsSheet {
 		sheet.put(StatID.ARMOR, new Stat("Armor", 0));
 		
 		sheet.put(StatID.LIFE_ON_HIT, new Stat("Life On Hit", 0));
-		sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen", 0));
+		sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen /5s", 0));
 	}
 	
 	public void addMod(StatMod mod){
@@ -74,7 +74,7 @@ public class StatsSheet {
 			case LIFE_ON_HIT:
 				return "Life On Hit";
 			case LIFE_REGEN:
-				return "Life Regen";
+				return "Life Regen /5s";
 			default:
 				break;
 		}

@@ -126,6 +126,8 @@ public class OneHandAttack extends Projectile{
 			
 			weapon.playHitSound();
 			
+			Hero.onHittingSomething();
+			
 //			Vector2f txtPos = new Vector2f(rect.x + width / 2, rect.y + height / 2);
 //			new DamageText(txtPos, damage);
 //			new ImpactEmitter(txtPos, 3, "blood", 20, velocity.add(offset.div(4)), 5);
