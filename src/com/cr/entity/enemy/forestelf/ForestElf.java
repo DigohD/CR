@@ -58,17 +58,24 @@ public class ForestElf extends Enemy{
 			super(position);
 			headSprite = new Sprite("felfhead");
 
+			v = new Vector2f(0, 0);
+			offset = new Vector2f(0f, 0f);
+			
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
-			EntityManager.addEntity(this);
 		}
 
 		public void tick(ForestElf parent, float dt) {
-			counter = counter + 0.5f;
+			counter = counter + 0.2f;
 			
-			v = v.add(new Vector2f(0, Math.sin(a)));
+			v = new Vector2f(0, (float) Math.sin(counter));
 			
 			offset = offset.add(v);
+			
+			System.out.println(offset.toString());
+			System.out.println(v.toString());
+			System.out.println();
+			
 			position = offset.add(parent.position);
 		}
 		
@@ -84,13 +91,14 @@ public class ForestElf extends Enemy{
 
 		@Override
 		public Rectangle getRect() {
-			return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+			return new Rectangle((int) position.x, (int) position.y + 1, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		}
 		
 	}
 	
-	private int counter;
-	private Vector2f v;
+	private float counter;
+	private Vector2f v, offset;
+	private ForestElfHead head;
 	
 	public ForestElf(Vector2f position, World world) {
 		super(position, world);
@@ -98,6 +106,8 @@ public class ForestElf extends Enemy{
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
+		
+		head = new ForestElfHead(position);
 		EntityManager.addEntity(this);
 		
 		behaviour = new Chasing(this);
@@ -109,8 +119,21 @@ public class ForestElf extends Enemy{
 		rect.setLocation((int)position.x,(int)position.y);
 		behaviour.tick(dt);
 		move(dt);
+		
+		counter = counter + 0.2f;
+		
+		offset = new Vector2f((float) Math.cos(counter / 2f) * 5, (float) Math.sin(counter) * 10);
+		position = position.add(offset);
+		
+		head.tick(this, dt);
 	}
 
+	@Override
+	public void render(Screen screen) {
+		screen.renderSprite(sprite, position.x , position.y);
+		head.render(screen);
+	}
+	
 	@Override
 	public void HeroCollide(Hero hero) {
 		
