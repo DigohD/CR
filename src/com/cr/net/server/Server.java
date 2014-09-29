@@ -10,8 +10,10 @@ import java.util.List;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.entity.hero.HeroMP;
+import com.cr.net.client.ClientInfo;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.LoginPacket00;
+import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
 
@@ -20,11 +22,15 @@ public class Server implements Runnable{
 	private DatagramSocket socket;
 	private Thread thread;
 	
-	private List<HeroMP> connectedPlayers = new ArrayList<HeroMP>();
+	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
+	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
+	
+	
 	
 	private boolean running = false;
 	
 	public Server(){
+		System.out.println("Server created");
 		
 		try {
 			socket = new DatagramSocket(1331);
@@ -35,14 +41,17 @@ public class Server implements Runnable{
 	}
 	
 	public void start(){
+		System.out.println("Server started..");
 		running = true;
 		thread = new Thread(this, "server-thread");
 		thread.start();
 	}
 	
 	public void stop(){
+		System.out.println("Server closing..");
 		running = false;
 		socket.close();
+		System.out.println("Server closed..");
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
@@ -82,8 +91,19 @@ public class Server implements Runnable{
 			case LOGIN:
 				packet = new LoginPacket00(data);
 				System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((LoginPacket00) packet).getUserName() + " has connected");
-				HeroMP hero = new HeroMP(new Vector2f(100, 100), ((LoginPacket00) packet).getUserName(), address, port);
-				addConnection(hero, (LoginPacket00) packet);
+				ClientInfo client = new ClientInfo(((LoginPacket00) packet).getUserName(), address, port);
+				HeroMP hero = new HeroMP(client.getUserName(), new Vector2f(10,10));
+				addConnection(client, hero, (LoginPacket00) packet);
+				break;
+			case MOVE:
+				packet = new MovePacket02(data);
+				for(int i = 0; i < connectedClients.size(); i++){
+					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
+						heroMockups.get(i).setPosition(new Vector2f(((MovePacket02) packet).getX(), ((MovePacket02) packet).getX()));
+					}
+				}
+				
+				packet.writeData(this);
 				break;
 			case DISCONNECT:
 				break;
@@ -91,34 +111,35 @@ public class Server implements Runnable{
 		
 	}
 	
-	public void addConnection(HeroMP player, LoginPacket00 packet) {
+	public void addConnection(ClientInfo client, HeroMP hero, LoginPacket00 packet) {
     	boolean alreadyConnected = false;
     	//loop through all the connected players 
-        for (HeroMP p : this.connectedPlayers) {
+        for (ClientInfo c : this.connectedClients) {
         	
-            if (player.getUserName().equalsIgnoreCase(p.getUserName())) {
-                if (p.getInetAddress() == null) {
-                    p.setIp(player.getInetAddress());
+            if (client.getUserName().equalsIgnoreCase(c.getUserName())) {
+                if (c.getInetAddress() == null) {
+                    c.setIp(client.getInetAddress());
                 }
-                if (p.getPort() == -1) {
-                    p.setPort(player.getPort());
+                if (c.getPort() == -1) {
+                    c.setPort(client.getPort());
                 }
                 alreadyConnected = true;
             } else {
                 // relay to the current connected player that there is a new
                 // player
-                sendData(packet.getData(), p.getInetAddress(), p.getPort());
+                sendData(packet.getData(), c.getInetAddress(), c.getPort());
 
                 // relay to the new player that the currently connect player
                 // exists
-                packet = new LoginPacket00(p.getUserName(), p.getPosition());
-                sendData(packet.getData(), player.getInetAddress(), player.getPort());
+                packet = new LoginPacket00(c.getUserName());
+                sendData(packet.getData(), client.getInetAddress(), client.getPort());
             }
         }
         if (!alreadyConnected) {
-        	System.out.println("Player: " + player.getUserName() + " joined server");
-        	sendData(new AcceptPacket03(player.getUserName()).getData(), player.getInetAddress(), player.getPort());
-            this.connectedPlayers.add(player);
+        	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
+        	sendData(new AcceptPacket03(client.getUserName()).getData(), client.getInetAddress(), client.getPort());
+            connectedClients.add(client);
+            heroMockups.add(hero);
         }
     }
 	
@@ -135,8 +156,16 @@ public class Server implements Runnable{
 	}
 
 	public void sendDataToAllClients(byte[] data) {
-		for(HeroMP h : connectedPlayers)
-			sendData(data, h.getInetAddress(), h.getPort());
+		for(ClientInfo c : connectedClients)
+			sendData(data, c.getInetAddress(), c.getPort());
+	}
+	
+	public List<ClientInfo> getClients(){
+		return connectedClients;
+	}
+	
+	public List<HeroMP> getMockups(){
+		return heroMockups;
 	}
 	
 

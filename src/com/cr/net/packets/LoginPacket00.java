@@ -1,12 +1,10 @@
 package com.cr.net.packets;
 
-import com.cr.engine.core.Vector2f;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
 public class LoginPacket00 extends Packet{
 	
-	private Vector2f pos;
 	private String userName;
 
 	public LoginPacket00(byte[] data) {
@@ -14,10 +12,9 @@ public class LoginPacket00 extends Packet{
 		this.userName = readData(data);
 	}
 	
-	public LoginPacket00(String userName, Vector2f pos) {
+	public LoginPacket00(String userName) {
 		super(00);
 		this.userName = userName;
-		this.pos = pos;
 	}
 
 	@Override
@@ -33,16 +30,9 @@ public class LoginPacket00 extends Packet{
 	
 	@Override
 	public byte[] getData() {
-		return ("02" + ":" + userName + ":" + pos.x + ":" + pos.y).getBytes();
+		return ("00" + ":" + userName).getBytes();
 	}
 	
-	public float getX() {
-		return pos.x;
-	}
-	
-	public float getY() {
-		return pos.y;
-	}
 
 	public String getUserName() {
 		return userName;

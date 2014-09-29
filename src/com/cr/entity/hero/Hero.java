@@ -15,9 +15,10 @@ import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
-import com.cr.entity.hero.misc.FootPrint;
+import com.cr.net.NetStatus;
+import com.cr.net.packets.MovePacket02;
+import com.cr.states.MPClientState;
 import com.cr.stats.StatsSheet;
-import com.cr.util.Randomizer;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
@@ -125,7 +126,12 @@ public class Hero extends Mob implements Collideable{
 		//if(!collisionWithTile(0, targetVel.y))
 			position.y = position.y + targetVel.y*dt;
 			
-			
+		if(NetStatus.isMultiPlayer){
+			if(!NetStatus.isHOST){
+				MovePacket02 mp  = new MovePacket02(userName, position);
+				MPClientState.getClient().sendData(mp.getData());
+			}
+		}
 		
 		move(dt);
 		

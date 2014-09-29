@@ -7,6 +7,8 @@ import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
+import com.cr.states.MPClientState;
+import com.cr.states.MPHostState;
 import com.cr.states.MenuState;
 import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
@@ -18,26 +20,13 @@ public class Game extends CoreEngine{
 	private Screen screen;
 	public static Shader shader;
 	
-	private Server server;
-	private Client client;
-	
 	public Game(){
-		boolean fullscreen = true;
+		boolean fullscreen = false;
 		Window.createWindow(1200, 675, fullscreen);
 		init();
 	}
 	
 	private void init(){
-		
-//		server = new Server();
-//		server.start();
-//		client = new Client("localhost");
-//		client.start();
-//		
-//		client.sendData("ping".getBytes());
-		
-		
-		
 		screen = new Screen();
 		new ImageLoader();
 	
@@ -84,13 +73,14 @@ public class Game extends CoreEngine{
 	
 	@Override
 	public void cleanUp() {
-		
 		shader.deleteShader();
 		if(World.getShader() != null)
 			World.getShader().deleteShader();
 		
-//		server.stop();
-//		client.stop();
+		if(MPHostState.getServer() != null)
+			MPHostState.close();
+		if(MPClientState.getClient() != null)
+			MPClientState.close();
 	}
 	
 	public static void main(String[] args){

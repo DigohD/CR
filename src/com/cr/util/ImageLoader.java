@@ -76,6 +76,8 @@ public class ImageLoader {
 		imageLib.put("healthfill", loadImage("/hero/fill.png"));
 		imageLib.put("healthfillbm", loadImage("/hero/fillbm.png"));
 		
+		imageLib.put("mptest", loadImage("/hero/mptest.png"));
+		
 		
 		// Hero Footprints
 //		imageLib.put("footprintgrass", loadImage("image", "footprintgrass.png"));
