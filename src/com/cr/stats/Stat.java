@@ -39,12 +39,12 @@ public class Stat{
 		calculateTotal();
 	}
 	
-	public void removeAddmod(String ID, float amount){
+	public void removeAddmod(String ID){
 		addMods.remove(ID);
 		calculateTotal();
 	}
 	
-	public void removeMulmod(String ID, float amount){
+	public void removeMulmod(String ID){
 		mulMods.remove(ID);
 		calculateTotal();
 	}
