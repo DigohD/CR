@@ -125,9 +125,7 @@ public class OneHandAttack extends Projectile{
 			
 			float damage = RPCalc.calculateDamage(weapon.getDamage(), Hero.getSheet(), e.getSheet());
 			e.takeDamage(damage);
-			System.out.println("Flat Damage done: " + weapon.getDamage());
-			System.out.println("Final Damage done: " + damage);
-			System.out.println("");
+			
 			
 			weapon.playHitSound();
 			
