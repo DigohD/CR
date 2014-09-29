@@ -56,7 +56,6 @@ public class ImageLoader {
 		imageLib.put("white", loadImage("/font/fwhite.png"));
 		imageLib.put("yellow", loadImage("/font/fyellow.png"));
 
-
 		// Nature
 		imageLib.put("tree1", loadImage("/prop/nature/tree1.png"));
 		imageLib.put("tree2", loadImage("/prop/nature/tree2.png"));
@@ -68,7 +67,8 @@ public class ImageLoader {
 		// Hero
 //		imageLib.put("hero", loadImage("/hero/hero.png"));
 		imageLib.put("herohead", loadImage("/hero/herohead.png"));
-		imageLib.put("herobody", loadImage("/hero/herobody.png"));
+		imageLib.put("herolowerbody", loadImage("/hero/herolowerbody.png"));
+		imageLib.put("heroupperbody", loadImage("/hero/heroupperbody.png"));
 		imageLib.put("herorighthand", loadImage("/hero/herorighthand.png"));
 		imageLib.put("herolefthand", loadImage("/hero/herolefthand.png"));
 		
@@ -106,12 +106,12 @@ public class ImageLoader {
 		imageLib.put("contour", loadImage("/inventory/contour.png"));
 		imageLib.put("cursor", loadImage("/inventory/cursor.png"));
 		
-//		// Materials UI
+		// Materials UI
 		imageLib.put("basebutton", loadImage("/materialui/basebutton.png"));
 		imageLib.put("essencesbutton", loadImage("/materialui/essencesbutton.png"));
 		imageLib.put("mineralsbutton", loadImage("/materialui/mineralsbutton.png"));
-//			
-//		// Materials
+			
+		// Materials
 		imageLib.put("copper", loadImage("/material/copper.png"));
 		imageLib.put("basiccloth", loadImage("/material/basiccloth.png"));
 		imageLib.put("pyrite", loadImage("/material/pyrite.png"));
@@ -121,7 +121,7 @@ public class ImageLoader {
 		imageLib.put("turquoise", loadImage("/material/turquoise.png"));
 		imageLib.put("basicleather", loadImage("/material/basicleather.png"));
 		imageLib.put("forestsoul", loadImage("/material/forestsoul.png"));
-//	
+	
 //		// Crafting UI
 		imageLib.put("addbutton", loadImage("/craftingui/addbutton.png"));
 		imageLib.put("backbutton", loadImage("/craftingui/backbutton.png"));
