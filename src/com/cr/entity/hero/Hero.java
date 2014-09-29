@@ -23,6 +23,8 @@ import com.cr.world.tile.Tile;
 
 public class Hero extends Mob implements Collideable{
 	
+	private String userName;
+	
 	private Sprite sprite;
 	private Vector2f targetVel;
 	
@@ -122,6 +124,8 @@ public class Hero extends Mob implements Collideable{
 		
 		//if(!collisionWithTile(0, targetVel.y))
 			position.y = position.y + targetVel.y*dt;
+			
+			
 		
 		move(dt);
 		
@@ -290,6 +294,14 @@ public class Hero extends Mob implements Collideable{
 
 	public static StatsSheet getSheet() {
 		return sheet;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	

@@ -60,10 +60,6 @@ public class Client implements Runnable{
 				e.printStackTrace();
 			}
 			
-			String message = new String(packet.getData());
-			if(message.trim().equalsIgnoreCase("pong"))
-				System.out.println("Server: " + message);
-			
 		}
 		
 	}

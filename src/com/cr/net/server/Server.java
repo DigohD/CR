@@ -8,11 +8,12 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.entity.hero.HeroMP;
+import com.cr.net.packets.AcceptPacket03;
+import com.cr.net.packets.LoginPacket00;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
-import com.cr.net.packets.Packet00Login;
-import com.cr.states.PlayState;
 
 public class Server implements Runnable{
 	
@@ -75,13 +76,14 @@ public class Server implements Runnable{
 		Packet packet = null;
 		switch(type){
 			default:
+				break;
 			case INVALID:
 				break;
 			case LOGIN:
-				packet = new Packet00Login(data);
-				//System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((Packet00Login) packet).getUserName() + " has connected");
-				HeroMP hero = new HeroMP(PlayState.getWorld(), ((Packet00Login) packet).getUserName(), address, port);
-				
+				packet = new LoginPacket00(data);
+				System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((LoginPacket00) packet).getUserName() + " has connected");
+				HeroMP hero = new HeroMP(new Vector2f(100, 100), ((LoginPacket00) packet).getUserName(), address, port);
+				addConnection(hero, (LoginPacket00) packet);
 				break;
 			case DISCONNECT:
 				break;
@@ -89,17 +91,36 @@ public class Server implements Runnable{
 		
 	}
 	
-	public void addConnection(HeroMP hero, Packet00Login packet){
-		boolean alreadyConnected = false;
-		
-		for(HeroMP h : this.connectedPlayers){
-			if(hero.getUserName().equalsIgnoreCase(h.getUserName())){
-				
-			}
-		}
-		
-		
-	}
+	public void addConnection(HeroMP player, LoginPacket00 packet) {
+    	boolean alreadyConnected = false;
+    	//loop through all the connected players 
+        for (HeroMP p : this.connectedPlayers) {
+        	
+            if (player.getUserName().equalsIgnoreCase(p.getUserName())) {
+                if (p.getInetAddress() == null) {
+                    p.setIp(player.getInetAddress());
+                }
+                if (p.getPort() == -1) {
+                    p.setPort(player.getPort());
+                }
+                alreadyConnected = true;
+            } else {
+                // relay to the current connected player that there is a new
+                // player
+                sendData(packet.getData(), p.getInetAddress(), p.getPort());
+
+                // relay to the new player that the currently connect player
+                // exists
+                packet = new LoginPacket00(p.getUserName(), p.getPosition());
+                sendData(packet.getData(), player.getInetAddress(), player.getPort());
+            }
+        }
+        if (!alreadyConnected) {
+        	System.out.println("Player: " + player.getUserName() + " joined server");
+        	sendData(new AcceptPacket03(player.getUserName()).getData(), player.getInetAddress(), player.getPort());
+            this.connectedPlayers.add(player);
+        }
+    }
 	
 
 	public void sendData(byte[] data, InetAddress ip, int port){

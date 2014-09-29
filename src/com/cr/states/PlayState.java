@@ -10,6 +10,7 @@ import com.cr.world.World;
 public class PlayState extends GameState{
 
 	private static World w;
+	
 
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
