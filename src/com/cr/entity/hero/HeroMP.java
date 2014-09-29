@@ -19,11 +19,10 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	public HeroMP(String userName, Vector2f position){
 		super(position);
 		this.userName = userName;
-		
-		
 	}
 	
 	public void init(){
+		System.out.println("DERP");
 		sprite = new Sprite("mptest");
 		EntityManager.addEntity(this);
 	}
@@ -46,8 +45,7 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 
 	@Override
 	public Rectangle getRect() {
-		
-		return null;
+		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 	}
 
 	public String getUserName() {
