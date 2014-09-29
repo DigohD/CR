@@ -67,13 +67,13 @@ public abstract class ItemSlot extends Button implements Renderable, Tickable, H
 
 	public void applyStats(){
 		for(StatMod x : item.getStatMods().getStatMods())
-			Hero.getSheet().addMod(x);
+			Hero.getHeroSheet().addMod(x);
 		isStatsApplied = true;
 	}
 	
 	public void unApplyStats(){
 		for(StatMod x : item.getStatMods().getStatMods())
-			Hero.getSheet().removeMod(x);
+			Hero.getHeroSheet().removeMod(x);
 		isStatsApplied = false;
 	}
 	

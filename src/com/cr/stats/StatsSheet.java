@@ -36,8 +36,7 @@ public class StatsSheet {
 			sheet.put(StatID.STRENGTH, new Stat("Strength", 10));
 			sheet.put(StatID.AGILITY, new Stat("Agility", 10));
 			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 10));
-			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10));
-			sheet.put(StatID.HP_NOW, new Stat("Current Hp", 100));
+			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10000));
 			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 100));
 			
 			sheet.put(StatID.ARMOR, new Stat("Armor", 0));
@@ -50,6 +49,8 @@ public class StatsSheet {
 			sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen /5s", 0));
 			
 			updateInternalStats();
+			
+			sheet.put(StatID.HP_NOW, new Stat("Current Hp", sheet.get(StatID.HP_MAX).getTotal()));
 		}
 	}
 	

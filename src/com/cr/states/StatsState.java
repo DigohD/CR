@@ -68,11 +68,11 @@ public class StatsState extends GameState{
 		
 		int counter = 0;
 		for(StatID id : StatID.values()) {
-			if(Hero.getSheet().getStat(id) == null)
+			if(Hero.getHeroSheet().getStat(id) == null)
 				continue;
 			if(id == StatID.HP_NOW || id == StatID.ARMOR)
 				counter++;
-			f.setFont(CRString.create(StatsSheet.getStatString(id) + ": " + Hero.getSheet().getStat(id).getTotal()));
+			f.setFont(CRString.create(StatsSheet.getStatString(id) + ": " + Hero.getHeroSheet().getStat(id).getTotal()));
 			f.renderFont(xOffset + 24, yOffset + (counter++ * 24), 0.2f);
 		}
 		

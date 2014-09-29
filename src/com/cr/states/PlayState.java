@@ -52,7 +52,7 @@ public class PlayState extends GameState{
 		
 		screen.renderStaticSprite(healthBar, 10, 10, 14, 2);
 		
-		float percent = Hero.getSheet().getStat(StatID.HP_NOW).getTotal() / Hero.getSheet().getStat(StatID.HP_MAX).getTotal();
+		float percent = Hero.getHeroSheet().getStat(StatID.HP_NOW).getTotal() / Hero.getHeroSheet().getStat(StatID.HP_MAX).getTotal();
 		float scaleX = 14 * percent;
 		
 		screen.renderStaticSprite(healthBar, 10, 10, 14, 2);

@@ -20,8 +20,11 @@ public class Chasing extends Behaviour{
 		range = range.normalize();
 		if(length < 280){
 			move(dt, range);
-		}else
+			enemy.setMoving(true);
+		}else{
 			enemy.setVelocity(new Vector2f(0, 0));
+			enemy.setMoving(false);
+		}
 	}
 
 	@Override
