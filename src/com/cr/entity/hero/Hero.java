@@ -9,7 +9,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
-import com.cr.entity.hero.body.Body;
+import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.LowerBody;
@@ -35,7 +35,7 @@ public class Hero extends Mob implements Collideable{
 
 	private int stepCounter;
 	private static Head head;
-	private static Body body;
+	private static UpperBody body;
 	private static LowerBody lowerBody;
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
@@ -73,7 +73,7 @@ public class Hero extends Mob implements Collideable{
 		}
 				
 		head = new Head();
-		body = new Body();
+		body = new UpperBody();
 		lowerBody = new LowerBody();
 		rightHand = new RightHand();
 		leftHand = new LeftHand();
@@ -162,7 +162,6 @@ public class Hero extends Mob implements Collideable{
 				rightHand.render(screen);
 				break;
 			case NORTH:
-				head.render(screen);
 				rightHand.render(screen);
 				leftHand.render(screen);
 				head.render(screen);
@@ -177,13 +176,6 @@ public class Hero extends Mob implements Collideable{
 				leftHand.render(screen);
 				break;
 		}
-		
-//		g.setColor(Color.BLACK);
-//		g.fillRect(Game.WIDTH - 100, Game.HEIGHT - 50, 90, 40);
-//		g.setColor(Color.WHITE);
-//		String cHPS = String.format("%.1f", currentHP);
-//		String mHPS = String.format("%.1f", maxHP);
-//		g.drawString(cHPS + "/" + mHPS, Game.WIDTH - 90, Game.HEIGHT - 25);
 	}
 	
 	@Override
