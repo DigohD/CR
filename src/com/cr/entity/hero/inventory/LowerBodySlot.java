@@ -10,11 +10,11 @@ import com.cr.item.armor.UpperBody;
 public class LowerBodySlot extends ItemSlot{
 
 	public LowerBodySlot() {
-		super(591, 245);
+		super(591, 265);
 	}
 	
 	public LowerBodySlot(int xOffset, int yOffset) {
-		super(591 + xOffset, 245 + yOffset);
+		super(591 + xOffset, 265 + yOffset);
 	}
 	
 	@Override
