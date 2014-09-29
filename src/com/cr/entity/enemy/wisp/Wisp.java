@@ -15,11 +15,37 @@ import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
+import com.cr.stats.Stat;
+import com.cr.stats.StatsSheet;
 import com.cr.util.Randomizer;
 import com.cr.world.World;
 
 public class Wisp extends Enemy{
 
+	private class WispSheet extends StatsSheet{
+		public WispSheet(){
+			super();
+			sheet.put(StatID.LEVEL, new Stat("Level", 1));
+			sheet.put(StatID.STRENGTH, new Stat("Strength", 5));
+			sheet.put(StatID.AGILITY, new Stat("Agility", 5));
+			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 20));
+			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 15));
+			sheet.put(StatID.HP_NOW, new Stat("Current Hp", 50));
+			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 50));
+			
+			sheet.put(StatID.ARMOR, new Stat("Armor", 25));
+			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
+			sheet.put(StatID.PHYSICAL_POWER, new Stat("Physical Power", 0));
+			sheet.put(StatID.RAPIDNESS, new Stat("Rapidness", 0));
+			sheet.put(StatID.SPELL_POWER, new Stat("Spell Power", 0));
+			
+			sheet.put(StatID.LIFE_ON_HIT, new Stat("Life On Hit", 0));
+			sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen /5s", 5));
+			
+			updateInternalStats();
+		}
+	}
+	
 	private class WispLimb extends Entity implements Renderable{
 
 		private Vector2f v, offset;
@@ -93,6 +119,7 @@ public class Wisp extends Enemy{
 		wl2 = new WispLimb(position, false);
 		
 		behaviour = new Fleeing(this);
+		sheet = new WispSheet();
 	}
 
 	@Override
@@ -105,7 +132,7 @@ public class Wisp extends Enemy{
 		position = position.add(v);
 		
 		counter++;
-		if(counter > 60){
+		if(counter > 180){
 			Vector2f range = this.getCenterPos().sub(EntityManager.getHero().getCenterPos());
 			float length = Math.abs(range.length());
 			if(length < 300){

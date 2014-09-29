@@ -8,11 +8,12 @@ public class StatsSheet {
 	
 	public enum StatID {
 						/*Primary Stats*/
+						LEVEL,
 						STRENGTH, AGILITY, INTELLIGENCE, TOUGHNESS,
 						HP_NOW, HP_MAX,
 						
 						/*Secondary Stats*/
-						ARMOR, PHYSICAL_POWER, RAPIDNESS, SPELL_POWER,
+						ARMOR, ARMOR_RATING, PHYSICAL_POWER, RAPIDNESS, SPELL_POWER,
 						
 						/*On hit Effects*/
 						LIFE_ON_HIT,
@@ -26,22 +27,30 @@ public class StatsSheet {
 	
 	public StatsSheet(){
 		super();
-		sheet.put(StatID.STRENGTH, new Stat("Strength", 10));
-		sheet.put(StatID.AGILITY, new Stat("Agility", 10));
-		sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 10));
-		sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10));
-		sheet.put(StatID.HP_NOW, new Stat("Current Hp", 100));
-		sheet.put(StatID.HP_MAX, new Stat("Max Hp", 100));
-		
-		sheet.put(StatID.ARMOR, new Stat("Armor", 0));
-		sheet.put(StatID.PHYSICAL_POWER, new Stat("Physical Power", 0));
-		sheet.put(StatID.RAPIDNESS, new Stat("Rapidness", 0));
-		sheet.put(StatID.SPELL_POWER, new Stat("Spell Power", 0));
-		
-		sheet.put(StatID.LIFE_ON_HIT, new Stat("Life On Hit", 0));
-		sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen /5s", 0));
-		
-		updateInternalStats();
+	}
+	
+	public StatsSheet(boolean isHero){
+		super();
+		if(isHero){
+			sheet.put(StatID.LEVEL, new Stat("Level", 1));
+			sheet.put(StatID.STRENGTH, new Stat("Strength", 10));
+			sheet.put(StatID.AGILITY, new Stat("Agility", 10));
+			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 10));
+			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10));
+			sheet.put(StatID.HP_NOW, new Stat("Current Hp", 100));
+			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 100));
+			
+			sheet.put(StatID.ARMOR, new Stat("Armor", 0));
+			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
+			sheet.put(StatID.PHYSICAL_POWER, new Stat("Physical Power", 0));
+			sheet.put(StatID.RAPIDNESS, new Stat("Rapidness", 0));
+			sheet.put(StatID.SPELL_POWER, new Stat("Spell Power", 0));
+			
+			sheet.put(StatID.LIFE_ON_HIT, new Stat("Life On Hit", 0));
+			sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen /5s", 0));
+			
+			updateInternalStats();
+		}
 	}
 	
 	public void addMod(StatMod mod){
@@ -68,6 +77,8 @@ public class StatsSheet {
 	
 	public static String getStatString(StatID id){
 		switch(id){
+			case LEVEL:
+				return "Level";
 			case STRENGTH:
 				return "Strength";
 			case AGILITY:
@@ -110,5 +121,9 @@ public class StatsSheet {
 		
 		sheet.get(StatID.SPELL_POWER).removeAddmod(StatsSheet.getStatString(StatID.INTELLIGENCE));
 		sheet.get(StatID.SPELL_POWER).addAddmod(StatsSheet.getStatString(StatID.INTELLIGENCE), sheet.get(StatID.INTELLIGENCE).getTotal() * 5);
+		
+		sheet.get(StatID.ARMOR_RATING).removeAddmod(StatsSheet.getStatString(StatID.ARMOR));
+		sheet.get(StatID.ARMOR_RATING).addAddmod(StatsSheet.getStatString(StatID.ARMOR), 
+				sheet.get(StatID.ARMOR).getTotal() / sheet.get(StatID.LEVEL).getTotal() );
 	}
 }
