@@ -47,7 +47,7 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 	public void collisionWith(Collideable obj) {
 		if(obj instanceof Hero){
 			Hero h = (Hero) obj;
-			new KnockBack(20, 1, h, null, distance.div(2));
+			new KnockBack(20, 1, h, null, distance.div(10));
 			
 			float finalDamage = RPCalc.calculateDamage(damage, entityOwner.getSheet(), h.getHeroSheet());
 			h.takeDamage(finalDamage);
@@ -67,7 +67,7 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 			if(counter < 25){
 				Vector2f dir = Hero.position.sub(entity.getPosition());
 				dir = dir.normalize();
-				dir = dir.mul(2);
+				dir = dir;
 				
 				distance = distance.add(dir);
 			}else if(!isReturning){
@@ -77,8 +77,6 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 			
 			if(isReturning)
 				distance = distance.sub(ret);
-			
-			System.out.println(distance.toString() + " < " + ret.toString());
 						
 			if(isReturning && distance.length() <= 10){
 				distance = new Vector2f(0, 0);
