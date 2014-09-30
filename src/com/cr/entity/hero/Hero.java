@@ -18,6 +18,7 @@ import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.MovePacket02;
 import com.cr.states.MPClientState;
+import com.cr.states.MPHostState;
 import com.cr.stats.StatsSheet;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
@@ -130,6 +131,10 @@ public class Hero extends Mob implements Collideable{
 			if(!NetStatus.isHOST){
 				MovePacket02 mp  = new MovePacket02(userName, position);
 				MPClientState.getClient().sendData(mp.getData());
+			}
+			if(NetStatus.isHOST){
+				MovePacket02 mp  = new MovePacket02(userName, position);
+				MPHostState.getServer().sendDataToAllClients(mp.getData());
 			}
 		}
 		

@@ -43,8 +43,8 @@ public class MPHostState extends GameState{
 				mockUps.get(i).init();
 		}
 		
-		MovePacket02 mp = new MovePacket02(hero.getUserName(), hero.getPos());
-		server.sendDataToAllClients(mp.getData());
+//		MovePacket02 mp = new MovePacket02(hero.getUserName(), hero.getPos());
+//		server.sendDataToAllClients(mp.getData());
 	}
 
 	@Override

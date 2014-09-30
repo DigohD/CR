@@ -39,9 +39,9 @@ public class World {
 	private float currentTime = 0.2f;
 	private float targetTime = 2f;
 	private float dayNightCycleTime = 10.0f;
-	private float amplitudeWave = 5f;
+	private float amplitudeWave = 2f;
 	private float angleWave = 2.86f;
-	private float angleWaveSpeed = 0.3f;
+	private float angleWaveSpeed = 0.2f;
 	private static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
 	
 	private boolean day = true, night = false;
@@ -92,7 +92,7 @@ public class World {
 		//sprite = new Sprite("normalMap1", shader, new Transform());
 //		sprite1 = new Sprite("blueMask", Game.shader, new Transform());
 		
-		map = new TileMap(100, 100);
+		map = new TileMap(250, 250);
 
 		width = map.getWidth();
 		height = map.getHeight();
@@ -109,10 +109,10 @@ public class World {
 			boolean generated = false;
 			while(!generated){
 				e = new Wisp(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+				int x = Randomizer.getInt(0, width * 32) + 40;
+				int y = Randomizer.getInt(0, height * 32) + e.getSprite().getSpriteHeight();
 				//System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+				if(map.getTopLayer().getTileID(x / 32, y / 32) == ColorRGBA.GREEN){
 					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
 					generated = true;
 				}
@@ -121,15 +121,15 @@ public class World {
 		
 		
 		
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 250; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
 				t = new Tree(-1000, -1000);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + t.getSprite().getSpriteHeight();
+				int x = Randomizer.getInt(0, width * 32) + 40;
+				int y = Randomizer.getInt(0, height * 32) + t.getSprite().getSpriteHeight();
 				//System.out.println(t.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+				if(map.getTopLayer().getTileID(x / 32, y / 32) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
 					generated = true;
@@ -137,14 +137,14 @@ public class World {
 			}
 		}
 		
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 200; i++){
 			Stone s;
 			boolean generated = false;
 			while(!generated){
 				s = new Stone(-1000, -1000);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + s.getSprite().getSpriteHeight();
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+				int x = Randomizer.getInt(0, width * 32) + 40;
+				int y = Randomizer.getInt(0, height * 32) + s.getSprite().getSpriteHeight();
+				if(map.getTopLayer().getTileID(x / 32, y / 32) == ColorRGBA.GREEN){
 					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
 					generated = true;
 				}

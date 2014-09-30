@@ -26,13 +26,13 @@ public class MenuState extends GameState{
 		if(Input.getKey(Input.ENTER)){
 			gsm.push(new PlayState(gsm));
 		}
-		if(Input.getKey(Input.C)){
+		if(Input.getKey(Input.H)){
 			NetStatus.isHOST = true;
 			NetStatus.isMultiPlayer = true;
 			gsm.push(new MPHostState(gsm));
 		}
 		
-		if(Input.getKey(Input.X)){
+		if(Input.getKey(Input.J)){
 			NetStatus.isHOST = false;
 			NetStatus.isMultiPlayer = true;
 			gsm.push(new MPClientState(gsm));
@@ -45,10 +45,10 @@ public class MenuState extends GameState{
 		f.setFont(CRString.create("Press Enter to Play!"));
 		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100, 0.5f);
 		
-		f.setFont(CRString.create("Press C to Host"));
+		f.setFont(CRString.create("Press H to Host"));
 		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100 + 40, 0.5f);
 		
-		f.setFont(CRString.create("Press X to Join"));
+		f.setFont(CRString.create("Press J to Join"));
 		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100 + 80, 0.5f);
 		FontLoader.releaseFont(f);
 	}

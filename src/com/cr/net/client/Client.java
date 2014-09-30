@@ -92,9 +92,11 @@ public class Client implements Runnable{
 				
 				for(int i = 0; i < connectedClients.size(); i++){
 					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						heroMockups.get(i).setPosition(new Vector2f(((MovePacket02) packet).getX(), ((MovePacket02) packet).getY()));
+						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
 					}
 				}
+				
+				
 				
 				break;
 		}
