@@ -40,7 +40,7 @@ public class World {
 	private float currentTime = 0.2f;
 	private float targetTime = 2f;
 	private float dayNightCycleTime = 10.0f;
-	private float amplitudeWave = 2f;
+	private float amplitudeWave = 5f;
 	private float angleWave = 2.86f;
 	private float angleWaveSpeed = 0.2f;
 	private static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
@@ -165,15 +165,15 @@ public class World {
 		if(timer < 7500) timer++;
 		else timer = 0;
 		
-		dayNightCycle(dt);
+		//dayNightCycle(dt);
 		
 		
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
 		
-//		lightPosition.x = EntityManager.getHero().getPos().x;
-//		lightPosition.y = EntityManager.getHero().getPos().y;
+		lightPosition.x = EntityManager.getHero().getPos().x + 10;
+		lightPosition.y = EntityManager.getHero().getPos().y + 10;
 		
 //		if(start)
 //			currentTime += targetTime / 80 * dt;
@@ -230,7 +230,7 @@ public class World {
 		
 		shader.unbind();
 	
-		//em.render(screen);
+		em.render(screen);
 	}
 	
 	public boolean tileExists(int xp, int yp){
