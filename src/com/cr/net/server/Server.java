@@ -85,6 +85,7 @@ public class Server implements Runnable{
 		
 		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
 		Packet packet = null;
+		
 		switch(type){
 			default:
 				break;

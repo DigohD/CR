@@ -30,7 +30,7 @@ public class AcceptPacket03 extends Packet{
 
     @Override
     public byte[] getData() {
-        return ("02" + ":" + this.username).getBytes();
+        return ("03" + ":" + this.username).getBytes();
     }
 
     public String getUsername() {

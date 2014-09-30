@@ -21,7 +21,6 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	}
 	
 	public void init(){
-		System.out.println("DERP");
 		sprite = new Sprite("mptest");
 		EntityManager.addEntity(this);
 	}
@@ -33,7 +32,6 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	@Override
 	public void setPosition(Vector2f position) {
-		System.out.println("POS SET!");
 		this.position = position;
 	}
 	
@@ -44,7 +42,6 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 
 	@Override
 	public Sprite getSprite() {
-		
 		return sprite;
 	}
 

@@ -24,7 +24,7 @@ public class MPClientState extends GameState{
 	@Override
 	public void init() {
 		w = new World();
-		client = new Client("localhost");
+		client = new Client("192.168.0.176");
 		client.start();
 		mockUps = client.getHeroMockups();
 		String userName = "anders";

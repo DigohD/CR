@@ -36,6 +36,7 @@ public class World {
 	private static Shader shader;
 	private static Transform transform;
 	
+	private float t = 0;
 	private float currentTime = 0.2f;
 	private float targetTime = 2f;
 	private float dayNightCycleTime = 10.0f;
@@ -47,50 +48,35 @@ public class World {
 	private boolean day = true, night = false;
 	private static boolean start = true;
 	
-	private Vector3f viewSpaceLightPos, viewSpaceLightPos2, ambientLight;
-	
-	private Texture cubeMap, mask, normalMap;
-	Sprite sprite, sprite1;
+	private Vector3f lightPosition, ambientLight, eyePosition;
 	
 	public World(){
 		transform = new Transform();
 		
-		viewSpaceLightPos = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, Window.getHeight()/2, -1000));
-		//viewSpaceLightPos2 = transform.getViewMatrix().mul(new Vector3f(Window.getWidth()/2, 100, -10));
-		ambientLight = new Vector3f(currentTime, currentTime, currentTime);
-		normalMap = new Texture("normalMap1");
+		lightPosition = transform.getModelMatrix().mul(new Vector3f(Window.getWidth()/2, Window.getHeight()/2, -100));
+		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
 		
-	
-		
+
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
 		shader.addUniform("transformation");
-		shader.addUniform("modelViewMatrix");
+		shader.addUniform("modelMatrix");
 		shader.addUniform("time");
 		shader.addUniform("sampler");
-//		shader.addUniform("envMap");
-		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
-		shader.addUniform("viewSpaceLightPos");
-		//shader.addUniform("viewSpaceLightPos2");
+		shader.addUniform("lightPosition");
 		shader.addUniform("scene_ambient_light");
+		shader.addUniform("eyePosition");
 		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");
 		shader.addUniform("material_specular_color");
 		shader.addUniform("material_emissive_color");
 		
-	
-
 		shader.setUniformi("sampler", 0);
-//		shader.setUniformi("normalMap", 2);
-//		shader.setUniformi("envMap", 1);
-		
-	
-		//sprite = new Sprite("normalMap1", shader, new Transform());
-//		sprite1 = new Sprite("blueMask", Game.shader, new Transform());
+
 		
 		map = new TileMap(250, 250);
 
@@ -99,6 +85,8 @@ public class World {
 		
 		em = new EntityManager(this);
 		camera = new Camera();
+		
+		eyePosition = Camera.getPos();
 		
 //		new LootEmitter(new Vector2f(200,200), 5000);
 		
@@ -118,7 +106,6 @@ public class World {
 				}
 			}
 		}
-		
 		
 		
 		for(int i = 0; i < 250; i++){
@@ -157,16 +144,35 @@ public class World {
 //		test.craftTest();
 	}
 	
-	float t = 0;
+
 	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
 		
+		//dayNightCycle(dt);
+		
+		angleWave += dt * angleWaveSpeed;
+		while(angleWave > PI2)
+			angleWave -= PI2;
+		
+//		if(start)
+//			currentTime += targetTime / 80 * dt;
+//		
+//		if(currentTime >= 1f || !start){
+//			start = false;
+//			//dayNightCycle(dt);
+//		}
+
+		camera.tick(dt);
+		em.tick(dt);
+	}
+	
+	private void dayNightCycle(float dt){
 		t += (dt*angleWaveSpeed*0.3f)/ dayNightCycleTime;
 		
 		if(t >= PI2) t = 0;
-		viewSpaceLightPos = viewSpaceLightPos.rotate(new Vector3f(0,1,0), (t*dt*angleWaveSpeed*0.3f)/ dayNightCycleTime);
+		lightPosition = lightPosition.rotate(new Vector3f(0,1,0), (t*dt*angleWaveSpeed*0.3f)/ dayNightCycleTime);
 		
 		if(currentTime <= 1.2f && day){
 			currentTime += (dt*angleWaveSpeed*0.3f)/dayNightCycleTime;
@@ -187,39 +193,6 @@ public class World {
 		ambientLight.x = currentTime;
 		ambientLight.y = currentTime;
 		ambientLight.z = currentTime;
-		
-		angleWave += dt * angleWaveSpeed;
-		while(angleWave > PI2)
-			angleWave -= PI2;
-		
-//		if(start)
-//			currentTime += targetTime / 80 * dt;
-//		
-//		if(currentTime >= 1f || !start){
-//			start = false;
-//			//dayNightCycle(dt);
-//		}
-
-		camera.tick(dt);
-		em.tick(dt);
-	}
-	
-	private void dayNightCycle(float dt){
-		if(currentTime <= 2.0f && day){
-			currentTime += targetTime / dayNightCycleTime * dt;
-			if(currentTime > 2.0f) {
-				night = true;
-				day = false;
-			}
-		}
-		
-		if(night){
-			currentTime -= targetTime / dayNightCycleTime * dt;
-			if(currentTime <= 0.2f){
-				day = true;
-				night = false;
-			}
-		}
 	}
 
 	public void render(Screen screen) {
@@ -228,10 +201,11 @@ public class World {
 		shader.setUniformf("waveDataX", angleWave);
 		shader.setUniformf("waveDataY", amplitudeWave);
 		shader.setUniform("transformation", transform.getOrthoTransformation());
-		shader.setUniform("modelViewMatrix", transform.getModelViewMatrix());
-		shader.setUniformf("viewSpaceLightPos", viewSpaceLightPos);
+		shader.setUniform("modelMatrix", transform.getModelMatrix());
+		shader.setUniformf("lightPosition", lightPosition);
 		shader.setUniformf("scene_ambient_light", ambientLight);
 		shader.setUniformf("time", t);
+		shader.setUniformf("eyePosition", eyePosition);
 		
 		map.renderMap();
 		
