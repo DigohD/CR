@@ -122,6 +122,7 @@ public class ForestElf extends Enemy{
 
 		public void tick(ForestElf parent, float dt) {
 			if(parent.isMoving){
+				ep.activate();
 				counter = counter + 0.2f;
 				v = new Vector2f(0, (float) Math.cos(counter));
 			}else{
@@ -130,7 +131,6 @@ public class ForestElf extends Enemy{
 			}
 			offset = offset.add(v);
 			
-			ep.activate();
 			ep.tick(dt);
 			
 			position = offset.add(parent.position.add(ep.getDistance()));
@@ -154,29 +154,37 @@ public class ForestElf extends Enemy{
 		private Sprite handSprite;
 		private float counter;
 		private Vector2f v, offset;
+		private Enemy parent;
+		private EntityProjectile ep;
 		
-		public ForestElfLeftHand(Vector2f position) {
+		public ForestElfLeftHand(Vector2f position, Enemy parent) {
 			super(position);
 			handSprite = new Sprite("felflefthand");
-
+			this.parent = parent;
+			
 			v = new Vector2f(0, 0);
 			offset = new Vector2f(0f, 0f);
 			
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
+			
+			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5);
 		}
 
 		public void tick(ForestElf parent, float dt) {
 			if(parent.isMoving){
 				counter = counter + 0.2f;
 				v = new Vector2f(0, (float) -Math.cos(counter));
+				ep.activate();
 			}else{
 				counter = counter + 0.05f;
 				v = new Vector2f(0, (float) -Math.cos(counter) / 4);
 			}
 			offset = offset.add(v);
 			
-			position = offset.add(parent.position);
+			ep.tick(dt);
+			
+			position = offset.add(parent.position.add(ep.getDistance()));
 		}
 		
 		public void render(Screen screen) {
@@ -208,7 +216,7 @@ public class ForestElf extends Enemy{
 		
 		head = new ForestElfHead(position);
 		rightHand = new ForestElfRightHand(position, this);
-		leftHand = new ForestElfLeftHand(position);
+		leftHand = new ForestElfLeftHand(position, this);
 		EntityManager.addEntity(this);
 		
 		behaviour = new Chasing(this);
