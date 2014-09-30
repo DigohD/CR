@@ -11,6 +11,8 @@ in float isWater_out;
 
 uniform sampler2D sampler;
 
+uniform float time;
+
 uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 
@@ -20,7 +22,7 @@ uniform vec3 material_specular_color;
 uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light;
-uniform vec3 scene_light = vec3(2.9, 2.9, 2.9);
+uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
 
 
 vec4 calcAmbientLight(vec3 sceneAmbientLight, vec4 materialAmbient){
@@ -33,7 +35,7 @@ vec4 calcDiffuseLight(vec3 sceneLight, vec4 materialDiffuse, vec3 directionToLig
 
 vec4 calcSpecularLight(vec3 sceneLight, vec3 directionFromEye, vec3 reflectedLight){
 	float normalizationFactor = (material_shininess + 2.0) / 8.0;
-	float specular = pow(dot(reflectedLight, directionFromEye), material_shininess) * normalizationFactor;
+	float specular = pow(dot(reflectedLight, directionFromEye), material_shininess) ;
 	return vec4(sceneLight, 1.0) * vec4(material_specular_color, 1.0) * specular;	
 }
 
@@ -59,18 +61,19 @@ void main(){
 	
 	//diffuse light
 	vec3 directionToLight = normalize(lightPosition - vertexPosition);
+	
 	vec4 diffuse = texColor * vec4(material_diffuse_color, 1.0);
 	vec4 diffuseLight = calcDiffuseLight(scene_light, diffuse, directionToLight, normal); 
 
 	//specular light
-	vec3 directionFromEye = normalize(eyePosition - vertexPosition);
-	vec3 reflectedLight = normalize(reflect(lightPosition, normal));
+	vec3 directionFromEye = normalize(lightPosition - vertexPosition);
+	vec3 reflectedLight = reflect(-directionToLight, normal);
 	vec4 specularLight = calcSpecularLight(scene_light, directionFromEye, reflectedLight);
 	
 	//emissive light calculations
 	vec4 emissive = texColor * vec4(material_emissive_color, 1.0);
 	
-	vec4 shading = ambientLight + clamp(diffuseLight, 0, 1.0) + clamp(specularLight, 0, 1.0) + emissive;
+	vec4 shading = ambientLight + clamp(diffuseLight, 0, 1) + clamp(specularLight, 0, 1) + emissive;
 	
 	if(texture2D(sampler, texCoord.xy).w == 0){
 		shading = vec4(0);

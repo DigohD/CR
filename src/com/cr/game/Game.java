@@ -27,6 +27,7 @@ public class Game extends CoreEngine{
 	}
 	
 	private void init(){
+		
 		screen = new Screen();
 		new ImageLoader();
 	

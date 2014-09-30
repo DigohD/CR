@@ -5,7 +5,7 @@ import com.cr.engine.graphics.Texture;
 
 public abstract class Tile {
 	
-	private static Texture texture = new Texture("tileatlas32");
+	private static Texture texture = new Texture("tileatlas");
 	
 	public final static float TILE_ATLAS_ROWS = 4;
 	public final static float TILE_ATLAS_COLS = 4;
