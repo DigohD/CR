@@ -97,10 +97,10 @@ public class World {
 			boolean generated = false;
 			while(!generated){
 				e = new Wisp(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 32) + 40;
-				int y = Randomizer.getInt(0, height * 32) + e.getSprite().getSpriteHeight();
+				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + e.getSprite().getSpriteHeight();
 				//System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 32, y / 32) == ColorRGBA.GREEN){
+				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
 					generated = true;
 				}
@@ -113,10 +113,10 @@ public class World {
 			boolean generated = false;
 			while(!generated){
 				t = new Tree(-1000, -1000);
-				int x = Randomizer.getInt(0, width * 32) + 40;
-				int y = Randomizer.getInt(0, height * 32) + t.getSprite().getSpriteHeight();
+				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
 				//System.out.println(t.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 32, y / 32) == ColorRGBA.GREEN){
+				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
 					generated = true;
@@ -129,9 +129,9 @@ public class World {
 			boolean generated = false;
 			while(!generated){
 				s = new Stone(-1000, -1000);
-				int x = Randomizer.getInt(0, width * 32) + 40;
-				int y = Randomizer.getInt(0, height * 32) + s.getSprite().getSpriteHeight();
-				if(map.getTopLayer().getTileID(x / 32, y / 32) == ColorRGBA.GREEN){
+				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
+				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
 					generated = true;
 				}
