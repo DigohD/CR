@@ -57,9 +57,6 @@ public class World {
 	public World(){
 		transform = new Transform();
 		
-		
-		
-
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
 		shader.addUniform("transformation");

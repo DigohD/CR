@@ -104,7 +104,7 @@ public class Client implements Runnable{
 	
 	public void sendData(byte[] data){
 		
-		DatagramPacket packet = new DatagramPacket(data, data.length, ip, 1331);
+		DatagramPacket packet = new DatagramPacket(data, data.length, ip, 12121);
 		try {
 			socket.send(packet);
 		} catch (IOException e) {

@@ -35,7 +35,7 @@ public class Server implements Runnable{
 		System.out.println("Server created");
 		
 		try {
-			socket = new DatagramSocket(1331);
+			socket = new DatagramSocket(12121);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
