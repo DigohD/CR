@@ -109,7 +109,9 @@ public class Client implements Runnable{
 				packet = new MapPacket04(data);
 				if(packetNumber == ((MapPacket04)packet).getPacketNumber()){
 					assembleWorld(data);
-					if(pixels.size() >= width*height*3){
+					System.out.println(pixels.size());
+					if(pixels.size() > width*height*3){
+						while(pixels.size() > 30000) pixels.removeFirst();
 						MPClientState.worldAssembled = true;
 						return;
 					}

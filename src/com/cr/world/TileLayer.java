@@ -10,9 +10,11 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.core.Vertex;
 import com.cr.engine.graphics.Bitmap;
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Mesh;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.world.tile.Tile;
+import com.cr.world.tile.WaterTile;
 
 public class TileLayer {
 	
@@ -41,6 +43,9 @@ public class TileLayer {
 		meshes = new ArrayList<Mesh>();
 		tiles = new HashMap<Integer, Tile>();
 		
+		this.width = width;
+		this.height = height;
+		
 		int size = width*height;
 		
 		int[] pixelData = new int[size];
@@ -48,8 +53,8 @@ public class TileLayer {
 		for(int i = size-1; i >=0; i--){
 			pixelData[i] = pixels.getFirst();
 			pixels.removeFirst();
-			System.out.print(pixelData[i]);
-			if(i%100==0) System.out.println(pixelData[i]);
+//			System.out.print(pixelData[i]);
+//			if(i%100==0) System.out.println(pixelData[i]);
 		
 		}
 		
@@ -105,7 +110,17 @@ public class TileLayer {
 			for(int x = xStart; x < xEnd; x++){
 				if(bitmap.getPixel(x, y) == 0) continue;
 				
+				//System.out.println("tile:" + tiles.get(bitmap.getPixel(x, y)));
+				//System.out.println(tiles.containsKey(bitmap.getPixel(x, y)));
+				//System.out.println("x: " + x + ", y:" + y);
+//				System.out.println("COL" +tiles.get(bitmap.getPixel(x, y)).getCol());
+//				System.out.println("PIXEL" + bitmap.getPixel(x, y));
+				//System.out.println("ROW" +tiles.get(bitmap.getPixel(x, y)).getRow());
+				
+				
 				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
+				
+			
 			
 				float xPos = x * tWidth;
 				float yPos = y * tHeight;
@@ -144,6 +159,8 @@ public class TileLayer {
 	}
 	
 	public void renderTileLayer(boolean water){
+		
+		//System.out.println("RENDER");
 		transform.translate(0, 0, depth);
 		
 		for(Integer i : tiles.keySet()){

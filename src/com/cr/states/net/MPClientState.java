@@ -30,7 +30,7 @@ public class MPClientState extends GameState{
 		client = new Client("192.168.0.2");
 		client.start();
 		mockUps = client.getHeroMockups();
-		String userName = "anders";
+		String userName = "anden";
 		
 		String message = "00" + userName;
 		client.sendData(message.getBytes());
