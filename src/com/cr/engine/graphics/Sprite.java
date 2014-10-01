@@ -48,7 +48,7 @@ public class Sprite {
 							 new Vertex(new Vector3f(0 + width , 0 + height, 0), new Vector2f(1,1)),
 							 new Vertex(new Vector3f(0 + width, 0, 0), new Vector2f(1,0))};
 		
-		int[] indices = {0,1,2, 
+		short[] indices = {0,1,2, 
 						 2,3,0};
 		
 		mesh = new Mesh(vertices, indices);
@@ -90,7 +90,7 @@ public class Sprite {
 							    new Vector2f(xHigh, yHigh),
 							    new Vector2f(xHigh, yLow)};
 		
-		int[] indices = {0,1,2, 
+		short[] indices = {0,1,2, 
 						 2,3,0};
 		
 		mesh = new Mesh(vertices, texCoords, indices, true);

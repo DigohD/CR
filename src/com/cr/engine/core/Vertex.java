@@ -7,7 +7,7 @@ public class Vertex {
 	private Vector3f tangent;
 	private Vector2f texCoord;
 	
-	public final static int SIZE = 11;
+	public final static int SIZE = 8;
 	
 	public Vertex(Vector3f pos){
 		this(pos, new Vector2f(0,0));

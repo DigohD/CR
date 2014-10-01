@@ -70,7 +70,7 @@ public class TileLayer {
 	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
 		List<Vertex> vertices = new ArrayList<Vertex>();
-		List<Integer> indices = new ArrayList<Integer>();
+		List<Short> indices = new ArrayList<Short>();
 		
 		float tWidth = Tile.getTileWidth();
 		float tHeight = Tile.getTileHeight();
@@ -87,13 +87,13 @@ public class TileLayer {
 				float xOffset = 7f;
 				float yOffset = 5f;
 	
-				indices.add(vertices.size() + 0);
-				indices.add(vertices.size() + 1);
-				indices.add(vertices.size() + 2);
+				indices.add((short)(vertices.size() + 0));
+				indices.add((short)(vertices.size() + 1));
+				indices.add((short)(vertices.size() + 2));
 				
-				indices.add(vertices.size() + 2);
-				indices.add(vertices.size() + 3);
-				indices.add(vertices.size() + 0);
+				indices.add((short)(vertices.size() + 2));
+				indices.add((short)(vertices.size() + 3));
+				indices.add((short)(vertices.size() + 0));
 	
 				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0), new Vector2f(xLow, yLow)));
 				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0), new Vector2f(xLow, yHigh)));
@@ -103,12 +103,12 @@ public class TileLayer {
 		}
 		
 		Vertex[] vertexArray = new Vertex[vertices.size()];
-		Integer[] indexArray = new Integer[indices.size()];
+		Short[] indexArray = new Short[indices.size()];
 	
 		vertices.toArray(vertexArray);
 		indices.toArray(indexArray);
 		
-		int[] iArray = new int[indexArray.length];
+		short[] iArray = new short[indexArray.length];
 		
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
