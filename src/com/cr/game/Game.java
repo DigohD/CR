@@ -19,26 +19,24 @@ public class Game extends CoreEngine{
 	public static Shader shader;
 	
 	public Game(){
-		boolean fullscreen = true;
-		Window.createWindow(800, 600, fullscreen);
+		boolean fullScreen = true;
+		if(fullScreen){
+			Window.setFullScreen();
+		}else Window.createWindow(800, 600, false);
+	
 		init();
 	}
 	
 	private void init(){
-		
 		screen = new Screen();
 		new ImageLoader();
 	
-		
 		shader = new Shader("basicVertShader", "basicFragShader");
 		shader.addUniform("transformation");
-//		shader.addUniform("sampler1");
-//		shader.addUniform("sampler2");
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
 		
 		new FontLoader();
-		
 		
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));

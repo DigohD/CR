@@ -5,36 +5,34 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.PixelFormat;
 
 public class Window {
 	
 	private static boolean fullscreenMode;
 	
-	public static void createWindow(int width, int height, boolean fullscreenMode){
-		Window.fullscreenMode = fullscreenMode;
-		if(fullscreenMode){
-			try {
-				Display.setFullscreen(false);
-				Display.setVSyncEnabled(false);
-				Display.create();
-				Keyboard.create();
-				Mouse.create();
-			} catch (LWJGLException e) {
-				e.printStackTrace();
-			}
-		}else{
-			try {
-				Display.setDisplayMode(new DisplayMode(width, height));
-				//Display.setVSyncEnabled(true);
-				Display.create();
-				Keyboard.create();
-				Mouse.create();
-			} catch (LWJGLException e) {
-				e.printStackTrace();
-			}
+	public static void createWindow(int width, int height, boolean vsync){
+		try {
+			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.setVSyncEnabled(vsync);
+			Display.create();
+			Keyboard.create();
+			Mouse.create();
+		} catch (LWJGLException e) {
+			e.printStackTrace();
 		}
-		
+	}
+	
+	public static void setFullScreen(){
+		fullscreenMode = true;
+		try {
+			Display.setFullscreen(true);
+			Display.setVSyncEnabled(true);
+			Display.create();
+			Keyboard.create();
+			Mouse.create();
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void setTitle(String title){

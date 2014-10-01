@@ -14,6 +14,7 @@ uniform sampler2D sampler;
 uniform float time;
 
 uniform vec3 lightPosition;
+uniform vec3 lightPosition2;
 uniform vec3 eyePosition;
 
 uniform float material_shininess;
@@ -22,7 +23,7 @@ uniform vec3 material_specular_color;
 uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light;
-uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
+uniform vec3 scene_light = vec3(1.4, 1.4, 1.4);
 
 
 vec4 calcAmbientLight(vec3 sceneAmbientLight, vec4 materialAmbient){
@@ -97,20 +98,26 @@ void main(){
 	
 	//diffuse light
 	vec3 directionToLight = normalize(lightPosition - vertexPosition);
+	vec3 directionToLight2 = normalize(lightPosition2 - vertexPosition);
 	//directionToLight = rotateZ(directionToLight, time);
 	vec4 diffuse = texColor * vec4(material_diffuse_color, 1.0);
 	vec4 diffuseLight = calcDiffuseLight(scene_light, diffuse, directionToLight, normal); 
+	vec4 diffuseLight2 = calcDiffuseLight(scene_light, diffuse, directionToLight2, normal); 
 
 	//specular light
 	vec3 directionFromEye = normalize(lightPosition - vertexPosition);
+	vec3 directionFromEye2 = normalize(lightPosition2 - vertexPosition);
+	//directionFromEye2 = rotateZ(directionFromEye2, 3.14/2);
 	vec3 reflectedLight = reflect(-directionToLight, normal);
+	vec3 reflectedLight2 = reflect(-directionToLight2, normal);
 	//vec4 specLight = calcSpecularLight2(scene_light, material_shininess, normal, directionToLight, directionFromEye);
 	vec4 specularLight = calcSpecularLight(scene_light, directionFromEye, reflectedLight);
+	vec4 specularLight2 = calcSpecularLight(scene_light, directionFromEye2, reflectedLight2);
 	
 	//emissive light calculations
 	vec4 emissive = texColor * vec4(material_emissive_color, 1.0);
 	
-	vec4 shading = ambientLight + clamp(diffuseLight, 0, 1) + clamp(specularLight, 0, 1) + emissive;
+	vec4 shading = ambientLight + clamp(diffuseLight, 0, 1) + clamp(diffuseLight2, 0, 1) + clamp(specularLight, 0, 1)  + clamp(specularLight2, 0, 1) + emissive;
 	
 	if(texture2D(sampler, texCoord.xy).w == 0){
 		shading = vec4(0);
