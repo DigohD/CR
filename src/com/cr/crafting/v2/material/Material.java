@@ -204,7 +204,6 @@ public abstract class Material{
 	
 	public ArrayList<StatMod> generateStat(boolean isWeapon){
 		ArrayList<StatMod> stats = new ArrayList<StatMod>();
-		setQualityMods();
 		if(isWeapon){
 			getWeaponStats(stats);
 			return stats;

@@ -117,8 +117,20 @@ public class Pyrite extends Material{
 
 	@Override
 	protected void setQualityMods() {
-		// TODO Auto-generated method stub
-		
+		switch(quality){
+		case SUPERB:
+			primbonus = 1f;
+			baseBonus = 1.25f;
+			secBonus = 1f;
+			break;
+		case MASTERFUL:
+			primbonus = 1f;
+			baseBonus = 1.5f;
+			secBonus = 1f;
+			break;
+		default:
+			break;
+	}
 	}
 	
 }
