@@ -60,7 +60,7 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	}
 
 	protected void move(float dt){
-		distance = velocity.mul(dt);
+		distance = velocity.mul(dt * sheet.getStat(StatID.MOVEMENT_SPEED).getTotal());
 		position = position.add(distance);
 	}
 	
@@ -136,5 +136,11 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public abstract void death();
 	public abstract void push(Vector2f distance);
 	public abstract void playHurtSound();
+
+	public StatsSheet getSheet() {
+		return sheet;
+	}
+	
+	
 	
 }

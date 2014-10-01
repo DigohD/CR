@@ -7,13 +7,16 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
+import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.effect.movement.KnockBack;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.emitter.ParticleEmitter;
+import com.cr.entity.enemy.Enemy;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.item.weapon.Weapon;
+import com.cr.util.RPCalc;
 
 public class Linear extends EnemyProjectile implements Renderable{
 
@@ -22,14 +25,15 @@ public class Linear extends EnemyProjectile implements Renderable{
 	protected Sprite sprite;
 	protected ImpactEmitter ie;
 	protected int lifetime = 90, counter;
+	protected float damage = 10f;
 	
-	public Linear(Vector2f pos, Vector2f velocity) {
-		super(pos);
+	public Linear(Vector2f pos, Vector2f velocity, Enemy owner) {
+		super(pos, owner);
 		this.velocity = velocity;
 		
-		sprite = new Sprite("rock1");
+		sprite = new Sprite("wispp");
 		rect = new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		ie = new ImpactEmitter(position, 1, "white1", 5, velocity.normalize().mul(-1), 1);
+		ie = new ImpactEmitter(position.add(new Vector2f(3.5f, 3.5f)), 1, "wispp", 15, velocity.normalize().mul(-1), 3);
 		
 		EntityManager.addEntity(this);
 	}
@@ -42,8 +46,13 @@ public class Linear extends EnemyProjectile implements Renderable{
 			Vector2f CenterOffset = Hero.position.sub(this.position);
 			CollisionPoint = CenterOffset.add(position);
 			
+			Hero h = (Hero) obj;
+			
 			ImpactEmitter ie = new ImpactEmitter(CollisionPoint, 1, "white1", 5, velocity, 5);
-			KnockBack kb = new KnockBack(20, 1, ((Hero) obj), null, this.getVelocity().div(2));
+			KnockBack kb = new KnockBack(20, 1, ((Hero) obj), null, this.getVelocity().div(4));
+			
+			float finalDamage = RPCalc.calculateDamage(damage, owner.getSheet(), Hero.getHeroSheet());
+			h.takeDamage(finalDamage);
 			
 			spent = true;
 			live = false;

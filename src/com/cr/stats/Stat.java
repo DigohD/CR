@@ -21,7 +21,7 @@ public class Stat{
 			total = total + addMods.get(x);
 		}
 		
-		float mulTotal = 1;
+		float mulTotal = 1f;
 		for(String x : mulMods.keySet()){
 			mulTotal = mulTotal + mulMods.get(x);
 		}
@@ -39,12 +39,12 @@ public class Stat{
 		calculateTotal();
 	}
 	
-	public void removeAddmod(String ID, float amount){
+	public void removeAddmod(String ID){
 		addMods.remove(ID);
 		calculateTotal();
 	}
 	
-	public void removeMulmod(String ID, float amount){
+	public void removeMulmod(String ID){
 		mulMods.remove(ID);
 		calculateTotal();
 	}

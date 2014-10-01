@@ -9,17 +9,20 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
-import com.cr.entity.hero.body.Body;
 import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
+import com.cr.entity.hero.body.LowerBody;
 import com.cr.entity.hero.body.RightHand;
+import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.MovePacket02;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
+import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
@@ -36,7 +39,8 @@ public class Hero extends Mob implements Collideable{
 
 	private int stepCounter;
 	private static Head head;
-	private Body body;
+	private static UpperBody body;
+	private static LowerBody lowerBody;
 	private static RightHand rightHand;
 	private static LeftHand leftHand;
 
@@ -72,9 +76,9 @@ public class Hero extends Mob implements Collideable{
 			}
 		}
 				
-		
 		head = new Head();
-		body = new Body();
+		body = new UpperBody();
+		lowerBody = new LowerBody();
 		rightHand = new RightHand();
 		leftHand = new LeftHand();
 		
@@ -89,7 +93,7 @@ public class Hero extends Mob implements Collideable{
 		inventory = new Inventory();
 		materialsBox = new MaterialsBox();
 		
-		sheet = new StatsSheet();
+		sheet = new StatsSheet(true);
 	}
 	
 	protected boolean collisionWithTile(float x, float y){
@@ -116,7 +120,7 @@ public class Hero extends Mob implements Collideable{
 		rect.setLocation((int)position.x,(int)position.y);
 		
 		input.input();
-
+		
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		
@@ -142,6 +146,7 @@ public class Hero extends Mob implements Collideable{
 		
 		head.tick(dt);
 		body.tick(dt);
+		lowerBody.tick(dt);
 		rightHand.tick(dt);
 		leftHand.tick(dt);
 		
@@ -150,12 +155,15 @@ public class Hero extends Mob implements Collideable{
 		}if(leftHand.getItem() != null && Input.getMouse(1)){
 			leftHand.getItem().activate();
 		}
+		
+		passiveRegen(dt);
 	}
 
 	@Override
 	public void render(Screen screen) {
 		switch(currentDir){
 			case SOUTH:
+				lowerBody.render(screen);
 				body.render(screen);
 				rightHand.render(screen);
 				leftHand.render(screen);
@@ -163,37 +171,30 @@ public class Hero extends Mob implements Collideable{
 				break;
 			case EAST:
 				leftHand.render(screen);
+				lowerBody.render(screen);
 				body.render(screen);
 				head.render(screen);
 				rightHand.render(screen);
 				break;
 			case NORTH:
-				head.render(screen);
 				rightHand.render(screen);
 				leftHand.render(screen);
 				head.render(screen);
+				lowerBody.render(screen);
 				body.render(screen);
 				break;
 			case WEST:
 				rightHand.render(screen);
+				lowerBody.render(screen);
 				body.render(screen);
 				head.render(screen);
 				leftHand.render(screen);
 				break;
 		}
-		
-//		g.setColor(Color.BLACK);
-//		g.fillRect(Game.WIDTH - 100, Game.HEIGHT - 50, 90, 40);
-//		g.setColor(Color.WHITE);
-//		String cHPS = String.format("%.1f", currentHP);
-//		String mHPS = String.format("%.1f", maxHP);
-//		g.drawString(cHPS + "/" + mHPS, Game.WIDTH - 90, Game.HEIGHT - 25);
 	}
 	
 	@Override
 	protected void move(float dt){
-		
-		
 		if(printTimer++ > 3){
 			//new FootPrint();
 			printTimer = 0;
@@ -214,11 +215,13 @@ public class Hero extends Mob implements Collideable{
 		rightHand.setItem(inventory.getrHSlot().getItem());
 		leftHand.setItem(inventory.getlHSlot().getItem());
 		head.setItem(inventory.getHeadSlot().getItem());
+		body.setItem(inventory.getUpperBodySlot().getItem());
+		lowerBody.setItem(inventory.getLowerBodySlot().getItem());
 	}
 	
 	@Override
 	public void death() {
-		
+		live = false;
 	}
 	
 	@Override
@@ -236,9 +239,40 @@ public class Hero extends Mob implements Collideable{
 	
 	private void setBobing(boolean isBobing){
 		head.getBob().setActive(isBobing);
+		lowerBody.getBob().setActive(isBobing);
 		body.getBob().setActive(isBobing);
 		rightHand.getBob().setActive(isBobing);
 		leftHand.getBob().setActive(isBobing);
+	}
+	
+	@Override
+	public void takeDamage(float damage){
+		playHurtSound();
+		
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		hpNow.setNewBase(hpNow.getTotal() - damage);
+		
+		if(hpNow.getTotal() < 0)
+			death();
+	}
+	
+	private void passiveRegen(float dt){
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		Stat hpRegen = sheet.getStat(StatID.LIFE_REGEN);
+
+		hpNow.setNewBase(hpNow.getTotal() + (hpRegen.getTotal() / 300f));
+		
+		if(hpNow.getTotal() > sheet.getStat(StatID.HP_MAX).getTotal())
+			hpNow.setNewBase(sheet.getStat(StatID.HP_MAX).getTotal());
+	}
+	
+	public static void onHittingSomething(){
+		Stat hpNow = sheet.getStat(StatID.HP_NOW);
+		Stat hpOnHit = sheet.getStat(StatID.LIFE_ON_HIT);
+		hpNow.setNewBase(hpNow.getTotal() + hpOnHit.getTotal());
+		
+		if(hpNow.getTotal() > sheet.getStat(StatID.HP_MAX).getTotal())
+			hpNow.setNewBase(sheet.getStat(StatID.HP_MAX).getTotal());
 	}
 	
 	@Override
@@ -259,10 +293,8 @@ public class Hero extends Mob implements Collideable{
 	}
 
 	public float getSpeed() {
-		return speed;
+		return speed * sheet.getStat(StatID.MOVEMENT_SPEED).getTotal();
 	}
-
-
 
 	@Override
 	public Rectangle getRect() {
@@ -303,7 +335,12 @@ public class Hero extends Mob implements Collideable{
 		
 	}
 
-	public static StatsSheet getSheet() {
+	@Override
+	public StatsSheet getSheet() {
+		return sheet;
+	}
+	
+	public static StatsSheet getHeroSheet() {
 		return sheet;
 	}
 

@@ -34,10 +34,12 @@ public abstract class TimedEffect extends Entity implements Tickable{
 			removeEffect();
 			live = false;
 		}
+		particles();
 	}
 	
 	public abstract void applyEffect();
 	public abstract void removeEffect();
+	protected abstract void particles();
 	
 	public Mob getOwner() {
 		return owner;

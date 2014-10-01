@@ -57,7 +57,6 @@ public class ImageLoader {
 		imageLib.put("white", loadImage("/font/fwhite.png"));
 		imageLib.put("yellow", loadImage("/font/fyellow.png"));
 
-
 		// Nature
 		imageLib.put("tree1", loadImage("/prop/nature/tree1.png"));
 		imageLib.put("tree2", loadImage("/prop/nature/tree2.png"));
@@ -69,7 +68,8 @@ public class ImageLoader {
 		// Hero
 //		imageLib.put("hero", loadImage("/hero/hero.png"));
 		imageLib.put("herohead", loadImage("/hero/herohead.png"));
-		imageLib.put("herobody", loadImage("/hero/herobody.png"));
+		imageLib.put("herolowerbody", loadImage("/hero/herolowerbody.png"));
+		imageLib.put("heroupperbody", loadImage("/hero/heroupperbody.png"));
 		imageLib.put("herorighthand", loadImage("/hero/herorighthand.png"));
 		imageLib.put("herolefthand", loadImage("/hero/herolefthand.png"));
 		
@@ -95,6 +95,10 @@ public class ImageLoader {
 		// Armor
 		imageLib.put("copperhelm", loadImage("items/armors/copperhelm.png"));
 		imageLib.put("copperhelmicon", loadImage("items/armors/copperhelmicon.png"));
+		imageLib.put("copperplate", loadImage("items/armors/copperplate.png"));
+		imageLib.put("copperplateicon", loadImage("items/armors/copperplateicon.png"));
+		imageLib.put("copperleggings", loadImage("items/armors/copperleggings.png"));
+		imageLib.put("copperleggingsicon", loadImage("items/armors/copperleggingsicon.png"));
 		
 		// Inventory UI
 		//imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
@@ -105,12 +109,12 @@ public class ImageLoader {
 		imageLib.put("contour", loadImage("/inventory/contour.png"));
 		imageLib.put("cursor", loadImage("/inventory/cursor.png"));
 		
-//		// Materials UI
+		// Materials UI
 		imageLib.put("basebutton", loadImage("/materialui/basebutton.png"));
 		imageLib.put("essencesbutton", loadImage("/materialui/essencesbutton.png"));
 		imageLib.put("mineralsbutton", loadImage("/materialui/mineralsbutton.png"));
-//			
-//		// Materials
+			
+		// Materials
 		imageLib.put("copper", loadImage("/material/copper.png"));
 		imageLib.put("basiccloth", loadImage("/material/basiccloth.png"));
 		imageLib.put("pyrite", loadImage("/material/pyrite.png"));
@@ -120,7 +124,7 @@ public class ImageLoader {
 		imageLib.put("turquoise", loadImage("/material/turquoise.png"));
 		imageLib.put("basicleather", loadImage("/material/basicleather.png"));
 		imageLib.put("forestsoul", loadImage("/material/forestsoul.png"));
-//	
+	
 //		// Crafting UI
 		imageLib.put("addbutton", loadImage("/craftingui/addbutton.png"));
 		imageLib.put("backbutton", loadImage("/craftingui/backbutton.png"));
@@ -139,11 +143,16 @@ public class ImageLoader {
 		
 		imageLib.put("flatblack", loadImage("/craftingui/black.png"));
 		imageLib.put("flatwhite", loadImage("/craftingui/white.png"));
+		imageLib.put("flatdarkred", loadImage("/craftingui/darkred.png"));
+		imageLib.put("flatgreen", loadImage("/craftingui/green.png"));
+		imageLib.put("blank", loadImage("/craftingui/blank.png"));
 //		
 //		// Patterns
 		imageLib.put("knifepattern", loadImage("/pattern/knifepattern.png"));
 		imageLib.put("hammerpattern", loadImage("/pattern/hammerpattern.png"));
 		imageLib.put("helmpattern", loadImage("/pattern/helmpattern.png"));
+		imageLib.put("breastplatepattern", loadImage("/pattern/breastplatepattern.png"));
+		imageLib.put("leggingspattern", loadImage("/pattern/leggingspattern.png"));
 //		
 		// Enemies
 		imageLib.put("critter", loadImage("/enemy/critter.png"));
@@ -154,9 +163,15 @@ public class ImageLoader {
 		imageLib.put("wispbody", loadImage("/enemy/wispbody.png"));
 		imageLib.put("wisplimb", loadImage("/enemy/wisplimb.png"));
 		
+		imageLib.put("felfbody", loadImage("/enemy/forestelf/felfbody.png"));
+		imageLib.put("felfhead", loadImage("/enemy/forestelf/felfhead.png"));
+		imageLib.put("felflefthand", loadImage("/enemy/forestelf/felflefthand.png"));
+		imageLib.put("felfrighthand", loadImage("/enemy/forestelf/felfrighthand.png"));
+		
 //		// Particles
 		imageLib.put("blood", loadImage("/particle/blood.png"));
 		imageLib.put("white1", loadImage("/particle/white1.png"));
+		imageLib.put("wispp", loadImage("/particle/wispp.png"));
 	}
 	
 	private static synchronized BufferedImage loadImage(String path){

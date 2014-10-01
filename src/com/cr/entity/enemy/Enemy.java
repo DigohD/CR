@@ -20,11 +20,17 @@ public abstract class Enemy extends Mob implements Collideable{
 	protected Rectangle rect;
 	protected Behaviour behaviour;
 	
+	protected boolean isMoving = false;
+	
 	protected LootTable lt = new LootTable();
+	
+	protected SpellBook spellBook = new SpellBook();
 	
 	public Enemy(Vector2f position, World world) {
 		super(position, world);
 		sheet = new EnemySheet();
+		
+		initSpellBook(spellBook);
 	}
 	
 	@Override
@@ -49,8 +55,17 @@ public abstract class Enemy extends Mob implements Collideable{
 	}
 	
 	public abstract void HeroCollide(Hero hero);
+	public abstract void initSpellBook(SpellBook sb);
 	
+	public boolean isMoving() {
+		return isMoving;
+	}
 
+	public void setMoving(boolean isMoving) {
+		this.isMoving = isMoving;
+	}
+	
+	
 	
 
 }
