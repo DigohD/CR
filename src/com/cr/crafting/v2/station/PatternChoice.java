@@ -6,7 +6,6 @@ import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.hero.inventory.Button;
-import com.cr.input.Mouse;
 
 public class PatternChoice extends Button{
 
@@ -34,7 +33,7 @@ public class PatternChoice extends Button{
 	@Override
 	public void clicked() {
 		isClicked = true;
-		Mouse.resetButton();
+		//Mouse.resetButton();
 	}
 
 	public boolean isClicked() {

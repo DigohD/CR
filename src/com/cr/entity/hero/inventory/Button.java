@@ -2,12 +2,9 @@ package com.cr.entity.hero.inventory;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Observable;
-import java.util.Observer;
 
 import com.cr.engine.input.Input;
 import com.cr.entity.Tickable;
-import com.cr.input.Mouse;
 
 public abstract class Button implements Tickable{
 

@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.crafting;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.station.AddButton;
@@ -15,6 +15,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.states.GameState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 

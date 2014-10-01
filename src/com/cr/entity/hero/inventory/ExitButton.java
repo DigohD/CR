@@ -7,7 +7,6 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 
 public class ExitButton extends Button implements Renderable{
 

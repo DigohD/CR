@@ -74,6 +74,8 @@ public class Shader {
 		glShaderSource(fragmentShader, fragmentShaderSource);
 		glCompileShader(fragmentShader);
 		
+		System.out.println(":: " + fileName);
+		
 		if(glGetShaderi(fragmentShader, GL_COMPILE_STATUS) == GL_FALSE)
 			System.err.println("Couldn't compile fragmentShader: "  + fileName + " correctly");
 		
@@ -85,7 +87,7 @@ public class Shader {
 		glBindAttribLocation(shaderProgram, 0, "position");
 		glBindAttribLocation(shaderProgram, 1, "texCoordIn");
 		glBindAttribLocation(shaderProgram, 2, "normalIn");
-		glBindAttribLocation(shaderProgram, 3, "tangentIn");
+		//glBindAttribLocation(shaderProgram, 3, "tangentIn");
 
 		glLinkProgram(shaderProgram);
 		glValidateProgram(shaderProgram);

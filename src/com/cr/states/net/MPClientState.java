@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.net;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
 import com.cr.game.GameStateManager;
 import com.cr.net.client.Client;
+import com.cr.states.GameState;
 import com.cr.world.World;
 
 public class MPClientState extends GameState{

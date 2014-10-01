@@ -2,13 +2,9 @@ package com.cr.item.weapon;
 
 import java.awt.Rectangle;
 
-import com.cr.combat.attack.OneHandAttack;
-import com.cr.entity.Collideable;
-import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.item.activation.ItemObject;
 import com.cr.stats.Stat;
-import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 
 public abstract class Weapon extends Item{

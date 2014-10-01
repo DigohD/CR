@@ -2,20 +2,19 @@ package com.cr.entity.hero.materials;
 
 import java.awt.Rectangle;
 
+import org.lwjgl.input.Mouse;
+
 import com.cr.crafting.v2.material.Material;
-import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.property.Property;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
-import com.cr.engine.graphics.Window;
-import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.Hooverable;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
@@ -55,7 +54,7 @@ public class MaterialChoice extends Button implements Hooverable{
 	@Override
 	public void clicked(){
 		isClicked = true;
-		Mouse.resetButton();
+		//Mouse.resetButton();
 	}
 
 	public boolean isClicked() {

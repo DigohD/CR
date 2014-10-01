@@ -7,6 +7,8 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.game.GameStateManager;
 import com.cr.net.NetStatus;
+import com.cr.states.net.MPClientState;
+import com.cr.states.net.MPHostState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 

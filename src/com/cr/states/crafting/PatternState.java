@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.crafting;
 
 import java.util.ArrayList;
 
@@ -11,9 +11,9 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.inventory.ExitButton;
-import com.cr.entity.hero.inventory.Inventory;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.states.GameState;
 
 public class PatternState extends GameState{
 

@@ -2,15 +2,15 @@ package com.cr.states;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
-import com.cr.engine.graphics.Font.FontColor;
+import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.CRString;
@@ -42,7 +42,7 @@ public class StatsState extends GameState{
 	public void tick(float dt) {
 		exit.tick(dt);
 		
-		if(KeyInput.space || exit.isClicked()) {
+		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){
 				PlayState ps = (PlayState) gsm.next();
 			}

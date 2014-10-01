@@ -9,7 +9,6 @@ import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 
 public class UpArrow2 extends Button implements Renderable{
 

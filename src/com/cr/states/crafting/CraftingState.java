@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.crafting;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,9 @@ import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.states.GameState;
+import com.cr.states.PlayState;
+import com.cr.states.inventory.InventoryState;
 
 
 public class CraftingState extends GameState{

@@ -8,7 +8,6 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 
 public class CraftButton extends Button implements Renderable{
 
@@ -36,7 +35,7 @@ public class CraftButton extends Button implements Renderable{
 	@Override
 	public void clicked() {
 		isClicked = true;
-		Mouse.resetButton();
+		//Mouse.resetButton();
 	}
 
 	public boolean isClicked() {

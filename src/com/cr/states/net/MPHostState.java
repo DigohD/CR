@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.net;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
 import com.cr.game.GameStateManager;
-import com.cr.net.packets.MovePacket02;
 import com.cr.net.server.Server;
+import com.cr.states.GameState;
 import com.cr.world.World;
 
 public class MPHostState extends GameState{
