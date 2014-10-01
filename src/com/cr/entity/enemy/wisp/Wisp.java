@@ -11,12 +11,14 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.emitter.Particle;
 import com.cr.entity.enemy.Enemy;
+import com.cr.entity.enemy.SpellBook;
 import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Fleeing;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Randomizer;
 import com.cr.world.World;
 
@@ -31,6 +33,8 @@ public class Wisp extends Enemy{
 			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 20));
 			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10));
 			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 5));
+			
+			sheet.put(StatID.MOVEMENT_SPEED, new Stat("Movement Speed", 1f));
 			
 			sheet.put(StatID.ARMOR, new Stat("Armor", 15));
 			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
@@ -166,6 +170,12 @@ public class Wisp extends Enemy{
 	@Override
 	public Rectangle getRect() {
 		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+	}
+
+	@Override
+	public void initSpellBook(SpellBook sb) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

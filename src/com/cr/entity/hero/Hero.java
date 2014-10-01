@@ -278,7 +278,7 @@ public class Hero extends Mob implements Collideable{
 	}
 
 	public float getSpeed() {
-		return speed;
+		return speed * sheet.getStat(StatID.MOVEMENT_SPEED).getTotal();
 	}
 
 	@Override

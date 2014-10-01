@@ -12,13 +12,16 @@ public class StatsSheet {
 						STRENGTH, AGILITY, INTELLIGENCE, TOUGHNESS,
 						HP_NOW, HP_MAX,
 						
+						/*Mobility*/
+						MOVEMENT_SPEED,
+						
 						/*Secondary Stats*/
 						ARMOR, ARMOR_RATING, PHYSICAL_POWER, RAPIDNESS, SPELL_POWER,
 						
 						/*On hit Effects*/
 						LIFE_ON_HIT,
 	
-						/*Passive*/
+						/*Active Passive*/
 						LIFE_REGEN,
 						
 						/* Non-character Stats*/
@@ -38,6 +41,8 @@ public class StatsSheet {
 			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 10));
 			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10000));
 			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 100));
+			
+			sheet.put(StatID.MOVEMENT_SPEED, new Stat("Movement Speed", 1f));
 			
 			sheet.put(StatID.ARMOR, new Stat("Armor", 0));
 			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
