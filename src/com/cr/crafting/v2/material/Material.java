@@ -149,7 +149,7 @@ public abstract class Material{
 		else
 			quality = Quality.MASTERFUL;
 		
-		setQualityMods(quality);
+		setQualityMods();
 		
 		return null;
 	}
@@ -204,6 +204,7 @@ public abstract class Material{
 	
 	public ArrayList<StatMod> generateStat(boolean isWeapon){
 		ArrayList<StatMod> stats = new ArrayList<StatMod>();
+		setQualityMods();
 		if(isWeapon){
 			getWeaponStats(stats);
 			return stats;
@@ -219,7 +220,7 @@ public abstract class Material{
 	public abstract ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats);
 	public abstract ArrayList<StatMod> getArmorStats(ArrayList<StatMod> stats);
 	
-	protected abstract void setQualityMods(Quality quality);
+	protected abstract void setQualityMods();
 	protected abstract void newMods();
 	
 	public void resetSpans(){

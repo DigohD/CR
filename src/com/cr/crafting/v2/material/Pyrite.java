@@ -116,7 +116,7 @@ public class Pyrite extends Material{
 	}
 
 	@Override
-	protected void setQualityMods(Quality quality) {
+	protected void setQualityMods() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -168,9 +168,19 @@ public class Copper extends Material{
 	}
 
 	@Override
-	protected void setQualityMods(Quality quality) {
+	protected void setQualityMods() {
 		switch(quality){
 			case SUPERB:
+				primbonus = 1.25f;
+				baseBonus = 1f;
+				secBonus = 1f;
+				break;
+			case MASTERFUL:
+				primbonus = 1.5f;
+				baseBonus = 1.25f;
+				secBonus = 1f;
+				break;
+			default:
 				break;
 		}
 	}
