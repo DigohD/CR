@@ -52,7 +52,15 @@ public class World {
 	float lightY = 0;
 	float lightZ = 0;
 	
+	float lightX2 = 0;
+	float lightY2 = 0;
+	float lightZ2 = 0;
+	
+	float k = 0;
+	
 	private Vector3f lightPosition,lightPosition2, ambientLight, eyePosition;
+	
+	private int[] bottomLayerData, middleLayerData, topLayerData;
 	
 	public World(){
 		transform = new Transform();
@@ -70,6 +78,7 @@ public class World {
 		shader.addUniform("lightPosition2");
 		shader.addUniform("scene_ambient_light");
 		shader.addUniform("eyePosition");
+		shader.addUniform("k");
 		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");
@@ -78,22 +87,33 @@ public class World {
 		
 		shader.setUniformi("sampler", 0);
 
-		
 		map = new TileMap(100, 100);
+		
+		bottomLayerData = map.getBottomLayer().getBitmap().getPixels();
+		middleLayerData = map.getMiddleLayer().getBitmap().getPixels();
+		topLayerData = map.getTopLayer().getBitmap().getPixels();
 
 		width = map.getWidth();
 		height = map.getHeight();
 		
-		lightX = (width * Tile.getTileWidth()) ;
+		lightX = -1000;
 		lightY = (height * Tile.getTileHeight()) / 2;
-		lightZ = -100;
+		lightZ = 0;
+		
+		
+		
+		
 		
 		lightPosition = transform.getModelMatrix().mul(new Vector3f(lightX, lightY, lightZ));
-		lightPosition2 = transform.getModelMatrix().mul(new Vector3f(lightX - 300, lightY + 50, lightZ));
+		lightPosition2 = transform.getModelMatrix().mul(new Vector3f(lightX2, lightY2, lightZ2));
 		
 		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
 		
 		em = new EntityManager(this);
+		
+		lightX2 = EntityManager.getHero().getX() + 1000;
+		lightY2 = EntityManager.getHero().getY();
+		lightZ2 = 0;
 		camera = new Camera();
 		
 		eyePosition = Camera.getPos();
@@ -178,16 +198,28 @@ public class World {
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
+	
+		t += dt*0.01f;
 		
-		//dayNightCycle(dt);
+		if(t >= PI2) t = 0;
+		
+		if(t > 0 && t <= 3.14/6.0)
+			k += 0.001f;
+		
+		
+		if(t > ((5.0*3.14) / 6.0) && t <= 3.14)
+			k -= 0.001f;
+
+		lightPosition2.y = Camera.getCamY() + Window.getHeight()/2;
+		lightPosition2.x = lightX2 + ( -1.0f * (float)(Math.cos((-t-3.14f))) * 2000);
+		lightPosition2.z = -400 * (float) Math.sin(t);
+		
+		lightPosition.x = lightX + (-1.0f * ((float) Math.cos(t)) * (2000 + (width * Tile.getTileWidth())));
+		lightPosition.z = -10000 * (float) Math.sin(t);
 		
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
-		
-		lightPosition.x = EntityManager.getHero().getPos().x + 10;
-		lightPosition.y = EntityManager.getHero().getPos().y + 10;
-		
 
 		camera.tick(dt);
 		em.tick(dt);
@@ -231,6 +263,7 @@ public class World {
 		shader.setUniformf("lightPosition2", lightPosition2);
 		shader.setUniformf("scene_ambient_light", ambientLight);
 		shader.setUniformf("time", t);
+		shader.setUniformf("k", k);
 		shader.setUniformf("eyePosition", eyePosition);
 		
 		map.renderMap();
@@ -273,6 +306,18 @@ public class World {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public int[] getBottomLayerData() {
+		return bottomLayerData;
+	}
+
+	public int[] getMiddleLayerData() {
+		return middleLayerData;
+	}
+
+	public int[] getTopLayerData() {
+		return topLayerData;
 	}
 
 }
