@@ -98,4 +98,10 @@ public class Forge {
 	public Material getBase(){
 		return materials.get(0);
 	}
+
+	public ArrayList<Material> getMaterials() {
+		return materials;
+	}
+	
+	
 }

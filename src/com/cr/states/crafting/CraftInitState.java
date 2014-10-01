@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.station.Forge;
+import com.cr.crafting.v2.station.PatternButton;
 import com.cr.crafting.v2.station.PatternChoice;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
@@ -15,23 +16,24 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.states.GameState;
 
-public class PatternState extends GameState{
-
-	private Sprite bg = new Sprite("patternbg", Game.shader, new Transform());
+public class CraftInitState extends GameState{
+	
+	private PatternButton pattern;
 	private ExitButton exit;
-	private ArrayList<PatternChoice> patternChoices = new ArrayList<PatternChoice>();
 	
 	private ArrayList<Pattern> patterns;
 	
 	private Forge forge;
 	
-	public PatternState(GameStateManager gsm, Forge forge) {
+	public CraftInitState(GameStateManager gsm, Forge forge) {
 		super(gsm);
 		blockRendering = false;
 		
 		int xOffset =  (Window.getWidth() - 150) / 2;
-		int yOffset = (Window.getHeight() - 230);
+		int yOffset = (Window.getHeight() / 2);
+		
 		exit = new ExitButton(xOffset, yOffset);
+		pattern = new PatternButton(xOffset, yOffset - 40);
 		
 		this.forge = forge;
 		patterns = new ArrayList<Pattern>();
@@ -39,9 +41,6 @@ public class PatternState extends GameState{
 		
 		xOffset =  (Window.getWidth() - 500) / 2;
 		yOffset = (Window.getHeight() - 420) / 2;
-		for(int i = 0; i < patterns.size(); i++){
-			patternChoices.add(new PatternChoice(xOffset + 10 + (i * 90), yOffset + 10, patterns.get(i)));
-		}
 	}
 
 	@Override
@@ -53,30 +52,24 @@ public class PatternState extends GameState{
 	public void tick(float dt) {
 		exit.tick(dt);
 		
-		for(PatternChoice x : patternChoices){
-			x.tick(dt);
-			if(x.isClicked()){
-				forge.setPattern(x.getPattern());
-				if(gsm.next() instanceof CraftingState){
-					CraftingState cs = (CraftingState) gsm.next();
-				}
-				exit.removeFromInput();
-				for(PatternChoice xs : patternChoices)
-					xs.removeFromInput();
-				gsm.pop();
-				gsm.push(new ChooseBaseState(gsm, forge));
-				return;
-			}
-		}
-		
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof CraftingState){
 				CraftingState cs = (CraftingState) gsm.next();
 			}
+			
+			pattern.removeFromInput();
 			exit.removeFromInput();
-			for(PatternChoice x : patternChoices)
-				x.removeFromInput();
 			gsm.pop();
+		}if(pattern.isClicked()) {
+			if(gsm.next() instanceof CraftingState){
+				CraftingState cs = (CraftingState) gsm.next();
+			}
+			
+			pattern.removeFromInput();
+			exit.removeFromInput();
+			gsm.pop();
+			
+			gsm.push(new PatternState(gsm, forge));
 		}
 	}
 
@@ -85,11 +78,10 @@ public class PatternState extends GameState{
 		int xOffset =  (Window.getWidth() - 500) / 2;
 		int yOffset = (Window.getHeight() - 420) / 2;
 		
-		screen.renderStaticSprite(bg, xOffset, yOffset);
+//		for(PatternChoice x : patternChoices)
+//			x.render(screen);
 		
-		for(PatternChoice x : patternChoices)
-			x.render(screen);
-		
+		pattern.render(screen);
 		exit.render(screen);
 	}
 	

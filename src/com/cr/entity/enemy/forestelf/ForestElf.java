@@ -258,12 +258,6 @@ public class ForestElf extends Enemy{
 		rightHand.render(screen);
 		leftHand.render(screen);
 	}
-	
-	@Override
-	public void HeroCollide(Hero hero) {
-		
-	}
-
 	@Override
 	public void death() {
 		

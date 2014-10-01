@@ -6,6 +6,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.game.GameStateManager;
+import com.cr.states.crafting.CraftInitState;
 import com.cr.states.crafting.CraftingState;
 import com.cr.states.inventory.InventoryState;
 import com.cr.stats.StatsSheet.StatID;
@@ -35,7 +36,7 @@ public class PlayState extends GameState{
 		if(Input.getKey(Input.C))
 			gsm.push(new InventoryState(gsm));
 		else if(Input.getKey(Input.M))
-			gsm.push(new CraftingState(gsm, new Forge()));
+			gsm.push(new CraftInitState(gsm, new Forge()));
 		else if(Input.getKey(Input.Q))
 			gsm.push(new StatsState(gsm));
 		else if(Input.getKey(Input.F1))

@@ -161,11 +161,6 @@ public class Wisp extends Enemy{
 	}
 
 	@Override
-	public void HeroCollide(Hero hero) {
-		
-	}
-
-	@Override
 	public void playHurtSound() {
 		
 	}

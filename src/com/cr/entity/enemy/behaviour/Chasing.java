@@ -18,7 +18,7 @@ public class Chasing extends Behaviour{
 		float length = Math.abs(range.length());
 		
 		range = range.normalize();
-		if(length < 280){
+		if(length < 280 && length > 30){
 			move(dt, range);
 			enemy.setMoving(true);
 		}else{

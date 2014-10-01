@@ -71,7 +71,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	
 	@Override
 	public void render(Screen screen) {
-
 		screen.renderSprite(sprite, position.x , position.y);
 	}
 

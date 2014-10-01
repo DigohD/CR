@@ -35,9 +35,7 @@ public abstract class Enemy extends Mob implements Collideable{
 	
 	@Override
 	public void collisionWith(Collideable obj) {
-		if(obj instanceof Hero){
-			HeroCollide((Hero) obj);
-		}
+		
 	}
 	
 	@Override
@@ -54,7 +52,6 @@ public abstract class Enemy extends Mob implements Collideable{
 		return sheet;
 	}
 	
-	public abstract void HeroCollide(Hero hero);
 	public abstract void initSpellBook(SpellBook sb);
 	
 	public boolean isMoving() {

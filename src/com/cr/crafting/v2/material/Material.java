@@ -7,12 +7,16 @@ import com.cr.crafting.v2.property.Property;
 import com.cr.engine.graphics.Sprite;
 import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
+import com.cr.util.Randomizer;
 
 public abstract class Material{
 
 	public enum State{BALANCED, TEMPERED, HARDENED, FLASHED, BLASTED, BROKEN}
 	
+	public enum Quality{NORMAL, SUPERB, MASTERFUL, LEGENDARY}
+	
 	protected State state;
+	protected Quality quality;
 	
 	protected int lowerHeatLimit, higherHeatLimit;
 	protected int lowerTimeLimit, higherTimeLimit;
@@ -27,13 +31,14 @@ public abstract class Material{
 	protected int newBalancedValue;
 	
 	protected int amount, usedAmount;
+	protected float secBonus, baseBonus, primbonus;
 	
 	protected boolean breakable, isPrimary;
 	
 	protected ArrayList<Property> properties;
 	
 	public abstract String getName();
-
+	
 	public boolean process(int heat, int time, ArrayList<Material> materials){
 		breakable = true;
 		
@@ -136,6 +141,16 @@ public abstract class Material{
 		if(right && upper)
 			return State.HARDENED;
 		
+		int rnd = Randomizer.getInt(1, 100);
+		if(rnd < 75)
+			quality = Quality.NORMAL;
+		else if(rnd < 95)
+			quality = Quality.SUPERB;
+		else
+			quality = Quality.MASTERFUL;
+		
+		setQualityMods(quality);
+		
 		return null;
 	}
 	
@@ -196,7 +211,6 @@ public abstract class Material{
 			getArmorStats(stats);
 			return stats;
 		}
-		
 	}
 	
 	public abstract int getID();
@@ -204,6 +218,9 @@ public abstract class Material{
 	public abstract Sprite getMaterialImage();
 	public abstract ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats);
 	public abstract ArrayList<StatMod> getArmorStats(ArrayList<StatMod> stats);
+	
+	protected abstract void setQualityMods(Quality quality);
+	protected abstract void newMods();
 	
 	public void resetSpans(){
 		newHigherHeatLimit = higherHeatLimit;
@@ -220,8 +237,6 @@ public abstract class Material{
 		this.usedAmount = usedAmount;
 		newMods();
 	}
-	
-	protected abstract void newMods();
 	
 	public int getLowerHeatLimit() {
 		return lowerHeatLimit;
