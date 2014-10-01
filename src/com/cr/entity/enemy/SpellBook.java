@@ -13,6 +13,7 @@ public class SpellBook implements Tickable{
 	public void tick(float dt) {
 		for(Ability x : spells){
 			x.tick(dt);
+			System.out.println(x.isAIActivate());
 			if(x.isAIActivate())
 				x.activate();
 		}

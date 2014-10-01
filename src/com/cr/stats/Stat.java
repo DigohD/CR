@@ -21,7 +21,7 @@ public class Stat{
 			total = total + addMods.get(x);
 		}
 		
-		float mulTotal = 1;
+		float mulTotal = 1f;
 		for(String x : mulMods.keySet()){
 			mulTotal = mulTotal + mulMods.get(x);
 		}

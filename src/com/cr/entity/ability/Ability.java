@@ -18,6 +18,7 @@ public abstract class Ability implements Tickable{
 
 	@Override
 	public void tick(float dt){
+		System.out.println("SPELL " + countDown);
 		if(countDown > -1)
 			countDown--;
 	}
@@ -25,8 +26,10 @@ public abstract class Ability implements Tickable{
 	public void activate(){
 		if(countDown <= 0){
 			Mob target = findTarget();
-			execute(target);
-			countDown = cooldown;
+			if(target != null){
+				execute(target);
+				countDown = cooldown;
+			}
 		}
 	}
 	

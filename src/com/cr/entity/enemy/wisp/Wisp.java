@@ -9,6 +9,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.ability.self.WispPrison;
 import com.cr.entity.emitter.Particle;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.SpellBook;
@@ -150,6 +151,8 @@ public class Wisp extends Enemy{
 		
 		wl1.tick(this, dt);
 		wl2.tick(this, dt);
+		
+		spellBook.tick(dt);
 	}
 
 	@Override
@@ -174,8 +177,7 @@ public class Wisp extends Enemy{
 
 	@Override
 	public void initSpellBook(SpellBook sb) {
-		// TODO Auto-generated method stub
-		
+		sb.addSpell(new WispPrison(this, 600));
 	}
 	
 }

@@ -320,6 +320,11 @@ public class Hero extends Mob implements Collideable{
 		
 	}
 
+	@Override
+	public StatsSheet getSheet() {
+		return sheet;
+	}
+	
 	public static StatsSheet getHeroSheet() {
 		return sheet;
 	}
