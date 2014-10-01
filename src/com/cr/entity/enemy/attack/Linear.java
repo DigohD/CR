@@ -49,7 +49,7 @@ public class Linear extends EnemyProjectile implements Renderable{
 			Hero h = (Hero) obj;
 			
 			ImpactEmitter ie = new ImpactEmitter(CollisionPoint, 1, "white1", 5, velocity, 5);
-			KnockBack kb = new KnockBack(20, 1, ((Hero) obj), null, this.getVelocity().div(2));
+			KnockBack kb = new KnockBack(20, 1, ((Hero) obj), null, this.getVelocity().div(4));
 			
 			float finalDamage = RPCalc.calculateDamage(damage, owner.getSheet(), Hero.getHeroSheet());
 			h.takeDamage(finalDamage);

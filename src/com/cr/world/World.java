@@ -104,7 +104,7 @@ public class World {
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
 
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 30; i++){
 			ForestElf e = null;
 			boolean generated = false;
 			while(!generated){
