@@ -119,6 +119,8 @@ public class Hero extends Mob implements Collideable{
 	public void tick(float dt) {
 		rect.setLocation((int)position.x,(int)position.y);
 		
+		//System.out.println("X: " + position.x + ", Y: " + position.y);
+		
 		input.input();
 		
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);

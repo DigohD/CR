@@ -1,6 +1,14 @@
 package com.cr.world;
 
+import java.util.LinkedList;
+
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.world.biome.Grasslands;
+import com.cr.world.tile.DirtTile;
+import com.cr.world.tile.GrassTile;
+import com.cr.world.tile.SandTile;
+import com.cr.world.tile.StoneTile;
+import com.cr.world.tile.WaterTile;
 
 public class TileMap {
 	
@@ -8,6 +16,33 @@ public class TileMap {
 	private int height;
 	
 	private TileLayer bottomLayer, middleLayer, topLayer;
+	
+	public TileMap(LinkedList<Integer> pixels, int width, int height){
+		this.width = width;
+		this.height = height;
+		
+		
+		topLayer = new TileLayer(pixels, width, height, 0);
+		System.out.println();
+		middleLayer = new TileLayer(pixels, width, height, 0);
+		System.out.println();
+		bottomLayer = new TileLayer(pixels, width, height, 0);
+		System.out.println();
+	
+		
+		
+		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
+		
+		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());
+		middleLayer.addTileType(ColorRGBA.YELLOW, new SandTile());
+		middleLayer.addTileType(ColorRGBA.GRAY, new StoneTile());
+		
+		topLayer.addTileType(ColorRGBA.GREEN, new GrassTile());
+		
+		bottomLayer.generateTileLayer();
+		middleLayer.generateTileLayer();
+		topLayer.generateTileLayer();
+	}
 	
 	public TileMap(int width, int height){
 		this.width = width;

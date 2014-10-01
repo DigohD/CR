@@ -1,21 +1,16 @@
 package com.cr.world;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.cr.engine.core.Transform;
-import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
-import com.cr.entity.enemy.forestelf.ForestElf;
-import com.cr.entity.enemy.wisp.Wisp;
 import com.cr.game.EntityManager;
 import com.cr.util.Camera;
-import com.cr.util.Randomizer;
-import com.cr.world.terrain.Stone;
-import com.cr.world.terrain.Tree;
 import com.cr.world.tile.Tile;
 
 public class World {
@@ -54,13 +49,126 @@ public class World {
 	
 	private Vector3f lightPosition,lightPosition2, ambientLight, eyePosition;
 	
-	private byte[] bottomLayerData, middleLayerData, topLayerData;
-	
 	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
 	
 	
-	public World(byte[] bottom, byte[] middle, byte[] top){
+	public World(LinkedList<Integer> pixels, int width, int height){
+		transform = new Transform();
 		
+		shader = new Shader("phongVertShader", "phongFragShader");
+		
+		shader.addUniform("transformation");
+		shader.addUniform("modelMatrix");
+		shader.addUniform("time");
+		shader.addUniform("sampler");
+		shader.addUniform("waveDataX");
+		shader.addUniform("waveDataY");
+		shader.addUniform("isWater");
+		shader.addUniform("lightPosition");
+		shader.addUniform("lightPosition2");
+		shader.addUniform("scene_ambient_light");
+		shader.addUniform("eyePosition");
+		shader.addUniform("k");
+		
+		shader.addUniform("material_shininess");
+		shader.addUniform("material_diffuse_color");
+		shader.addUniform("material_specular_color");
+		shader.addUniform("material_emissive_color");
+		
+		shader.setUniformi("sampler", 0);
+
+		map = new TileMap(pixels, width, height);
+
+		width = map.getWidth();
+		height = map.getHeight();
+		
+		lightX = -1000;
+		lightY = (height * Tile.getTileHeight()) / 2;
+		lightZ = 0;
+
+		lightPosition = transform.getModelMatrix().mul(new Vector3f(lightX, lightY, lightZ));
+		lightPosition2 = transform.getModelMatrix().mul(new Vector3f(lightX2, lightY2, lightZ2));
+		
+		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
+		
+		em = new EntityManager(this);
+		
+		lightX2 = EntityManager.getHero().getX() + 1000;
+		lightY2 = EntityManager.getHero().getY();
+		lightZ2 = 0;
+		camera = new Camera();
+		
+		eyePosition = Camera.getPos();
+		
+//		new LootEmitter(new Vector2f(200,200), 5000);
+		
+//		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
+
+
+//		for(int i = 0; i < 30; i++){
+//			ForestElf e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new ForestElf(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < 10; i++){
+//			Wisp e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new Wisp(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < 100; i++){
+//			Tree t;
+//			boolean generated = false;
+//			while(!generated){
+//				t = new Tree(-1000, -1000);
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
+//				//System.out.println(t.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
+//					t.updateRect();
+//					generated = true;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < 100; i++){
+//			Stone s;
+//			boolean generated = false;
+//			while(!generated){
+//				s = new Stone(-1000, -1000);
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+		
+		
+		
+//		CraftTest test = new CraftTest();
+//		test.craftTest();
 		
 		
 		
@@ -99,9 +207,7 @@ public class World {
 		width = map.getWidth();
 		height = map.getHeight();
 		
-		bottomLayerData = new byte[width*height];
-		middleLayerData =  new byte[width*height];
-		topLayerData =  new byte[width*height];
+
 		
 		initByteMap();
 		
@@ -131,66 +237,65 @@ public class World {
 		
 //		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
 
-
-		for(int i = 0; i < 0; i++){
-			ForestElf e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new ForestElf(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
-		
-		for(int i = 0; i < 0; i++){
-			Wisp e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new Wisp(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
-		
-		for(int i = 0; i < 100; i++){
-			Tree t;
-			boolean generated = false;
-			while(!generated){
-				t = new Tree(-1000, -1000);
-				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
-				//System.out.println(t.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
-					t.updateRect();
-					generated = true;
-				}
-			}
-		}
-		
-		for(int i = 0; i < 100; i++){
-			Stone s;
-			boolean generated = false;
-			while(!generated){
-				s = new Stone(-1000, -1000);
-				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
-				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
+//		for(int i = 0; i < 30; i++){
+//			ForestElf e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new ForestElf(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < 10; i++){
+//			Wisp e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new Wisp(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < 100; i++){
+//			Tree t;
+//			boolean generated = false;
+//			while(!generated){
+//				t = new Tree(-1000, -1000);
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
+//				//System.out.println(t.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
+//					t.updateRect();
+//					generated = true;
+//				}
+//			}
+//		}
+//		
+//		for(int i = 0; i < 100; i++){
+//			Stone s;
+//			boolean generated = false;
+//			while(!generated){
+//				s = new Stone(-1000, -1000);
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
 		
 		
 		
@@ -390,16 +495,6 @@ public class World {
 		return height;
 	}
 
-	public byte[] getBottomLayerData() {
-		return bottomLayerData;
-	}
-
-	public byte[] getMiddleLayerData() {
-		return middleLayerData;
-	}
-
-	public byte[] getTopLayerData() {
-		return topLayerData;
-	}
+	
 
 }
