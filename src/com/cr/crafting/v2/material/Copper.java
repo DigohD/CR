@@ -139,7 +139,6 @@ public class Copper extends Material{
 			stats.add(diceMod);
 			stats.add(cooldownMod);
 		}
-		
 		return stats;
 	}
 
@@ -165,8 +164,15 @@ public class Copper extends Material{
 			armorMod = new StatMod(base * mod1 * mod2, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}
-		
 		return null;
+	}
+
+	@Override
+	protected void setQualityMods(Quality quality) {
+		switch(quality){
+			case SUPERB:
+				break;
+		}
 	}
 	
 }

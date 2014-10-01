@@ -113,5 +113,11 @@ public class ForestSoul extends Material{
 		}
 		return null;
 	}
+
+	@Override
+	protected void setQualityMods(Quality quality) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

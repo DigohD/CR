@@ -103,7 +103,10 @@ void main(){
 	//directionToLight = rotateZ(directionToLight, time);
 	vec4 diffuse = texColor * vec4(material_diffuse_color, 1.0);
 	vec4 diffuseLight = calcDiffuseLight(scene_light, diffuse, directionToLight, normal); 
-	vec4 diffuseLight2 = 8.7f * calcDiffuseLight(scene_light, diffuse, directionToLight2, normal); 
+
+	vec4 colors2 = vec4(0.3f, 0.8f, 1.0f, 1.0f) * 38.0f;
+
+	vec4 diffuseLight2 = colors2 * calcDiffuseLight(scene_light, diffuse, directionToLight2, normal); 
 
 	//specular light
 	vec3 directionFromEye = normalize(lightPosition - vertexPosition);

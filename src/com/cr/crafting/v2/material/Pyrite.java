@@ -114,5 +114,11 @@ public class Pyrite extends Material{
 		}
 		return null;
 	}
+
+	@Override
+	protected void setQualityMods(Quality quality) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
