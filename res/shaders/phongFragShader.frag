@@ -12,6 +12,7 @@ in float isWater_out;
 uniform sampler2D sampler;
 
 uniform float time;
+uniform float k;
 
 uniform vec3 lightPosition;
 uniform vec3 lightPosition2;
@@ -23,7 +24,7 @@ uniform vec3 material_specular_color;
 uniform vec3 material_emissive_color; 
 
 uniform vec3 scene_ambient_light;
-uniform vec3 scene_light = vec3(1.4, 1.4, 1.4);
+uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
 
 
 vec4 calcAmbientLight(vec3 sceneAmbientLight, vec4 materialAmbient){
@@ -102,7 +103,7 @@ void main(){
 	//directionToLight = rotateZ(directionToLight, time);
 	vec4 diffuse = texColor * vec4(material_diffuse_color, 1.0);
 	vec4 diffuseLight = calcDiffuseLight(scene_light, diffuse, directionToLight, normal); 
-	vec4 diffuseLight2 = calcDiffuseLight(scene_light, diffuse, directionToLight2, normal); 
+	vec4 diffuseLight2 = 8.7f * calcDiffuseLight(scene_light, diffuse, directionToLight2, normal); 
 
 	//specular light
 	vec3 directionFromEye = normalize(lightPosition - vertexPosition);
@@ -117,7 +118,21 @@ void main(){
 	//emissive light calculations
 	vec4 emissive = texColor * vec4(material_emissive_color, 1.0);
 	
-	vec4 shading = ambientLight + clamp(diffuseLight, 0, 1) + clamp(diffuseLight2, 0, 1) + clamp(specularLight, 0, 1)  + clamp(specularLight2, 0, 1) + emissive;
+	vec4 shading;
+	
+	if(isWater_out == 1){
+		
+		
+		if(time >= 3.14 && time <= 3.14*2.0){
+			shading = ambientLight + clamp(diffuseLight, 0, 1) + emissive;
+		}else{
+			shading = ambientLight + clamp(diffuseLight, 0, 1) + (k*clamp(diffuseLight2, 0, 1)) + (k*clamp(specularLight2, 0, 1)) + emissive;
+		}
+		
+	}else{
+		shading = ambientLight + clamp(diffuseLight, 0, 1)  + emissive;
+	}
+	
 	
 	if(texture2D(sampler, texCoord.xy).w == 0){
 		shading = vec4(0);
