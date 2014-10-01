@@ -27,15 +27,16 @@ public class MPClientState extends GameState{
 	@Override
 	public void init() {
 		
-		client = new Client("213.100.75.188");
+		client = new Client("192.168.0.2");
 		client.start();
 		mockUps = client.getHeroMockups();
 		String userName = "anders";
-		EntityManager.getHero().setUserName(userName);
+		
 		String message = "00" + userName;
 		client.sendData(message.getBytes());
 		
 		while(!worldAssembled){
+			//System.out.println("LOOP");
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -43,9 +44,13 @@ public class MPClientState extends GameState{
 			}
 		}
 		
-		System.out.println(client.pixels.size());
 		
-		w = new World();
+		
+		//System.out.println(client.pixels.size());
+		
+		w = new World(client.pixels, client.width, client.height);
+		
+		EntityManager.getHero().setUserName(userName);
 		
 	}
 

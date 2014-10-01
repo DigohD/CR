@@ -2,6 +2,7 @@ package com.cr.world;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.cr.engine.core.Transform;
@@ -31,6 +32,31 @@ public class TileLayer {
 	private float yHigh = 0;
 	
 	private float scaleFactor = 1f;
+	
+	int[] pixelData;
+	
+	public TileLayer(LinkedList<Integer> pixels, int width, int height, float depth){
+		this.transform = World.getTransform();
+		this.shader = World.getShader();
+		meshes = new ArrayList<Mesh>();
+		tiles = new HashMap<Integer, Tile>();
+		
+		int size = width*height;
+		
+		int[] pixelData = new int[size];
+		
+		for(int i = size-1; i >=0; i--){
+			pixelData[i] = pixels.getFirst();
+			pixels.removeFirst();
+			System.out.print(pixelData[i]);
+			if(i%100==0) System.out.println(pixelData[i]);
+		
+		}
+		
+		
+		bitmap = new Bitmap(width, height);
+		bitmap.setPixels(pixelData);
+	}
 	
 	public TileLayer(int width, int height, float depth){
 		this.depth = depth;

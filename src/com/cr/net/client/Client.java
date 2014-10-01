@@ -42,6 +42,8 @@ public class Client implements Runnable{
 	int packetNumber = 0;
 	int index = 0;
 	
+	public int width, height;
+	
 	public Client(String ip){
 	
 		byteToIntMap.put((byte)-1, ColorRGBA.BLACK);
@@ -96,7 +98,7 @@ public class Client implements Runnable{
 	}
 	
 	
-	int width, height;
+
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
@@ -106,9 +108,10 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case MAP:
+				//System.out.println("data size: " + data.length);
 				packet = new MapPacket04(data);
 				if(packetNumber == ((MapPacket04)packet).getPacketNumber()){
-					assembleWorld(packet.getData());
+					assembleWorld(data);
 					if(pixels.size() >= width*height*3){
 						MPClientState.worldAssembled = true;
 						return;
@@ -116,6 +119,7 @@ public class Client implements Runnable{
 					packetNumber++;
 					RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
 					sendData(p.getData());
+					System.out.println("REQUEST SENT");
 				}else{
 					RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
 					sendData(p.getData());
@@ -124,6 +128,8 @@ public class Client implements Runnable{
 				break;
 			case ACCEPT:
 				packet = new AcceptPacket03(data);
+				width = ((AcceptPacket03)packet).getWidth();
+				height = ((AcceptPacket03)packet).getHeight();
 				bottomLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
 				middleLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
 				topLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
@@ -154,9 +160,7 @@ public class Client implements Runnable{
 	}
 	
 	public void assembleWorld(byte[] data){
-		
-		
-		
+	
 		for(int i = 0; i < 924; i++){
 			pixels.addFirst(byteToIntMap.get(data[i+100]));
 		}
