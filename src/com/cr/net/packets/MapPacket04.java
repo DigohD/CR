@@ -12,7 +12,7 @@ public class MapPacket04 extends Packet{
 	    
 	    String[] dataArray = readData(data).split(":");
 	  
-	    this.packetNumber = Integer.parseInt(dataArray[2]);
+	    this.packetNumber = Integer.parseInt(dataArray[1]);
 	}
 	
 	public MapPacket04(int packetNumber) {
@@ -34,7 +34,7 @@ public class MapPacket04 extends Packet{
 
 	@Override
 	public byte[] getData() {
-		return ("04" + ":" + packetID).getBytes();
+		return ("04" + ":" + packetNumber + ":").getBytes();
 	}
 
 	public int getPacketNumber() {

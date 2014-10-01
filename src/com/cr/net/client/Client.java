@@ -95,7 +95,6 @@ public class Client implements Runnable{
 		
 	}
 	
-	
 	int width, height;
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
@@ -146,22 +145,14 @@ public class Client implements Runnable{
 						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
 					}
 				}
-				
-				
-				
 				break;
 		}
 	}
 	
 	public void assembleWorld(byte[] data){
-		
-		
-		
 		for(int i = 0; i < 924; i++){
 			pixels.addFirst(byteToIntMap.get(data[i+100]));
 		}
-		
-		
 	}
 	
 	public void sendData(byte[] data){

@@ -29,8 +29,6 @@ public class Server implements Runnable{
 	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
 	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
 	
-	
-	
 	private boolean running = false;
 	
 	public Server(){
@@ -85,6 +83,7 @@ public class Server implements Runnable{
 		
 		String message = new String(data).trim();
 		
+		System.out.println(message.substring(0, 2));
 		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
 		Packet packet = null;
 		
@@ -113,7 +112,13 @@ public class Server implements Runnable{
 			case REQUESTMAP:
 				packet = new RequestMapPacket05(data);
 				MapPacket04 p = new MapPacket04(((RequestMapPacket05)packet).getPacketNumber());
-				sendData(MPHostState.getWorld().convertToByteArrays(p.getPacketNumber(), p.getData()), address, port);
+				
+				byte[] data2 = new byte[1024];
+				for(int i = 0; i < p.getData().length; i++)
+					data2[i] = p.getData()[i];
+				
+				sendData(MPHostState.getWorld().convertToByteArrays(p.getPacketNumber(), data2), address, port);
+				System.out.println(new String(MPHostState.getWorld().convertToByteArrays(p.getPacketNumber(), data2)));
 				break;
 		}
 		
