@@ -2,13 +2,11 @@ package com.cr.crafting.v2.material;
 
 import java.util.ArrayList;
 
-import com.cr.combat.Damage;
 import com.cr.crafting.v2.property.Property;
 import com.cr.crafting.v2.property.Solid;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.game.Game;
-import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatsSheet.StatID;
 
