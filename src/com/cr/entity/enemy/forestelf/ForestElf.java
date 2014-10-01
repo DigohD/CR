@@ -9,8 +9,10 @@ import com.cr.entity.Collideable;
 import com.cr.entity.Entity;
 import com.cr.entity.Mob;
 import com.cr.entity.Renderable;
+import com.cr.entity.ability.self.Haste;
 import com.cr.entity.emitter.Particle;
 import com.cr.entity.enemy.Enemy;
+import com.cr.entity.enemy.SpellBook;
 import com.cr.entity.enemy.attack.EntityProjectile;
 import com.cr.entity.enemy.attack.Linear;
 import com.cr.entity.enemy.behaviour.Chasing;
@@ -35,6 +37,8 @@ public class ForestElf extends Enemy{
 			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 5));
 			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 1));
 			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 5));
+			
+			sheet.put(StatID.MOVEMENT_SPEED, new Stat("Movement Speed", 1f));
 			
 			sheet.put(StatID.ARMOR, new Stat("Armor", 15));
 			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
@@ -243,6 +247,8 @@ public class ForestElf extends Enemy{
 		head.tick(this, dt);
 		rightHand.tick(this, dt);
 		leftHand.tick(this, dt);
+		
+		spellBook.tick(dt);
 	}
 
 	@Override
@@ -271,6 +277,11 @@ public class ForestElf extends Enemy{
 	@Override
 	public Rectangle getRect() {
 		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+	}
+
+	@Override
+	public void initSpellBook(SpellBook book) {
+		book.addSpell(new Haste(this, 600));
 	}
 
 }

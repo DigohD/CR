@@ -27,6 +27,12 @@ public class KnockBack extends TimedEffect{
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	protected void particles() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 	

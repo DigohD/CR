@@ -60,7 +60,7 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	}
 
 	protected void move(float dt){
-		distance = velocity.mul(dt);
+		distance = velocity.mul(dt * sheet.getStat(StatID.MOVEMENT_SPEED).getTotal());
 		position = position.add(distance);
 	}
 	
