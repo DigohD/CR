@@ -25,7 +25,7 @@ public class WispPrison extends Ability{
 
 		@Override
 		public void applyEffect() {
-			owner.getSheet().getStat(StatID.MOVEMENT_SPEED).addMulmod("wispprison", -0.5f);
+			owner.getSheet().getStat(StatID.MOVEMENT_SPEED).addMulmod("wispprison", -0.8f);
 		}
 
 		@Override
