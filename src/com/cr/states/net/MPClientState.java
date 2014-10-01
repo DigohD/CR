@@ -15,6 +15,8 @@ public class MPClientState extends GameState{
 	private List<HeroMP> mockUps;
 	private static Client client;
 	private World w;
+	
+	public static boolean worldAssembled = false;
 
 	public MPClientState(GameStateManager gsm) {
 		super(gsm);
@@ -24,7 +26,7 @@ public class MPClientState extends GameState{
 	
 	@Override
 	public void init() {
-		w = new World();
+		
 		client = new Client("213.100.75.188");
 		client.start();
 		mockUps = client.getHeroMockups();
@@ -32,6 +34,19 @@ public class MPClientState extends GameState{
 		EntityManager.getHero().setUserName(userName);
 		String message = "00" + userName;
 		client.sendData(message.getBytes());
+		
+		while(!worldAssembled){
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println(client.pixels.size());
+		
+		w = new World();
+		
 	}
 
 	@Override

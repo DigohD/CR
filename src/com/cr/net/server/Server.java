@@ -8,16 +8,18 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cr.engine.core.Vector2f;
 import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
 import com.cr.net.client.ClientInfo;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
 import com.cr.net.packets.LoginPacket00;
+import com.cr.net.packets.MapPacket04;
 import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
+import com.cr.net.packets.RequestMapPacket05;
+import com.cr.states.net.MPHostState;
 
 public class Server implements Runnable{
 	
@@ -108,7 +110,10 @@ public class Server implements Runnable{
 				
 				packet.writeData(this);
 				break;
-			case DISCONNECT:
+			case REQUESTMAP:
+				packet = new RequestMapPacket05(data);
+				MapPacket04 p = new MapPacket04(((RequestMapPacket05)packet).getPacketNumber());
+				sendData(MPHostState.getWorld().convertToByteArrays(p.getPacketNumber(), p.getData()), address, port);
 				break;
 		}
 		
@@ -144,7 +149,7 @@ public class Server implements Runnable{
         
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
-        	sendData(new AcceptPacket03(client.getUserName()).getData(), client.getInetAddress(), client.getPort());
+        	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
             connectedClients.add(client);
             heroMockups.add(hero);
         }

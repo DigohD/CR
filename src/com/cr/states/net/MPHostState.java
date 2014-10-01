@@ -14,7 +14,7 @@ import com.cr.world.World;
 public class MPHostState extends GameState{
 	
 	private static Server server;
-	private World world;
+	private static World world;
 	private Hero hero;
 	
 	private List<HeroMP> mockUps;
@@ -58,6 +58,10 @@ public class MPHostState extends GameState{
 
 	public static Server getServer() {
 		return server;
+	}
+
+	public static World getWorld() {
+		return world;
 	}
 
 }

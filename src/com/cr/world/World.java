@@ -1,23 +1,17 @@
 package com.cr.world;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
+import java.util.HashMap;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
-import com.cr.engine.graphics.Sprite;
-import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.wisp.Wisp;
 import com.cr.game.EntityManager;
-import com.cr.game.Game;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.terrain.Stone;
@@ -60,7 +54,18 @@ public class World {
 	
 	private Vector3f lightPosition,lightPosition2, ambientLight, eyePosition;
 	
-	private int[] bottomLayerData, middleLayerData, topLayerData;
+	private byte[] bottomLayerData, middleLayerData, topLayerData;
+	
+	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
+	
+	
+	public World(byte[] bottom, byte[] middle, byte[] top){
+		
+		
+		
+		
+		
+	}
 	
 	public World(){
 		transform = new Transform();
@@ -89,12 +94,16 @@ public class World {
 
 		map = new TileMap(100, 100);
 		
-		bottomLayerData = map.getBottomLayer().getBitmap().getPixels();
-		middleLayerData = map.getMiddleLayer().getBitmap().getPixels();
-		topLayerData = map.getTopLayer().getBitmap().getPixels();
+
 
 		width = map.getWidth();
 		height = map.getHeight();
+		
+		bottomLayerData = new byte[width*height];
+		middleLayerData =  new byte[width*height];
+		topLayerData =  new byte[width*height];
+		
+		initByteMap();
 		
 		lightX = -1000;
 		lightY = (height * Tile.getTileHeight()) / 2;
@@ -291,6 +300,60 @@ public class World {
 			
 		return null;
 	}
+	
+	
+	
+	private void initByteMap(){
+		byteMap.put(ColorRGBA.BLACK, (byte)-1);
+		byteMap.put(ColorRGBA.GRAY, (byte)0);
+		byteMap.put(ColorRGBA.GREEN, (byte)1);
+		byteMap.put(ColorRGBA.BLUE, (byte)2);
+		byteMap.put(ColorRGBA.BROWN, (byte)3);
+		byteMap.put(ColorRGBA.YELLOW, (byte)4);
+	}
+	
+	
+	
+	public byte[] convertToByteArrays(int packetNumber, byte[] data){
+		
+	
+	
+		int rest = ((packetNumber + 1) * 924) % (width*height);
+		int pre = 924 - rest;
+		
+		if(rest < 924 && ((packetNumber+1)*924) > (width*height*2)){
+			int start = packetNumber * 924;
+			for(int i = 0; i < pre; i++)
+				data[i + 100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[start + i]);
+			
+			for(int i = pre; i < 924; i++){
+				data[i + 100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[i]);
+			}
+			
+			return data;
+		}
+		
+		if(rest < 924){
+			int start = packetNumber * 924;
+			for(int i = 0; i < pre; i++)
+				data[i + 100] = byteMap.get(map.getBottomLayer().getBitmap().getPixels()[start + i]);
+			
+			for(int i = pre; i < 924; i++){
+				data[i + 100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[i]);
+			}
+			
+			return data;
+		}
+		
+		
+		
+		for(int i = 0; i < 924; i++)
+			data[i+100] = byteMap.get(map.getBottomLayer().getBitmap().getPixels()[i + (packetNumber*924)]);
+		
+		
+		return data;
+		
+	}
 
 	public static Shader getShader() {
 		return shader;
@@ -308,15 +371,15 @@ public class World {
 		return height;
 	}
 
-	public int[] getBottomLayerData() {
+	public byte[] getBottomLayerData() {
 		return bottomLayerData;
 	}
 
-	public int[] getMiddleLayerData() {
+	public byte[] getMiddleLayerData() {
 		return middleLayerData;
 	}
 
-	public int[] getTopLayerData() {
+	public byte[] getTopLayerData() {
 		return topLayerData;
 	}
 

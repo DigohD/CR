@@ -7,14 +7,20 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
-import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.entity.hero.HeroMP;
+import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
+import com.cr.net.packets.MapPacket04;
 import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
+import com.cr.net.packets.RequestMapPacket05;
+import com.cr.states.net.MPClientState;
 
 public class Client implements Runnable{
 
@@ -27,8 +33,23 @@ public class Client implements Runnable{
 	
 	private volatile boolean running = false;
 	
+	private int[] bottomLayerData, middleLayerData, topLayerData;
+	
+	private HashMap<Byte, Integer> byteToIntMap = new HashMap<Byte, Integer>();
+	
+	public LinkedList<Integer> pixels = new LinkedList<Integer>();
+	
+	int packetNumber = 0;
+	int index = 0;
+	
 	public Client(String ip){
 	
+		byteToIntMap.put((byte)-1, ColorRGBA.BLACK);
+		byteToIntMap.put((byte)0, ColorRGBA.GRAY);
+		byteToIntMap.put((byte)1, ColorRGBA.GREEN);
+		byteToIntMap.put((byte)2, ColorRGBA.BLUE);
+		byteToIntMap.put((byte)3, ColorRGBA.BROWN);
+		byteToIntMap.put((byte)4, ColorRGBA.YELLOW);
 		
 		try {
 			socket = new DatagramSocket();
@@ -74,6 +95,9 @@ public class Client implements Runnable{
 		
 	}
 	
+	
+	int width, height;
+	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
 		
@@ -81,6 +105,33 @@ public class Client implements Runnable{
 		Packet packet = null;
 		
 		switch(type){
+			case MAP:
+				packet = new MapPacket04(data);
+				if(packetNumber == ((MapPacket04)packet).getPacketNumber()){
+					assembleWorld(packet.getData());
+					if(pixels.size() >= width*height*3){
+						MPClientState.worldAssembled = true;
+						return;
+					}
+					packetNumber++;
+					RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
+					sendData(p.getData());
+				}else{
+					RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
+					sendData(p.getData());
+				}
+				
+				break;
+			case ACCEPT:
+				packet = new AcceptPacket03(data);
+				bottomLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
+				middleLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
+				topLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
+				
+				RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
+				sendData(p.getData());
+				
+				break;
 			case CONNECT:
 				packet = new ConnectPacket01(data);
 				HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos());
@@ -100,6 +151,17 @@ public class Client implements Runnable{
 				
 				break;
 		}
+	}
+	
+	public void assembleWorld(byte[] data){
+		
+		
+		
+		for(int i = 0; i < 924; i++){
+			pixels.addFirst(byteToIntMap.get(data[i+100]));
+		}
+		
+		
 	}
 	
 	public void sendData(byte[] data){

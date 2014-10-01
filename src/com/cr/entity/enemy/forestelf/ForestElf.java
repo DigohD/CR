@@ -40,7 +40,7 @@ public class ForestElf extends Enemy{
 			
 			sheet.put(StatID.MOVEMENT_SPEED, new Stat("Movement Speed", 1f));
 			
-			sheet.put(StatID.ARMOR, new Stat("Armor", 15));
+			sheet.put(StatID.ARMOR, new Stat("Armor", 1));
 			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
 			sheet.put(StatID.PHYSICAL_POWER, new Stat("Physical Power", 0));
 			sheet.put(StatID.RAPIDNESS, new Stat("Rapidness", 0));
@@ -260,7 +260,7 @@ public class ForestElf extends Enemy{
 	}
 	@Override
 	public void death() {
-		
+		live = false;
 	}
 
 	@Override
