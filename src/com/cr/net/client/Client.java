@@ -28,7 +28,7 @@ public class Client implements Runnable{
 	
 	private int port;
 	private int packetNumber = 0;
-	public int width, height;
+	private int width, height;
 	
 	private volatile boolean running = false;
 	
@@ -173,6 +173,14 @@ public class Client implements Runnable{
 
 	public HashMap<String, HeroMP> getClientsMap() {
 		return clientsMap;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 }

@@ -6,7 +6,7 @@ public abstract class CoreEngine {
 	
 	public static int TARGET_TPS = 60;
 	public static float dt = (float) ((1.0 / TARGET_TPS) * 10);
-	private volatile boolean running = false;
+	private static volatile boolean running = false;
 	
 	public abstract void getInput();
 	public abstract void tick(float dt);
@@ -18,7 +18,7 @@ public abstract class CoreEngine {
 		gameLoop();
 	}
 	
-	protected synchronized void stop(){
+	public static synchronized void stop(){
 		running = false;
 	}
 	

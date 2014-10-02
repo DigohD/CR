@@ -46,15 +46,15 @@ public class World {
 	
 	private boolean day = true, night = false;
 	
-	float lightX = 0;
-	float lightY = 0;
-	float lightZ = 0;
+	private float lightX = 0;
+	private float lightY = 0;
+	private float lightZ = 0;
 	
-	float lightX2 = 0;
-	float lightY2 = 0;
-	float lightZ2 = 0;
+	private float lightX2 = 0;
+	private float lightY2 = 0;
+	private float lightZ2 = 0;
 	
-	float k = 0;
+	private float k = 0;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();

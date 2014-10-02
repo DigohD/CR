@@ -107,7 +107,9 @@ public class Server implements Runnable{
 	}
 	
 	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
-		
+		if(clientsMap.containsKey(packet.getUserName()))
+			clientsMap.remove(packet.getUserName());
+		sendDataToAllClients(packet.getData());
 	}
 	
 	private void handleLogin(LoginPacket00 packet, InetAddress address, int port){
