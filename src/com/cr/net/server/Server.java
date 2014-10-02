@@ -92,6 +92,8 @@ public class Server implements Runnable{
 				break;
 			case INVALID:
 				break;
+			case DISCONNECT:
+				break;
 			case LOGIN:
 				packet = new LoginPacket00(data);
 				System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((LoginPacket00) packet).getUserName() + " has connected");

@@ -33,7 +33,7 @@ public class World {
 	private Vector3f lightPosition,lightPosition2, ambientLight, eyePosition;
 	
 	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
-	private List<Integer> pixelList = new ArrayList<Integer>();
+	private List<Integer> pixels = new ArrayList<Integer>();
 	
 	private int width, height;
 	private int timer = 0;
@@ -78,13 +78,13 @@ public class World {
 		initByteMap();
 		
 		for(int i = 0; i < width*height; i++)
-			pixelList.add(map.getBottomLayer().getBitmap().getPixels()[i]);
+			pixels.add(map.getBottomLayer().getBitmap().getPixels()[i]);
 		
 		for(int i = 0; i < width*height; i++)
-			pixelList.add(map.getMiddleLayer().getBitmap().getPixels()[i]);
+			pixels.add(map.getMiddleLayer().getBitmap().getPixels()[i]);
 	
 		for(int i = 0; i < width*height; i++)
-			pixelList.add(map.getTopLayer().getBitmap().getPixels()[i]);
+			pixels.add(map.getTopLayer().getBitmap().getPixels()[i]);
 		
 		init();
 	}
@@ -284,7 +284,7 @@ public class World {
 	public byte[] getBytes2(int pNumber, byte[] data){
 		for(int i = 0; i < 924; i++)
 			if(i + (pNumber*924) < 30000)
-				data[i+100] = byteMap.get(pixelList.get(i + (pNumber*924)));
+				data[i+100] = byteMap.get(pixels.get(i + (pNumber*924)));
 		return data;
 	}
 	
