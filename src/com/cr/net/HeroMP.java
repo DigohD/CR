@@ -78,15 +78,16 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	}
 	
 	public void setDirection(Direction dir){
-		this.dir = dir;
-		
-		if(lowerBody != null){
+		if(lowerBody != null)
 			lowerBody.setDir(dir);
+		if(body != null)
 			body.setDir(dir);
+		if(rightHand != null)
 			rightHand.setDir(dir);
+		if(leftHand != null)
 			leftHand.setDir(dir);
+		if(head != null)
 			head.setDir(dir);
-		}
 	}
 	
 	@Override
