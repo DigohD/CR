@@ -47,15 +47,6 @@ public class Game extends CoreEngine{
 		Input.tick();
 		if(Input.getKey(Input.ESCAPE))
 			stop();
-		
-//		if(Input.getMouse(0))
-//			System.out.println("mouse btn 0");
-//		if(Input.getMouse(1))
-//			System.out.println("mouse btn 1");
-//		if(Input.getMouse(2))
-//			System.out.println("mouse btn 2");
-//		if(Input.getMouse(3))
-//			System.out.println("mouse btn 3");
 	}
 
 	@Override

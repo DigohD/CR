@@ -35,7 +35,7 @@ public class Server implements Runnable{
 		System.out.println("Server created");
 		
 		try {
-			socket = new DatagramSocket(12121);
+			socket = new DatagramSocket(1331);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
@@ -118,7 +118,7 @@ public class Server implements Runnable{
 					data2[i] = p.getData()[i];
 				
 				sendData(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2), address, port);
-				System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
+				//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
 				break;
 		}
 		
