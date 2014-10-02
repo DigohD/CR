@@ -286,6 +286,10 @@ public class Hero extends Mob implements Collideable{
 		return position;
 	}
 	
+	public static void setPosition2(Vector2f position) {
+		Hero.position = position;
+	}
+
 	public float getX() {
 		return position.x;
 	}

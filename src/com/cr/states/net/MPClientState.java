@@ -2,13 +2,16 @@ package com.cr.states.net;
 
 import java.util.List;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
+import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
 import com.cr.game.GameStateManager;
 import com.cr.net.client.Client;
 import com.cr.states.GameState;
 import com.cr.world.World;
+import com.cr.world.tile.Tile;
 
 public class MPClientState extends GameState{
 	
@@ -51,6 +54,7 @@ public class MPClientState extends GameState{
 		w = new World(client.pixels, client.width, client.height);
 		
 		EntityManager.getHero().setUserName(userName);
+		Hero.setPosition2(new Vector2f((w.getWidth() * Tile.getTileWidth()) / 2 , (w.getHeight() * Tile.getTileHeight()) / 2));
 		
 	}
 
