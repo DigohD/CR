@@ -61,8 +61,8 @@ public class World {
 		
 		map = new TileMap(pixels, width, height);
 
-		width = map.getWidth();
-		height = map.getHeight();
+		this.width = width;
+		this.height = height;
 		
 		init();
 	}
@@ -106,7 +106,7 @@ public class World {
 		
 		eyePosition = Camera.getPos();
 		
-		generateWorldObjects();
+		//generateWorldObjects();
 	}
 	
 	private void initShader(){

@@ -54,8 +54,6 @@ public class MPClientState extends GameState{
 		w = new World(client.pixels, client.width, client.height);
 		
 		EntityManager.getHero().setUserName(userName);
-		Hero.setPosition2(new Vector2f((w.getWidth() * Tile.getTileWidth()) / 2 , (w.getHeight() * Tile.getTileHeight()) / 2));
-		
 	}
 
 	@Override
