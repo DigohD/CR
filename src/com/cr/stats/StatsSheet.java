@@ -35,7 +35,7 @@ public class StatsSheet {
 	
 	public StatsSheet(boolean isHero){
 		super();
-		this.isHero = isHero;
+		StatsSheet.isHero = isHero;
 		if(isHero){
 			sheet.put(StatID.LEVEL, new Stat(StatID.LEVEL, "Level", 1));
 			sheet.put(StatID.STRENGTH, new Stat(StatID.STRENGTH, "Strength", 10));

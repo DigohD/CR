@@ -106,6 +106,7 @@ public class Server implements Runnable{
 				break;
 			case STATS:
 				StatPacket07 packet07 = new StatPacket07(data);
+				handleStatPacket(packet07, address, port);
 				break;
 			default:
 				break;
@@ -113,19 +114,17 @@ public class Server implements Runnable{
 		
 	}
 	
-	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
-		System.out.println("DISCONNECT PACKET RECEIVED");
-		System.out.println(new String(packet.getData()));
-		System.out.println(clientsMap.get(packet.getUserName()));
+	private void handleStatPacket(StatPacket07 packet07, InetAddress address, int port) {
+		
+		
+	}
 
+	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
 		if(clientsMap.containsKey(packet.getUserName())){
-			System.out.println("CLIENT EXISTS");
+			clientsMap.get(packet.getUserName()).setLive(false);
+			clientsMap.remove(packet.getUserName());
 		}
-		clientsMap.get(packet.getUserName()).setLive(false);
-		clientsMap.remove(packet.getUserName());
-		
-		
-		//sendDataToAllClients(packet.getData());
+		sendDataToAllClients(packet.getData());
 	}
 	
 	private void handleLogin(LoginPacket00 packet, InetAddress address, int port){
