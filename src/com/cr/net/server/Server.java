@@ -31,11 +31,11 @@ public class Server implements Runnable{
 	
 	private boolean running = false;
 	
-	public Server(){
+	public Server(int port){
 		System.out.println("Server created");
 		
 		try {
-			socket = new DatagramSocket(1331);
+			socket = new DatagramSocket(port);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

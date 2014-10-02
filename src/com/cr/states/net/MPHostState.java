@@ -29,7 +29,7 @@ public class MPHostState extends GameState{
 		world = new World();
 		hero = EntityManager.getHero();
 		hero.setUserName("Ders");
-		server = new Server();
+		server = new Server(1331);
 		mockUps = server.getMockups();
 		server.start();
 	}

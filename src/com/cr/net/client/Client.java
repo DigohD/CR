@@ -28,6 +28,8 @@ public class Client implements Runnable{
 	private DatagramSocket socket;
 	private Thread thread;
 	
+	private int port;
+	
 	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
 	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
 	
@@ -44,7 +46,9 @@ public class Client implements Runnable{
 	
 	public int width, height;
 	
-	public Client(String ip){
+	public Client(String ip, int port){
+		
+		this.port = port;
 	
 		byteToIntMap.put((byte)-1, ColorRGBA.BLACK);
 		byteToIntMap.put((byte)0, ColorRGBA.GRAY);
@@ -163,7 +167,7 @@ public class Client implements Runnable{
 	
 	public void sendData(byte[] data){
 		
-		DatagramPacket packet = new DatagramPacket(data, data.length, ip, 12121);
+		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
