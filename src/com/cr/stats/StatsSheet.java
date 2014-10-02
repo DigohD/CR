@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class StatsSheet {
 	
 	protected HashMap<StatID, Stat> sheet = new HashMap<StatID, Stat>();
+	public static boolean isHero;
 	
 	public enum StatID {
 						/*Primary Stats*/
@@ -34,6 +35,7 @@ public class StatsSheet {
 	
 	public StatsSheet(boolean isHero){
 		super();
+		this.isHero = isHero;
 		if(isHero){
 			sheet.put(StatID.LEVEL, new Stat(StatID.LEVEL, "Level", 1));
 			sheet.put(StatID.STRENGTH, new Stat(StatID.STRENGTH, "Strength", 10));
