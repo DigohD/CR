@@ -76,6 +76,7 @@ public class ProcessState extends GameState{
 			
 			gsm.pop();
 			gsm.push(new ChooseSecState(gsm, forge));
+			gsm.push(new ProcessReportState(gsm, forge));
 		}
 		
 	}

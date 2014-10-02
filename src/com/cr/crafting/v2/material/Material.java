@@ -4,9 +4,14 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.property.Property;
+import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
+import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
+import com.cr.util.CRString;
+import com.cr.util.FontLoader;
 import com.cr.util.Randomizer;
 
 public abstract class Material{
@@ -132,15 +137,6 @@ public abstract class Material{
 		else
 			upper = true;
 		
-		if(left && upper)
-			return State.TEMPERED;
-		if(left && lower)
-			return State.FLASHED;
-		if(right && lower)
-			return State.BLASTED;
-		if(right && upper)
-			return State.HARDENED;
-		
 		int rnd = Randomizer.getInt(1, 100);
 		if(rnd < 75)
 			quality = Quality.NORMAL;
@@ -150,6 +146,15 @@ public abstract class Material{
 			quality = Quality.MASTERFUL;
 		
 		setQualityMods();
+		
+		if(left && upper)
+			return State.TEMPERED;
+		if(left && lower)
+			return State.FLASHED;
+		if(right && lower)
+			return State.BLASTED;
+		if(right && upper)
+			return State.HARDENED;
 		
 		return null;
 	}
@@ -221,6 +226,25 @@ public abstract class Material{
 	
 	protected abstract void setQualityMods();
 	protected abstract void newMods();
+	
+	public void renderStatus(Screen screen, int xOffset, int yOffset){
+		Font f = FontLoader.aquireFont(FontColor.BLACK);
+		
+		f.setFont(CRString.create(getName() + ":"));
+		screen.renderFont(f, xOffset, yOffset, 0.3f);
+		
+		String stateS = state.name().toLowerCase();
+		stateS = Character.toUpperCase(stateS.charAt(0)) + stateS.substring(1);
+		f.setFont(CRString.create(stateS));
+		screen.renderFont(f, xOffset + 150, yOffset, 0.3f);
+		
+		String qualityS = quality.name().toLowerCase();
+		qualityS = Character.toUpperCase(qualityS.charAt(0)) + qualityS.substring(1);
+		f.setFont(CRString.create(qualityS));
+		screen.renderFont(f, xOffset + 300, yOffset, 0.3f);
+		
+		FontLoader.releaseFont(f);
+	}
 	
 	public void resetSpans(){
 		newHigherHeatLimit = higherHeatLimit;
