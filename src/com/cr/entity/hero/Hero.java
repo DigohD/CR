@@ -66,8 +66,7 @@ public class Hero extends Mob implements Collideable{
 		input = new HeroInput(this);
 		t = new Transform();
 		if(NetStatus.isMultiPlayer && !NetStatus.isHOST){
-			position.x = MPClientState.getClient().getStartPos().x + 50;
-			position.y = MPClientState.getClient().getStartPos().y;
+			position = new Vector2f(MPClientState.getClient().getStartPos().x + 50, MPClientState.getClient().getStartPos().y);
 		}else{
 			position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
 		}
