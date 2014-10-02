@@ -266,7 +266,7 @@ public class ForestElf extends Enemy{
 
 	@Override
 	public void death() {
-		
+		live = false;
 	}
 
 	@Override

@@ -2,13 +2,11 @@ package com.cr.crafting.v2.material;
 
 import java.util.ArrayList;
 
-import com.cr.combat.Damage;
 import com.cr.crafting.v2.property.Property;
 import com.cr.crafting.v2.property.Solid;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.game.Game;
-import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatsSheet.StatID;
 
@@ -139,7 +137,6 @@ public class Copper extends Material{
 			stats.add(diceMod);
 			stats.add(cooldownMod);
 		}
-		
 		return stats;
 	}
 
@@ -165,8 +162,25 @@ public class Copper extends Material{
 			armorMod = new StatMod(base * mod1 * mod2, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}
-		
 		return null;
+	}
+
+	@Override
+	protected void setQualityMods() {
+		switch(quality){
+			case SUPERB:
+				primbonus = 1.25f;
+				baseBonus = 1f;
+				secBonus = 1f;
+				break;
+			case MASTERFUL:
+				primbonus = 1.5f;
+				baseBonus = 1.25f;
+				secBonus = 1f;
+				break;
+			default:
+				break;
+		}
 	}
 	
 }

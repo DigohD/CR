@@ -5,13 +5,13 @@ in vec2 texCoordIn;
 in vec3 normalIn;
 in vec3 tangentIn;
 
-out vec3 viewSpaceNormal;
-out vec3 viewSpaceTangent;
-out vec3 viewSpacePos;
+out vec3 normal_out;
+out vec3 tangent_out;
+out vec3 vertexPosition;
 out vec3 outColor;
 out vec2 texCoord; 
 out float isWater_out;
-out mat4 modelview;
+out mat4 modelMatrix_out;
 
 uniform float isWater;
 
@@ -20,18 +20,17 @@ uniform float waveDataY;
 
 
 uniform mat4 transformation;
-uniform mat4 modelViewMatrix;
+uniform mat4 modelMatrix;
 
-void main() 
-{
-
+void main(){
 	outColor = vec3(1.0, 1.0, 1.0);
-	modelview = modelViewMatrix;
+	modelMatrix_out = modelMatrix;
 	isWater_out = isWater;
 	texCoord = texCoordIn;
-	viewSpacePos = (modelViewMatrix * vec4(position, 1.0)).xyz;
-	viewSpaceNormal = (modelViewMatrix * vec4(normalIn, 0.0)).xyz;
-	viewSpaceTangent = (modelViewMatrix * vec4(tangentIn, 0.0)).xyz;
+	
+	vertexPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+	normal_out = mat3(modelMatrix) * normalIn;
+	tangent_out = mat3(modelMatrix) * tangentIn;
 	
 	if(isWater == 1.0){
 		vec4 a_position = vec4(position, 1);

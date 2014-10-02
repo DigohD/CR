@@ -1,12 +1,13 @@
 package com.cr.game;
 
-import com.cr.crafting.v2.test.CraftTest;
 import com.cr.engine.core.CoreEngine;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
+import com.cr.states.net.MPClientState;
+import com.cr.states.net.MPHostState;
 import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
 import com.cr.world.World;
@@ -18,8 +19,11 @@ public class Game extends CoreEngine{
 	public static Shader shader;
 	
 	public Game(){
-		boolean fullscreen = true;
-		Window.createWindow(1200, 675, fullscreen);
+		boolean fullScreen = true;
+		if(fullScreen){
+			Window.setFullScreen();
+		}else Window.createWindow(800, 600, false);
+	
 		init();
 	}
 	
@@ -27,16 +31,12 @@ public class Game extends CoreEngine{
 		screen = new Screen();
 		new ImageLoader();
 	
-		
 		shader = new Shader("basicVertShader", "basicFragShader");
 		shader.addUniform("transformation");
-//		shader.addUniform("sampler1");
-//		shader.addUniform("sampler2");
 		shader.addUniform("sampler");
 		shader.setUniformi("sampler", 0);
 		
 		new FontLoader();
-		
 		
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));
@@ -47,15 +47,6 @@ public class Game extends CoreEngine{
 		Input.tick();
 		if(Input.getKey(Input.ESCAPE))
 			stop();
-		
-//		if(Input.getMouse(0))
-//			System.out.println("mouse btn 0");
-//		if(Input.getMouse(1))
-//			System.out.println("mouse btn 1");
-//		if(Input.getMouse(2))
-//			System.out.println("mouse btn 2");
-//		if(Input.getMouse(3))
-//			System.out.println("mouse btn 3");
 	}
 
 	@Override
@@ -73,6 +64,11 @@ public class Game extends CoreEngine{
 		shader.deleteShader();
 		if(World.getShader() != null)
 			World.getShader().deleteShader();
+		
+		if(MPHostState.getServer() != null)
+			MPHostState.close();
+		if(MPClientState.getClient() != null)
+			MPClientState.close();
 	}
 	
 	public static void main(String[] args){

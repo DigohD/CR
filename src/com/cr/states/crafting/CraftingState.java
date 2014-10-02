@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.crafting;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,9 @@ import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.states.GameState;
+import com.cr.states.PlayState;
+import com.cr.states.inventory.InventoryState;
 
 
 public class CraftingState extends GameState{
@@ -58,12 +61,6 @@ public class CraftingState extends GameState{
 		int counter = 0;
 		for(Material x : mats)
 			matsChoices.add(new MaterialChoice(xOffset + 10 + (counter++ * 60), yOffset + 10, x));
-		
-		pattern = new PatternButton(600 + xOffset, 294 + yOffset);
-		add = new AddButton(600 + xOffset, 354 + yOffset);
-		process = new ProcessButton(600 + xOffset, 414 + yOffset);
-		craft = new CraftButton(600 + xOffset, 474 + yOffset);
-		exit = new ExitButton(600 + xOffset, 534 + yOffset);
 	}
 
 	@Override
@@ -73,17 +70,11 @@ public class CraftingState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		add.tick(dt);
-		pattern.tick(dt);
-		process.tick(dt);
-		craft.tick(dt);
-		exit.tick(dt);
-		
-		for(MaterialChoice x : matsChoices){
-			x.tick(dt);
-			if(x.isClicked())
-				activeMaterial = x.getMaterial();
-		}
+//		for(MaterialChoice x : matsChoices){
+//			x.tick(dt);
+//			if(x.isClicked())
+//				activeMaterial = x.getMaterial();
+//		}
 		
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){

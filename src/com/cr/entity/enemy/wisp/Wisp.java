@@ -161,11 +161,6 @@ public class Wisp extends Enemy{
 	}
 
 	@Override
-	public void HeroCollide(Hero hero) {
-		
-	}
-
-	@Override
 	public void playHurtSound() {
 		
 	}
@@ -178,6 +173,12 @@ public class Wisp extends Enemy{
 	@Override
 	public void initSpellBook(SpellBook sb) {
 		sb.addSpell(new WispPrison(this, 600));
+	}
+
+	@Override
+	public void HeroCollide(Hero hero) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -1,7 +1,6 @@
 package com.cr.crafting.v2.station;
 
 import java.awt.Rectangle;
-import java.util.Observable;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
@@ -10,7 +9,6 @@ import com.cr.engine.input.Input;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 
 public class UpArrow extends Button implements Renderable{
 

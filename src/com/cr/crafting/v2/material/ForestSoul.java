@@ -113,5 +113,23 @@ public class ForestSoul extends Material{
 		}
 		return null;
 	}
+
+	@Override
+	protected void setQualityMods() {
+		switch(quality){
+			case SUPERB:
+				primbonus = 1f;
+				baseBonus = 1.2f;
+				secBonus = 1.2f;
+				break;
+			case MASTERFUL:
+				primbonus = 1f;
+				baseBonus = 1.4f;
+				secBonus = 1.4f;
+				break;
+			default:
+				break;
+		}
+	}
 	
 }

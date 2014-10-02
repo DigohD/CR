@@ -2,6 +2,7 @@ package com.cr.world;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.cr.engine.core.Transform;
@@ -9,9 +10,11 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.core.Vertex;
 import com.cr.engine.graphics.Bitmap;
+import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Mesh;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.world.tile.Tile;
+import com.cr.world.tile.WaterTile;
 
 public class TileLayer {
 	
@@ -31,6 +34,34 @@ public class TileLayer {
 	private float yHigh = 0;
 	
 	private float scaleFactor = 1f;
+	
+	int[] pixelData;
+	
+	public TileLayer(LinkedList<Integer> pixels, int width, int height, float depth){
+		this.transform = World.getTransform();
+		this.shader = World.getShader();
+		meshes = new ArrayList<Mesh>();
+		tiles = new HashMap<Integer, Tile>();
+		
+		this.width = width;
+		this.height = height;
+		
+		int size = width*height;
+		
+		int[] pixelData = new int[size];
+		
+		for(int i = size-1; i >=0; i--){
+			pixelData[i] = pixels.getFirst();
+			pixels.removeFirst();
+//			System.out.print(pixelData[i]);
+//			if(i%100==0) System.out.println(pixelData[i]);
+		
+		}
+		
+		
+		bitmap = new Bitmap(width, height);
+		bitmap.setPixels(pixelData);
+	}
 	
 	public TileLayer(int width, int height, float depth){
 		this.depth = depth;
@@ -70,7 +101,7 @@ public class TileLayer {
 	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
 		List<Vertex> vertices = new ArrayList<Vertex>();
-		List<Integer> indices = new ArrayList<Integer>();
+		List<Short> indices = new ArrayList<Short>();
 		
 		float tWidth = Tile.getTileWidth();
 		float tHeight = Tile.getTileHeight();
@@ -79,7 +110,17 @@ public class TileLayer {
 			for(int x = xStart; x < xEnd; x++){
 				if(bitmap.getPixel(x, y) == 0) continue;
 				
+				//System.out.println("tile:" + tiles.get(bitmap.getPixel(x, y)));
+				//System.out.println(tiles.containsKey(bitmap.getPixel(x, y)));
+				//System.out.println("x: " + x + ", y:" + y);
+//				System.out.println("COL" +tiles.get(bitmap.getPixel(x, y)).getCol());
+//				System.out.println("PIXEL" + bitmap.getPixel(x, y));
+				//System.out.println("ROW" +tiles.get(bitmap.getPixel(x, y)).getRow());
+				
+				
 				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
+				
+			
 			
 				float xPos = x * tWidth;
 				float yPos = y * tHeight;
@@ -87,13 +128,13 @@ public class TileLayer {
 				float xOffset = 7f;
 				float yOffset = 5f;
 	
-				indices.add(vertices.size() + 0);
-				indices.add(vertices.size() + 1);
-				indices.add(vertices.size() + 2);
+				indices.add((short)(vertices.size() + 0));
+				indices.add((short)(vertices.size() + 1));
+				indices.add((short)(vertices.size() + 2));
 				
-				indices.add(vertices.size() + 2);
-				indices.add(vertices.size() + 3);
-				indices.add(vertices.size() + 0);
+				indices.add((short)(vertices.size() + 2));
+				indices.add((short)(vertices.size() + 3));
+				indices.add((short)(vertices.size() + 0));
 	
 				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0), new Vector2f(xLow, yLow)));
 				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0), new Vector2f(xLow, yHigh)));
@@ -103,12 +144,12 @@ public class TileLayer {
 		}
 		
 		Vertex[] vertexArray = new Vertex[vertices.size()];
-		Integer[] indexArray = new Integer[indices.size()];
+		Short[] indexArray = new Short[indices.size()];
 	
 		vertices.toArray(vertexArray);
 		indices.toArray(indexArray);
 		
-		int[] iArray = new int[indexArray.length];
+		short[] iArray = new short[indexArray.length];
 		
 		for(int i = 0; i < indexArray.length; i++)
 			iArray[i] = indexArray[i];
@@ -118,6 +159,8 @@ public class TileLayer {
 	}
 	
 	public void renderTileLayer(boolean water){
+		
+		//System.out.println("RENDER");
 		transform.translate(0, 0, depth);
 		
 		for(Integer i : tiles.keySet()){

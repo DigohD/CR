@@ -17,7 +17,7 @@ public class FootPrint extends Entity implements Renderable, Tickable{
 	private int timer;
 	
 	public FootPrint(){
-		super(Hero.position.add(new Vector2f(0, 28)));
+		super(EntityManager.getHero().getPos().add(new Vector2f(0, 28)));
 		sprite = new Sprite("footprintgrass");
 		timer = 0;
 		EntityManager.addEntity(this);

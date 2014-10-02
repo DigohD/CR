@@ -9,22 +9,26 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
-import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.LowerBody;
 import com.cr.entity.hero.body.RightHand;
+import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
-import com.cr.entity.hero.misc.FootPrint;
+import com.cr.net.NetStatus;
+import com.cr.net.packets.MovePacket02;
+import com.cr.states.net.MPClientState;
+import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
-import com.cr.util.Randomizer;
 import com.cr.world.World;
 import com.cr.world.tile.Tile;
 
 public class Hero extends Mob implements Collideable{
+	
+	private String userName;
 	
 	private Sprite sprite;
 	private Vector2f targetVel;
@@ -62,7 +66,7 @@ public class Hero extends Mob implements Collideable{
 		input = new HeroInput(this);
 		t = new Transform();
 		position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
-	
+		//position = new Vector2f(10, 10);
 		if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
 			while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
 				position.y += Tile.getTileHeight();
@@ -115,6 +119,8 @@ public class Hero extends Mob implements Collideable{
 	public void tick(float dt) {
 		rect.setLocation((int)position.x,(int)position.y);
 		
+		//System.out.println("X: " + position.x + ", Y: " + position.y);
+		
 		input.input();
 		
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
@@ -126,6 +132,17 @@ public class Hero extends Mob implements Collideable{
 		
 		//if(!collisionWithTile(0, targetVel.y))
 			position.y = position.y + targetVel.y*dt;
+			
+		if(NetStatus.isMultiPlayer){
+			if(!NetStatus.isHOST){
+				MovePacket02 mp  = new MovePacket02(userName, position);
+				MPClientState.getClient().sendData(mp.getData());
+			}
+			if(NetStatus.isHOST){
+				MovePacket02 mp  = new MovePacket02(userName, position);
+				MPHostState.getServer().sendDataToAllClients(mp.getData());
+			}
+		}
 		
 		move(dt);
 		
@@ -269,6 +286,10 @@ public class Hero extends Mob implements Collideable{
 		return position;
 	}
 	
+	public static void setPosition2(Vector2f position) {
+		Hero.position = position;
+	}
+
 	public float getX() {
 		return position.x;
 	}
@@ -327,6 +348,14 @@ public class Hero extends Mob implements Collideable{
 	
 	public static StatsSheet getHeroSheet() {
 		return sheet;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	

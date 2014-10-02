@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.inventory;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
@@ -10,8 +10,8 @@ import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
-import com.cr.util.Camera;
+import com.cr.states.GameState;
+import com.cr.states.PlayState;
 
 public class InventoryState extends GameState{
 

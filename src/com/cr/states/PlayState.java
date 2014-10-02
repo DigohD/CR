@@ -6,13 +6,15 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
 import com.cr.game.GameStateManager;
-import com.cr.input.KeyInput;
+import com.cr.states.crafting.CraftInitState;
+import com.cr.states.inventory.InventoryState;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.world.World;
 
 public class PlayState extends GameState{
 
-	private World w;
+	private static World w;
+	
 
 	private Sprite healthBar, health;
 	
@@ -30,19 +32,15 @@ public class PlayState extends GameState{
 	
 	@Override
 	public void tick(float dt) {
-		if(KeyInput.esc){
-			gsm.push(new PauseState(gsm));
-		}else if(Input.getKey(Input.C)){ 
+		if(Input.getKey(Input.C))
 			gsm.push(new InventoryState(gsm));
-		}else if(Input.getKey(Input.M)){
-			gsm.push(new CraftingState(gsm, new Forge()));
-		}else if(Input.getKey(Input.Q)){
+		else if(Input.getKey(Input.M))
+			gsm.push(new CraftInitState(gsm, new Forge()));
+		else if(Input.getKey(Input.Q))
 			gsm.push(new StatsState(gsm));
-		}else if(Input.getKey(Input.F1)){
+		else if(Input.getKey(Input.F1))
 			gsm.push(new BiomeTestState(gsm));
-		}else if(KeyInput.f){
-			gsm.push(new CraftingState(gsm, new Forge()));
-		}
+		
 		w.tick(dt);
 	}
 
@@ -57,6 +55,10 @@ public class PlayState extends GameState{
 		
 		screen.renderStaticSprite(healthBar, 10, 10, 14, 2);
 		screen.renderStaticSprite(health, 10, 10, scaleX, 2);
+	}
+
+	public static World getWorld() {
+		return w;
 	}
 
 }

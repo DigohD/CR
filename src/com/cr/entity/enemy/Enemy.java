@@ -35,9 +35,7 @@ public abstract class Enemy extends Mob implements Collideable{
 	
 	@Override
 	public void collisionWith(Collideable obj) {
-		if(obj instanceof Hero){
-			HeroCollide((Hero) obj);
-		}
+		
 	}
 	
 	@Override

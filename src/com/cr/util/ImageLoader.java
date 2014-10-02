@@ -14,6 +14,7 @@ public class ImageLoader {
 	public ImageLoader(){
 		// Tiles
 		imageLib.put("tileatlas", loadImage("/tiles/tileatlas.png"));
+		imageLib.put("tileatlas32", loadImage("/tiles/tileatlas32.png"));
 		imageLib.put("grass", loadImage("/tiles/grass.png"));
 		imageLib.put("grass2", loadImage("/tiles/grass2.png"));
 		imageLib.put("dirt", loadImage("/tiles/dirt.png"));
@@ -76,6 +77,8 @@ public class ImageLoader {
 		imageLib.put("healthfill", loadImage("/hero/fill.png"));
 		imageLib.put("healthfillbm", loadImage("/hero/fillbm.png"));
 		
+		imageLib.put("mptest", loadImage("/hero/mptest.png"));
+		
 		
 		// Hero Footprints
 //		imageLib.put("footprintgrass", loadImage("image", "footprintgrass.png"));
@@ -130,8 +133,16 @@ public class ImageLoader {
 		imageLib.put("craftbutton", loadImage("/craftingui/craftbutton.png"));
 		imageLib.put("sliderarrow", loadImage("/craftingui/sliderarrow.png"));
 		imageLib.put("slider", loadImage("/craftingui/slider.png"));
+		
 		imageLib.put("craftingbg", loadImage("/craftingui/craftingbg.png"));
 		imageLib.put("patternbg", loadImage("/craftingui/patternbg.png"));
+		imageLib.put("amountbg", loadImage("/craftingui/amountbg.png"));
+		imageLib.put("processbg", loadImage("/craftingui/processbg.png"));
+		
+		imageLib.put("weaponbutton", loadImage("/craftingui/weaponbutton.png"));
+		imageLib.put("armorbutton", loadImage("/craftingui/armorbutton.png"));
+		imageLib.put("jewelrybutton", loadImage("/craftingui/jewelrybutton.png"));
+		
 		
 		imageLib.put("downarrow", loadImage("/craftingui/downarrow.png"));
 		imageLib.put("downarrow2", loadImage("/craftingui/downarrow2.png"));

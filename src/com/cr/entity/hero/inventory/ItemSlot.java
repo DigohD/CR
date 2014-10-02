@@ -2,6 +2,8 @@ package com.cr.entity.hero.inventory;
 
 import java.awt.Rectangle;
 
+import org.lwjgl.input.Mouse;
+
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -10,7 +12,6 @@ import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 import com.cr.item.Item;
 import com.cr.stats.StatMod;
 

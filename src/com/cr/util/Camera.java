@@ -8,19 +8,13 @@ public class Camera {
 	
 	private static Vector3f position = new Vector3f(0,0, 0);
 	private Vector3f targetPos;
-	
-	private float xC, yC, zC;
-	
+
 	private float cameraFollowFactor = 40.0f; 
 	
 	public Camera(){
-		
 		targetPos = new Vector3f(0,0,0);
 		position.x = EntityManager.getHero().getX() - (Window.getWidth()/2 - EntityManager.getHero().getWidth());
 		position.y = EntityManager.getHero().getY() - (Window.getHeight()/2 - EntityManager.getHero().getHeight());
-		
-		xC = 0;
-		yC = 0;
 	}
 	
 	public Camera(Vector3f position) {

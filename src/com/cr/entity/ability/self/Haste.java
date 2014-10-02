@@ -23,7 +23,7 @@ public class Haste extends SelfAbility{
 
 		@Override
 		public void applyEffect() {
-			source.getSheet().getStat(StatID.MOVEMENT_SPEED).addMulmod("haste", 2f);
+			source.getSheet().getStat(StatID.MOVEMENT_SPEED).addMulmod("haste", 1f);
 		}
 
 		@Override

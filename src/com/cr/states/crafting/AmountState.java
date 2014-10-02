@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.crafting;
 
 import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.station.AddButton;
@@ -15,12 +15,13 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.states.GameState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
 public class AmountState extends GameState{
 
-	private Sprite bg = new Sprite("patternbg", Game.shader, new Transform());
+	private Sprite bg = new Sprite("amountbg", Game.shader, new Transform());
 	
 	private AddButton add;
 	
@@ -45,19 +46,19 @@ public class AmountState extends GameState{
 		
 		whiteFont = FontLoader.aquireFont(FontColor.WHITE);
 		
-		int xOffset =  (Window.getWidth() - 150) / 2;
-		int yOffset = (Window.getHeight() - 230);
-		add = new AddButton(xOffset, yOffset);
+		int xOffset =  (Window.getWidth() - 240) / 2;
+		int yOffset = (Window.getHeight() - 200) / 2;
+		add = new AddButton(xOffset + 70, yOffset + 135);
 		
 		this.activeMaterial = activeMaterial;
 		
 		xOffset =  (Window.getWidth() - 40) / 2;
 		yOffset = (Window.getHeight() - 40) / 2;
 		
-		down1 = new DownArrow(xOffset - 60, yOffset);
-		down2 = new DownArrow2(xOffset - 110, yOffset);
-		up1 = new UpArrow(xOffset + 60, yOffset);
-		up2 = new UpArrow2(xOffset + 110, yOffset);
+		down1 = new DownArrow(xOffset - 48, yOffset);
+		down2 = new DownArrow2(xOffset - 80, yOffset);
+		up1 = new UpArrow(xOffset + 48, yOffset);
+		up2 = new UpArrow2(xOffset + 90, yOffset);
 		
 		this.forge = forge;
 	}
@@ -85,6 +86,7 @@ public class AmountState extends GameState{
 			forge.addMaterial(activeMaterial, amount);
 			
 			gsm.pop();
+			gsm.push(new ProcessState(gsm, forge));
 		}
 		
 		if(down1.isClicked() && amount > 1){
@@ -101,10 +103,10 @@ public class AmountState extends GameState{
 
 	@Override
 	public void render(Screen screen) {
-		int xOffset =  (Window.getWidth() - 500) / 2;
-		int yOffset = (Window.getHeight() - 420) / 2;
+		int xOffset =  (Window.getWidth() - 240) / 2;
+		int yOffset = (Window.getHeight() - 200) / 2;
 		
-		screen.renderStaticSprite(bg, xOffset, yOffset);
+		screen.renderStaticSprite(bg, xOffset + 2, yOffset);
 		
 		down1.render(screen);
 		down2.render(screen);
@@ -115,10 +117,10 @@ public class AmountState extends GameState{
 		yOffset = (Window.getHeight()) / 2;
 		
 		whiteFont.setFont(CRString.create(activeMaterial.getName()));
-		whiteFont.renderFont(xOffset - 115, yOffset - 80, 0.2f);
+		whiteFont.renderFont(xOffset - 100, yOffset - 100, 0.3f);
 		
 		whiteFont.setFont(CRString.create(amount + ""));
-		whiteFont.renderFont(xOffset - 60, yOffset - 40, 0.5f);
+		whiteFont.renderFont(xOffset - 34, yOffset - 80, 0.5f);
 		
 		add.render(screen);
 	}

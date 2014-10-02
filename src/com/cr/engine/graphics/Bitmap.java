@@ -66,6 +66,10 @@ public class Bitmap {
 		pixels[index] = color;
 	}
 	
+	public void setPixels(int[] pixels) {
+		this.pixels = pixels;
+	}
+
 	/**
 	 * Retrieves the pixel located at position (x,y)
 	 * @param x the x position of the pixel

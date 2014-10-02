@@ -2,13 +2,14 @@ package com.cr.crafting.v2.station;
 
 import java.awt.Rectangle;
 
+import org.lwjgl.input.Mouse;
+
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
-import com.cr.input.Mouse;
 
 public class AddButton extends Button implements Renderable{
 
@@ -36,7 +37,7 @@ public class AddButton extends Button implements Renderable{
 	@Override
 	public void clicked() {
 		isClicked = true;
-		Mouse.resetButton();
+		//Mouse.resetButton();
 	}
 
 	public boolean isClicked() {

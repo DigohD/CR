@@ -19,7 +19,9 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 	private Enemy entityOwner;
 	private Vector2f distance, ret, targetPos;
 	private boolean isReturning = false, isActive = false;
-	private int width, height, counter;
+
+	private int width, height, counter, cooldown;
+
 	private float damage = 0;
 	
 	public EntityProjectile(Entity entity, Enemy owner, Vector2f targetPos, int width, int height, float damage) {
@@ -31,12 +33,14 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 		this.damage = damage;
 		this.entityOwner = owner;
 		
+		cooldown = 40;
+
 		distance = new Vector2f(0, 0);
 		ret = new Vector2f(0, 0);
 	}
 
 	public void activate(){
-		if(!isActive){
+		if(!isActive && cooldown <= 0){
 			isActive = true;
 			live = true;
 			EntityManager.addEntity(this);
@@ -47,7 +51,7 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 	public void collisionWith(Collideable obj) {
 		if(obj instanceof Hero){
 			Hero h = (Hero) obj;
-			new KnockBack(20, 1, h, null, distance.div(10));
+			new KnockBack(20, 1, h, null, distance.div(50));
 			
 			float finalDamage = RPCalc.calculateDamage(damage, entityOwner.getSheet(), h.getHeroSheet());
 			h.takeDamage(finalDamage);
@@ -62,6 +66,9 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 
 	@Override
 	public void tick(float dt) {
+		cooldown--;
+		if(cooldown < -1)
+			cooldown = -1;
 		if(isActive){
 			counter++;
 			if(counter < 25){

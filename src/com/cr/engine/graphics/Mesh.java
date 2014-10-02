@@ -2,7 +2,7 @@ package com.cr.engine.graphics;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_SHORT;
 import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
@@ -12,12 +12,14 @@ import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
 import static org.lwjgl.opengl.GL15.glBufferSubData;
 import static org.lwjgl.opengl.GL15.glGenBuffers;
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -31,51 +33,63 @@ public class Mesh {
 	private int size;
 	
 	private FloatBuffer vertexBuffer, texCoordBuffer;
-	private IntBuffer indexBuffer;
+	private ShortBuffer indexBuffer;
 	
 	private boolean allDynamic;
 	
-	public Mesh(Vertex[] vertices, int[] indices){
-		sendData(vertices, indices);
+	public Mesh(Vertex[] vertices, short[] indices){
+		createVertexBuffer(vertices, indices, true);
+		sendData();
 	}
 	
-	public Mesh(Vertex[] vertices, Vector2f[] texCoords, int[] indices, boolean allDynamic){
+	public Mesh(Vertex[] vertices, Vector2f[] texCoords, short[] indices, boolean allDynamic){
 		this.allDynamic = allDynamic;
 		sendData(vertices, texCoords, indices);
 	}
 	
-	private void sendData(Vertex[] vertices, int[] indices){
-		
+	private void createVertexBuffer(Vertex[] vertices, short[] indices, boolean texCoords){
 		calcNormals(vertices, indices);
-		calcTangents(vertices, indices);
 		
-		vertexBuffer = BufferUtils.createFloatBuffer(Vertex.SIZE * vertices.length);
+		if(!texCoords)
+			vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
+		else vertexBuffer = BufferUtils.createFloatBuffer(Vertex.SIZE * vertices.length);
 		
 		for(int i = 0; i < vertices.length; i++){
 			vertexBuffer.put(vertices[i].getPos().x);
 			vertexBuffer.put(vertices[i].getPos().y);
 			vertexBuffer.put(vertices[i].getPos().z);
 			
-			vertexBuffer.put(vertices[i].getTexCoord().x);
-			vertexBuffer.put(vertices[i].getTexCoord().y);
+			if(texCoords){
+				vertexBuffer.put(vertices[i].getTexCoord().x);
+				vertexBuffer.put(vertices[i].getTexCoord().y);
+			}
 			
 			vertexBuffer.put(vertices[i].getNormal().x);
 			vertexBuffer.put(vertices[i].getNormal().y);
 			vertexBuffer.put(vertices[i].getNormal().z);
-			
-			vertexBuffer.put(vertices[i].getTangent().x);
-			vertexBuffer.put(vertices[i].getTangent().y);
-			vertexBuffer.put(vertices[i].getTangent().z);
-		}		
+		}	
 		
 		vertexBuffer.flip();
 		
-		indexBuffer = BufferUtils.createIntBuffer(indices.length);
+		indexBuffer = BufferUtils.createShortBuffer(indices.length);
 		indexBuffer.put(indices);
 		indexBuffer.flip();
 		
 		size = indices.length;
+	}
+	
+	private void createTexCoordBuffer(Vector2f[] texCoords){
+		texCoordBuffer = BufferUtils.createFloatBuffer(2 * texCoords.length);
 		
+		for(int i = 0; i < texCoords.length; i++){
+			texCoordBuffer.put(texCoords[i].x);
+			texCoordBuffer.put(texCoords[i].y);
+		}
+		
+		texCoordBuffer.flip();
+	}
+	
+	private void sendData(){
 		vboID = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
@@ -96,46 +110,15 @@ public class Mesh {
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);
-		glVertexAttribPointer(3, 3, GL_FLOAT, false, Vertex.SIZE * 4, 32);
+		//glVertexAttribPointer(3, 3, GL_FLOAT, false, Vertex.SIZE * 4, 32);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glBindVertexArray(0);
 	}
 	
-	private void sendData(Vertex[] vertices, Vector2f[] texCoords, int[] indices) {
-		
-		calcNormals(vertices, indices);
-		
-		//if(!allDynamic) calcNormals(vertices, indices);
-		
-		vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
-		
-		for(int i = 0; i < vertices.length; i++){
-			vertexBuffer.put(vertices[i].getPos().x);
-			vertexBuffer.put(vertices[i].getPos().y);
-			vertexBuffer.put(vertices[i].getPos().z);
-			
-			vertexBuffer.put(vertices[i].getNormal().x);
-			vertexBuffer.put(vertices[i].getNormal().y);
-			vertexBuffer.put(vertices[i].getNormal().z);
-		}		
-		
-		vertexBuffer.flip();
-		
-		texCoordBuffer = BufferUtils.createFloatBuffer(2 * texCoords.length);
-		
-		for(int i = 0; i < texCoords.length; i++){
-			texCoordBuffer.put(texCoords[i].x);
-			texCoordBuffer.put(texCoords[i].y);
-		}
-		
-		texCoordBuffer.flip();
-		
-		indexBuffer = BufferUtils.createIntBuffer(indices.length);
-		indexBuffer.put(indices);
-		indexBuffer.flip();
-		
-		size = indices.length;
+	private void sendData(Vertex[] vertices, Vector2f[] texCoords, short[] indices) {
+		createVertexBuffer(vertices, indices, false);
+		createTexCoordBuffer(texCoords);
 		
 		vboID = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -166,7 +149,7 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 6*4, 0);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, 6*4, 12);
-		glVertexAttribPointer(3, 3, GL_FLOAT, false, 6*4, 20);
+		//glVertexAttribPointer(3, 3, GL_FLOAT, false, 6*4, 20);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, texID);
@@ -199,7 +182,7 @@ public class Mesh {
 	}
 	
 	public void updateVertexData(Vertex[] vertices){
-		vertexBuffer = BufferUtils.createFloatBuffer(9 * vertices.length);
+		vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
 		
 		for(int i = 0; i < vertices.length; i++){
 			vertexBuffer.put(vertices[i].getPos().x);
@@ -210,10 +193,6 @@ public class Mesh {
 			vertexBuffer.put(vertices[i].getNormal().y);
 			vertexBuffer.put(vertices[i].getNormal().z);
 			
-
-			vertexBuffer.put(vertices[i].getTangent().x);
-			vertexBuffer.put(vertices[i].getTangent().y);
-			vertexBuffer.put(vertices[i].getTangent().z);
 		}
 		
 		vertexBuffer.flip();
@@ -223,14 +202,14 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
-	public void updateIndexData(int[] indices){
-		indexBuffer = BufferUtils.createIntBuffer(indices.length);
+	public void updateIndexData(short[] indices){
+		indexBuffer = BufferUtils.createShortBuffer(indices.length);
 		indexBuffer.put(indices);
 		indexBuffer.flip();
 		
-		glBindBuffer(GL_ARRAY_BUFFER, iboID);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, indexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	
 	public void render(){
@@ -239,21 +218,21 @@ public class Mesh {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
-		glEnableVertexAttribArray(3);
+		//glEnableVertexAttribArray(3);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
-		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
-		glDisableVertexAttribArray(3);
+		//glDisableVertexAttribArray(3);
 	
 		glBindVertexArray(0);
 	}
 	
-	private void calcNormals(Vertex[] vertices, int[] indices){
+	private void calcNormals(Vertex[] vertices, short[] indices){
 		for(int i = 0; i < indices.length; i+=3){
 			Vertex v0 = vertices[indices[i]];
 			Vertex v1 = vertices[indices[i+1]];
@@ -274,7 +253,7 @@ public class Mesh {
 		
 	}
 	
-	private void calcTangents(Vertex[] vertices, int[] indices){
+	private void calcTangents(Vertex[] vertices, short[] indices){
 		for(int i = 0; i < indices.length; i+=3){
 			Vertex v0 = vertices[indices[i]];
 			Vertex v1 = vertices[indices[i+1]];
@@ -304,6 +283,18 @@ public class Mesh {
 		for(int i = 0; i < vertices.length; i++)
 			vertices[i].getTangent().normalize();
 		
+	}
+
+	public FloatBuffer getVertexBuffer() {
+		return vertexBuffer;
+	}
+
+	public FloatBuffer getTexCoordBuffer() {
+		return texCoordBuffer;
+	}
+
+	public ShortBuffer getIndexBuffer() {
+		return indexBuffer;
 	}
 
 }
