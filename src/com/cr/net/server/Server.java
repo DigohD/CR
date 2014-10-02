@@ -19,12 +19,15 @@ import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
 import com.cr.net.packets.RequestMapPacket05;
 import com.cr.states.net.MPHostState;
+import com.cr.stats.StatsSheet;
 
 public class Server implements Runnable{
 	
 	private DatagramSocket socket;
 	private Thread thread;
+	
 	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
+	private HashMap<HeroMP, StatsSheet> statsMap = new HashMap<HeroMP, StatsSheet>();
 	
 	private boolean running = false;
 	
@@ -185,6 +188,7 @@ public class Server implements Runnable{
         	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), 
         			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
             clientsMap.put(client.getUserName(), client);
+            statsMap.put(client, new StatsSheet(true));
         }
     }
 	
