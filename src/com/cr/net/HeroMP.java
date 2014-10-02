@@ -35,15 +35,18 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		this.ip = ip;
 		this.port = port;
 		
+		
+	}
+	
+	public void init(){
+		sprite = new Sprite("mptest");
+		
 		head = new Head(position);
 		body = new UpperBody(position);
 		lowerBody = new LowerBody(position);
 		rightHand = new RightHand(position);
 		leftHand = new LeftHand(position);
-	}
-	
-	public void init(){
-		sprite = new Sprite("mptest");
+		
 		EntityManager.addEntity(this);
 	}
 
