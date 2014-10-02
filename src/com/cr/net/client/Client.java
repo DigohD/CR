@@ -13,6 +13,7 @@ import com.cr.engine.graphics.ColorRGBA;
 import com.cr.net.HeroMP;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
+import com.cr.net.packets.MapLoadedPacket07;
 import com.cr.net.packets.MapPacket04;
 import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
@@ -144,6 +145,8 @@ public class Client implements Runnable{
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
 				MPClientState.worldAssembled = true;
+				RequestMapPacket05 p = new RequestMapPacket05(-1);
+				sendData(p.getData());
 				return;
 			}
 			packetNumber++;

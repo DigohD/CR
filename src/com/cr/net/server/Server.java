@@ -139,11 +139,17 @@ public class Server implements Runnable{
 	private void handleRequestMap(RequestMapPacket05 packet, InetAddress address, int port){
 		MapPacket04 p = new MapPacket04(packet.getPacketNumber());
 		
-		byte[] data2 = new byte[1024];
-		for(int i = 0; i < p.getData().length; i++)
-			data2[i] = p.getData()[i];
+		if(p.getPacketNumber() == -1){
+			ConnectPacket01 p2 = new ConnectPacket01(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
+	        sendData(p2.getData(), address, port);
+		}else{
+			byte[] data2 = new byte[1024];
+			for(int i = 0; i < p.getData().length; i++)
+				data2[i] = p.getData()[i];
+			
+			sendData(MPHostState.getWorld().getBytes(p.getPacketNumber(), data2), address, port);
+		}
 		
-		sendData(MPHostState.getWorld().getBytes(p.getPacketNumber(), data2), address, port);
 		//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
 	}
 	
@@ -172,8 +178,7 @@ public class Server implements Runnable{
             }
         }
         
-        packet = new ConnectPacket01(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
-        sendData(packet.getData(), client.getInetAddress(), client.getPort());
+
         
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");

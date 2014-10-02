@@ -8,7 +8,7 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.HeroMP;
 import com.cr.net.client.Client;
-import com.cr.net.packets.DisconnectPacket06;
+import com.cr.net.packets.RequestMapPacket05;
 import com.cr.states.GameState;
 import com.cr.states.StatsState;
 import com.cr.states.crafting.CraftInitState;
@@ -29,9 +29,9 @@ public class MPClientState extends GameState{
 	
 	@Override
 	public void init() {
-		client = new Client("localhost", 1331);
+		client = new Client("192.168.0.2", 12121);
 		client.start();
-		String userName = "anden";
+		String userName = "anders";
 		
 		String message = "00" + userName;
 		client.sendData(message.getBytes());
@@ -60,7 +60,8 @@ public class MPClientState extends GameState{
 		if(Input.getKey(Input.ESCAPE)){
 			System.out.println(EntityManager.getHero().getUserName());
 			//DisconnectPacket06 packet = new DisconnectPacket06(EntityManager.getHero().getUserName());
-			client.sendData("06:anden".getBytes());
+			String message = "06:" + EntityManager.getHero().getUserName();
+			client.sendData(message.getBytes());
 			Game.stop();
 		}
 			
