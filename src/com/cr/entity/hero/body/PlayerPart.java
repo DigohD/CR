@@ -2,6 +2,7 @@ package com.cr.entity.hero.body;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -40,8 +41,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		this.bob = bob;
 	}
 	
-	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset, Vector2f pos){
-		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), Hero.t);
+	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset, Vector2f pos, Transform t){
+		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), t);
 		
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
@@ -132,6 +133,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 
 	public Item getItem() {
 		return item;
+	}
+
+	public void setPos(Vector2f pos) {
+		this.pos = pos;
 	}
 	
 	

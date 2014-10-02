@@ -3,6 +3,7 @@ package com.cr.net;
 import java.awt.Rectangle;
 import java.net.InetAddress;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
@@ -23,29 +24,35 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	private String userName;
 	private Sprite sprite;
 	
+	private Transform t = new Transform();
+	
+	private int bobCounter = 0;
+	
 	private Head head;
 	private UpperBody body;
 	private LowerBody lowerBody;
 	private RightHand rightHand;
 	private LeftHand leftHand;
 	
+	public HeroMP(Vector2f position){
+		super(position);
+	}
+	
 	public HeroMP(String userName, Vector2f position, InetAddress ip, int port){
 		super(position);
 		this.userName = userName;
 		this.ip = ip;
 		this.port = port;
-		
-		
 	}
 	
 	public void init(){
 		sprite = new Sprite("mptest");
 		
-		head = new Head(position);
-		body = new UpperBody(position);
-		lowerBody = new LowerBody(position);
-		rightHand = new RightHand(position);
-		leftHand = new LeftHand(position);
+		head = new Head(position, t);
+		body = new UpperBody(position, t);
+		lowerBody = new LowerBody(position, t);
+		rightHand = new RightHand(position, t);
+		leftHand = new LeftHand(position, t);
 		
 		EntityManager.addEntity(this);
 	}
@@ -57,16 +64,27 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		lowerBody.tick(dt);
 		rightHand.tick(dt);
 		leftHand.tick(dt);
+		
+		bobCounter++;
+		if(bobCounter < 10)
+			setBobing(true);
+		else
+			setBobing(false);
 	}
 	
 	@Override
 	public void setPosition(Vector2f position) {
 		this.position = position;
+		bobCounter = 0;
 	}
 	
 	@Override
 	public void render(Screen screen) {
-		screen.renderSprite(sprite, position.x, position.y);
+		lowerBody.setPos(position);
+		body.setPos(position);
+		rightHand.setPos(position);
+		leftHand.setPos(position);
+		head.setPos(position);
 		
 		lowerBody.render(screen);
 		body.render(screen);
@@ -75,6 +93,14 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		head.render(screen);
 	}
 
+	private void setBobing(boolean isBobing){
+		head.getBob().setActive(isBobing);
+		lowerBody.getBob().setActive(isBobing);
+		body.getBob().setActive(isBobing);
+		rightHand.getBob().setActive(isBobing);
+		leftHand.getBob().setActive(isBobing);
+	}
+	
 	@Override
 	public Sprite getSprite() {
 		return sprite;

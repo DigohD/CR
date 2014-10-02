@@ -27,6 +27,7 @@ public class Stat{
 		}
 		
 		total = total * mulTotal;
+		
 	}
 	
 	public void addAddmod(String ID, float amount){
