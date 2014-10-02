@@ -85,16 +85,16 @@ public class Server implements Runnable{
 			case INVALID:
 				break;
 			case DISCONNECT:
-				DisconnectPacket06 packet = new DisconnectPacket06(data);
-				handleDisconnect(packet, address, port);
+				DisconnectPacket06 packet06 = new DisconnectPacket06(data);
+				handleDisconnect(packet06, address, port);
 				break;
 			case LOGIN:
-				LoginPacket00 packet0 = new LoginPacket00(data);
-				handleLogin(packet0, address, port);
+				LoginPacket00 packet00 = new LoginPacket00(data);
+				handleLogin(packet00, address, port);
 				break;
 			case MOVE:
-				MovePacket02 packet2 = new MovePacket02(data);
-				handleMove(packet2, address, port);
+				MovePacket02 packet02 = new MovePacket02(data);
+				handleMove(packet02, address, port);
 				break;
 			case REQUESTMAP:
 				RequestMapPacket05 packet05 = new RequestMapPacket05(data);
@@ -107,9 +107,11 @@ public class Server implements Runnable{
 	}
 	
 	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
-		if(clientsMap.containsKey(packet.getUserName()))
-			clientsMap.remove(packet.getUserName());
-		sendDataToAllClients(packet.getData());
+		System.out.println("DISCONNECT PACKET RECEIVED");
+		clientsMap.remove(packet.getUserName());
+		EntityManager.removeEntity(clientsMap.get(packet.getUserName()));
+		
+		//sendDataToAllClients(packet.getData());
 	}
 	
 	private void handleLogin(LoginPacket00 packet, InetAddress address, int port){
