@@ -230,9 +230,9 @@ public class World {
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
-		
+	
 		dayNightCycle(dt);
-		
+
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
@@ -363,7 +363,5 @@ public class World {
 	public int getHeight() {
 		return height;
 	}
-
-	
 
 }
