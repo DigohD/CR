@@ -120,8 +120,10 @@ public class Client implements Runnable{
 	
 	private void handleMove(Packet packet, InetAddress address, int port){
 		String s = ((MovePacket02) packet).getUserName();
-		if(clientsMap.containsKey(s))
+		if(clientsMap.containsKey(s)){
 			clientsMap.get(s).setPosition(((MovePacket02) packet).getPos());
+			clientsMap.get(s).setDirection(((MovePacket02) packet).getDir());
+		}
 	}
 	
 	private void handleConnect(Packet packet, InetAddress address, int port){

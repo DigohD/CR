@@ -10,6 +10,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.hero.Hero.Direction;
 import com.cr.entity.hero.body.Head;
 import com.cr.entity.hero.body.LeftHand;
 import com.cr.entity.hero.body.LowerBody;
@@ -25,6 +26,8 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	private Sprite sprite;
 	
 	private Transform t = new Transform();
+	
+	private Direction dir;
 	
 	private Head head;
 	private UpperBody body;
@@ -72,6 +75,16 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 			setBobing(true);
 		
 		this.position = position;
+	}
+	
+	public void setDirection(Direction dir){
+		this.dir = dir;
+		
+		lowerBody.setDir(dir);
+		body.setDir(dir);
+		rightHand.setDir(dir);
+		leftHand.setDir(dir);
+		head.setDir(dir);
 	}
 	
 	@Override

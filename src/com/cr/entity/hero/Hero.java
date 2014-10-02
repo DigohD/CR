@@ -135,11 +135,11 @@ public class Hero extends Mob implements Collideable{
 			
 		if(NetStatus.isMultiPlayer){
 			if(!NetStatus.isHOST){
-				MovePacket02 mp  = new MovePacket02(userName, position);
+				MovePacket02 mp  = new MovePacket02(userName, position, currentDir);
 				MPClientState.getClient().sendData(mp.getData());
 			}
 			if(NetStatus.isHOST){
-				MovePacket02 mp  = new MovePacket02(userName, position);
+				MovePacket02 mp  = new MovePacket02(userName, position, currentDir);
 				MPHostState.getServer().sendDataToAllClients(mp.getData());
 			}
 		}

@@ -21,7 +21,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	protected Item item;
 	
+	protected boolean isLocal = false;
+	
 	protected Vector2f pos;
+	protected Direction dir;
 	
 	protected int width, height;
 	protected int horXOffset, vertXOffset, xOffset, yOffset;
@@ -33,6 +36,7 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		height = sprite.getSpriteHeight();
 		
 		pos = Hero.position;
+		isLocal = true;
 		
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
@@ -48,6 +52,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		height = sprite.getSpriteHeight();
 		
 		this.pos = pos;
+		isLocal = false;
+		dir = Direction.SOUTH;
 		
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
@@ -61,7 +67,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		int x = (int) pos.x;
 		int y = (int) pos.y;
 		
-		Direction dir = Hero.currentDir;
+		if(isLocal)
+			dir = Hero.currentDir;
 		int spriteID = 0;
 		int horXOffset = 0;
 		
@@ -137,6 +144,10 @@ public abstract class PlayerPart implements Renderable, Tickable{
 
 	public void setPos(Vector2f pos) {
 		this.pos = pos;
+	}
+
+	public void setDir(Direction dir) {
+		this.dir = dir;
 	}
 	
 	

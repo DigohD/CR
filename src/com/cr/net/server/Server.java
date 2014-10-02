@@ -137,9 +137,10 @@ public class Server implements Runnable{
 	
 	private void handleMove(MovePacket02 packet, InetAddress address, int port){
 		String s = packet.getUserName();
-		if(clientsMap.containsKey(s))
+		if(clientsMap.containsKey(s)){
 			clientsMap.get(s).setPosition(packet.getPos());
-	
+			clientsMap.get(s).setDirection(packet.getDir());
+		}
 		packet.writeData(this);
 	}
 	
