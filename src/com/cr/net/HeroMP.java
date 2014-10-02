@@ -26,8 +26,6 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	private Transform t = new Transform();
 	
-	private int bobCounter = 0;
-	
 	private Head head;
 	private UpperBody body;
 	private LowerBody lowerBody;
@@ -64,18 +62,16 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		lowerBody.tick(dt);
 		rightHand.tick(dt);
 		leftHand.tick(dt);
-		
-		bobCounter++;
-		if(bobCounter < 10)
-			setBobing(true);
-		else
-			setBobing(false);
 	}
 	
 	@Override
 	public void setPosition(Vector2f position) {
+		if(this.position.sub(position).length() == 0)
+			setBobing(false);
+		else
+			setBobing(true);
+		
 		this.position = position;
-		bobCounter = 0;
 	}
 	
 	@Override
