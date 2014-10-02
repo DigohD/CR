@@ -50,7 +50,7 @@ public class World {
 	private Vector3f lightPosition,lightPosition2, ambientLight, eyePosition;
 	
 	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
-	
+	private LinkedList<Integer> pixels = new LinkedList<Integer>();
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		transform = new Transform();
@@ -203,11 +203,21 @@ public class World {
 		map = new TileMap(100, 100);
 		
 
-
+		
 		width = map.getWidth();
 		height = map.getHeight();
 		
+		for(int i = 0; i < width*height; i++){
+			pixels.addLast(map.getBottomLayer().getBitmap().getPixels()[i]);
+		}
+		
+		for(int i = 0; i < width*height; i++){
+			pixels.addLast(map.getMiddleLayer().getBitmap().getPixels()[i]);
+		}
 
+		for(int i = 0; i < width*height; i++){
+			pixels.addLast(map.getTopLayer().getBitmap().getPixels()[i]);
+		}
 		
 		initByteMap();
 		
@@ -419,7 +429,18 @@ public class World {
 	
 	
 	
-	public byte[] convertToByteArrays(int packetNumber, byte[] data){
+	public byte[] getBytes2(int pNumber, byte[] data){
+		
+		for(int i = 0; i < 924; i++){
+			data[i+100] = byteMap.get(pixels.getFirst());
+			pixels.removeFirst();
+		}
+		
+		return data;
+		
+	}
+	
+	public byte[] getBytes(int packetNumber, byte[] data){
 		
 		System.out.println();
 		System.out.println();

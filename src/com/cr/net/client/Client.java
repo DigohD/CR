@@ -40,7 +40,7 @@ public class Client implements Runnable{
 	public LinkedList<Integer> pixels = new LinkedList<Integer>();
 	
 	int packetNumber = 0;
-	int index = 0;
+	//int index = 0;
 	
 	public int width, height;
 	

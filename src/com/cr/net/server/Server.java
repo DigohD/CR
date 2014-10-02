@@ -117,8 +117,8 @@ public class Server implements Runnable{
 				for(int i = 0; i < p.getData().length; i++)
 					data2[i] = p.getData()[i];
 				
-				sendData(MPHostState.getWorld().convertToByteArrays(p.getPacketNumber(), data2), address, port);
-				System.out.println(new String(MPHostState.getWorld().convertToByteArrays(p.getPacketNumber(), data2)));
+				sendData(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2), address, port);
+				System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
 				break;
 		}
 		
