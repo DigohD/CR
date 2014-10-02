@@ -2,6 +2,7 @@ package com.cr.entity.hero.body;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
@@ -19,6 +20,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	protected Item item;
 	
+	protected Vector2f pos;
+	
 	protected int width, height;
 	protected int horXOffset, vertXOffset, xOffset, yOffset;
 	
@@ -27,6 +30,23 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
+		
+		pos = Hero.position;
+		
+		this.horXOffset = horXOffset;
+		this.vertXOffset = vertXOffset;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
+		this.bob = bob;
+	}
+	
+	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset, Vector2f pos){
+		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), Hero.t);
+		
+		width = sprite.getSpriteWidth();
+		height = sprite.getSpriteHeight();
+		
+		this.pos = pos;
 		
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
@@ -37,8 +57,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	@Override
 	public void render(Screen screen){
-		int x = (int) Hero.position.x;
-		int y = (int) Hero.position.y;
+		int x = (int) pos.x;
+		int y = (int) pos.y;
 		
 		Direction dir = Hero.currentDir;
 		int spriteID = 0;
@@ -88,8 +108,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	@Override
 	public Rectangle getRect() {
-		int x = (int) Hero.position.x;
-		int y = (int) Hero.position.y;
+		int x = (int) pos.x;
+		int y = (int) pos.y;
 		
 		int drawX = x + (int)bob.getOffset().x + horXOffset + xOffset;
 		int drawY = y + (int)bob.getOffset().y + yOffset;

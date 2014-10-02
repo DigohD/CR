@@ -13,7 +13,6 @@ import com.cr.engine.graphics.ColorRGBA;
 import com.cr.net.HeroMP;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
-import com.cr.net.packets.MapLoadedPacket07;
 import com.cr.net.packets.MapPacket04;
 import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;

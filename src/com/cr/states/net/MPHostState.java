@@ -30,8 +30,8 @@ public class MPHostState extends GameState{
 	public void init() {
 		world = new World();
 		hero = EntityManager.getHero();
-		hero.setUserName("Ders");
-		server = new Server(1331);
+		hero.setUserName("dgd");
+		server = new Server(12121);
 		server.start();
 	}
 

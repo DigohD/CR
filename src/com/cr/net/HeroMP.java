@@ -9,6 +9,11 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.hero.body.Head;
+import com.cr.entity.hero.body.LeftHand;
+import com.cr.entity.hero.body.LowerBody;
+import com.cr.entity.hero.body.RightHand;
+import com.cr.entity.hero.body.UpperBody;
 import com.cr.game.EntityManager;
 
 public class HeroMP extends Entity implements Tickable, Renderable{
@@ -18,11 +23,23 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	private String userName;
 	private Sprite sprite;
 	
+	private Head head;
+	private UpperBody body;
+	private LowerBody lowerBody;
+	private RightHand rightHand;
+	private LeftHand leftHand;
+	
 	public HeroMP(String userName, Vector2f position, InetAddress ip, int port){
 		super(position);
 		this.userName = userName;
 		this.ip = ip;
 		this.port = port;
+		
+		head = new Head(position);
+		body = new UpperBody(position);
+		lowerBody = new LowerBody(position);
+		rightHand = new RightHand(position);
+		leftHand = new LeftHand(position);
 	}
 	
 	public void init(){
@@ -32,7 +49,11 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 
 	@Override
 	public void tick(float dt) {
-	
+		head.tick(dt);
+		body.tick(dt);
+		lowerBody.tick(dt);
+		rightHand.tick(dt);
+		leftHand.tick(dt);
 	}
 	
 	@Override
@@ -43,6 +64,12 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	@Override
 	public void render(Screen screen) {
 		screen.renderSprite(sprite, position.x, position.y);
+		
+		lowerBody.render(screen);
+		body.render(screen);
+		rightHand.render(screen);
+		leftHand.render(screen);
+		head.render(screen);
 	}
 
 	@Override
