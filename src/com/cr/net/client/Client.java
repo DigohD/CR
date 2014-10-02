@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.net.HeroMP;
 import com.cr.net.packets.AcceptPacket03;
@@ -25,6 +26,8 @@ public class Client implements Runnable{
 	private InetAddress ip;
 	private DatagramSocket socket;
 	private Thread thread;
+	
+	private Vector2f startPos;
 	
 	private int port;
 	private int packetNumber = 0;
@@ -128,6 +131,7 @@ public class Client implements Runnable{
 	
 	private void handleConnect(Packet packet, InetAddress address, int port){
 		HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos(), address, port);
+		startPos = hostHero.getPosition();
 		clientsMap.put(hostHero.getUserName(), hostHero);
 	}
 	
@@ -185,6 +189,10 @@ public class Client implements Runnable{
 
 	public int getHeight() {
 		return height;
+	}
+
+	public Vector2f getStartPos() {
+		return startPos;
 	}
 
 }

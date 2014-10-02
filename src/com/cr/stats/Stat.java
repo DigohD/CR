@@ -42,12 +42,12 @@ public class Stat{
 		
 		total = total * mulTotal;
 		
-		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && StatsSheet.isHero){
-			System.out.println(EntityManager.getHero());
-			String message = EntityManager.getHero().getUserName() + id.toString() + total;
-			StatPacket07 packet = new StatPacket07(message.getBytes());
-			MPClientState.getClient().sendData(packet.getData());
-		}
+//		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && StatsSheet.isHero){
+//			System.out.println(EntityManager.getHero());
+//			String message = EntityManager.getHero().getUserName() + id.toString() + total;
+//			StatPacket07 packet = new StatPacket07(message.getBytes());
+//			MPClientState.getClient().sendData(packet.getData());
+//		}
 
 	}
 	

@@ -185,8 +185,6 @@ public class Server implements Runnable{
             }
         }
         
-
-        
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
         	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), 
