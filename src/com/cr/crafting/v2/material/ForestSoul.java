@@ -75,19 +75,19 @@ public class ForestSoul extends Material{
 	@Override
 	public ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats) {
 		if(state == State.BALANCED){
-			stats.add(new StatMod(4 * mod1 * mod4, StatID.LIFE_ON_HIT, "", true));
+			stats.add(new StatMod(4 * mod1 * mod4 * secBonus, StatID.LIFE_ON_HIT, "", true));
 		}else if(state == State.BLASTED){
-			stats.add(new StatMod(2 * mod3 * mod3, StatID.STRENGTH, "", true));
-			stats.add(new StatMod(2 * mod4 * mod1, StatID.LIFE_ON_HIT, "", true));
+			stats.add(new StatMod(2 * mod3 * mod3 * baseBonus, StatID.STRENGTH, "", true));
+			stats.add(new StatMod(2 * mod4 * mod1 * secBonus, StatID.LIFE_ON_HIT, "", true));
 		}else if(state == State.FLASHED){
-			stats.add(new StatMod(2 * mod1 * mod3, StatID.LIFE_ON_HIT, "", true));
-			stats.add(new StatMod(2 * mod3 * mod4, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(2 * mod1 * mod3 * secBonus, StatID.LIFE_ON_HIT, "", true));
+			stats.add(new StatMod(2 * mod3 * mod4 * baseBonus, StatID.TOUGHNESS, "", true));
 		}else if(state == State.HARDENED){
-			stats.add(new StatMod(2 * mod2 * mod2, StatID.AGILITY, "", true));
-			stats.add(new StatMod(2 * mod3 * mod1, StatID.LIFE_ON_HIT, "", true));
+			stats.add(new StatMod(2 * mod2 * mod2 * baseBonus, StatID.AGILITY, "", true));
+			stats.add(new StatMod(2 * mod3 * mod1 * secBonus, StatID.LIFE_ON_HIT, "", true));
 		}else if(state == State.TEMPERED){
-			stats.add(new StatMod(2 * mod4 * mod1, StatID.LIFE_ON_HIT, "", true));
-			stats.add(new StatMod(2 * mod2 * mod4, StatID.INTELLIGENCE, "", true));
+			stats.add(new StatMod(2 * mod4 * mod1 * secBonus, StatID.LIFE_ON_HIT, "", true));
+			stats.add(new StatMod(2 * mod2 * mod4 * baseBonus, StatID.INTELLIGENCE, "", true));
 		}
 		return stats;
 	}
@@ -97,19 +97,19 @@ public class ForestSoul extends Material{
 		StatMod armorMod;
 		
 		if(state == State.BALANCED){
-			stats.add(new StatMod(4 * mod1 * mod4, StatID.LIFE_REGEN, "", true));
+			stats.add(new StatMod(4 * mod1 * mod4 * secBonus, StatID.LIFE_REGEN, "", true));
 		}else if(state == State.BLASTED){
-			stats.add(new StatMod(2 * mod3 * mod3, StatID.STRENGTH, "", true));
-			stats.add(new StatMod(2 * mod4 * mod1, StatID.LIFE_REGEN, "", true));
+			stats.add(new StatMod(2 * mod3 * mod3 * baseBonus, StatID.STRENGTH, "", true));
+			stats.add(new StatMod(2 * mod4 * mod1 * secBonus, StatID.LIFE_REGEN, "", true));
 		}else if(state == State.FLASHED){
-			stats.add(new StatMod(2 * mod1 * mod3, StatID.LIFE_REGEN, "", true));
-			stats.add(new StatMod(2 * mod3 * mod4, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(2 * mod1 * mod3 * secBonus, StatID.LIFE_REGEN, "", true));
+			stats.add(new StatMod(2 * mod3 * mod4 * baseBonus, StatID.TOUGHNESS, "", true));
 		}else if(state == State.HARDENED){
-			stats.add(new StatMod(2 * mod2 * mod2, StatID.AGILITY, "", true));
-			stats.add(new StatMod(2 * mod3 * mod1, StatID.LIFE_REGEN, "", true));
+			stats.add(new StatMod(2 * mod2 * mod2 * baseBonus, StatID.AGILITY, "", true));
+			stats.add(new StatMod(2 * mod3 * mod1 * secBonus, StatID.LIFE_REGEN, "", true));
 		}else if(state == State.TEMPERED){
-			stats.add(new StatMod(2 * mod4 * mod1, StatID.LIFE_REGEN, "", true));
-			stats.add(new StatMod(2 * mod2 * mod4, StatID.INTELLIGENCE, "", true));
+			stats.add(new StatMod(2 * mod4 * mod1 * secBonus, StatID.LIFE_REGEN, "", true));
+			stats.add(new StatMod(2 * mod2 * mod4 * baseBonus, StatID.INTELLIGENCE, "", true));
 		}
 		return null;
 	}
