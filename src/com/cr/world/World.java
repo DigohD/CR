@@ -281,71 +281,11 @@ public class World {
 		return null;
 	}
 	
-	public byte[] getBytes2(int pNumber, byte[] data){
+	public byte[] getBytes(int pNumber, byte[] data){
 		for(int i = 0; i < 924; i++)
 			if(i + (pNumber*924) < 30000)
 				data[i+100] = byteMap.get(pixels.get(i + (pNumber*924)));
 		return data;
-	}
-	
-	public byte[] getBytes(int packetNumber, byte[] data){
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("Pn: " + packetNumber);
-	
-		int rest = ((packetNumber + 1) * 924) % (width*height);
-		int pre = 924 - rest;
-		
-		if(packetNumber != 0 && rest < 924 && ((packetNumber+1)*924) > (width*height*2) && ((packetNumber+1)*924) < (width*height*3)){
-			int start = (packetNumber * 924)   - (width * height);
-			for(int i = 0; i < pre; i++)
-				data[i + 100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[start + i]);
-			
-			for(int i = pre; i < 924; i++){
-				data[i + 100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[i]);
-			}
-			
-			return data;
-		}else if(((packetNumber+1)*924) > (width*height*3)){
-			int start = (width * height) - rest;
-			for(int i = 0; i < rest; i++)
-				data[i + 100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[i + start]);
-			return data;
-		}
-		
-		if(packetNumber != 0 && rest < 924){
-			int start = (packetNumber * 924);
-			for(int i = 0; i < pre; i++)
-				data[i + 100] = byteMap.get(map.getBottomLayer().getBitmap().getPixels()[start + i]);
-			
-			for(int i = pre; i < 924; i++){
-				data[i + 100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[i]);
-			}
-			
-			return data;
-		}
-		
-		if(packetNumber * 924 > width * height * 2){
-			for(int i = 0; i < 924; i++)
-				data[i+100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[(i + (packetNumber*924))  - (width * height * 2)]);
-			return data;
-		}
-			
-		if(packetNumber * 924 > width * height){
-			for(int i = 0; i < 924; i++)
-				data[i+100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[(i + (packetNumber*924)) - (width * height)]);
-			return data;
-		}
-		
-		for(int i = 0; i < 924; i++){
-			data[i+100] = byteMap.get(map.getBottomLayer().getBitmap().getPixels()[i + (packetNumber*924)]);
-		}
-		
-		
-		return data;
-		
 	}
 
 	public static Shader getShader() {

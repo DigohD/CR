@@ -5,15 +5,13 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
-import com.cr.net.client.ClientInfo;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
+import com.cr.net.packets.DisconnectPacket06;
 import com.cr.net.packets.LoginPacket00;
 import com.cr.net.packets.MapPacket04;
 import com.cr.net.packets.MovePacket02;
@@ -78,18 +76,17 @@ public class Server implements Runnable{
 	}
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
-		
 		String message = new String(data).trim();
 		
 		System.out.println(message.substring(0, 2));
 		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
 		
 		switch(type){
-			default:
-				break;
 			case INVALID:
 				break;
 			case DISCONNECT:
+				DisconnectPacket06 packet = new DisconnectPacket06(data);
+				handleDisconnect(packet, address, port);
 				break;
 			case LOGIN:
 				LoginPacket00 packet0 = new LoginPacket00(data);
@@ -103,7 +100,13 @@ public class Server implements Runnable{
 				RequestMapPacket05 packet05 = new RequestMapPacket05(data);
 				handleRequestMap(packet05, address, port);
 				break;
+			default:
+				break;
 		}
+		
+	}
+	
+	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
 		
 	}
 	
@@ -129,7 +132,7 @@ public class Server implements Runnable{
 		for(int i = 0; i < p.getData().length; i++)
 			data2[i] = p.getData()[i];
 		
-		sendData(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2), address, port);
+		sendData(MPHostState.getWorld().getBytes(p.getPacketNumber(), data2), address, port);
 		//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
 	}
 	

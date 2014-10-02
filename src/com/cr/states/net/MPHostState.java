@@ -1,7 +1,5 @@
 package com.cr.states.net;
 
-import java.util.List;
-
 import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
@@ -41,8 +39,6 @@ public class MPHostState extends GameState{
 				h.init();
 		}
 		
-//		MovePacket02 mp = new MovePacket02(hero.getUserName(), hero.getPos());
-//		server.sendDataToAllClients(mp.getData());
 	}
 
 	@Override

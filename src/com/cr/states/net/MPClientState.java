@@ -22,7 +22,7 @@ public class MPClientState extends GameState{
 	
 	@Override
 	public void init() {
-		client = new Client("192.168.0.176", 1331);
+		client = new Client("213.100.75.188", 12121);
 		client.start();
 		String userName = "anden";
 		
