@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.cr.engine.graphics.ColorRGBA;
-import com.cr.entity.hero.HeroMP;
+import com.cr.net.HeroMP;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
 import com.cr.net.packets.MapPacket04;
@@ -29,22 +29,17 @@ public class Client implements Runnable{
 	private Thread thread;
 	
 	private int port;
-	
-	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
-	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
+	private int packetNumber = 0;
+	public int width, height;
 	
 	private volatile boolean running = false;
 	
 	private int[] bottomLayerData, middleLayerData, topLayerData;
 	
+	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	private HashMap<Byte, Integer> byteToIntMap = new HashMap<Byte, Integer>();
 	
 	public LinkedList<Integer> pixels = new LinkedList<Integer>();
-	
-	int packetNumber = 0;
-	//int index = 0;
-	
-	public int width, height;
 	
 	public Client(String ip, int port){
 		
@@ -143,18 +138,21 @@ public class Client implements Runnable{
 				break;
 			case CONNECT:
 				packet = new ConnectPacket01(data);
-				HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos());
-				heroMockups.add(hostHero);
-				connectedClients.add(new ClientInfo(((ConnectPacket01)packet).getUserName(), address, port));
+				HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos(), address, port);
+				clientsMap.put(hostHero.getUserName(), hostHero);
 				break;
 			case MOVE:
 				packet = new MovePacket02(data);
 				
-				for(int i = 0; i < connectedClients.size(); i++){
-					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
-					}
-				}
+				String s = ((MovePacket02) packet).getUserName();
+				if(clientsMap.containsKey(s))
+					clientsMap.get(s).setPosition(((MovePacket02) packet).getPos());
+				
+//				for(int i = 0; i < connectedClients.size(); i++){
+//					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
+//						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
+//					}
+//				}
 				break;
 		}
 	}
@@ -176,14 +174,9 @@ public class Client implements Runnable{
 		
 	}
 
-	public List<ClientInfo> getConnectedClients() {
-		return connectedClients;
+	public HashMap<String, HeroMP> getClientsMap() {
+		return clientsMap;
 	}
-
-	public List<HeroMP> getHeroMockups() {
-		return heroMockups;
-	}
-	
 
 }
 

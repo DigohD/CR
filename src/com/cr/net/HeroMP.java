@@ -1,6 +1,7 @@
-package com.cr.entity.hero;
+package com.cr.net;
 
 import java.awt.Rectangle;
+import java.net.InetAddress;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
@@ -12,12 +13,16 @@ import com.cr.game.EntityManager;
 
 public class HeroMP extends Entity implements Tickable, Renderable{
 	
+	private InetAddress ip;
+	private int port;
 	private String userName;
 	private Sprite sprite;
 	
-	public HeroMP(String userName, Vector2f position){
+	public HeroMP(String userName, Vector2f position, InetAddress ip, int port){
 		super(position);
 		this.userName = userName;
+		this.ip = ip;
+		this.port = port;
 	}
 	
 	public void init(){
@@ -54,7 +59,22 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		return userName;
 	}
 
+	public InetAddress getInetAddress() {
+		return ip;
+	}
 
+	public int getPort() {
+		return port;
+	}
+	
+	
+	public void setIp(InetAddress ip) {
+		this.ip = ip;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
 	
 
 }

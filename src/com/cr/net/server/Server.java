@@ -6,10 +6,11 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
+import com.cr.net.HeroMP;
 import com.cr.net.client.ClientInfo;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
@@ -25,9 +26,7 @@ public class Server implements Runnable{
 	
 	private DatagramSocket socket;
 	private Thread thread;
-	
-	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
-	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
+	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	
 	private boolean running = false;
 	
@@ -39,7 +38,6 @@ public class Server implements Runnable{
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void start(){
@@ -85,7 +83,6 @@ public class Server implements Runnable{
 		
 		System.out.println(message.substring(0, 2));
 		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
-		Packet packet = null;
 		
 		switch(type){
 			default:
@@ -95,25 +92,26 @@ public class Server implements Runnable{
 			case DISCONNECT:
 				break;
 			case LOGIN:
-				packet = new LoginPacket00(data);
-				System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((LoginPacket00) packet).getUserName() + " has connected");
-				ClientInfo client = new ClientInfo(((LoginPacket00) packet).getUserName(), address, port);
-				HeroMP hero = new HeroMP(client.getUserName(), EntityManager.getHero().getPos());
-				addConnection(client, hero, (LoginPacket00) packet);
+				LoginPacket00 packet0 = new LoginPacket00(data);
+				handleLogin(packet0, address, port);
 				break;
 			case MOVE:
-				packet = new MovePacket02(data);
-				for(int i = 0; i < connectedClients.size(); i++){
-					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
-					}
-				}
+				MovePacket02 packet2 = new MovePacket02(data);
+				String s = packet2.getUserName();
+				if(clientsMap.containsKey(s))
+					clientsMap.get(s).setPosition(packet2.getPos());
 				
-				packet.writeData(this);
+//				for(int i = 0; i < connectedClients.size(); i++){
+//					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
+//						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
+//					}
+//				}
+				
+				packet2.writeData(this);
 				break;
 			case REQUESTMAP:
-				packet = new RequestMapPacket05(data);
-				MapPacket04 p = new MapPacket04(((RequestMapPacket05)packet).getPacketNumber());
+				RequestMapPacket05 packet05 = new RequestMapPacket05(data);
+				MapPacket04 p = new MapPacket04(packet05.getPacketNumber());
 				
 				byte[] data2 = new byte[1024];
 				for(int i = 0; i < p.getData().length; i++)
@@ -126,27 +124,34 @@ public class Server implements Runnable{
 		
 	}
 	
-	public void addConnection(ClientInfo client, HeroMP hero, Packet packet) {
+	private void handleLogin(LoginPacket00 packet, InetAddress address, int port){
+		System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUserName() + " has connected");
+		String name = packet.getUserName();
+		HeroMP hero = new HeroMP(name, EntityManager.getHero().getPos(), address, port);
+		addConnection(hero, packet);
+	}
+	
+	public void addConnection(HeroMP client, Packet packet) {
     	boolean alreadyConnected = false;
     	//loop through all the connected players 
-        for (ClientInfo c : this.connectedClients) {
-        	
-            if (client.getUserName().equalsIgnoreCase(c.getUserName())) {
-                if (c.getInetAddress() == null) {
-                    c.setIp(client.getInetAddress());
+        for (String name : clientsMap.keySet()) {
+        	HeroMP h = clientsMap.get(name);
+            if (name.equalsIgnoreCase(client.getUserName())) {
+                if (h.getInetAddress() == null) {
+                    h.setIp(client.getInetAddress());
                 }
-                if (c.getPort() == -1) {
-                    c.setPort(client.getPort());
+                if (h.getPort() == -1) {
+                    h.setPort(client.getPort());
                 }
                 alreadyConnected = true;
             } else {
                 // relay to the current connected player that there is a new
                 // player
-                sendData(packet.getData(), c.getInetAddress(), c.getPort());
+                sendData(packet.getData(), h.getInetAddress(), h.getPort());
 
                 // relay to the new player that the currently connect player
                 // exists
-                packet = new LoginPacket00(c.getUserName());
+                packet = new LoginPacket00(h.getUserName());
                 sendData(packet.getData(), client.getInetAddress(), client.getPort());
             }
         }
@@ -156,36 +161,31 @@ public class Server implements Runnable{
         
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
-        	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
-            connectedClients.add(client);
-            heroMockups.add(hero);
+        	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), 
+        			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
+            clientsMap.put(client.getUserName(), client);
         }
     }
 	
 
 	public void sendData(byte[] data, InetAddress ip, int port){
-		
 		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	public void sendDataToAllClients(byte[] data) {
-		for(ClientInfo c : connectedClients)
-			sendData(data, c.getInetAddress(), c.getPort());
+		for(String name : clientsMap.keySet()){
+			HeroMP h = clientsMap.get(name);
+			sendData(data, h.getInetAddress(), h.getPort());
+		}	
 	}
-	
-	public List<ClientInfo> getClients(){
-		return connectedClients;
+
+	public HashMap<String, HeroMP> getClientsMap() {
+		return clientsMap;
 	}
-	
-	public List<HeroMP> getMockups(){
-		return heroMockups;
-	}
-	
 
 }

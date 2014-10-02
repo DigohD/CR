@@ -1,21 +1,15 @@
 package com.cr.states.net;
 
-import java.util.List;
-
-import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
-import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
 import com.cr.game.GameStateManager;
+import com.cr.net.HeroMP;
 import com.cr.net.client.Client;
 import com.cr.states.GameState;
 import com.cr.world.World;
-import com.cr.world.tile.Tile;
 
 public class MPClientState extends GameState{
 	
-	private List<HeroMP> mockUps;
 	private static Client client;
 	private World w;
 	
@@ -26,31 +20,23 @@ public class MPClientState extends GameState{
 		init();
 	}
 	
-	
 	@Override
 	public void init() {
-		
 		client = new Client("192.168.0.176", 1331);
 		client.start();
-		mockUps = client.getHeroMockups();
 		String userName = "anden";
 		
 		String message = "00" + userName;
 		client.sendData(message.getBytes());
 		
 		while(!worldAssembled){
-			//System.out.println("LOOP");
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		//System.out.println(client.pixels.size());
-		
+
 		w = new World(client.pixels, client.width, client.height);
 		
 		EntityManager.getHero().setUserName(userName);
@@ -59,9 +45,11 @@ public class MPClientState extends GameState{
 	@Override
 	public void tick(float dt) {
 		w.tick(dt);
-		for(int i = 0; i < mockUps.size(); i++){
-			if(mockUps.get(i).getSprite() == null)
-				mockUps.get(i).init();
+		
+		for(String name : client.getClientsMap().keySet()){
+			HeroMP h = client.getClientsMap().get(name);
+			if(h.getSprite() == null)
+				h.init();
 		}
 	}
 
