@@ -66,9 +66,9 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	@Override
 	public void setPosition(Vector2f position) {
-		if(this.position.sub(position).length() == 0)
+		if(head != null && this.position.sub(position).length() == 0)
 			setBobing(false);
-		else
+		else if(head != null)
 			setBobing(true);
 		
 		this.position = position;
