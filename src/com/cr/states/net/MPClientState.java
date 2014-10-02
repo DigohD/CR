@@ -29,7 +29,7 @@ public class MPClientState extends GameState{
 	
 	@Override
 	public void init() {
-		client = new Client("213.100.75.188", 12121);
+		client = new Client("localhost", 1331);
 		client.start();
 		String userName = "anden";
 		
@@ -58,8 +58,9 @@ public class MPClientState extends GameState{
 		if(Input.getKey(Input.Q))
 			gsm.push(new StatsState(gsm));
 		if(Input.getKey(Input.ESCAPE)){
-			DisconnectPacket06 packet = new DisconnectPacket06(EntityManager.getHero().getUserName());
-			client.sendData(packet.getData());
+			System.out.println(EntityManager.getHero().getUserName());
+			//DisconnectPacket06 packet = new DisconnectPacket06(EntityManager.getHero().getUserName());
+			client.sendData("06:anden".getBytes());
 			Game.stop();
 		}
 			

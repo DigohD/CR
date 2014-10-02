@@ -78,7 +78,7 @@ public class Server implements Runnable{
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
 		
-		System.out.println(message.substring(0, 2));
+		//System.out.println(message.substring(0, 2));
 		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
 		
 		switch(type){
@@ -108,8 +108,15 @@ public class Server implements Runnable{
 	
 	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
 		System.out.println("DISCONNECT PACKET RECEIVED");
+		System.out.println(new String(packet.getData()));
+		System.out.println(clientsMap.get(packet.getUserName()));
+
+		if(clientsMap.containsKey(packet.getUserName())){
+			System.out.println("CLIENT EXISTS");
+		}
+		clientsMap.get(packet.getUserName()).setLive(false);
 		clientsMap.remove(packet.getUserName());
-		EntityManager.removeEntity(clientsMap.get(packet.getUserName()));
+		
 		
 		//sendDataToAllClients(packet.getData());
 	}

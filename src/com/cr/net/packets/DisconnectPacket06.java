@@ -9,7 +9,8 @@ public class DisconnectPacket06 extends Packet{
 	
 	public DisconnectPacket06(byte[] data) {
 		super(06);
-		String[] dataArray = new String(data).split(":");
+		
+		String[] dataArray = readData(data).split(":");
 		
 		this.userName = dataArray[1];
 	}
