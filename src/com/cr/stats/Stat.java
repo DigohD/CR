@@ -44,7 +44,7 @@ public class Stat{
 		
 //		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && StatsSheet.isHero){
 //			System.out.println(EntityManager.getHero());
-//			String message = EntityManager.getHero().getUserName() + id.toString() + total;
+//			String message = EntityManager.getHero().getUserName() + id.name() + total;
 //			StatPacket07 packet = new StatPacket07(message.getBytes());
 //			MPClientState.getClient().sendData(packet.getData());
 //		}
