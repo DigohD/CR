@@ -97,28 +97,11 @@ public class Server implements Runnable{
 				break;
 			case MOVE:
 				MovePacket02 packet2 = new MovePacket02(data);
-				String s = packet2.getUserName();
-				if(clientsMap.containsKey(s))
-					clientsMap.get(s).setPosition(packet2.getPos());
-				
-//				for(int i = 0; i < connectedClients.size(); i++){
-//					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-//						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
-//					}
-//				}
-				
-				packet2.writeData(this);
+				handleMove(packet2, address, port);
 				break;
 			case REQUESTMAP:
 				RequestMapPacket05 packet05 = new RequestMapPacket05(data);
-				MapPacket04 p = new MapPacket04(packet05.getPacketNumber());
-				
-				byte[] data2 = new byte[1024];
-				for(int i = 0; i < p.getData().length; i++)
-					data2[i] = p.getData()[i];
-				
-				sendData(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2), address, port);
-				//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
+				handleRequestMap(packet05, address, port);
 				break;
 		}
 		
@@ -131,7 +114,26 @@ public class Server implements Runnable{
 		addConnection(hero, packet);
 	}
 	
-	public void addConnection(HeroMP client, Packet packet) {
+	private void handleMove(MovePacket02 packet, InetAddress address, int port){
+		String s = packet.getUserName();
+		if(clientsMap.containsKey(s))
+			clientsMap.get(s).setPosition(packet.getPos());
+	
+		packet.writeData(this);
+	}
+	
+	private void handleRequestMap(RequestMapPacket05 packet, InetAddress address, int port){
+		MapPacket04 p = new MapPacket04(packet.getPacketNumber());
+		
+		byte[] data2 = new byte[1024];
+		for(int i = 0; i < p.getData().length; i++)
+			data2[i] = p.getData()[i];
+		
+		sendData(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2), address, port);
+		//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
+	}
+	
+	private void addConnection(HeroMP client, Packet packet) {
     	boolean alreadyConnected = false;
     	//loop through all the connected players 
         for (String name : clientsMap.keySet()) {
