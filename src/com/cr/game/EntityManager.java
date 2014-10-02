@@ -14,6 +14,7 @@ import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
+import com.cr.net.HeroMP;
 import com.cr.stats.StatsSheet;
 import com.cr.util.Camera;
 import com.cr.world.World;
@@ -35,6 +36,8 @@ public class EntityManager {
 		deToAdd = new ArrayList<Renderable>();
 		
 		hero = new Hero(world);
+		HeroMP h = new HeroMP(hero.position.clone());
+		h.init();
 	}
 	
 	public static void clear(){

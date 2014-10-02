@@ -42,7 +42,7 @@ public class Stat{
 			StatPacket07 packet = new StatPacket07(message.getBytes());
 			MPClientState.getClient().sendData(packet.getData());
 		}
-	
+
 	}
 	
 	public void addAddmod(String ID, float amount){
