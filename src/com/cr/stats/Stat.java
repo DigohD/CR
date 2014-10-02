@@ -17,6 +17,11 @@ public class Stat{
 	
 	protected StatID id;
 	
+	public Stat(String name, float base){
+		this.name = name;
+		this.base = base;
+	}
+	
 	public Stat(StatID id, String name, float base){
 		this.id = id;
 		this.name = name;

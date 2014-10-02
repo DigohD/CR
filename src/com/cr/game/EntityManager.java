@@ -36,8 +36,8 @@ public class EntityManager {
 		deToAdd = new ArrayList<Renderable>();
 		
 		hero = new Hero(world);
-		HeroMP h = new HeroMP(hero.position.clone());
-		h.init();
+//		HeroMP h = new HeroMP(hero.position.clone());
+//		h.init();
 	}
 	
 	public static void clear(){
