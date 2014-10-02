@@ -35,27 +35,27 @@ public class StatsSheet {
 	public StatsSheet(boolean isHero){
 		super();
 		if(isHero){
-			sheet.put(StatID.LEVEL, new Stat("Level", 1));
-			sheet.put(StatID.STRENGTH, new Stat("Strength", 10));
-			sheet.put(StatID.AGILITY, new Stat("Agility", 10));
-			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 10));
-			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 10000));
-			sheet.put(StatID.HP_MAX, new Stat("Max Hp", 100));
+			sheet.put(StatID.LEVEL, new Stat(StatID.LEVEL, "Level", 1));
+			sheet.put(StatID.STRENGTH, new Stat(StatID.STRENGTH, "Strength", 10));
+			sheet.put(StatID.AGILITY, new Stat(StatID.AGILITY, "Agility", 10));
+			sheet.put(StatID.INTELLIGENCE, new Stat(StatID.INTELLIGENCE, "Intelligence", 10));
+			sheet.put(StatID.TOUGHNESS, new Stat(StatID.TOUGHNESS, "Toughness", 10000));
+			sheet.put(StatID.HP_MAX, new Stat(StatID.HP_MAX, "Max Hp", 100));
 			
-			sheet.put(StatID.MOVEMENT_SPEED, new Stat("Movement Speed", 1f));
+			sheet.put(StatID.MOVEMENT_SPEED, new Stat(StatID.MOVEMENT_SPEED, "Movement Speed", 1f));
 			
-			sheet.put(StatID.ARMOR, new Stat("Armor", 0));
-			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
-			sheet.put(StatID.PHYSICAL_POWER, new Stat("Physical Power", 0));
-			sheet.put(StatID.RAPIDNESS, new Stat("Rapidness", 0));
-			sheet.put(StatID.SPELL_POWER, new Stat("Spell Power", 0));
+			sheet.put(StatID.ARMOR, new Stat(StatID.ARMOR, "Armor", 0));
+			sheet.put(StatID.ARMOR_RATING, new Stat(StatID.ARMOR_RATING, "Armor Rating", 0));
+			sheet.put(StatID.PHYSICAL_POWER, new Stat(StatID.PHYSICAL_POWER, "Physical Power", 0));
+			sheet.put(StatID.RAPIDNESS, new Stat(StatID.RAPIDNESS, "Rapidness", 0));
+			sheet.put(StatID.SPELL_POWER, new Stat(StatID.SPELL_POWER, "Spell Power", 0));
 			
-			sheet.put(StatID.LIFE_ON_HIT, new Stat("Life On Hit", 0));
-			sheet.put(StatID.LIFE_REGEN, new Stat("Life Regen /5s", 0));
+			sheet.put(StatID.LIFE_ON_HIT, new Stat(StatID.LIFE_ON_HIT, "Life On Hit", 0));
+			sheet.put(StatID.LIFE_REGEN, new Stat(StatID.LIFE_REGEN, "Life Regen /5s", 0));
 			
 			updateInternalStats();
 			
-			sheet.put(StatID.HP_NOW, new Stat("Current Hp", sheet.get(StatID.HP_MAX).getTotal()));
+			sheet.put(StatID.HP_NOW, new Stat(StatID.HP_NOW, "Current Hp", sheet.get(StatID.HP_MAX).getTotal()));
 		}
 	}
 	

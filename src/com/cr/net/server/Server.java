@@ -18,6 +18,7 @@ import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
 import com.cr.net.packets.RequestMapPacket05;
+import com.cr.net.packets.StatPacket07;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.StatsSheet;
 
@@ -102,6 +103,9 @@ public class Server implements Runnable{
 			case REQUESTMAP:
 				RequestMapPacket05 packet05 = new RequestMapPacket05(data);
 				handleRequestMap(packet05, address, port);
+				break;
+			case STATS:
+				StatPacket07 packet07 = new StatPacket07(data);
 				break;
 			default:
 				break;

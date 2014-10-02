@@ -2,6 +2,12 @@ package com.cr.stats;
 
 import java.util.HashMap;
 
+import com.cr.game.EntityManager;
+import com.cr.net.NetStatus;
+import com.cr.net.packets.StatPacket07;
+import com.cr.states.net.MPClientState;
+import com.cr.stats.StatsSheet.StatID;
+
 public class Stat{
 
 	protected String name;
@@ -9,7 +15,10 @@ public class Stat{
 	protected HashMap<String, Float> addMods = new HashMap<String, Float>();
 	protected HashMap<String, Float> mulMods = new HashMap<String, Float>();
 	
-	public Stat(String name, float base){
+	protected StatID id;
+	
+	public Stat(StatID id, String name, float base){
+		this.id = id;
 		this.name = name;
 		this.base = base;
 	}
@@ -27,6 +36,13 @@ public class Stat{
 		}
 		
 		total = total * mulTotal;
+		
+		if(NetStatus.isMultiPlayer && !NetStatus.isHOST){
+			String message = EntityManager.getHero().getUserName() + id.toString() + total;
+			StatPacket07 packet = new StatPacket07(message.getBytes());
+			MPClientState.getClient().sendData(packet.getData());
+		}
+	
 	}
 	
 	public void addAddmod(String ID, float amount){
