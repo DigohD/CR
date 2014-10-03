@@ -58,8 +58,10 @@ public class MPClientState extends GameState{
 			gsm.push(new StatsState(gsm));
 		if(Input.getKey(Input.ESCAPE)){
 			System.out.println(EntityManager.getHero().getUserName());
+			System.out.println("ESCAPE");
 			Packet16Disconnect packet = new Packet16Disconnect(EntityManager.getHero().getUserName());
 			client.sendData(packet.getData());
+			client.disconnected = true;
 			Game.stop();
 		}
 			

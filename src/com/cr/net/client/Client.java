@@ -38,6 +38,7 @@ public class Client implements Runnable{
 	private int width, height;
 	
 	private volatile boolean running = false;
+	public boolean disconnected = false;
 	
 	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	private HashMap<Byte, Integer> byteToIntMap = new HashMap<Byte, Integer>();
@@ -91,7 +92,7 @@ public class Client implements Runnable{
 	@Override
 	public void run() {
 		try {
-            socket.setSoTimeout(1000);
+            socket.setSoTimeout(250);
             while(running) {
             	byte[] data = new byte[1024];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -223,12 +224,15 @@ public class Client implements Runnable{
 	}
 	
 	public void sendData(byte[] data){
-		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
-		try {
-			socket.send(packet);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(!disconnected){
+			DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+			try {
+				socket.send(packet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 
 	public HashMap<String, HeroMP> getClientsMap() {
