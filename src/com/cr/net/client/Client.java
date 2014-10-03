@@ -14,15 +14,15 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
-import com.cr.net.packets.Packet13Accept;
-import com.cr.net.packets.Packet11Connect;
-import com.cr.net.packets.Packet16Disconnect;
-import com.cr.net.packets.Packet10Login;
-import com.cr.net.packets.Packet14Map;
-import com.cr.net.packets.Packet12Move;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
+import com.cr.net.packets.Packet10Login;
+import com.cr.net.packets.Packet11Connect;
+import com.cr.net.packets.Packet12Move;
+import com.cr.net.packets.Packet13Accept;
+import com.cr.net.packets.Packet14Map;
 import com.cr.net.packets.Packet15RequestMap;
+import com.cr.net.packets.Packet16Disconnect;
 import com.cr.states.net.MPClientState;
 
 public class Client implements Runnable{
@@ -81,7 +81,6 @@ public class Client implements Runnable{
 	
 	public synchronized void stop(){
 		running = false;
-		socket.close();
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
@@ -91,28 +90,29 @@ public class Client implements Runnable{
 
 	@Override
 	public void run() {
-		while(running){
-			byte[] data = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(data, data.length);
-			
-			try {
-				socket.receive(packet);
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			try {
-				socket.setSoTimeout(1000);
-			} catch (SocketException e) {
-//				loginPacket = new Packet10Login(userName);
+		try {
+            socket.setSoTimeout(1000);
+            while(running) {
+            	byte[] data = new byte[1024];
+				DatagramPacket packet = new DatagramPacket(data, data.length);
 				
-				System.out.println("RESEND LOGIN");
-				sendData(loginPacket.getData());
-				//e.printStackTrace();
-			}
-			
-			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
-		}
+                try {
+                	socket.receive(packet);
+                }catch (SocketTimeoutException e) {
+                	 System.out.println("TIMEOUT, RESENDING");
+                	 sendData(loginPacket.getData());
+                     e.printStackTrace();  
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+          
+                parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            }
+        } catch (SocketException e1) {
+            e1.printStackTrace();
+        } finally {
+            socket.close();
+        }
 	}
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {

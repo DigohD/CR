@@ -5,19 +5,20 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
-import com.cr.net.packets.Packet13Accept;
-import com.cr.net.packets.Packet11Connect;
-import com.cr.net.packets.Packet16Disconnect;
-import com.cr.net.packets.Packet10Login;
-import com.cr.net.packets.Packet14Map;
-import com.cr.net.packets.Packet12Move;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
+import com.cr.net.packets.Packet10Login;
+import com.cr.net.packets.Packet11Connect;
+import com.cr.net.packets.Packet12Move;
+import com.cr.net.packets.Packet13Accept;
+import com.cr.net.packets.Packet14Map;
 import com.cr.net.packets.Packet15RequestMap;
+import com.cr.net.packets.Packet16Disconnect;
 import com.cr.net.packets.Packet17Stat;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
@@ -54,7 +55,6 @@ public class Server implements Runnable{
 	public void stop(){
 		System.out.println("Server closing..");
 		running = false;
-		socket.close();
 		System.out.println("Server closed..");
 		try {
 			thread.join();
@@ -65,20 +65,28 @@ public class Server implements Runnable{
 
 	@Override
 	public void run() {
-		while(running){
-			byte[] data = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(data, data.length);
-			
-			try {
-				socket.receive(packet);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			System.out.println("REcieve Packet: " + packet.getData());
-			
-			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
-		}
+		
+		try {
+            socket.setSoTimeout(1000);
+            while(running) {
+            	byte[] data = new byte[1024];
+				DatagramPacket packet = new DatagramPacket(data, data.length);
+				
+                try {
+                	socket.receive(packet);
+                }catch (SocketTimeoutException e) {
+                     e.printStackTrace();  
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("REcieve Packet: " + packet.getData());
+                parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            }
+        } catch (SocketException e1) {
+            e1.printStackTrace();
+        } finally {
+            socket.close();
+        }
 		
 	}
 	
