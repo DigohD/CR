@@ -9,7 +9,8 @@ public class Packet10Login extends Packet{
 
 	public Packet10Login(byte[] data) {
 		super(10);
-		this.userName = readData(data);
+	    String[] dataArray = readData(data).split(":");
+		this.userName = dataArray[1];
 	}
 	
 	public Packet10Login(String userName) {
@@ -25,7 +26,6 @@ public class Packet10Login extends Packet{
 	@Override
 	public void writeData(Server server) {
 		server.sendDataToAllClients(getData());
-		
 	}
 	
 	@Override

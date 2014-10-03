@@ -38,6 +38,7 @@ public class MPClientState extends GameState{
 		
 		Packet10Login packet = new Packet10Login(userName);
 		client.sendData(packet.getData());
+		System.out.println("LOGIN PACKET SENT");
 		
 		while(!worldAssembled){
 			try {

@@ -104,18 +104,22 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case MAP:
+				System.out.println("MAP PACKET RECEIVED");
 				packet = new Packet14Map(data);
 				handleMap(packet, data, address, port);
 				break;
 			case ACCEPT:
+				System.out.println("ACCEPT PACKET RECEIVED");
 				packet = new Packet13Accept(data);
 				handleAccept(packet, address, port);
 				break;
 			case CONNECT:
+				System.out.println("CONNECT PACKET RECEIVED");
 				packet = new Packet11Connect(data);
 				handleConnect(packet, address, port);
 				break;
 			case MOVE:
+				//System.out.println("MOVE PACKET RECEIVED");
 				packet = new Packet12Move(data);
 				handleMove(packet, address, port);
 				break;
@@ -170,6 +174,7 @@ public class Client implements Runnable{
 
 		Packet15RequestMap p = new Packet15RequestMap(packetNumber);
 		sendData(p.getData());
+		System.out.println("REQUEST MAP PACKET SENT");
 	}
 	
 	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
