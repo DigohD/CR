@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class StatsSheet {
 	
 	protected HashMap<StatID, Stat> sheet = new HashMap<StatID, Stat>();
-	public static boolean isHero;
+	private boolean isHero;
 	
 	public enum StatID {
 						/*Primary Stats*/
@@ -33,31 +33,31 @@ public class StatsSheet {
 		super();
 	}
 	
-	public StatsSheet(boolean isHero){
+	public StatsSheet(boolean newIsHero){
 		super();
-		StatsSheet.isHero = isHero;
+		isHero = newIsHero;
 		if(isHero){
-			sheet.put(StatID.LEVEL, new Stat(StatID.LEVEL, "Level", 1));
-			sheet.put(StatID.STRENGTH, new Stat(StatID.STRENGTH, "Strength", 10));
-			sheet.put(StatID.AGILITY, new Stat(StatID.AGILITY, "Agility", 10));
-			sheet.put(StatID.INTELLIGENCE, new Stat(StatID.INTELLIGENCE, "Intelligence", 10));
-			sheet.put(StatID.TOUGHNESS, new Stat(StatID.TOUGHNESS, "Toughness", 10000));
-			sheet.put(StatID.HP_MAX, new Stat(StatID.HP_MAX, "Max Hp", 100));
+			sheet.put(StatID.LEVEL, new Stat(StatID.LEVEL, "Level", 1, isHero));
+			sheet.put(StatID.STRENGTH, new Stat(StatID.STRENGTH, "Strength", 10, isHero));
+			sheet.put(StatID.AGILITY, new Stat(StatID.AGILITY, "Agility", 10, isHero));
+			sheet.put(StatID.INTELLIGENCE, new Stat(StatID.INTELLIGENCE, "Intelligence", 10, isHero));
+			sheet.put(StatID.TOUGHNESS, new Stat(StatID.TOUGHNESS, "Toughness", 10000, isHero));
+			sheet.put(StatID.HP_MAX, new Stat(StatID.HP_MAX, "Max Hp", 100, isHero));
 			
-			sheet.put(StatID.MOVEMENT_SPEED, new Stat(StatID.MOVEMENT_SPEED, "Movement Speed", 1f));
+			sheet.put(StatID.MOVEMENT_SPEED, new Stat(StatID.MOVEMENT_SPEED, "Movement Speed", 1f, isHero));
 			
-			sheet.put(StatID.ARMOR, new Stat(StatID.ARMOR, "Armor", 0));
-			sheet.put(StatID.ARMOR_RATING, new Stat(StatID.ARMOR_RATING, "Armor Rating", 0));
-			sheet.put(StatID.PHYSICAL_POWER, new Stat(StatID.PHYSICAL_POWER, "Physical Power", 0));
-			sheet.put(StatID.RAPIDNESS, new Stat(StatID.RAPIDNESS, "Rapidness", 0));
-			sheet.put(StatID.SPELL_POWER, new Stat(StatID.SPELL_POWER, "Spell Power", 0));
+			sheet.put(StatID.ARMOR, new Stat(StatID.ARMOR, "Armor", 0, isHero));
+			sheet.put(StatID.ARMOR_RATING, new Stat(StatID.ARMOR_RATING, "Armor Rating", 0, isHero));
+			sheet.put(StatID.PHYSICAL_POWER, new Stat(StatID.PHYSICAL_POWER, "Physical Power", 0, isHero));
+			sheet.put(StatID.RAPIDNESS, new Stat(StatID.RAPIDNESS, "Rapidness", 0, isHero));
+			sheet.put(StatID.SPELL_POWER, new Stat(StatID.SPELL_POWER, "Spell Power", 0, isHero));
 			
-			sheet.put(StatID.LIFE_ON_HIT, new Stat(StatID.LIFE_ON_HIT, "Life On Hit", 0));
-			sheet.put(StatID.LIFE_REGEN, new Stat(StatID.LIFE_REGEN, "Life Regen /5s", 0));
+			sheet.put(StatID.LIFE_ON_HIT, new Stat(StatID.LIFE_ON_HIT, "Life On Hit", 0, isHero));
+			sheet.put(StatID.LIFE_REGEN, new Stat(StatID.LIFE_REGEN, "Life Regen /5s", 0, isHero));
 			
 			updateInternalStats();
 			
-			sheet.put(StatID.HP_NOW, new Stat(StatID.HP_NOW, "Current Hp", sheet.get(StatID.HP_MAX).getTotal()));
+			sheet.put(StatID.HP_NOW, new Stat(StatID.HP_NOW, "Current Hp", sheet.get(StatID.HP_MAX).getTotal(), isHero));
 		}
 	}
 	

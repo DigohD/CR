@@ -14,6 +14,8 @@ public class Stat{
 	protected float base, total;
 	protected HashMap<String, Float> addMods = new HashMap<String, Float>();
 	protected HashMap<String, Float> mulMods = new HashMap<String, Float>();
+	protected boolean isHero;
+	
 	
 	protected StatID id;
 	
@@ -22,10 +24,11 @@ public class Stat{
 		this.base = base;
 	}
 	
-	public Stat(StatID id, String name, float base){
+	public Stat(StatID id, String name, float base, boolean isHero){
 		this.id = id;
 		this.name = name;
 		this.base = base;
+		this.isHero = isHero;
 		calculateTotal();
 	}
 	
@@ -43,12 +46,11 @@ public class Stat{
 		
 		total = total * mulTotal;
 		
-		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && StatsSheet.isHero && id != null){
+		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && isHero && id != null){
 			System.out.println("STatID:" + id + ", username: " + MPClientState.userName);
 			StatPacket07 packet = new StatPacket07(MPClientState.userName, id.name(), total);
 			MPClientState.getClient().sendData(packet.getData());
 		}
-
 	}
 	
 	public void addAddmod(String ID, float amount){
@@ -76,8 +78,9 @@ public class Stat{
 		calculateTotal();
 	}
 
-	public float getTotal() {
-		//calculateTotal();
+	public float getTotal(){
+		if(!isHero)
+			calculateTotal();
 		return total;
 	}
 
