@@ -96,9 +96,9 @@ public class Client implements Runnable{
             while(running) {
             	byte[] data = new byte[1024];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-				socket.setSoTimeout(1000);
                 try {
                 	System.out.println("BEFORE RECEIVE");
+                	socket.setSoTimeout(1000);
                 	socket.receive(packet);
                 	System.out.println("AFTER RECEIVE");
                 }catch (SocketTimeoutException e) {
