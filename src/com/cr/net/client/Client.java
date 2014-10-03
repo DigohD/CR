@@ -92,16 +92,21 @@ public class Client implements Runnable{
 	@Override
 	public void run() {
 		try {
-            socket.setSoTimeout(250);
+            
             while(running) {
             	byte[] data = new byte[1024];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-				
+				socket.setSoTimeout(1000);
                 try {
+                	System.out.println("BEFORE RECEIVE");
                 	socket.receive(packet);
+                	System.out.println("AFTER RECEIVE");
                 }catch (SocketTimeoutException e) {
-                	 System.out.println("TIMEOUT, RESENDING");
-                	 sendData(loginPacket.getData());
+                	
+                	 if(!disconnected){
+                		 System.out.println("TIMEOUT, RESENDING");
+                		 sendData(loginPacket.getData());
+                	 }
                     // e.printStackTrace();  
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -112,6 +117,7 @@ public class Client implements Runnable{
         } catch (SocketException e1) {
             e1.printStackTrace();
         } finally {
+        	System.out.println("SOCKET CLOSED");
             socket.close();
         }
 	}
