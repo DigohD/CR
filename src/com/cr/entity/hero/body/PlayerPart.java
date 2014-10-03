@@ -64,13 +64,11 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	@Override
 	public void render(Screen screen){
-		if(isLocal){
-			pos = Hero.position;
-			dir = Hero.currentDir;
-		}
 		int x = (int) pos.x;
 		int y = (int) pos.y;
 		
+		if(isLocal)
+			dir = Hero.currentDir;
 		int spriteID = 0;
 		int horXOffset = 0;
 		
