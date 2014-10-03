@@ -189,7 +189,7 @@ public class Client implements Runnable{
 	private void handleLogin(Packet packet, InetAddress address, int port) {
 		Packet10Login p = (Packet10Login) packet;
 		
-		if(!(p.getUserName().equalsIgnoreCase(EntityManager.getHero().getUserName()))){
+		if(!(p.getUserName().equalsIgnoreCase(this.userName))){
 			clientsMap.put(p.getUserName(), new HeroMP(p.getUserName(),new Vector2f(0,0), address, port));
 		}
 		else System.out.println(p.getUserName() + " has joined!");
