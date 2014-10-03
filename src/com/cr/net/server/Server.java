@@ -65,7 +65,6 @@ public class Server implements Runnable{
 
 	@Override
 	public void run() {
-		
 		try {
             socket.setSoTimeout(1000);
             while(running) {
@@ -79,6 +78,7 @@ public class Server implements Runnable{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                
                 System.out.println("REcieve Packet: " + packet.getData());
                 parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
             }
