@@ -46,11 +46,11 @@ public class Stat{
 		
 		total = total * mulTotal;
 		
-		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && isHero && id != null){
-			System.out.println("STatID:" + id + ", username: " + MPClientState.userName);
-			Packet17Stat packet = new Packet17Stat(MPClientState.userName, id.name(), total);
-			MPClientState.getClient().sendData(packet.getData());
-		}
+//		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && isHero && id != null){
+//			System.out.println("STatID:" + id + ", username: " + MPClientState.userName);
+//			Packet17Stat packet = new Packet17Stat(MPClientState.userName, id.name(), total);
+//			MPClientState.getClient().sendData(packet.getData());
+//		}
 	}
 	
 	public void addAddmod(String ID, float amount){

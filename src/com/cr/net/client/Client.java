@@ -42,6 +42,8 @@ public class Client implements Runnable{
 	private volatile boolean running = false;
 	public boolean disconnected = false;
 	
+	public boolean connected = false;
+	
 	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	private HashMap<Byte, Integer> byteToIntMap = new HashMap<Byte, Integer>();
 	
@@ -94,34 +96,53 @@ public class Client implements Runnable{
 
 	@Override
 	public void run() {
-		try {
+		while(!connected){
+			loginPacket = new Packet10Login(userName);
+			sendData(loginPacket.getData());
+			
+			byte[] data = new byte[1024];
+			DatagramPacket packet = new DatagramPacket(data, data.length);
+           
+            try {
+            	System.out.println("BEFORE RECEIVE");
+				socket.receive(packet);
+				System.out.println("AFTER RECEIVE");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             
+            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            	
+		}
+		
             while(running) {
             	byte[] data = new byte[1024];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-                try {
+               
                 	System.out.println("BEFORE RECEIVE");
-                	socket.setSoTimeout(1000);
-                	socket.receive(packet);
-                	System.out.println("AFTER RECEIVE");
-                }catch (SocketTimeoutException e) {
+                	try{
+                		socket.setSoTimeout(250);
+                		socket.receive(packet);
+                	}catch(SocketTimeoutException e){
+            			continue;
+                	} catch (IOException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+                	}
                 	
-                	 if(!disconnected){
-                		 System.out.println("TIMEOUT, RESENDING");
-                		 sendData(loginPacket.getData());
-                	 }
-                    // e.printStackTrace();  
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                	System.out.println("AFTER RECEIVE");
+              
           
                 parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
             }
-        }finally {
-        	System.out.println("SOCKET CLOSED");
             socket.close();
-        }
-	}
+		}
+        
+	
+          
+        
+	
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
@@ -136,11 +157,13 @@ public class Client implements Runnable{
 				handleMap(packet, data, address, port);
 				break;
 			case ACCEPT:
+				connected = true;
 				System.out.println("ACCEPT PACKET RECEIVED");
 				packet = new Packet13Accept(data);
 				handleAccept(packet, address, port);
 				break;
 			case CONNECT:
+				
 				System.out.println("CONNECT PACKET RECEIVED");
 				packet = new Packet11Connect(data);
 				handleConnect(packet, address, port);
@@ -232,13 +255,15 @@ public class Client implements Runnable{
 	
 	public void sendData(byte[] data){
 		if(!disconnected){
-			DatagramPacket packet = new DatagramPacket(data, data.length);
+			DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
 			try {
 				socket.send(packet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+			
+		
 		
 	}
 
