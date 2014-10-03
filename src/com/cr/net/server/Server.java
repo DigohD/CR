@@ -55,9 +55,13 @@ public class Server implements Runnable{
 	public void stop(){
 		System.out.println("Server closing..");
 		running = false;
+		
+		
+		
 		System.out.println("Server closed..");
 		try {
 			thread.join();
+			System.out.println("Threads joined..");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -66,25 +70,25 @@ public class Server implements Runnable{
 	@Override
 	public void run() {
 		try {
-            socket.setSoTimeout(1000);
+			socket.setSoTimeout(10);
             while(running) {
             	byte[] data = new byte[1024];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-				
                 try {
                 	socket.receive(packet);
                 }catch (SocketTimeoutException e) {
-                     e.printStackTrace();  
-                } catch (IOException e) {
+                    continue;
+                }catch (IOException e) {
                     e.printStackTrace();
                 }
                 
-                System.out.println("REcieve Packet: " + packet.getData());
+                System.out.println("REcieve Packet: " + new String(packet.getData()));
                 parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
             }
-        } catch (SocketException e1) {
-            e1.printStackTrace();
-        } finally {
+        }catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
             socket.close();
         }
 		

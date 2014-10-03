@@ -19,7 +19,7 @@ public class Game extends CoreEngine{
 	public static Shader shader;
 	
 	public Game(){
-		boolean fullScreen = true;
+		boolean fullScreen = false;
 		if(fullScreen){
 			Window.setFullScreen();
 		}else Window.createWindow(800, 600, false);
@@ -63,10 +63,10 @@ public class Game extends CoreEngine{
 		if(World.getShader() != null)
 			World.getShader().deleteShader();
 		
-//		if(MPHostState.getServer() != null)
-//			MPHostState.close();
-//		if(MPClientState.getClient() != null)
-//			MPClientState.close();
+		if(MPHostState.getServer() != null)
+			MPHostState.close();
+		if(MPClientState.getClient() != null)
+			MPClientState.close();
 	}
 	
 	public static void main(String[] args){
