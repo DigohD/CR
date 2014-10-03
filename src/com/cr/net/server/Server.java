@@ -125,6 +125,7 @@ public class Server implements Runnable{
 	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
 		if(clientsMap.containsKey(packet.getUserName())){
 			clientsMap.get(packet.getUserName()).setLive(false);
+			statsMap.remove(clientsMap.get(packet.getUserName()));
 			clientsMap.remove(packet.getUserName());
 		}
 		sendDataToAllClients(packet.getData());
