@@ -21,6 +21,8 @@ public class MPClientState extends GameState{
 	private World w;
 	
 	public static boolean worldAssembled = false;
+	
+	public static String userName;
 
 	public MPClientState(GameStateManager gsm) {
 		super(gsm);
@@ -31,7 +33,7 @@ public class MPClientState extends GameState{
 	public void init() {
 		client = new Client("192.168.0.2", 12121);
 		client.start();
-		String userName = "anders";
+		userName = "anders";
 		
 		String message = "00" + userName;
 		client.sendData(message.getBytes());

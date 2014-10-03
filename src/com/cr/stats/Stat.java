@@ -26,6 +26,7 @@ public class Stat{
 		this.id = id;
 		this.name = name;
 		this.base = base;
+		calculateTotal();
 	}
 	
 	public void calculateTotal(){
@@ -42,12 +43,11 @@ public class Stat{
 		
 		total = total * mulTotal;
 		
-//		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && StatsSheet.isHero){
-//			System.out.println(EntityManager.getHero());
-//			String message = EntityManager.getHero().getUserName() + id.name() + total;
-//			StatPacket07 packet = new StatPacket07(message.getBytes());
-//			MPClientState.getClient().sendData(packet.getData());
-//		}
+		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && StatsSheet.isHero && id != null){
+			System.out.println("STatID:" + id + ", username: " + MPClientState.userName);
+			StatPacket07 packet = new StatPacket07(MPClientState.userName, id.name(), total);
+			MPClientState.getClient().sendData(packet.getData());
+		}
 
 	}
 	
@@ -77,7 +77,7 @@ public class Stat{
 	}
 
 	public float getTotal() {
-		calculateTotal();
+		//calculateTotal();
 		return total;
 	}
 

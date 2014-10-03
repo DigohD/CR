@@ -65,7 +65,6 @@ public class Server implements Runnable{
 
 	@Override
 	public void run() {
-		
 		while(running){
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data, data.length);

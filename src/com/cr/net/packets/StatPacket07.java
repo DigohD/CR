@@ -17,7 +17,7 @@ public class StatPacket07 extends Packet{
 	    this.value = Float.parseFloat(dataArray[3]);
 	}
 
-	public StatPacket07(int packetID, String userName, String statID, float value) {
+	public StatPacket07(String userName, String statID, float value) {
 		super(07);
 		this.userName = userName;
 		this.statID = statID;
