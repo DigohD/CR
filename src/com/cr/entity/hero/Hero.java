@@ -142,7 +142,7 @@ public class Hero extends Mob implements Collideable{
 			if(!NetStatus.isHOST){
 				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
 				MPClientState.getClient().sendData(mp.getData());
-				System.out.println("MOVE PACKET SENT");
+				//System.out.println("MOVE PACKET SENT");
 			}
 			if(NetStatus.isHOST){
 				Packet12Move mp  = new Packet12Move(userName, position, currentDir);

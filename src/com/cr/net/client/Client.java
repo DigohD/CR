@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -43,8 +44,11 @@ public class Client implements Runnable{
 	
 	public LinkedList<Integer> pixels = new LinkedList<Integer>();
 	
-	public Client(String ip, int port){
-		
+	private Packet10Login loginPacket;
+	private String userName;
+	
+	public Client(String userName, String ip, int port){
+		this.userName = userName;
 		this.port = port;
 	
 		byteToIntMap.put((byte)-1, ColorRGBA.BLACK);
@@ -56,6 +60,7 @@ public class Client implements Runnable{
 		
 		try {
 			socket = new DatagramSocket();
+			
 			this.ip = InetAddress.getByName(ip);
 		} catch (SocketException e) {
 			e.printStackTrace();
@@ -69,6 +74,9 @@ public class Client implements Runnable{
 		running = true;
 		thread = new Thread(this, "client-thread");
 		thread.start();
+		loginPacket = new Packet10Login(userName);
+		sendData(loginPacket.getData());
+		System.out.println("LOGIN PACKET SENT");
 	}
 	
 	public synchronized void stop(){
@@ -92,6 +100,17 @@ public class Client implements Runnable{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			try {
+				socket.setSoTimeout(1000);
+			} catch (SocketException e) {
+//				loginPacket = new Packet10Login(userName);
+				
+				System.out.println("RESEND LOGIN");
+				sendData(loginPacket.getData());
+				//e.printStackTrace();
+			}
+			
 			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 		}
 	}
@@ -104,7 +123,7 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case MAP:
-				System.out.println("MAP PACKET RECEIVED");
+				//System.out.println("MAP PACKET RECEIVED");
 				packet = new Packet14Map(data);
 				handleMap(packet, data, address, port);
 				break;
@@ -174,7 +193,7 @@ public class Client implements Runnable{
 
 		Packet15RequestMap p = new Packet15RequestMap(packetNumber);
 		sendData(p.getData());
-		System.out.println("REQUEST MAP PACKET SENT");
+		//System.out.println("REQUEST MAP PACKET SENT");
 	}
 	
 	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
@@ -210,7 +229,6 @@ public class Client implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	public HashMap<String, HeroMP> getClientsMap() {
@@ -227,6 +245,10 @@ public class Client implements Runnable{
 
 	public Vector2f getStartPos() {
 		return startPos;
+	}
+
+	public String getUserName() {
+		return userName;
 	}
 
 }

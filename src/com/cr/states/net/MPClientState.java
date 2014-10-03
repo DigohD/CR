@@ -32,14 +32,9 @@ public class MPClientState extends GameState{
 	
 	@Override
 	public void init() {
-		client = new Client("192.168.0.2", 12121);
+		client = new Client("anders","192.168.0.2", 12121);
 		client.start();
-		userName = "anders";
-		
-		Packet10Login packet = new Packet10Login(userName);
-		client.sendData(packet.getData());
-		System.out.println("LOGIN PACKET SENT");
-		
+		userName = client.getUserName();
 		while(!worldAssembled){
 			try {
 				Thread.sleep(1);
@@ -64,7 +59,6 @@ public class MPClientState extends GameState{
 		if(Input.getKey(Input.ESCAPE)){
 			System.out.println(EntityManager.getHero().getUserName());
 			Packet16Disconnect packet = new Packet16Disconnect(EntityManager.getHero().getUserName());
-			//String message = "16:" + EntityManager.getHero().getUserName();
 			client.sendData(packet.getData());
 			Game.stop();
 		}
