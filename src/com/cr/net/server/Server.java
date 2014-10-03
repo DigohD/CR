@@ -31,7 +31,6 @@ public class Server implements Runnable{
 	private Thread thread;
 	
 	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
-	private HashMap<HeroMP, StatsSheet> statsMap = new HashMap<HeroMP, StatsSheet>();
 	
 	private boolean running = false;
 	
@@ -130,17 +129,14 @@ public class Server implements Runnable{
 	
 	private void handleStatPacket(Packet17Stat packet07, InetAddress address, int port) {
 		HeroMP client = clientsMap.get(packet07.getUserName());
-		StatsSheet sheet = statsMap.get(client);
-		if(sheet != null){
-			Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
-			stat.setNewBase(packet07.getValue());
-		}
+		StatsSheet sheet = client.getSheet();
+		Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
+		stat.setNewBase(packet07.getValue());
 	}
 
 	private void handleDisconnect(Packet16Disconnect packet, InetAddress address, int port){
 		if(clientsMap.containsKey(packet.getUserName())){
 			clientsMap.get(packet.getUserName()).setLive(false);
-			statsMap.remove(clientsMap.get(packet.getUserName()));
 			clientsMap.remove(packet.getUserName());
 		}
 		sendDataToAllClients(packet.getData());
@@ -207,7 +203,6 @@ public class Server implements Runnable{
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
             clientsMap.put(client.getUserName(), client);
-            statsMap.put(client, new StatsSheet(true));
         }
         sendData(new Packet13Accept(client.getUserName(), MPHostState.getWorld().getWidth(), 
     			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());

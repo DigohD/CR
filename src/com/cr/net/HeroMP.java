@@ -17,6 +17,7 @@ import com.cr.entity.hero.body.LowerBody;
 import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.body.UpperBody;
 import com.cr.game.EntityManager;
+import com.cr.stats.StatsSheet;
 
 public class HeroMP extends Entity implements Tickable, Renderable{
 	
@@ -35,6 +36,8 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	private RightHand rightHand;
 	private LeftHand leftHand;
 	
+	private StatsSheet sheet;
+	
 	public HeroMP(Vector2f position){
 		super(position);
 	}
@@ -44,6 +47,7 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		this.userName = userName;
 		this.ip = ip;
 		this.port = port;
+		sheet = new StatsSheet(true);
 	}
 	
 	public void init(){
@@ -142,6 +146,10 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public StatsSheet getSheet() {
+		return sheet;
 	}
 	
 
