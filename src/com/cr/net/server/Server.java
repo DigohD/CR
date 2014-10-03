@@ -66,28 +66,20 @@ public class Server implements Runnable{
 	@Override
 	public void run() {
 		try {
-            socket.setSoTimeout(1000);
-            while(running) {
-            	byte[] data = new byte[1024];
+			while(running) {
+				byte[] data = new byte[1024];
 				DatagramPacket packet = new DatagramPacket(data, data.length);
-				
-                try {
-                	socket.receive(packet);
-                }catch (SocketTimeoutException e) {
-                     e.printStackTrace();  
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                
-                System.out.println("REcieve Packet: " + packet.getData());
-                parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
-            }
-        } catch (SocketException e1) {
-            e1.printStackTrace();
-        } finally {
+
+				socket.receive(packet);
+
+				System.out.println("REcieve Packet: " + packet.getData());
+				parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+           }
+		} catch (IOException e) {
+            e.printStackTrace();
+        }finally {
             socket.close();
         }
-		
 	}
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
