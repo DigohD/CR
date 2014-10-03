@@ -91,7 +91,6 @@ public class Server implements Runnable{
 		} finally {
             socket.close();
         }
-		
 	}
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
