@@ -97,7 +97,7 @@ public class Client implements Runnable{
 			
 			try {
 				socket.receive(packet);
-			} catch (IOException e) {
+			}catch (IOException e) {
 				e.printStackTrace();
 			}
 			

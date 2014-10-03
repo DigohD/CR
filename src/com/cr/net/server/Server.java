@@ -75,6 +75,8 @@ public class Server implements Runnable{
 				e.printStackTrace();
 			}
 			
+			System.out.println("REcieve Packet: " + packet.getData());
+			
 			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 		}
 		
@@ -118,8 +120,10 @@ public class Server implements Runnable{
 	private void handleStatPacket(Packet17Stat packet07, InetAddress address, int port) {
 		HeroMP client = clientsMap.get(packet07.getUserName());
 		StatsSheet sheet = statsMap.get(client);
-		Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
-		stat.setNewBase(packet07.getValue());
+		if(sheet != null){
+			Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
+			stat.setNewBase(packet07.getValue());
+		}
 	}
 
 	private void handleDisconnect(Packet16Disconnect packet, InetAddress address, int port){
@@ -201,6 +205,9 @@ public class Server implements Runnable{
 
 	public void sendData(byte[] data, InetAddress ip, int port){
 		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+		
+//		System.out.println("SendPacket: " + new String(packet.getData()));
+		
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
