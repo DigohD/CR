@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -14,7 +12,6 @@ import java.util.LinkedList;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
-import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
@@ -65,9 +62,7 @@ public class Client implements Runnable{
 		
 		try {
 			this.ip = InetAddress.getByName(ip);
-			
 			socket = new DatagramSocket();
-//			socket.bind(new InetSocketAddress(this.ip, port));
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} catch (UnknownHostException e) {
@@ -82,7 +77,6 @@ public class Client implements Runnable{
 		thread.start();
 		loginPacket = new Packet10Login(userName);
 		sendData(loginPacket.getData());
-		System.out.println("LOGIN PACKET SENT");
 	}
 	
 	public synchronized void stop(){
@@ -104,11 +98,8 @@ public class Client implements Runnable{
 			DatagramPacket packet = new DatagramPacket(data, data.length);
            
             try {
-            	System.out.println("BEFORE RECEIVE");
 				socket.receive(packet);
-				System.out.println("AFTER RECEIVE");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             
@@ -116,34 +107,23 @@ public class Client implements Runnable{
             	
 		}
 		
-            while(running) {
-            	byte[] data = new byte[1024];
-				DatagramPacket packet = new DatagramPacket(data, data.length);
+        while(running) {
+        	byte[] data = new byte[1024];
+        	DatagramPacket packet = new DatagramPacket(data, data.length);
                
-                	System.out.println("BEFORE RECEIVE");
-                	try{
-                		socket.setSoTimeout(250);
-                		socket.receive(packet);
-                	}catch(SocketTimeoutException e){
-            			continue;
-                	} catch (IOException e) {
-            			// TODO Auto-generated catch block
-            			e.printStackTrace();
-                	}
-                	
-                	System.out.println("AFTER RECEIVE");
-              
-          
-                parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            try{
+                socket.setSoTimeout(250);
+                socket.receive(packet);
+            }catch(SocketTimeoutException e){
+            	continue;
+            } catch (IOException e) {	
+            	e.printStackTrace();
             }
-            socket.close();
-		}
-        
-	
-          
-        
-	
-	
+            	parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            }
+           socket.close();
+	}
+
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
 		

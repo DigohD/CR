@@ -9,7 +9,6 @@ import com.cr.game.GameStateManager;
 import com.cr.net.HeroMP;
 import com.cr.net.client.Client;
 import com.cr.net.packets.Packet16Disconnect;
-import com.cr.net.packets.Packet10Login;
 import com.cr.states.GameState;
 import com.cr.states.StatsState;
 import com.cr.states.crafting.CraftInitState;
@@ -23,8 +22,6 @@ public class MPClientState extends GameState{
 	
 	public static boolean worldAssembled = false;
 	
-	public static String userName;
-
 	public MPClientState(GameStateManager gsm) {
 		super(gsm);
 		init();
@@ -34,7 +31,7 @@ public class MPClientState extends GameState{
 	public void init() {
 		client = new Client("anders","192.168.0.2", 12121);
 		client.start();
-		userName = client.getUserName();
+	
 		while(!worldAssembled){
 			try {
 				Thread.sleep(1);
@@ -45,7 +42,7 @@ public class MPClientState extends GameState{
 
 		w = new World(client.pixels, client.getWidth(), client.getHeight());
 		
-		EntityManager.getHero().setUserName(userName);
+		EntityManager.getHero().setUserName(client.getUserName());
 	}
 
 	@Override
@@ -56,18 +53,7 @@ public class MPClientState extends GameState{
 			gsm.push(new CraftInitState(gsm, new Forge()));
 		if(Input.getKey(Input.Q))
 			gsm.push(new StatsState(gsm));
-//		if(Input.getKey(Input.L)){
-//			System.out.println(EntityManager.getHero().getUserName());
-//			System.out.println("ESCAPE");
-//			Packet16Disconnect packet = new Packet16Disconnect(EntityManager.getHero().getUserName());
-//			client.sendData(packet.getData());
-//			client.disconnected = true;
-//			close();
-//			gsm.pop();
-//		}
 		if(Input.getKey(Input.ESCAPE)){
-			System.out.println(EntityManager.getHero().getUserName());
-			System.out.println("ESCAPE");
 			Packet16Disconnect packet = new Packet16Disconnect(EntityManager.getHero().getUserName());
 			client.sendData(packet.getData());
 			client.disconnected = true;
