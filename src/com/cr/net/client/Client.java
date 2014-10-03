@@ -101,7 +101,7 @@ public class Client implements Runnable{
                 }catch (SocketTimeoutException e) {
                 	 System.out.println("TIMEOUT, RESENDING");
                 	 sendData(loginPacket.getData());
-                     e.printStackTrace();  
+                    // e.printStackTrace();  
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
