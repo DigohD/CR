@@ -47,7 +47,6 @@ public class Stat{
 		total = total * mulTotal;
 		
 		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && isHero && id != null){
-			System.out.println("STatID:" + id + ", username: " + MPClientState.userName);
 			Packet17Stat packet = new Packet17Stat(MPClientState.getClient().getUserName(), id.name(), total);
 			MPClientState.getClient().sendData(packet.getData());
 		}
