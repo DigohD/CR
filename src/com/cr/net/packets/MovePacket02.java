@@ -12,7 +12,7 @@ public class MovePacket02 extends Packet{
 	private Direction dir;
 	
 	public MovePacket02(byte[] data) {
-	    super(02);
+	    super(12);
 	    
 	    String[] dataArray = readData(data).split(":");
 	  
@@ -23,7 +23,7 @@ public class MovePacket02 extends Packet{
 	}
 
 	public MovePacket02(String userName, Vector2f pos, Direction dir) {
-		super(02);
+		super(12);
 		
 		this.userName = userName;
 		this.pos = pos;
@@ -42,7 +42,7 @@ public class MovePacket02 extends Packet{
 
 	@Override
 	public byte[] getData() {
-		return ("02" + ":" + userName + ":" + pos.x + ":" + pos.y + ":" + dir.name()).getBytes();
+		return ("12" + ":" + userName + ":" + pos.x + ":" + pos.y + ":" + dir.name()).getBytes();
 	}
 	
 	public Vector2f getPos() {

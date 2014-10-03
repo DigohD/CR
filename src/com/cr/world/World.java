@@ -87,6 +87,7 @@ public class World {
 			pixels.add(map.getTopLayer().getBitmap().getPixels()[i]);
 		
 		init();
+		generateWorldObjects();
 	}
 	
 	private void init(){
@@ -106,7 +107,7 @@ public class World {
 		
 		eyePosition = Camera.getPos();
 		
-		generateWorldObjects();
+		
 	}
 	
 	private void initShader(){
@@ -188,6 +189,7 @@ public class World {
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
+					
 					generated = true;
 				}
 			}
@@ -202,6 +204,7 @@ public class World {
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+					
 					generated = true;
 				}
 			}

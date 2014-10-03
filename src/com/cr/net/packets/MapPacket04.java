@@ -8,7 +8,7 @@ public class MapPacket04 extends Packet{
 	private int packetNumber;
 	
 	public MapPacket04(byte[] data) {
-	    super(04);
+	    super(14);
 	    
 	    String[] dataArray = readData(data).split(":");
 	  
@@ -16,7 +16,7 @@ public class MapPacket04 extends Packet{
 	}
 	
 	public MapPacket04(int packetNumber) {
-		super(04);
+		super(14);
 		this.packetNumber = packetNumber;
 	}
 
@@ -34,7 +34,7 @@ public class MapPacket04 extends Packet{
 
 	@Override
 	public byte[] getData() {
-		return ("04" + ":" + packetNumber + ":").getBytes();
+		return ("14" + ":" + packetNumber + ":").getBytes();
 	}
 
 	public int getPacketNumber() {

@@ -8,7 +8,7 @@ public class DisconnectPacket06 extends Packet{
 	private String userName;
 	
 	public DisconnectPacket06(byte[] data) {
-		super(06);
+		super(16);
 		
 		String[] dataArray = readData(data).split(":");
 		
@@ -16,7 +16,7 @@ public class DisconnectPacket06 extends Packet{
 	}
 
 	public DisconnectPacket06(String userName) {
-		super(06);
+		super(16);
 		this.userName = userName;
 	}
 
@@ -32,7 +32,7 @@ public class DisconnectPacket06 extends Packet{
 
 	@Override
 	public byte[] getData() {
-		return ("06" + ":" + userName).getBytes();
+		return ("16" + ":" + userName).getBytes();
 	}
 
 	public String getUserName() {

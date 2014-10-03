@@ -9,7 +9,7 @@ public class AcceptPacket03 extends Packet{
 	private int width, height;
 
     public AcceptPacket03(byte[] data) {
-        super(03);
+        super(13);
         String[] dataArray = readData(data).split(":");
         this.username = dataArray[1];
         this.width = Integer.parseInt(dataArray[2]);
@@ -17,7 +17,7 @@ public class AcceptPacket03 extends Packet{
     }
 
     public AcceptPacket03(String username, int width, int height) {
-        super(03);
+        super(13);
         this.username = username;
         this.width = width;
         this.height = height;
@@ -35,7 +35,7 @@ public class AcceptPacket03 extends Packet{
 
     @Override
     public byte[] getData() {
-        return ("03" + ":" + this.username + ":" + width + ":" + height).getBytes();
+        return ("13" + ":" + this.username + ":" + width + ":" + height).getBytes();
     }
 
     public String getUsername() {

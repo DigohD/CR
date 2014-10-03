@@ -10,7 +10,7 @@ public class StatPacket07 extends Packet{
 	private float value;
 	
 	public StatPacket07(byte[] data){
-		super(07);
+		super(17);
 		String[] dataArray = readData(data).split(":");
 		this.userName = dataArray[1];
 		this.statID = dataArray[2];
@@ -18,7 +18,7 @@ public class StatPacket07 extends Packet{
 	}
 
 	public StatPacket07(String userName, String statID, float value) {
-		super(07);
+		super(17);
 		this.userName = userName;
 		this.statID = statID;
 		this.value = value;
@@ -36,7 +36,7 @@ public class StatPacket07 extends Packet{
 
 	@Override
 	public byte[] getData() {
-		return ("07" + ":" + userName + ":" + statID + ":" + value).getBytes();
+		return ("17" + ":" + userName + ":" + statID + ":" + value).getBytes();
 	}
 
 	public String getStatID() {
