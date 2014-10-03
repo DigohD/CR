@@ -206,11 +206,11 @@ public class Server implements Runnable{
         
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
-        	sendData(new Packet13Accept(client.getUserName(), MPHostState.getWorld().getWidth(), 
-        			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
             clientsMap.put(client.getUserName(), client);
             statsMap.put(client, new StatsSheet(true));
         }
+        sendData(new Packet13Accept(client.getUserName(), MPHostState.getWorld().getWidth(), 
+    			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
     }
 	
 
