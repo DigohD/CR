@@ -56,6 +56,15 @@ public class MPClientState extends GameState{
 			gsm.push(new CraftInitState(gsm, new Forge()));
 		if(Input.getKey(Input.Q))
 			gsm.push(new StatsState(gsm));
+//		if(Input.getKey(Input.L)){
+//			System.out.println(EntityManager.getHero().getUserName());
+//			System.out.println("ESCAPE");
+//			Packet16Disconnect packet = new Packet16Disconnect(EntityManager.getHero().getUserName());
+//			client.sendData(packet.getData());
+//			client.disconnected = true;
+//			close();
+//			gsm.pop();
+//		}
 		if(Input.getKey(Input.ESCAPE)){
 			System.out.println(EntityManager.getHero().getUserName());
 			System.out.println("ESCAPE");
