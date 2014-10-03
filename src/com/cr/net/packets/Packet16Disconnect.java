@@ -3,17 +3,20 @@ package com.cr.net.packets;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class LoginPacket00 extends Packet{
+public class Packet16Disconnect extends Packet{
 	
 	private String userName;
-
-	public LoginPacket00(byte[] data) {
-		super(10);
-		this.userName = readData(data);
-	}
 	
-	public LoginPacket00(String userName) {
-		super(10);
+	public Packet16Disconnect(byte[] data) {
+		super(16);
+		
+		String[] dataArray = readData(data).split(":");
+		
+		this.userName = dataArray[1];
+	}
+
+	public Packet16Disconnect(String userName) {
+		super(16);
 		this.userName = userName;
 	}
 
@@ -25,14 +28,12 @@ public class LoginPacket00 extends Packet{
 	@Override
 	public void writeData(Server server) {
 		server.sendDataToAllClients(getData());
-		
 	}
-	
+
 	@Override
 	public byte[] getData() {
-		return ("10" + ":" + userName).getBytes();
+		return ("16" + ":" + userName).getBytes();
 	}
-	
 
 	public String getUserName() {
 		return userName;

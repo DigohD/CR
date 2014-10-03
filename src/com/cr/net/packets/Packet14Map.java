@@ -3,11 +3,11 @@ package com.cr.net.packets;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class MapPacket04 extends Packet{
+public class Packet14Map extends Packet{
 
 	private int packetNumber;
 	
-	public MapPacket04(byte[] data) {
+	public Packet14Map(byte[] data) {
 	    super(14);
 	    
 	    String[] dataArray = readData(data).split(":");
@@ -15,7 +15,7 @@ public class MapPacket04 extends Packet{
 	    this.packetNumber = Integer.parseInt(dataArray[1]);
 	}
 	
-	public MapPacket04(int packetNumber) {
+	public Packet14Map(int packetNumber) {
 		super(14);
 		this.packetNumber = packetNumber;
 	}

@@ -3,13 +3,13 @@ package com.cr.net.packets;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class StaticObjectPacket08 extends Packet{
+public class Packet18StaticObject extends Packet{
 	
 	private int objectID;
 	private int x, y;
 	private int type;
 
-	public StaticObjectPacket08(byte[] data){
+	public Packet18StaticObject(byte[] data){
 		super(18);
 		
 	}

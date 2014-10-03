@@ -9,16 +9,16 @@ import java.util.HashMap;
 
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
-import com.cr.net.packets.AcceptPacket03;
-import com.cr.net.packets.ConnectPacket01;
-import com.cr.net.packets.DisconnectPacket06;
-import com.cr.net.packets.LoginPacket00;
-import com.cr.net.packets.MapPacket04;
-import com.cr.net.packets.MovePacket02;
+import com.cr.net.packets.Packet13Accept;
+import com.cr.net.packets.Packet11Connect;
+import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet10Login;
+import com.cr.net.packets.Packet14Map;
+import com.cr.net.packets.Packet12Move;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
-import com.cr.net.packets.RequestMapPacket05;
-import com.cr.net.packets.StatPacket07;
+import com.cr.net.packets.Packet15RequestMap;
+import com.cr.net.packets.Packet17Stat;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
@@ -90,23 +90,23 @@ public class Server implements Runnable{
 			case INVALID:
 				break;
 			case DISCONNECT:
-				DisconnectPacket06 packet06 = new DisconnectPacket06(data);
+				Packet16Disconnect packet06 = new Packet16Disconnect(data);
 				handleDisconnect(packet06, address, port);
 				break;
 			case LOGIN:
-				LoginPacket00 packet00 = new LoginPacket00(data);
+				Packet10Login packet00 = new Packet10Login(data);
 				handleLogin(packet00, address, port);
 				break;
 			case MOVE:
-				MovePacket02 packet02 = new MovePacket02(data);
+				Packet12Move packet02 = new Packet12Move(data);
 				handleMove(packet02, address, port);
 				break;
 			case REQUESTMAP:
-				RequestMapPacket05 packet05 = new RequestMapPacket05(data);
+				Packet15RequestMap packet05 = new Packet15RequestMap(data);
 				handleRequestMap(packet05, address, port);
 				break;
 			case STATS:
-				StatPacket07 packet07 = new StatPacket07(data);
+				Packet17Stat packet07 = new Packet17Stat(data);
 				handleStatPacket(packet07, address, port);
 				break;
 			default:
@@ -115,14 +115,14 @@ public class Server implements Runnable{
 		
 	}
 	
-	private void handleStatPacket(StatPacket07 packet07, InetAddress address, int port) {
+	private void handleStatPacket(Packet17Stat packet07, InetAddress address, int port) {
 		HeroMP client = clientsMap.get(packet07.getUserName());
 		StatsSheet sheet = statsMap.get(client);
 		Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
 		stat.setNewBase(packet07.getValue());
 	}
 
-	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
+	private void handleDisconnect(Packet16Disconnect packet, InetAddress address, int port){
 		if(clientsMap.containsKey(packet.getUserName())){
 			clientsMap.get(packet.getUserName()).setLive(false);
 			statsMap.remove(clientsMap.get(packet.getUserName()));
@@ -131,14 +131,14 @@ public class Server implements Runnable{
 		sendDataToAllClients(packet.getData());
 	}
 	
-	private void handleLogin(LoginPacket00 packet, InetAddress address, int port){
+	private void handleLogin(Packet10Login packet, InetAddress address, int port){
 		System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUserName() + " has connected");
 		String name = packet.getUserName();
 		HeroMP hero = new HeroMP(name, EntityManager.getHero().getPos(), address, port);
 		addConnection(hero, packet);
 	}
 	
-	private void handleMove(MovePacket02 packet, InetAddress address, int port){
+	private void handleMove(Packet12Move packet, InetAddress address, int port){
 		String s = packet.getUserName();
 		if(clientsMap.containsKey(s)){
 			clientsMap.get(s).setPosition(packet.getPos());
@@ -147,11 +147,11 @@ public class Server implements Runnable{
 		packet.writeData(this);
 	}
 	
-	private void handleRequestMap(RequestMapPacket05 packet, InetAddress address, int port){
-		MapPacket04 p = new MapPacket04(packet.getPacketNumber());
+	private void handleRequestMap(Packet15RequestMap packet, InetAddress address, int port){
+		Packet14Map p = new Packet14Map(packet.getPacketNumber());
 		
 		if(p.getPacketNumber() == -1){
-			ConnectPacket01 p2 = new ConnectPacket01(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
+			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
 	        sendData(p2.getData(), address, port);
 		}else{
 			byte[] data2 = new byte[1024];
@@ -184,14 +184,14 @@ public class Server implements Runnable{
 
                 // relay to the new player that the currently connect player
                 // exists
-                packet = new LoginPacket00(h.getUserName());
+                packet = new Packet10Login(h.getUserName());
                 sendData(packet.getData(), client.getInetAddress(), client.getPort());
             }
         }
         
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
-        	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), 
+        	sendData(new Packet13Accept(client.getUserName(), MPHostState.getWorld().getWidth(), 
         			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
             clientsMap.put(client.getUserName(), client);
             statsMap.put(client, new StatsSheet(true));

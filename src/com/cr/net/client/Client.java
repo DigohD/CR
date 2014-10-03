@@ -13,15 +13,15 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
-import com.cr.net.packets.AcceptPacket03;
-import com.cr.net.packets.ConnectPacket01;
-import com.cr.net.packets.DisconnectPacket06;
-import com.cr.net.packets.LoginPacket00;
-import com.cr.net.packets.MapPacket04;
-import com.cr.net.packets.MovePacket02;
+import com.cr.net.packets.Packet13Accept;
+import com.cr.net.packets.Packet11Connect;
+import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet10Login;
+import com.cr.net.packets.Packet14Map;
+import com.cr.net.packets.Packet12Move;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
-import com.cr.net.packets.RequestMapPacket05;
+import com.cr.net.packets.Packet15RequestMap;
 import com.cr.states.net.MPClientState;
 
 public class Client implements Runnable{
@@ -104,27 +104,27 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case MAP:
-				packet = new MapPacket04(data);
+				packet = new Packet14Map(data);
 				handleMap(packet, data, address, port);
 				break;
 			case ACCEPT:
-				packet = new AcceptPacket03(data);
+				packet = new Packet13Accept(data);
 				handleAccept(packet, address, port);
 				break;
 			case CONNECT:
-				packet = new ConnectPacket01(data);
+				packet = new Packet11Connect(data);
 				handleConnect(packet, address, port);
 				break;
 			case MOVE:
-				packet = new MovePacket02(data);
+				packet = new Packet12Move(data);
 				handleMove(packet, address, port);
 				break;
 			case LOGIN:
-				packet = new LoginPacket00(data);
+				packet = new Packet10Login(data);
 				handleLogin(packet, address, port);
 				break;
 			case DISCONNECT:
-				packet = new DisconnectPacket06(data);
+				packet = new Packet16Disconnect(data);
 				handleDisconnect(packet, address, port);
 				break;
 			default:
@@ -133,7 +133,7 @@ public class Client implements Runnable{
 	}
 	
 	private void handleLogin(Packet packet, InetAddress address, int port) {
-		LoginPacket00 p = (LoginPacket00) packet;
+		Packet10Login p = (Packet10Login) packet;
 		
 		if(!(p.getUserName().equalsIgnoreCase(EntityManager.getHero().getUserName()))){
 			clientsMap.put(p.getUserName(), new HeroMP(p.getUserName(),new Vector2f(0,0), address, port));
@@ -143,7 +143,7 @@ public class Client implements Runnable{
 	}
 	
 	private void handleDisconnect(Packet packet, InetAddress address, int port) {
-		DisconnectPacket06 p = (DisconnectPacket06) packet;
+		Packet16Disconnect p = (Packet16Disconnect) packet;
 		if(clientsMap.containsKey(p.getUserName())){
 			clientsMap.get(p.getUserName()).setLive(false);
 			clientsMap.remove(p.getUserName());
@@ -151,44 +151,44 @@ public class Client implements Runnable{
 	}
 
 	private void handleMove(Packet packet, InetAddress address, int port){
-		String s = ((MovePacket02) packet).getUserName();
+		String s = ((Packet12Move) packet).getUserName();
 		if(clientsMap.containsKey(s)){
-			clientsMap.get(s).setPosition(((MovePacket02) packet).getPos());
-			clientsMap.get(s).setDirection(((MovePacket02) packet).getDir());
+			clientsMap.get(s).setPosition(((Packet12Move) packet).getPos());
+			clientsMap.get(s).setDirection(((Packet12Move) packet).getDir());
 		}
 	}
 	
 	private void handleConnect(Packet packet, InetAddress address, int port){
-		HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos(), address, port);
+		HeroMP hostHero = new HeroMP(((Packet11Connect)packet).getUserName(),((Packet11Connect)packet).getPos(), address, port);
 		startPos = hostHero.getPosition();
 		clientsMap.put(hostHero.getUserName(), hostHero);
 	}
 	
 	private void handleAccept(Packet packet, InetAddress address, int port){
-		width = ((AcceptPacket03)packet).getWidth();
-		height = ((AcceptPacket03)packet).getHeight();
+		width = ((Packet13Accept)packet).getWidth();
+		height = ((Packet13Accept)packet).getHeight();
 
-		RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
+		Packet15RequestMap p = new Packet15RequestMap(packetNumber);
 		sendData(p.getData());
 	}
 	
 	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
-		if(packetNumber == ((MapPacket04)packet).getPacketNumber()){
+		if(packetNumber == ((Packet14Map)packet).getPacketNumber()){
 			assembleWorld(data);
 			//System.out.println(pixels.size());
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
 				MPClientState.worldAssembled = true;
-				RequestMapPacket05 p = new RequestMapPacket05(-1);
+				Packet15RequestMap p = new Packet15RequestMap(-1);
 				sendData(p.getData());
 				return;
 			}
 			packetNumber++;
-			RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
+			Packet15RequestMap p = new Packet15RequestMap(packetNumber);
 			sendData(p.getData());
 			//System.out.println("REQUEST SENT");
 		}else{
-			RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
+			Packet15RequestMap p = new Packet15RequestMap(packetNumber);
 			sendData(p.getData());
 		}
 	}

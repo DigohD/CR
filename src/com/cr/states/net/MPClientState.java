@@ -8,7 +8,8 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.HeroMP;
 import com.cr.net.client.Client;
-import com.cr.net.packets.RequestMapPacket05;
+import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet10Login;
 import com.cr.states.GameState;
 import com.cr.states.StatsState;
 import com.cr.states.crafting.CraftInitState;
@@ -35,8 +36,8 @@ public class MPClientState extends GameState{
 		client.start();
 		userName = "anders";
 		
-		String message = "00" + userName;
-		client.sendData(message.getBytes());
+		Packet10Login packet = new Packet10Login(userName);
+		client.sendData(packet.getData());
 		
 		while(!worldAssembled){
 			try {
@@ -61,9 +62,9 @@ public class MPClientState extends GameState{
 			gsm.push(new StatsState(gsm));
 		if(Input.getKey(Input.ESCAPE)){
 			System.out.println(EntityManager.getHero().getUserName());
-			//DisconnectPacket06 packet = new DisconnectPacket06(EntityManager.getHero().getUserName());
-			String message = "06:" + EntityManager.getHero().getUserName();
-			client.sendData(message.getBytes());
+			Packet16Disconnect packet = new Packet16Disconnect(EntityManager.getHero().getUserName());
+			//String message = "16:" + EntityManager.getHero().getUserName();
+			client.sendData(packet.getData());
 			Game.stop();
 		}
 			

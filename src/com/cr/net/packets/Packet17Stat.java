@@ -3,13 +3,13 @@ package com.cr.net.packets;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class StatPacket07 extends Packet{
+public class Packet17Stat extends Packet{
 	
 	private String userName;
 	private String statID;
 	private float value;
 	
-	public StatPacket07(byte[] data){
+	public Packet17Stat(byte[] data){
 		super(17);
 		String[] dataArray = readData(data).split(":");
 		this.userName = dataArray[1];
@@ -17,7 +17,7 @@ public class StatPacket07 extends Packet{
 	    this.value = Float.parseFloat(dataArray[3]);
 	}
 
-	public StatPacket07(String userName, String statID, float value) {
+	public Packet17Stat(String userName, String statID, float value) {
 		super(17);
 		this.userName = userName;
 		this.statID = statID;

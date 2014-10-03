@@ -3,12 +3,12 @@ package com.cr.net.packets;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class AcceptPacket03 extends Packet{
+public class Packet13Accept extends Packet{
 
 	private String username;
 	private int width, height;
 
-    public AcceptPacket03(byte[] data) {
+    public Packet13Accept(byte[] data) {
         super(13);
         String[] dataArray = readData(data).split(":");
         this.username = dataArray[1];
@@ -16,7 +16,7 @@ public class AcceptPacket03 extends Packet{
         this.height = Integer.parseInt(dataArray[3]);
     }
 
-    public AcceptPacket03(String username, int width, int height) {
+    public Packet13Accept(String username, int width, int height) {
         super(13);
         this.username = username;
         this.width = width;

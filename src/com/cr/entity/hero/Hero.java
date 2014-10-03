@@ -17,7 +17,7 @@ import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.net.NetStatus;
-import com.cr.net.packets.MovePacket02;
+import com.cr.net.packets.Packet12Move;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
@@ -140,11 +140,11 @@ public class Hero extends Mob implements Collideable{
 			
 		if(NetStatus.isMultiPlayer){
 			if(!NetStatus.isHOST){
-				MovePacket02 mp  = new MovePacket02(userName, position, currentDir);
+				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
 				MPClientState.getClient().sendData(mp.getData());
 			}
 			if(NetStatus.isHOST){
-				MovePacket02 mp  = new MovePacket02(userName, position, currentDir);
+				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
 				MPHostState.getServer().sendDataToAllClients(mp.getData());
 			}
 		}

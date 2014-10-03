@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.cr.game.EntityManager;
 import com.cr.net.NetStatus;
-import com.cr.net.packets.StatPacket07;
+import com.cr.net.packets.Packet17Stat;
 import com.cr.states.net.MPClientState;
 import com.cr.stats.StatsSheet.StatID;
 
@@ -48,7 +48,7 @@ public class Stat{
 		
 		if(NetStatus.isMultiPlayer && !NetStatus.isHOST && isHero && id != null){
 			System.out.println("STatID:" + id + ", username: " + MPClientState.userName);
-			StatPacket07 packet = new StatPacket07(MPClientState.userName, id.name(), total);
+			Packet17Stat packet = new Packet17Stat(MPClientState.userName, id.name(), total);
 			MPClientState.getClient().sendData(packet.getData());
 		}
 	}

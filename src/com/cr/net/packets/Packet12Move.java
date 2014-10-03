@@ -5,13 +5,13 @@ import com.cr.entity.hero.Hero.Direction;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class MovePacket02 extends Packet{
+public class Packet12Move extends Packet{
 
 	private Vector2f pos = new Vector2f(0, 0);
 	private String userName;
 	private Direction dir;
 	
-	public MovePacket02(byte[] data) {
+	public Packet12Move(byte[] data) {
 	    super(12);
 	    
 	    String[] dataArray = readData(data).split(":");
@@ -22,7 +22,7 @@ public class MovePacket02 extends Packet{
 	    this.dir = Direction.valueOf(dataArray[4]);
 	}
 
-	public MovePacket02(String userName, Vector2f pos, Direction dir) {
+	public Packet12Move(String userName, Vector2f pos, Direction dir) {
 		super(12);
 		
 		this.userName = userName;
