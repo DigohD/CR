@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -60,9 +62,10 @@ public class Client implements Runnable{
 		byteToIntMap.put((byte)4, ColorRGBA.YELLOW);
 		
 		try {
-			socket = new DatagramSocket();
-			
 			this.ip = InetAddress.getByName(ip);
+			
+			socket = new DatagramSocket();
+//			socket.bind(new InetSocketAddress(this.ip, port));
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} catch (UnknownHostException e) {
@@ -114,9 +117,7 @@ public class Client implements Runnable{
           
                 parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
             }
-        } catch (SocketException e1) {
-            e1.printStackTrace();
-        } finally {
+        }finally {
         	System.out.println("SOCKET CLOSED");
             socket.close();
         }
@@ -231,7 +232,7 @@ public class Client implements Runnable{
 	
 	public void sendData(byte[] data){
 		if(!disconnected){
-			DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+			DatagramPacket packet = new DatagramPacket(data, data.length);
 			try {
 				socket.send(packet);
 			} catch (IOException e) {
