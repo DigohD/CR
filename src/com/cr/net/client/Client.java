@@ -11,9 +11,12 @@ import java.util.LinkedList;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
+import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
 import com.cr.net.packets.AcceptPacket03;
 import com.cr.net.packets.ConnectPacket01;
+import com.cr.net.packets.DisconnectPacket06;
+import com.cr.net.packets.LoginPacket00;
 import com.cr.net.packets.MapPacket04;
 import com.cr.net.packets.MovePacket02;
 import com.cr.net.packets.Packet;
@@ -116,11 +119,37 @@ public class Client implements Runnable{
 				packet = new MovePacket02(data);
 				handleMove(packet, address, port);
 				break;
+			case LOGIN:
+				packet = new LoginPacket00(data);
+				handleLogin(packet, address, port);
+				break;
+			case DISCONNECT:
+				packet = new DisconnectPacket06(data);
+				handleDisconnect(packet, address, port);
+				break;
 			default:
 				break;
 		}
 	}
 	
+	private void handleLogin(Packet packet, InetAddress address, int port) {
+		LoginPacket00 p = (LoginPacket00) packet;
+		
+		if(!(p.getUserName().equalsIgnoreCase(EntityManager.getHero().getUserName()))){
+			clientsMap.put(p.getUserName(), new HeroMP(p.getUserName(),new Vector2f(0,0), address, port));
+		}
+		else System.out.println(p.getUserName() + " has joined!");
+		
+	}
+	
+	private void handleDisconnect(Packet packet, InetAddress address, int port) {
+		DisconnectPacket06 p = (DisconnectPacket06) packet;
+		if(clientsMap.containsKey(p.getUserName())){
+			clientsMap.get(p.getUserName()).setLive(false);
+			clientsMap.remove(p.getUserName());
+		}
+	}
+
 	private void handleMove(Packet packet, InetAddress address, int port){
 		String s = ((MovePacket02) packet).getUserName();
 		if(clientsMap.containsKey(s)){

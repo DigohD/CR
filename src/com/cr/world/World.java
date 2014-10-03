@@ -106,7 +106,7 @@ public class World {
 		
 		eyePosition = Camera.getPos();
 		
-		//generateWorldObjects();
+		generateWorldObjects();
 	}
 	
 	private void initShader(){

@@ -20,7 +20,9 @@ import com.cr.net.packets.Packet.PacketTypes;
 import com.cr.net.packets.RequestMapPacket05;
 import com.cr.net.packets.StatPacket07;
 import com.cr.states.net.MPHostState;
+import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 
 public class Server implements Runnable{
 	
@@ -115,8 +117,10 @@ public class Server implements Runnable{
 	}
 	
 	private void handleStatPacket(StatPacket07 packet07, InetAddress address, int port) {
-		
-		
+		HeroMP client = clientsMap.get(packet07.getUserName());
+		StatsSheet sheet = statsMap.get(client);
+		Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
+		stat.setNewBase(packet07.getValue());
 	}
 
 	private void handleDisconnect(DisconnectPacket06 packet, InetAddress address, int port){
