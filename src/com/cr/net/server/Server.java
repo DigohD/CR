@@ -75,7 +75,7 @@ public class Server implements Runnable{
 				e.printStackTrace();
 			}
 			
-			System.out.println("REcieve Packet: " + packet.getData());
+			System.out.println("Recieve Packet: " + new String(packet.getData()));
 			
 			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 		}
