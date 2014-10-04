@@ -34,12 +34,12 @@ public class Loot extends Entity implements Renderable, Collideable, Tickable{
 		this.initVel.x = 0;
 		initY = (int) pos.y;
 		
-		rect = new Rectangle(0, 0, (int) (sprite.getSpriteWidth() * 0.75f), (int) (sprite.getSpriteHeight() * 0.75f));
 		EntityManager.addByMainThread(this);
 	}
 
 	public void init(){
 		sprite = MaterialsBox.getMaterial(lootType).getMaterialImage();
+		rect = new Rectangle(0, 0, (int) (sprite.getSpriteWidth() * 0.75f), (int) (sprite.getSpriteHeight() * 0.75f));
 	}
 	
 	@Override

@@ -5,8 +5,10 @@ import java.net.InetAddress;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.Font.FontColor;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
@@ -18,6 +20,9 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.body.UpperBody;
 import com.cr.game.EntityManager;
 import com.cr.stats.StatsSheet;
+import com.cr.util.CRString;
+import com.cr.util.Camera;
+import com.cr.util.FontLoader;
 
 public class HeroMP extends Entity implements Tickable, Renderable{
 	
@@ -96,6 +101,11 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	@Override
 	public void render(Screen screen) {
+		Font f = FontLoader.aquireFont(FontColor.WHITE);
+		f.setFont(CRString.create(userName));
+		int length = userName.length();
+		f.renderFont(position.x - (length * 5) - Camera.getCamX(), position.y - 70 - Camera.getCamY(), 0.25f);
+		
 		lowerBody.setPos(position);
 		body.setPos(position);
 		rightHand.setPos(position);
@@ -107,6 +117,8 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		rightHand.render(screen);
 		leftHand.render(screen);
 		head.render(screen);
+		
+		FontLoader.releaseFont(f);
 	}
 
 	private void setBobing(boolean isBobing){
@@ -138,7 +150,6 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	public int getPort() {
 		return port;
 	}
-	
 	
 	public void setIp(InetAddress ip) {
 		this.ip = ip;

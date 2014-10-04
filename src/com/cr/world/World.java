@@ -307,7 +307,9 @@ public class World {
 		if(NetStatus.isMultiPlayer && NetStatus.isHOST){
 			Server server = MPHostState.getServer();
 			HashMap<String, HeroMP> players = server.getClientsMap();
+			System.out.println("Send Loot");
 			for(String s : players.keySet()){
+				System.out.println("Loot to: " + players.get(s).getUserName());
 				Packet19Loot p = new Packet19Loot(19, x, y, lt.getLootID(), 1);
 				server.sendData(p.getData(), players.get(s).getInetAddress(), players.get(s).getPort());
 			}

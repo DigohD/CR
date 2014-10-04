@@ -81,7 +81,7 @@ public class Server implements Runnable{
                     e.printStackTrace();
                 }
                 
-                System.out.println("REcieve Packet: " + new String(packet.getData()));
+//                System.out.println("REcieve Packet: " + new String(packet.getData()));
                 parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
             }
         }catch (SocketException e1) {
