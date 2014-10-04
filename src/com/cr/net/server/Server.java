@@ -20,10 +20,12 @@ import com.cr.net.packets.Packet14Map;
 import com.cr.net.packets.Packet15RequestMap;
 import com.cr.net.packets.Packet16Disconnect;
 import com.cr.net.packets.Packet17Stat;
+import com.cr.net.packets.Packet18StaticObject;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
+import com.cr.world.terrain.Tree;
 
 public class Server implements Runnable{
 	
@@ -164,6 +166,13 @@ public class Server implements Runnable{
 		if(p.getPacketNumber() == -1){
 			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
 	        sendData(p2.getData(), address, port);
+		}else if(p.getPacketNumber() == -2){
+			Tree[] trees = MPHostState.getWorld().getTrees();
+			for(int i = 0; i < trees.length; i++){
+				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getX(), 0);
+				sendData(pso.getData(), address, port);
+			}
+			
 		}else{
 			byte[] data2 = new byte[1024];
 			for(int i = 0; i < p.getData().length; i++)

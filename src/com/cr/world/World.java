@@ -22,6 +22,7 @@ import com.cr.net.HeroMP;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.net.server.Server;
+import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
@@ -42,6 +43,8 @@ public class World {
 	
 	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
 	private List<Integer> pixels = new ArrayList<Integer>();
+	
+	private Tree[] trees = new Tree[100];
 	
 	private int width, height;
 	private int timer = 0;
@@ -71,6 +74,8 @@ public class World {
 
 		this.width = width;
 		this.height = height;
+		
+		generateTrees(MPClientState.getClient().trees);
 		
 		init();
 	}
@@ -186,18 +191,20 @@ public class World {
 			}
 		}
 	
-		for(int i = 0; i < 100; i++){
+		
+		for(int i = 0; i < trees.length; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
 				t = new Tree(-1000, -1000);
+				t.init();
 				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
 				//System.out.println(t.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
-					
+					trees[i] = t;
 					generated = true;
 				}
 			}
@@ -317,6 +324,11 @@ public class World {
 		new Loot(new Vector2f(x, y), new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), lt.getLootID(), amount);
 	}
 	
+	public void generateTrees(List<Tree> trees){
+		for(Tree t : trees)
+			t.init();
+	}
+	
 	public static Shader getShader() {
 		return shader;
 	}
@@ -331,6 +343,10 @@ public class World {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public Tree[] getTrees() {
+		return trees;
 	}
 
 }

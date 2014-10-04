@@ -18,7 +18,7 @@ import com.cr.world.World;
 public class MPClientState extends GameState{
 	
 	private static Client client;
-	private World w;
+	private World world;
 	
 	public static boolean worldAssembled = false;
 	
@@ -40,7 +40,7 @@ public class MPClientState extends GameState{
 			}
 		}
 
-		w = new World(client.pixels, client.getWidth(), client.getHeight());
+		world = new World(client.pixels, client.getWidth(), client.getHeight());
 		
 		EntityManager.getHero().setUserName(client.getUserName());
 	}
@@ -60,7 +60,7 @@ public class MPClientState extends GameState{
 			Game.stop();
 		}
 			
-		w.tick(dt);
+		world.tick(dt);
 		
 		for(String name : client.getClientsMap().keySet()){
 			HeroMP h = client.getClientsMap().get(name);
@@ -71,7 +71,7 @@ public class MPClientState extends GameState{
 
 	@Override
 	public void render(Screen screen) {
-		w.render(screen);
+		world.render(screen);
 		
 	}
 	
@@ -82,6 +82,10 @@ public class MPClientState extends GameState{
 
 	public static Client getClient() {
 		return client;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 }

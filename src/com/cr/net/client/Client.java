@@ -7,8 +7,10 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
@@ -22,9 +24,11 @@ import com.cr.net.packets.Packet13Accept;
 import com.cr.net.packets.Packet14Map;
 import com.cr.net.packets.Packet15RequestMap;
 import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet18StaticObject;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.states.net.MPClientState;
 import com.cr.world.World;
+import com.cr.world.terrain.Tree;
 
 public class Client implements Runnable{
 	
@@ -167,11 +171,34 @@ public class Client implements Runnable{
 				packet = new Packet19Loot(data);
 				handleLoot(packet, address, port);
 				break;
+			case STATICOBJECT:
+				packet = new Packet18StaticObject(data);
+				handleStaticObject(packet, address, port);
+				break;
 			default:
 				break;
 		}
 	}
 	
+	public List<Tree> trees = new ArrayList<Tree>();
+	
+	private void handleStaticObject(Packet packet, InetAddress address, int port) {
+		Packet18StaticObject p = (Packet18StaticObject) packet;
+		
+		int type = p.getType();
+		
+		switch(type){
+			case 0:
+				Tree t = new Tree(p.getX(), p.getY());
+				t.setObjectID(p.getObjectID());
+				trees.add(t);
+				break;
+			default:
+				break;
+		}
+		
+	}
+
 	private void handleLoot(Packet packet, InetAddress address, int port) {
 		Packet19Loot p = (Packet19Loot) packet;
 		World.spawnLoot(p.getX(), p.getY(), p.getType(), p.getAmount());
@@ -225,6 +252,8 @@ public class Client implements Runnable{
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
 				MPClientState.worldAssembled = true;
+				Packet15RequestMap p2 = new Packet15RequestMap(-2);
+				sendData(p2.getData());
 				Packet15RequestMap p = new Packet15RequestMap(-1);
 				sendData(p.getData());
 				return;

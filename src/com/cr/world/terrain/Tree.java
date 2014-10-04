@@ -12,14 +12,19 @@ import com.cr.util.Randomizer;
 
 public class Tree extends Entity implements Renderable{
 
+	private int objectID;
 	private Sprite sprite;
 	private Rectangle rect;
 	
 	public Tree(int x , int y){
 		super(new Vector2f(x, y));
-		int rnd = Randomizer.getInt(1, 4);
-		sprite = new Sprite("tree" + rnd);
-		rect = new Rectangle(x, y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		objectID = Randomizer.getInt(1, 4);
+		
+	}
+	
+	public void init(){
+		sprite = new Sprite("tree" + objectID);
+		rect = new Rectangle((int)getX(), (int)getY(), sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		
 		EntityManager.addEntity(this);
 	}
@@ -41,6 +46,14 @@ public class Tree extends Entity implements Renderable{
 	@Override
 	public Rectangle getRect() {
 		return rect;
+	}
+
+	public int getObjectID() {
+		return objectID;
+	}
+
+	public void setObjectID(int objectID) {
+		this.objectID = objectID;
 	}
 	
 }

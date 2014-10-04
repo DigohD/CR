@@ -18,7 +18,7 @@ public class Packet18StaticObject extends Packet{
 		this.type = Integer.parseInt(array[4]);
 	}
 
-	public Packet18StaticObject(int packetID, int objectID, int x, int y, int type) {
+	public Packet18StaticObject(int objectID, int x, int y, int type) {
 		super(18);
 		this.objectID = objectID;
 		this.x = x;
