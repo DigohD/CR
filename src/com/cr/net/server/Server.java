@@ -170,7 +170,7 @@ public class Server implements Runnable{
 			System.out.println("OBJECT REQUEST RECEIVED");
 			Tree[] trees = MPHostState.getWorld().getTrees();
 			for(int i = 0; i < trees.length; i++){
-				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getX(), 0);
+				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getY(), 0);
 				sendData(pso.getData(), address, port);
 			}
 			
