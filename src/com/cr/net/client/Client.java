@@ -192,6 +192,7 @@ public class Client implements Runnable{
 				Tree t = new Tree(p.getX(), p.getY());
 				t.setObjectID(p.getObjectID());
 				trees.add(t);
+				System.out.println(trees.size());
 				if(trees.size() >= 100) MPClientState.worldAssembled = true;
 				break;
 			default:

@@ -75,9 +75,11 @@ public class World {
 		this.width = width;
 		this.height = height;
 		
-		generateTrees(MPClientState.getClient().trees);
+		System.out.println(MPClientState.getClient().trees.size());
+		
 		
 		init();
+		generateTrees(MPClientState.getClient().trees);
 	}
 	
 	public World(){
@@ -326,8 +328,11 @@ public class World {
 	}
 	
 	public void generateTrees(List<Tree> trees){
-		for(Tree t : trees)
-			t.init();
+		for(Tree t : trees){
+			if(t != null)
+				t.init();
+		}
+			
 	}
 	
 	public static Shader getShader() {
