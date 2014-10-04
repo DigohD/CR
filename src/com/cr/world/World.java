@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cr.combat.loot.Loot;
+import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
@@ -14,7 +16,13 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.wisp.Wisp;
+import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.EntityManager;
+import com.cr.net.HeroMP;
+import com.cr.net.NetStatus;
+import com.cr.net.packets.Packet19Loot;
+import com.cr.net.server.Server;
+import com.cr.states.net.MPHostState;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.terrain.Stone;
@@ -291,6 +299,22 @@ public class World {
 		return data;
 	}
 
+	public static void spawnLoot(int x, int y, int type, int amount){
+		new Loot(new Vector2f(x, y), new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), type, amount);
+	}
+	
+	public static void spawnLoot(int x, int y, LootTable lt, int amount){
+		if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+			Server server = MPHostState.getServer();
+			HashMap<String, HeroMP> players = server.getClientsMap();
+			for(String s : players.keySet()){
+				Packet19Loot p = new Packet19Loot(19, x, y, lt.getLootID(), 1);
+				server.sendData(p.getData(), players.get(s).getInetAddress(), players.get(s).getPort());
+			}
+		}
+		new Loot(new Vector2f(x, y), new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), lt.getLootID(), amount);
+	}
+	
 	public static Shader getShader() {
 		return shader;
 	}

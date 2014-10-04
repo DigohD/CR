@@ -22,7 +22,9 @@ import com.cr.net.packets.Packet13Accept;
 import com.cr.net.packets.Packet14Map;
 import com.cr.net.packets.Packet15RequestMap;
 import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet19Loot;
 import com.cr.states.net.MPClientState;
+import com.cr.world.World;
 
 public class Client implements Runnable{
 	
@@ -161,11 +163,20 @@ public class Client implements Runnable{
 				packet = new Packet16Disconnect(data);
 				handleDisconnect(packet, address, port);
 				break;
+			case LOOT:
+				packet = new Packet19Loot(data);
+				handleLoot(packet, address, port);
+				break;
 			default:
 				break;
 		}
 	}
 	
+	private void handleLoot(Packet packet, InetAddress address, int port) {
+		Packet19Loot p = (Packet19Loot) packet;
+		World.spawnLoot(p.getX(), p.getY(), p.getType(), p.getAmount());
+	}
+
 	private void handleLogin(Packet packet, InetAddress address, int port) {
 		Packet10Login p = (Packet10Login) packet;
 		

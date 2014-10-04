@@ -55,7 +55,7 @@ public class Pyrite extends Material{
 
 	@Override
 	public int getID() {
-		return 1;
+		return 2;
 	}
 
 	@Override

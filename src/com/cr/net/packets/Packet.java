@@ -15,7 +15,8 @@ public abstract class Packet {
 		REQUESTMAP(15), 
 		DISCONNECT(16),
 		STATS(17), 
-		STATICOBJECT(18);
+		STATICOBJECT(18),
+		LOOT(19);
 		
 		private int packetID;
 		

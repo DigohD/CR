@@ -367,5 +367,4 @@ public abstract class Material{
 	public int getUsedAmount() {
 		return usedAmount;
 	}
-	
 }

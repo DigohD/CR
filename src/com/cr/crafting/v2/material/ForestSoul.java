@@ -59,7 +59,7 @@ public class ForestSoul extends Material{
 
 	@Override
 	public int getID() {
-		return 1;
+		return 4;
 	}
 
 	@Override
