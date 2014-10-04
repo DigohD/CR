@@ -198,13 +198,14 @@ public class World {
 			while(!generated){
 				t = new Tree(-1000, -1000);
 				t.init();
+				trees[i] = t;
 				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
 				//System.out.println(t.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
-					trees[i] = t;
+					
 					generated = true;
 				}
 			}

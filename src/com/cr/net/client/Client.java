@@ -192,6 +192,7 @@ public class Client implements Runnable{
 				Tree t = new Tree(p.getX(), p.getY());
 				t.setObjectID(p.getObjectID());
 				trees.add(t);
+				if(trees.size() >= 100) MPClientState.worldAssembled = true;
 				break;
 			default:
 				break;
@@ -251,7 +252,7 @@ public class Client implements Runnable{
 			//System.out.println(pixels.size());
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
-				MPClientState.worldAssembled = true;
+				
 				Packet15RequestMap p2 = new Packet15RequestMap(-2);
 				sendData(p2.getData());
 				Packet15RequestMap p = new Packet15RequestMap(-1);

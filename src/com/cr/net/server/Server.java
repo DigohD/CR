@@ -167,6 +167,7 @@ public class Server implements Runnable{
 			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
 	        sendData(p2.getData(), address, port);
 		}else if(p.getPacketNumber() == -2){
+			System.out.println("OBJECT REQUEST RECEIVED");
 			Tree[] trees = MPHostState.getWorld().getTrees();
 			for(int i = 0; i < trees.length; i++){
 				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getX(), 0);
