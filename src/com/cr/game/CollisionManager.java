@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.cr.combat.Projectile;
 import com.cr.combat.loot.Loot;
+import com.cr.entity.Breakable;
 import com.cr.entity.Collideable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
@@ -15,6 +16,7 @@ public class CollisionManager {
 	
 	private static List<Enemy> enemies = new ArrayList<Enemy>();
 	private static List<Collideable> misc = new ArrayList<Collideable>();
+	private static List<Breakable> breakables = new ArrayList<Breakable>();
 	private static List<Loot> loot = new ArrayList<Loot>();
 	private static List<Projectile> playerProjectiles = 
 			new ArrayList<Projectile>();
@@ -53,6 +55,14 @@ public class CollisionManager {
 		misc.remove(c);
 	}
 	
+	public static void addBreakable(Breakable b){
+		misc.add(b);
+	}
+	
+	public static void removeBreakable(Breakable b){
+		misc.remove(b);
+	}
+	
 	public static void addEnemyProjectile(EnemyProjectile c) {
 		enemyProjectiles.add(c);
 	}
@@ -64,6 +74,9 @@ public class CollisionManager {
 	public static void clear(){
 		enemies.clear();
 		playerProjectiles.clear();
+		misc.clear();
+		breakables.clear();
+		loot.clear();
 	}
 	
 	private static boolean collisionBetween(Rectangle r1, Rectangle r2) {
@@ -100,6 +113,17 @@ public class CollisionManager {
 		
 		for(int i = 0; i < misc.size(); i++){
 			Collideable c = misc.get(i);
+			for(int j = 0; j < playerProjectiles.size(); j++){
+				Projectile p = playerProjectiles.get(j);
+				if (collisionBetween(p.getRect(), c.getRect())){
+					c.collisionWith(p);
+					p.collisionWith(c);
+				}
+			}
+		}
+		
+		for(int i = 0; i < breakables.size(); i++){
+			Breakable c = breakables.get(i);
 			for(int j = 0; j < playerProjectiles.size(); j++){
 				Projectile p = playerProjectiles.get(j);
 				if (collisionBetween(p.getRect(), c.getRect())){

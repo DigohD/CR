@@ -300,12 +300,16 @@ public class Client implements Runnable{
 			//System.out.println(pixels.size());
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
-				MPClientState.worldAssembled = true;
+				
 				if(!mapReceived){
 					Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
 					sendData(p2.getData());
 					mapReceived = true;
 				}
+				Packet15RequestMap p = new Packet15RequestMap(-1);
+				sendData(p.getData());
+				
+				MPClientState.worldAssembled = true;
 
 				return;
 			}

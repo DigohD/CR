@@ -9,6 +9,7 @@ import com.cr.combat.Projectile;
 import com.cr.combat.loot.Loot;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
+import com.cr.entity.Breakable;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
@@ -17,6 +18,7 @@ import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
 import com.cr.util.Camera;
 import com.cr.world.World;
+import com.cr.world.terrain.WorldObject;
 
 public class EntityManager {
 	
@@ -76,6 +78,10 @@ public class EntityManager {
 			Enemy c = (Enemy) e;
 			CollisionManager.addEnemy(c);
 		}
+		if(e instanceof WorldObject){
+			WorldObject wo = (WorldObject) e;
+			wo.init();
+		}
 		if(e instanceof Loot){
 			Loot c = (Loot) e;
 			c.init();
@@ -103,6 +109,13 @@ public class EntityManager {
 		if(e instanceof Enemy){
 			Enemy c = (Enemy) e;
 			CollisionManager.removeEnemy(c);
+		}
+		if(e instanceof WorldObject){
+			WorldObject w = (WorldObject) e;
+			if(w instanceof Breakable){
+				Breakable b = (Breakable) w;
+				CollisionManager.removeBreakable(b);
+			}
 		}
 		if(e instanceof Loot){
 			Loot c = (Loot) e;

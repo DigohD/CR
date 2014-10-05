@@ -6,6 +6,7 @@ import com.cr.combat.loot.LootEntry;
 import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Sprite;
+import com.cr.entity.Breakable;
 import com.cr.entity.Collideable;
 import com.cr.entity.Tickable;
 import com.cr.entity.emitter.ImpactEmitter;
@@ -14,7 +15,7 @@ import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
 
-public class Stone extends WorldObject implements Collideable, Tickable{
+public class Stone extends WorldObject implements Breakable, Tickable{
 
 	private int objectID;
 	private int shiverCount = 0;
@@ -33,14 +34,16 @@ public class Stone extends WorldObject implements Collideable, Tickable{
 		lt.addEntry(new LootEntry(1, 5));
 		lt.addEntry(new LootEntry(2, 10));
 		lt.addEntry(new LootEntry(3, 10));
+		
+		EntityManager.addByMainThread(this);
 	}
 
 	@Override
 	public void init() {
 		sprite = new Sprite("stone" + objectID);
 		rect = new Rectangle((int)position.x, (int)position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		EntityManager.addEntity(this);
-		CollisionManager.addHitable(this);
+	
+		CollisionManager.addBreakable(this);
 	}
 
 	@Override

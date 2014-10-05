@@ -15,13 +15,14 @@ public class Tree extends WorldObject{
 	public Tree(int x , int y){
 		super(new Vector2f(x, y));
 		objectID = Randomizer.getInt(1, 4);
+		EntityManager.addByMainThread(this);
 	}
 	
 	public void init(){
 		sprite = new Sprite("tree" + objectID);
 		rect = new Rectangle((int)position.x, (int)position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		
-		EntityManager.addEntity(this);
+		
 	}
 	
 	@Override
