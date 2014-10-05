@@ -102,25 +102,30 @@ public class Client implements Runnable{
 			sendData(loginPacket.getData());
 			
 			byte[] data = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(data, data.length);
-           
-            try {
-				socket.receive(packet);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
-            	
-		}
-		
+        	DatagramPacket packet = new DatagramPacket(data, data.length);
+               
+            try{
+                socket.setSoTimeout(1000);
+                System.out.println("BEFORE RECEIVE, !conected");
+                socket.receive(packet);
+                System.out.println("AFTER RECEIVE, !connected");
+            }catch(SocketTimeoutException e){
+            	continue;
+            } catch (IOException e) {	
+            	e.printStackTrace();
+            }
+            	parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+       }
+	
         while(running) {
         	byte[] data = new byte[1024];
         	DatagramPacket packet = new DatagramPacket(data, data.length);
                
             try{
-                socket.setSoTimeout(250);
+                socket.setSoTimeout(1000);
+                System.out.println("BEFORE RECEIVE");
                 socket.receive(packet);
+                System.out.println("AFTER RECEIVE");
             }catch(SocketTimeoutException e){
             	continue;
             } catch (IOException e) {	
