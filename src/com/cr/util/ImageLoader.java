@@ -63,7 +63,7 @@ public class ImageLoader {
 		imageLib.put("tree3", loadImage("/prop/nature/tree3.png"));
 		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
 		
-		imageLib.put("stone", loadImage("/prop/nature/stone.png"));
+		imageLib.put("stone", loadImage("/prop/nature/stone1.png"));
 		
 		// Hero
 //		imageLib.put("hero", loadImage("/hero/hero.png"));
