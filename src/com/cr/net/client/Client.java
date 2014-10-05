@@ -214,6 +214,8 @@ public class Client implements Runnable{
 				}
 				break;
 			case 1:
+				System.out.println("STONES RECEIVED");
+				System.out.println("Stones: " + stones.size());
 				if(stoneIndex < p.getAmount()){
 					Stone s = new Stone(p.getX(), p.getY());
 					s.setObjectID(p.getObjectID());
@@ -300,8 +302,12 @@ public class Client implements Runnable{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
+					Packet20RequestObj p2 = new Packet20RequestObj(0, treeIndex);
 					sendData(p2.getData());
+					treeIndex++;
+					Packet20RequestObj p1 = new Packet20RequestObj(1, stoneIndex);
+					sendData(p1.getData());
+					stoneIndex++;
 					MPClientState.lock.release();
 					mapReceived = true;
 				}
