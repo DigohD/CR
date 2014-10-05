@@ -21,7 +21,7 @@ public class BreastplatePattern extends Pattern{
 	
 	public BreastplatePattern(){
 		super(true);
-		ArmorMod = 0.65f;
+		ArmorMod = 1.2f;
 		isWeapon = false;
 	}
 

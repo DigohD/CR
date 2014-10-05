@@ -37,7 +37,7 @@ public abstract class Material{
 	protected int newBalancedValue;
 	
 	protected int amount, usedAmount;
-	protected float secBonus, baseBonus, primbonus;
+	protected float secBonus = 1f, baseBonus = 1f, primbonus = 1f;
 	
 	protected boolean breakable, isPrimary;
 	
@@ -212,9 +212,19 @@ public abstract class Material{
 		ArrayList<StatMod> stats = new ArrayList<StatMod>();
 		if(isWeapon){
 			getWeaponStats(stats);
+			System.out.println();
+			System.out.println(this.getState().name() + " " + this.getName() + " stats!");
+			for(StatMod sm : stats)
+				System.out.println(sm.getAffectedStat().name() + ": " + sm.getAmount());
+			System.out.println();
 			return stats;
 		}else{
 			getArmorStats(stats);
+			System.out.println();
+			System.out.println(this.getName() + " stats!");
+			for(StatMod sm : stats)
+				System.out.println(sm.getAffectedStat().name() + ": " + sm.getAmount());
+			System.out.println();
 			return stats;
 		}
 	}
