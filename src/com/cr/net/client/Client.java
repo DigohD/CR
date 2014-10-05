@@ -218,7 +218,7 @@ public class Client implements Runnable{
 					Stone s = new Stone(p.getX(), p.getY());
 					s.setObjectID(p.getObjectID());
 					stones.add(s);
-					Packet20RequestObj p1 = new Packet20RequestObj(0, stoneIndex);
+					Packet20RequestObj p1 = new Packet20RequestObj(1, stoneIndex);
 					sendData(p1.getData());
 					stoneIndex++;
 				}

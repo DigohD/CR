@@ -147,7 +147,7 @@ public class Server implements Runnable{
 				break;
 			case 1:
 				Packet18StaticObject pso2 = new Packet18StaticObject(stones[packet20.getIndex()].getObjectID(), (int)stones[packet20.getIndex()].getX(), 
-						(int)stones[packet20.getIndex()].getY(), 0, stones.length);
+						(int)stones[packet20.getIndex()].getY(), 1, stones.length);
 				sendData(pso2.getData(), address, port);
 			default:
 				break;
