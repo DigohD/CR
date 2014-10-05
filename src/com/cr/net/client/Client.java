@@ -106,9 +106,9 @@ public class Client implements Runnable{
                
             try{
                 socket.setSoTimeout(1000);
-                System.out.println("BEFORE RECEIVE, !conected");
+                //System.out.println("BEFORE RECEIVE, !conected");
                 socket.receive(packet);
-                System.out.println("AFTER RECEIVE, !connected");
+                //System.out.println("AFTER RECEIVE, !connected");
             }catch(SocketTimeoutException e){
             	continue;
             } catch (IOException e) {	
@@ -123,9 +123,9 @@ public class Client implements Runnable{
                
             try{
                 socket.setSoTimeout(1000);
-                System.out.println("BEFORE RECEIVE");
+               // System.out.println("BEFORE RECEIVE");
                 socket.receive(packet);
-                System.out.println("AFTER RECEIVE");
+                //System.out.println("AFTER RECEIVE");
             }catch(SocketTimeoutException e){
             	continue;
             } catch (IOException e) {	
@@ -201,28 +201,29 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case -1:
+				System.out.println("WORLD OBJECTS LOADED");
 				Packet15RequestMap p2 = new Packet15RequestMap(-1);
 				sendData(p2.getData());
 				MPClientState.worldAssembled = true;
 			break;
 			
 			case 0:
-				Tree t = new Tree(p.getX(), p.getY());
-				t.setObjectID(p.getObjectID());
-				trees.add(t);
-				//System.out.println(trees.size());
-				if(trees.size() == p.getAmount())
-					treesLoaded = true;
-
+				if(trees.size() < p.getAmount()){
+					Tree t = new Tree(p.getX(), p.getY());
+					t.setObjectID(p.getObjectID());
+					trees.add(t);
+					Packet15RequestMap p3 = new Packet15RequestMap(-2);
+					sendData(p3.getData());
+				}
 				break;
 			case 1:
-				Stone s = new Stone(p.getX(), p.getY());
-				s.setObjectID(p.getObjectID());
-				stones.add(s);
-				//System.out.println(trees.size());
-				if(stones.size() == p.getAmount())
-					stonesLoaded = true;
-				
+				if(trees.size() < p.getAmount()){
+					Stone s = new Stone(p.getX(), p.getY());
+					s.setObjectID(p.getObjectID());
+					stones.add(s);
+					Packet15RequestMap p3 = new Packet15RequestMap(-2);
+					sendData(p3.getData());
+				}
 				break;
 			default:
 				break;
