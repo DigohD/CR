@@ -157,8 +157,11 @@ public class Client implements Runnable{
 				break;
 			case MOVE:
 				//System.out.println("MOVE PACKET RECEIVED");
-				packet = new Packet12Move(data);
-				handleMove(packet, address, port);
+				if(MPClientState.worldAssembled){
+					packet = new Packet12Move(data);
+					handleMove(packet, address, port);
+				}
+				
 				break;
 			case LOGIN:
 				packet = new Packet10Login(data);
