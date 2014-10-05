@@ -332,7 +332,7 @@ public class World {
 	
 	public byte[] getBytes(int pNumber, byte[] data){
 		for(int i = 0; i < 924; i++)
-			if(i + (pNumber*924) < 30000)
+			if(i + (pNumber*924) < width*height*3)
 				data[i+100] = byteMap.get(pixels.get(i + (pNumber*924)));
 		return data;
 	}
