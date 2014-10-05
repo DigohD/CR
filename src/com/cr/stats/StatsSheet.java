@@ -99,8 +99,12 @@ public class StatsSheet {
 				return "Current HP";
 			case HP_MAX:
 				return "Max HP";
+			case MOVEMENT_SPEED:
+				return "Movement Speed";
 			case ARMOR:
 				return "Armor";
+			case ARMOR_RATING:
+				return "Armor Rating";
 			case PHYSICAL_POWER:
 				return "Physical Power";
 			case RAPIDNESS:

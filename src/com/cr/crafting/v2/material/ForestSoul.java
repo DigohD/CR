@@ -140,8 +140,16 @@ public class ForestSoul extends Material{
 
 	@Override
 	public void applyQualityBonuses(Item i, String sourceID) {
-		// TODO Auto-generated method stub
-		
+		switch(quality){
+			case SUPERB:
+				break;
+			case MASTERFUL:
+				break;
+			case LEGENDARY:
+				break;
+			default:
+				break;
+		}
 	}
 	
 }
