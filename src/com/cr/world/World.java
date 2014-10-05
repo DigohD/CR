@@ -90,7 +90,7 @@ public class World {
 	public World(){
 		initShader();
 
-		map = new TileMap(100, 100);
+		map = new TileMap(250, 250);
 		
 		width = map.getWidth();
 		height = map.getHeight();

@@ -96,7 +96,7 @@ public class Font {
 		charArray = txt.toCharArray();
 		
 		ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-		ArrayList<Short> indices = new ArrayList<Short>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
 		ArrayList<Vector2f> texCoords = new ArrayList<Vector2f>();
 		
 		int width = fontSheet.getSpriteWidth();
@@ -124,13 +124,13 @@ public class Font {
 			yLow = charMap.get(charArray[i]).y / fontSheet.getRows();
 			yHigh = yLow + (1 / fontSheet.getRows());
 
-			indices.add((short)(vertices.size() + 0));
-			indices.add((short)(vertices.size() + 1));
-			indices.add((short)(vertices.size() + 2));
+			indices.add(vertices.size() + 0);
+			indices.add(vertices.size() + 1);
+			indices.add(vertices.size() + 2);
 			
-			indices.add((short)(vertices.size() + 2));
-			indices.add((short)(vertices.size() + 3));
-			indices.add((short)(vertices.size() + 0));
+			indices.add(vertices.size() + 2);
+			indices.add(vertices.size() + 3);
+			indices.add(vertices.size() + 0);
 
 			vertices.add(new Vertex(new Vector3f(i*width - xOffset*i, height, 0)));
 			vertices.add(new Vertex(new Vector3f(i*width - xOffset*i, height + height, 0)));
@@ -144,14 +144,14 @@ public class Font {
 		}
 		
 		Vertex[] vertexArray = new Vertex[vertices.size()];
-		Short[] indexArray = new Short[indices.size()];
+		Integer[] indexArray = new Integer[indices.size()];
 		Vector2f[] texCoordArray = new Vector2f[texCoords.size()];
 		
 		vertices.toArray(vertexArray);
 		indices.toArray(indexArray);
 		texCoords.toArray(texCoordArray);
 		
-		short[] iArray = new short[indexArray.length];
+		int[] iArray = new int[indexArray.length];
 		
 		for(int j = 0; j < indexArray.length; j++)
 			iArray[j] = indexArray[j];

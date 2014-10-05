@@ -197,35 +197,41 @@ public class Client implements Runnable{
 		int type = p.getType();
 		
 		switch(type){
-			
-			
 			case 0:
-				System.out.println("TREES RECEIVED");
-				System.out.println("Trees: " + trees.size());
-				if(treeIndex < p.getAmount()){
+				if(treeIndex <= p.getAmount()){
 					Tree t = new Tree(p.getX(), p.getY());
 					t.setObjectID(p.getObjectID());
 					trees.add(t);
-					Packet20RequestObj p0 = new Packet20RequestObj(0, treeIndex);
-					sendData(p0.getData());
+					if(treeIndex < p.getAmount()){
+						Packet20RequestObj p0 = new Packet20RequestObj(0, treeIndex);
+						sendData(p0.getData());
+					}
+					
 					treeIndex++;
+					System.out.println("TREES RECEIVED");
+					System.out.println("Trees: " + trees.size());
 				}
-				
+
 				if(trees.size() == p.getAmount()){
 					treesLoaded = true;
 				}
 				break;
 			case 1:
-				System.out.println("STONES RECEIVED");
-				System.out.println("Stones: " + stones.size());
-				if(stoneIndex < p.getAmount()){
+				if(stoneIndex <= p.getAmount()){
 					Stone s = new Stone(p.getX(), p.getY());
 					s.setObjectID(p.getObjectID());
 					stones.add(s);
-					Packet20RequestObj p1 = new Packet20RequestObj(1, stoneIndex);
-					sendData(p1.getData());
+					if(stoneIndex < p.getAmount()){
+						Packet20RequestObj p1 = new Packet20RequestObj(1, stoneIndex);
+						sendData(p1.getData());
+					}
+					
 					stoneIndex++;
+					System.out.println("STONES RECEIVED");
+					System.out.println("Stones: " + stones.size());
 				}
+				
+			
 				
 				if(stones.size() == p.getAmount()){
 					stonesLoaded = true;

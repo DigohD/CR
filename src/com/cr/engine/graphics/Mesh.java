@@ -2,7 +2,7 @@ package com.cr.engine.graphics;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_SHORT;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
@@ -19,6 +19,7 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -33,21 +34,21 @@ public class Mesh {
 	private int size;
 	
 	private FloatBuffer vertexBuffer, texCoordBuffer;
-	private ShortBuffer indexBuffer;
+	private IntBuffer indexBuffer;
 	
 	private boolean allDynamic;
 	
-	public Mesh(Vertex[] vertices, short[] indices){
+	public Mesh(Vertex[] vertices, int[] indices){
 		createVertexBuffer(vertices, indices, true);
 		sendData();
 	}
 	
-	public Mesh(Vertex[] vertices, Vector2f[] texCoords, short[] indices, boolean allDynamic){
+	public Mesh(Vertex[] vertices, Vector2f[] texCoords, int[] indices, boolean allDynamic){
 		this.allDynamic = allDynamic;
 		sendData(vertices, texCoords, indices);
 	}
 	
-	private void createVertexBuffer(Vertex[] vertices, short[] indices, boolean texCoords){
+	private void createVertexBuffer(Vertex[] vertices, int[] indices, boolean texCoords){
 		calcNormals(vertices, indices);
 		
 		if(!texCoords)
@@ -71,7 +72,7 @@ public class Mesh {
 		
 		vertexBuffer.flip();
 		
-		indexBuffer = BufferUtils.createShortBuffer(indices.length);
+		indexBuffer = BufferUtils.createIntBuffer(indices.length);
 		indexBuffer.put(indices);
 		indexBuffer.flip();
 		
@@ -116,7 +117,7 @@ public class Mesh {
 		glBindVertexArray(0);
 	}
 	
-	private void sendData(Vertex[] vertices, Vector2f[] texCoords, short[] indices) {
+	private void sendData(Vertex[] vertices, Vector2f[] texCoords, int[] indices) {
 		createVertexBuffer(vertices, indices, false);
 		createTexCoordBuffer(texCoords);
 		
@@ -202,8 +203,8 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
-	public void updateIndexData(short[] indices){
-		indexBuffer = BufferUtils.createShortBuffer(indices.length);
+	public void updateIndexData(int[] indices){
+		indexBuffer = BufferUtils.createIntBuffer(indices.length);
 		indexBuffer.put(indices);
 		indexBuffer.flip();
 		
@@ -221,7 +222,7 @@ public class Mesh {
 		//glEnableVertexAttribArray(3);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
-		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
+		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
 		glDisableVertexAttribArray(0);
@@ -232,7 +233,7 @@ public class Mesh {
 		glBindVertexArray(0);
 	}
 	
-	private void calcNormals(Vertex[] vertices, short[] indices){
+	private void calcNormals(Vertex[] vertices, int[] indices){
 		for(int i = 0; i < indices.length; i+=3){
 			Vertex v0 = vertices[indices[i]];
 			Vertex v1 = vertices[indices[i+1]];
@@ -253,7 +254,7 @@ public class Mesh {
 		
 	}
 	
-	private void calcTangents(Vertex[] vertices, short[] indices){
+	private void calcTangents(Vertex[] vertices, int[] indices){
 		for(int i = 0; i < indices.length; i+=3){
 			Vertex v0 = vertices[indices[i]];
 			Vertex v1 = vertices[indices[i+1]];
@@ -293,7 +294,7 @@ public class Mesh {
 		return texCoordBuffer;
 	}
 
-	public ShortBuffer getIndexBuffer() {
+	public IntBuffer getIndexBuffer() {
 		return indexBuffer;
 	}
 
