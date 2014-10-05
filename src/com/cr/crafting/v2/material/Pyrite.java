@@ -129,6 +129,11 @@ public class Pyrite extends Material{
 			baseBonus = 1.5f;
 			secBonus = 1f;
 			break;
+		case LEGENDARY:
+			primbonus = 1f;
+			baseBonus = 1.5f;
+			secBonus = 1f;
+			break;
 		default:
 			break;
 	}
