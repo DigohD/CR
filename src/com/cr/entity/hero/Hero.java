@@ -143,9 +143,10 @@ public class Hero extends Mob implements Collideable{
 			position.y = position.y + targetVel.y*dt;
 			
 		if(NetStatus.isMultiPlayer){
-			if(!NetStatus.isHOST){
+			if(!NetStatus.isHOST && MPClientState.getClient().treesLoaded && MPClientState.getClient().stonesLoaded){
 				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
 				MPClientState.getClient().sendData(mp.getData());
+				passiveRegen(dt);
 				//System.out.println("MOVE PACKET SENT");
 			}
 			if(NetStatus.isHOST){
@@ -168,7 +169,8 @@ public class Hero extends Mob implements Collideable{
 			leftHand.getItem().activate();
 		}
 		
-		passiveRegen(dt);
+		if(NetStatus.isMultiPlayer && NetStatus.isHOST || !NetStatus.isMultiPlayer)
+			passiveRegen(dt);
 	}
 
 	@Override

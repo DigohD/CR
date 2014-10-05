@@ -198,22 +198,27 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case 0:
+				System.out.println("TREES RECEIVED");
 				if(treeIndex <= p.getAmount()){
 					Tree t = new Tree(p.getX(), p.getY());
 					t.setObjectID(p.getObjectID());
 					trees.add(t);
 					if(treeIndex < p.getAmount()){
+						System.out.println("SENDING REQUEST FOR TREE");
 						Packet20RequestObj p0 = new Packet20RequestObj(0, treeIndex);
+						System.out.println(new String(p0.getData()));
 						sendData(p0.getData());
 					}
 					
 					treeIndex++;
-					System.out.println("TREES RECEIVED");
+					
 					System.out.println("Trees: " + trees.size());
 				}
 
 				if(trees.size() == p.getAmount()){
 					treesLoaded = true;
+					Packet20RequestObj p1 = new Packet20RequestObj(1, 0);
+					sendData(p1.getData());
 				}
 				break;
 			case 1:
@@ -297,42 +302,41 @@ public class Client implements Runnable{
 	boolean mapReceived = false;
 	
 	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
-		if(packetNumber == ((Packet14Map)packet).getPacketNumber()){
-			assembleWorld(data);
-			//System.out.println(pixels.size());
-			if(pixels.size() > width*height*3){
-				while(pixels.size() > 30000) pixels.removeFirst();
-				MPClientState.worldAssembled = true;
-		
-				if(!mapReceived){
-					try {
-						MPClientState.lock.acquire();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
-					sendData(p2.getData());
+		if(!mapReceived){
+			if(packetNumber == ((Packet14Map)packet).getPacketNumber()){
+				assembleWorld(data);
+				//System.out.println(pixels.size());
+				if(pixels.size() > width*height*3){
+					while(pixels.size() > width*height*3) pixels.removeFirst();
+					MPClientState.worldAssembled = true;
 			
-					Packet20RequestObj p1 = new Packet20RequestObj(1, 0);
-					sendData(p1.getData());
+					if(!mapReceived){
+						try {
+							MPClientState.lock.acquire();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
+						sendData(p2.getData());
 				
-					MPClientState.lock.release();
-					mapReceived = true;
-				}
-				
-				
-				
+					
+					
+						MPClientState.lock.release();
+						mapReceived = true;
+					}
 
-				return;
+					return;
+				}
+				packetNumber++;
+				Packet15RequestMap p = new Packet15RequestMap(packetNumber);
+				sendData(p.getData());
+				//System.out.println("REQUEST SENT");
+			}else{
+				Packet15RequestMap p = new Packet15RequestMap(packetNumber);
+				sendData(p.getData());
 			}
-			packetNumber++;
-			Packet15RequestMap p = new Packet15RequestMap(packetNumber);
-			sendData(p.getData());
-			//System.out.println("REQUEST SENT");
-		}else{
-			Packet15RequestMap p = new Packet15RequestMap(packetNumber);
-			sendData(p.getData());
 		}
+		
 	}
 	
 	private void assembleWorld(byte[] data){
@@ -344,6 +348,7 @@ public class Client implements Runnable{
 		if(!disconnected){
 			DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
 			try {
+				//System.out.println(new String(packet.getData()));
 				socket.send(packet);
 			} catch (IOException e) {
 				e.printStackTrace();

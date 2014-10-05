@@ -52,7 +52,8 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		this.userName = userName;
 		this.ip = ip;
 		this.port = port;
-		sheet = new StatsSheet(true);
+		if(NetStatus.isMultiPlayer && NetStatus.isHOST)
+			sheet = new StatsSheet(true);
 	}
 	
 	public void init(){
@@ -123,6 +124,7 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 
 	private void setBobing(boolean isBobing){
 		head.getBob().setActive(isBobing);
+		//System.out.println("LOWER BODY: " + lowerBody + " , GETBOB: " + lowerBody.getBob());
 		lowerBody.getBob().setActive(isBobing);
 		body.getBob().setActive(isBobing);
 		rightHand.getBob().setActive(isBobing);
