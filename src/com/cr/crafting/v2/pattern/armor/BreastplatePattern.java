@@ -26,8 +26,9 @@ public class BreastplatePattern extends Pattern{
 	}
 
 	@Override
-	public Item generateItem(){
+	public Item generateItem(ArrayList<Material> materials){
 		CopperPlate ch = new CopperPlate();
+		createStatsFromMaterials(materials);
 		for(StatMod x : stats){
 			if(x.getAffectedStat() == StatID.ARMOR){
 				x.mulAmount(ArmorMod);
@@ -35,6 +36,7 @@ public class BreastplatePattern extends Pattern{
 			x.setSourceID("upperbody");
 			ch.addStat(x);
 		}
+		applyQualities(ch, materials, "upperbody");
 		return ch;
 	}
 

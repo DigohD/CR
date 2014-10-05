@@ -27,8 +27,9 @@ public class LeggingsPattern extends Pattern{
 	}
 
 	@Override
-	public Item generateItem(){
+	public Item generateItem(ArrayList<Material> materials){
 		CopperLeggings ch = new CopperLeggings();
+		createStatsFromMaterials(materials);
 		for(StatMod x : stats){
 			if(x.getAffectedStat() == StatID.ARMOR){
 				x.mulAmount(ArmorMod);
@@ -36,6 +37,7 @@ public class LeggingsPattern extends Pattern{
 			x.setSourceID("lowerbody");
 			ch.addStat(x);
 		}
+		applyQualities(ch, materials, "lowerbody");
 		return ch;
 	}
 

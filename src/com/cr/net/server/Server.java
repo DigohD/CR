@@ -126,7 +126,6 @@ public class Server implements Runnable{
 			default:
 				break;
 		}
-		
 	}
 	
 	private void handleStatPacket(Packet17Stat packet07, InetAddress address, int port) {

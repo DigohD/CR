@@ -25,7 +25,13 @@ public abstract class Pattern {
 		System.out.println("StatCount: " + stats.size());
 	}
 	
-	public abstract Item generateItem();
+	protected void applyQualities(Item i, ArrayList<Material> materials, String sourceID){
+		for(Material x : materials){
+			x.applyQualityBonuses(i, sourceID);
+		}
+	}
+	
+	public abstract Item generateItem(ArrayList<Material> materials);
 	public abstract Sprite getSprite();
 	
 }

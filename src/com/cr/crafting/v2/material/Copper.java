@@ -7,6 +7,8 @@ import com.cr.crafting.v2.property.Solid;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.game.Game;
+import com.cr.item.Item;
+import com.cr.item.weapon.Weapon;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatsSheet.StatID;
 
@@ -180,6 +182,34 @@ public class Copper extends Material{
 				break;
 			default:
 				break;
+		}
+	}
+
+	@Override
+	public void applyQualityBonuses(Item i, String sourceID) {
+		if(i instanceof Weapon)
+			switch(quality){
+				case SUPERB:
+					break;
+				case MASTERFUL:
+					break;
+				case LEGENDARY:
+					i.addStat(new StatMod(75, StatID.PHYSICAL_POWER, sourceID, true));
+					break;
+				default:
+					break;
+			}
+		else
+			switch(quality){
+				case SUPERB:
+					break;
+				case MASTERFUL:
+					break;
+				case LEGENDARY:
+					i.addStat(new StatMod(10, StatID.ARMOR_RATING, sourceID, true));
+					break;
+				default:
+					break;
 		}
 	}
 	
