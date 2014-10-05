@@ -192,6 +192,12 @@ public class Client implements Runnable{
 		int type = p.getType();
 		
 		switch(type){
+			case -1:
+				Packet15RequestMap p2 = new Packet15RequestMap(-1);
+				sendData(p2.getData());
+				MPClientState.worldAssembled = true;
+			break;
+			
 			case 0:
 				Tree t = new Tree(p.getX(), p.getY());
 				t.setObjectID(p.getObjectID());
@@ -214,11 +220,10 @@ public class Client implements Runnable{
 				break;
 		}
 		
-		if(treesLoaded && stonesLoaded){
-			Packet15RequestMap p2 = new Packet15RequestMap(-1);
-			sendData(p2.getData());
-			MPClientState.worldAssembled = true;
-		}
+//		if(treesLoaded && stonesLoaded){
+//			System.out.println("WORLD ASSEMLBED");
+//			
+//		}
 			
 		
 	}

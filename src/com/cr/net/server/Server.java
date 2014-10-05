@@ -183,7 +183,8 @@ public class Server implements Runnable{
 				sendData(pso.getData(), address, port);
 			}
 			
-			
+			Packet18StaticObject pso = new Packet18StaticObject(0, 0, 0, -1, 0);
+			sendData(pso.getData(), address, port);
 			
 		}else{
 			byte[] data2 = new byte[1024];
