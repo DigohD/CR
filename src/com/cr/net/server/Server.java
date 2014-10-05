@@ -25,6 +25,7 @@ import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
+import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 
 public class Server implements Runnable{
@@ -168,10 +169,17 @@ public class Server implements Runnable{
 			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
 	        sendData(p2.getData(), address, port);
 		}else if(p.getPacketNumber() == -2){
-			System.out.println("TREE REQUEST RECEIVED");
+			System.out.println("Worldobject REQUEST RECEIVED");
+			
 			Tree[] trees = MPHostState.getWorld().getTrees();
 			for(int i = 0; i < trees.length; i++){
-				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getY(), 0);
+				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getY(), 0, trees.length);
+				sendData(pso.getData(), address, port);
+			}
+			
+			Stone[] stones = MPHostState.getWorld().getStones();
+			for(int i = 0; i < stones.length; i++){
+				Packet18StaticObject pso = new Packet18StaticObject(stones[i].getObjectID(), (int)stones[i].getX(), (int)stones[i].getY(), 1, stones.length);
 				sendData(pso.getData(), address, port);
 			}
 			

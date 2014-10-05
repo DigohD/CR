@@ -28,6 +28,7 @@ import com.cr.net.packets.Packet18StaticObject;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.states.net.MPClientState;
 import com.cr.world.World;
+import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 
 public class Client implements Runnable{
@@ -181,6 +182,9 @@ public class Client implements Runnable{
 	}
 	
 	public List<Tree> trees = new ArrayList<Tree>();
+	public List<Stone> stones = new ArrayList<Stone>();
+	boolean treesLoaded = false;
+	boolean stonesLoaded = false;
 	
 	private void handleStaticObject(Packet packet, InetAddress address, int port) {
 		Packet18StaticObject p = (Packet18StaticObject) packet;
@@ -192,12 +196,30 @@ public class Client implements Runnable{
 				Tree t = new Tree(p.getX(), p.getY());
 				t.setObjectID(p.getObjectID());
 				trees.add(t);
-				System.out.println(trees.size());
-				if(trees.size() >= 100) MPClientState.worldAssembled = true;
+				//System.out.println(trees.size());
+				if(trees.size() == p.getAmount())
+					treesLoaded = true;
+
+				break;
+			case 1:
+				Stone s = new Stone(p.getX(), p.getY());
+				s.setObjectID(p.getObjectID());
+				stones.add(s);
+				//System.out.println(trees.size());
+				if(stones.size() == p.getAmount())
+					stonesLoaded = true;
+				
 				break;
 			default:
 				break;
 		}
+		
+		if(treesLoaded && stonesLoaded){
+			Packet15RequestMap p2 = new Packet15RequestMap(-1);
+			sendData(p2.getData());
+			MPClientState.worldAssembled = true;
+		}
+			
 		
 	}
 
@@ -247,6 +269,8 @@ public class Client implements Runnable{
 		//System.out.println("REQUEST MAP PACKET SENT");
 	}
 	
+	boolean mapReceived = false;
+	
 	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
 		if(packetNumber == ((Packet14Map)packet).getPacketNumber()){
 			assembleWorld(data);
@@ -254,10 +278,15 @@ public class Client implements Runnable{
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
 				
-				Packet15RequestMap p2 = new Packet15RequestMap(-2);
-				sendData(p2.getData());
-				Packet15RequestMap p = new Packet15RequestMap(-1);
-				sendData(p.getData());
+				if(!mapReceived){
+					Packet15RequestMap p2 = new Packet15RequestMap(-2);
+					sendData(p2.getData());
+					mapReceived = true;
+				}
+				
+				
+			
+				
 				return;
 			}
 			packetNumber++;
