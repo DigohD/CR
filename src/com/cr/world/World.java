@@ -81,10 +81,10 @@ public class World {
 		this.height = height;
 
 		init();
-		System.out.println("Number of Trees: " + MPClientState.getClient().trees.size());
-		generateTrees(MPClientState.getClient().trees);
-		System.out.println("Number of Stones: " + MPClientState.getClient().stones.size());
-		generateStones(MPClientState.getClient().stones);
+//		System.out.println("Number of Trees: " + MPClientState.getClient().trees.size());
+//		generateTrees(MPClientState.getClient().trees);
+//		System.out.println("Number of Stones: " + MPClientState.getClient().stones.size());
+//		generateStones(MPClientState.getClient().stones);
 	}
 	
 	public World(){
@@ -200,7 +200,7 @@ public class World {
 	}
 	
 	private void generateStones(int num){
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < num; i++){
 			Stone s;
 			boolean generated = false;
 			while(!generated){

@@ -18,7 +18,6 @@ import com.cr.net.HeroMP;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
 import com.cr.net.packets.Packet10Login;
-import com.cr.net.packets.Packet11Connect;
 import com.cr.net.packets.Packet12Move;
 import com.cr.net.packets.Packet13Accept;
 import com.cr.net.packets.Packet14Map;
@@ -155,12 +154,6 @@ public class Client implements Runnable{
 				packet = new Packet13Accept(data);
 				handleAccept(packet, address, port);
 				break;
-			case CONNECT:
-				
-				System.out.println("CONNECT PACKET RECEIVED");
-				packet = new Packet11Connect(data);
-				handleConnect(packet, address, port);
-				break;
 			case MOVE:
 				//System.out.println("MOVE PACKET RECEIVED");
 				if(MPClientState.worldAssembled){
@@ -277,18 +270,17 @@ public class Client implements Runnable{
 		}
 	}
 	
-	private void handleConnect(Packet packet, InetAddress address, int port){
-		HeroMP hostHero = new HeroMP(((Packet11Connect)packet).getUserName(),((Packet11Connect)packet).getPos(), address, port);
+	private void handleAccept(Packet packet, InetAddress address, int port){
+		Packet13Accept p = (Packet13Accept) packet;
+		width = p.getWidth();
+		height = p.getHeight();
+
+		HeroMP hostHero = new HeroMP(p.getUsername(), new Vector2f(p.getX(), p.getY()), address, port);
 		startPos = hostHero.getPosition();
 		clientsMap.put(hostHero.getUserName(), hostHero);
-	}
-	
-	private void handleAccept(Packet packet, InetAddress address, int port){
-		width = ((Packet13Accept)packet).getWidth();
-		height = ((Packet13Accept)packet).getHeight();
-
-		Packet15RequestMap p = new Packet15RequestMap(packetNumber);
-		sendData(p.getData());
+		
+		Packet15RequestMap p2 = new Packet15RequestMap(packetNumber);
+		sendData(p2.getData());
 		//System.out.println("REQUEST MAP PACKET SENT");
 	}
 	
@@ -300,16 +292,22 @@ public class Client implements Runnable{
 			//System.out.println(pixels.size());
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
-				
+				MPClientState.worldAssembled = true;
+		
 				if(!mapReceived){
+					try {
+						MPClientState.lock.acquire();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
 					sendData(p2.getData());
+					MPClientState.lock.release();
 					mapReceived = true;
 				}
-				Packet15RequestMap p = new Packet15RequestMap(-1);
-				sendData(p.getData());
 				
-				MPClientState.worldAssembled = true;
+				
+				
 
 				return;
 			}

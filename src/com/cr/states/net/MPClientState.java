@@ -1,5 +1,7 @@
 package com.cr.states.net;
 
+import java.util.concurrent.Semaphore;
+
 import com.cr.crafting.v2.station.Forge;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.input.Input;
@@ -22,6 +24,8 @@ public class MPClientState extends GameState{
 	
 	public static boolean worldAssembled = false;
 	
+	public static Semaphore lock = new Semaphore(1);
+	
 	public MPClientState(GameStateManager gsm) {
 		super(gsm);
 		init();
@@ -30,9 +34,14 @@ public class MPClientState extends GameState{
 	@Override
 	public void init() {
 		client = new Client("anders","213.100.75.188", 12121);
+		try {
+			lock.acquire();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		client.start();
 	
-		while(!worldAssembled && !client.treesLoaded && !client.stonesLoaded){
+		while(!worldAssembled){
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -41,6 +50,7 @@ public class MPClientState extends GameState{
 		}
 
 		world = new World(client.pixels, client.getWidth(), client.getHeight());
+		lock.release();
 		
 		EntityManager.getHero().setUserName(client.getUserName());
 	}

@@ -13,7 +13,6 @@ import com.cr.net.HeroMP;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
 import com.cr.net.packets.Packet10Login;
-import com.cr.net.packets.Packet11Connect;
 import com.cr.net.packets.Packet12Move;
 import com.cr.net.packets.Packet13Accept;
 import com.cr.net.packets.Packet14Map;
@@ -194,16 +193,12 @@ public class Server implements Runnable{
 	private void handleRequestMap(Packet15RequestMap packet, InetAddress address, int port){
 		Packet14Map p = new Packet14Map(packet.getPacketNumber());
 		
-		if(p.getPacketNumber() == -1){
-			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
-	        sendData(p2.getData(), address, port);
-		}else{
-			byte[] data2 = new byte[1024];
-			for(int i = 0; i < p.getData().length; i++)
-				data2[i] = p.getData()[i];
+		byte[] data2 = new byte[1024];
+		for(int i = 0; i < p.getData().length; i++)
+			data2[i] = p.getData()[i];
 			
-			sendData(MPHostState.getWorld().getBytes(p.getPacketNumber(), data2), address, port);
-		}
+		sendData(MPHostState.getWorld().getBytes(p.getPacketNumber(), data2), address, port);
+		
 		
 		//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
 	}
@@ -237,8 +232,8 @@ public class Server implements Runnable{
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
             clientsMap.put(client.getUserName(), client);
         }
-        sendData(new Packet13Accept(client.getUserName(), MPHostState.getWorld().getWidth(), 
-    			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
+        sendData(new Packet13Accept(EntityManager.getHero().getUserName(), MPHostState.getWorld().getWidth(), 
+    			MPHostState.getWorld().getHeight(), EntityManager.getHero().getX(), EntityManager.getHero().getY()).getData(), client.getInetAddress(), client.getPort());
     }
 	
 

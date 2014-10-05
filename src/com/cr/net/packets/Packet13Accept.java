@@ -7,6 +7,7 @@ public class Packet13Accept extends Packet{
 
 	private String username;
 	private int width, height;
+	private float x, y;
 
     public Packet13Accept(byte[] data) {
         super(13);
@@ -14,13 +15,17 @@ public class Packet13Accept extends Packet{
         this.username = dataArray[1];
         this.width = Integer.parseInt(dataArray[2]);
         this.height = Integer.parseInt(dataArray[3]);
+        this.x = Float.parseFloat(dataArray[4]);
+        this.y = Float.parseFloat(dataArray[5]);
     }
 
-    public Packet13Accept(String username, int width, int height) {
+    public Packet13Accept(String username, int width, int height, float x, float y) {
         super(13);
         this.username = username;
         this.width = width;
         this.height = height;
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -35,7 +40,7 @@ public class Packet13Accept extends Packet{
 
     @Override
     public byte[] getData() {
-        return ("13" + ":" + this.username + ":" + width + ":" + height).getBytes();
+        return ("13" + ":" + this.username + ":" + width + ":" + height + ":" + x + ":" + y).getBytes();
     }
 
     public String getUsername() {
@@ -48,6 +53,14 @@ public class Packet13Accept extends Packet{
 
 	public int getHeight() {
 		return height;
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
 	}
 
 }
