@@ -14,6 +14,7 @@ import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
+import com.cr.net.HeroMP;
 import com.cr.stats.StatsSheet;
 import com.cr.util.Camera;
 import com.cr.world.World;
@@ -26,6 +27,8 @@ public class EntityManager {
 	private static List<Renderable> renderableEntities;
 	private static List<Renderable> deToAdd;
 	
+	private static List<Entity> mainAdds;
+	
 	private static Hero hero;
 	
 	public EntityManager(World world){
@@ -34,7 +37,11 @@ public class EntityManager {
 		renderableEntities = new ArrayList<Renderable>();
 		deToAdd = new ArrayList<Renderable>();
 		
+		mainAdds = new ArrayList<Entity>();
+		
 		hero = new Hero(world);
+//		HeroMP h = new HeroMP(hero.position.clone());
+//		h.init();
 	}
 	
 	public static void clear(){
@@ -42,6 +49,12 @@ public class EntityManager {
 		teToAdd.clear();
 		renderableEntities.clear();
 		deToAdd.clear();
+		
+		mainAdds.clear();
+	}
+	
+	public static void addByMainThread(Entity e){
+		mainAdds.add(e);
 	}
 	
 	public static void addEntity(Entity e){
@@ -59,6 +72,7 @@ public class EntityManager {
 		}
 		if(e instanceof Loot){
 			Loot c = (Loot) e;
+			c.init();
 			CollisionManager.addLoot(c);
 		}
 		if(e instanceof Projectile){
@@ -120,6 +134,10 @@ public class EntityManager {
 		
 		teToAdd.clear();
 		deToAdd.clear();
+		
+		for(Entity mainAdd : mainAdds)
+			addEntity(mainAdd);
+		mainAdds.clear();
 		
 		removeDeadEntities();
 		CollisionManager.collisionCheck(hero);

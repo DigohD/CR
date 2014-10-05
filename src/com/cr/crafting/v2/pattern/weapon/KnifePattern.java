@@ -24,8 +24,9 @@ public class KnifePattern extends Pattern{
 	}
 
 	@Override
-	public Item generateItem(){
+	public Item generateItem(ArrayList<Material> materials){
 		CopperKnife ck = new CopperKnife();
+		createStatsFromMaterials(materials);
 		for(StatMod x : stats){
 			x.setSourceID("weapon");
 			if(x.getAffectedStat() == StatID.DAMAGE_BASE)
@@ -37,7 +38,7 @@ public class KnifePattern extends Pattern{
 			else
 				ck.addStat(x);
 		}
-
+		applyQualities(ck, materials, "weapon");
 		return ck;
 	}
 

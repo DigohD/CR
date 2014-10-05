@@ -1,14 +1,18 @@
 package com.cr.states.net;
 
-import java.util.List;
-
+import com.cr.crafting.v2.station.Forge;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.net.HeroMP;
 import com.cr.net.server.Server;
 import com.cr.states.GameState;
+import com.cr.states.StatsState;
+import com.cr.states.crafting.CraftInitState;
+import com.cr.states.inventory.InventoryState;
 import com.cr.world.World;
 
 public class MPHostState extends GameState{
@@ -16,8 +20,6 @@ public class MPHostState extends GameState{
 	private static Server server;
 	private static World world;
 	private Hero hero;
-	
-	private List<HeroMP> mockUps;
 	
 	public MPHostState(GameStateManager gsm) {
 		super(gsm);
@@ -28,23 +30,31 @@ public class MPHostState extends GameState{
 	public void init() {
 		world = new World();
 		hero = EntityManager.getHero();
-		hero.setUserName("Ders");
-		server = new Server(1331);
-		mockUps = server.getMockups();
+		hero.setUserName("dgd");
+		server = new Server(12121);
 		server.start();
 	}
 
 	@Override
 	public void tick(float dt) {
+		if(Input.getKey(Input.C))
+			gsm.push(new InventoryState(gsm));
+		if(Input.getKey(Input.M))
+			gsm.push(new CraftInitState(gsm, new Forge()));
+		if(Input.getKey(Input.Q))
+			gsm.push(new StatsState(gsm));
+		if(Input.getKey(Input.ESCAPE))
+			Game.stop();
+		
 		world.tick(dt);
 		
-		for(int i = 0; i < mockUps.size(); i++){
-			if(mockUps.get(i).getSprite() == null)
-				mockUps.get(i).init();
+		for(String name : server.getClientsMap().keySet()){
+			HeroMP h = server.getClientsMap().get(name);
+			if(h.getSprite() == null)
+				h.init();
 		}
 		
-//		MovePacket02 mp = new MovePacket02(hero.getUserName(), hero.getPos());
-//		server.sendDataToAllClients(mp.getData());
+	
 	}
 
 	@Override

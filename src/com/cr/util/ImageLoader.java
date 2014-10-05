@@ -124,6 +124,8 @@ public class ImageLoader {
 		imageLib.put("turquoise", loadImage("/material/turquoise.png"));
 		imageLib.put("basicleather", loadImage("/material/basicleather.png"));
 		imageLib.put("forestsoul", loadImage("/material/forestsoul.png"));
+		imageLib.put("blueagate", loadImage("/material/blueagate.png"));
+		imageLib.put("greenagate", loadImage("/material/greenagate.png"));
 	
 //		// Crafting UI
 		imageLib.put("addbutton", loadImage("/craftingui/addbutton.png"));

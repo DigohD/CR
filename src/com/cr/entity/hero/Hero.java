@@ -17,7 +17,7 @@ import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.net.NetStatus;
-import com.cr.net.packets.MovePacket02;
+import com.cr.net.packets.Packet12Move;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
@@ -65,16 +65,25 @@ public class Hero extends Mob implements Collideable{
 		super(position, world);
 		input = new HeroInput(this);
 		t = new Transform();
-		position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
-		//position = new Vector2f(10, 10);
-		if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
-			while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
-				position.y += Tile.getTileHeight();
-				if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
-					break;
+		if(NetStatus.isMultiPlayer && !NetStatus.isHOST){
+			position = new Vector2f(MPClientState.getClient().getStartPos().x + 50, MPClientState.getClient().getStartPos().y);
+		}else{
+			position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
+		}
+		
+		if(!(NetStatus.isMultiPlayer && !NetStatus.isHOST)){
+			//position = new Vector2f(10, 10);
+			if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+				while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
+					position.y += Tile.getTileHeight();
+					if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+						break;
+					}
 				}
 			}
 		}
+		
+		
 				
 		head = new Head();
 		body = new UpperBody();
@@ -135,11 +144,12 @@ public class Hero extends Mob implements Collideable{
 			
 		if(NetStatus.isMultiPlayer){
 			if(!NetStatus.isHOST){
-				MovePacket02 mp  = new MovePacket02(userName, position);
+				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
 				MPClientState.getClient().sendData(mp.getData());
+				//System.out.println("MOVE PACKET SENT");
 			}
 			if(NetStatus.isHOST){
-				MovePacket02 mp  = new MovePacket02(userName, position);
+				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
 				MPHostState.getServer().sendDataToAllClients(mp.getData());
 			}
 		}

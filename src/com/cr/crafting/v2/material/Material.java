@@ -8,6 +8,7 @@ import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.item.Item;
 import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
 import com.cr.util.CRString;
@@ -21,7 +22,7 @@ public abstract class Material{
 	public enum Quality{NORMAL, SUPERB, MASTERFUL, LEGENDARY}
 	
 	protected State state;
-	protected Quality quality;
+	protected Quality quality = Quality.NORMAL;
 	
 	protected int lowerHeatLimit, higherHeatLimit;
 	protected int lowerTimeLimit, higherTimeLimit;
@@ -223,6 +224,7 @@ public abstract class Material{
 	public abstract Sprite getMaterialImage();
 	public abstract ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats);
 	public abstract ArrayList<StatMod> getArmorStats(ArrayList<StatMod> stats);
+	public abstract void applyQualityBonuses(Item i, String sourceID);
 	
 	protected abstract void setQualityMods();
 	protected abstract void newMods();
@@ -391,5 +393,4 @@ public abstract class Material{
 	public int getUsedAmount() {
 		return usedAmount;
 	}
-	
 }

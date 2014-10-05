@@ -5,29 +5,34 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.SocketTimeoutException;
+import java.util.HashMap;
 
-import com.cr.entity.hero.HeroMP;
 import com.cr.game.EntityManager;
-import com.cr.net.client.ClientInfo;
-import com.cr.net.packets.AcceptPacket03;
-import com.cr.net.packets.ConnectPacket01;
-import com.cr.net.packets.LoginPacket00;
-import com.cr.net.packets.MapPacket04;
-import com.cr.net.packets.MovePacket02;
+import com.cr.net.HeroMP;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
-import com.cr.net.packets.RequestMapPacket05;
+import com.cr.net.packets.Packet10Login;
+import com.cr.net.packets.Packet11Connect;
+import com.cr.net.packets.Packet12Move;
+import com.cr.net.packets.Packet13Accept;
+import com.cr.net.packets.Packet14Map;
+import com.cr.net.packets.Packet15RequestMap;
+import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet17Stat;
+import com.cr.net.packets.Packet18StaticObject;
 import com.cr.states.net.MPHostState;
+import com.cr.stats.Stat;
+import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
+import com.cr.world.terrain.Tree;
 
 public class Server implements Runnable{
 	
 	private DatagramSocket socket;
 	private Thread thread;
 	
-	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
-	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
+	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	
 	private boolean running = false;
 	
@@ -39,7 +44,6 @@ public class Server implements Runnable{
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void start(){
@@ -52,10 +56,13 @@ public class Server implements Runnable{
 	public void stop(){
 		System.out.println("Server closing..");
 		running = false;
-		socket.close();
+		
+		
+		
 		System.out.println("Server closed..");
 		try {
 			thread.join();
+			System.out.println("Threads joined..");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -63,129 +70,179 @@ public class Server implements Runnable{
 
 	@Override
 	public void run() {
-		
-		while(running){
-			byte[] data = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(data, data.length);
-			
-			try {
-				socket.receive(packet);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
-		}
-		
+		try {
+			socket.setSoTimeout(10);
+            while(running) {
+            	byte[] data = new byte[1024];
+				DatagramPacket packet = new DatagramPacket(data, data.length);
+                try {
+                	socket.receive(packet);
+                }catch (SocketTimeoutException e) {
+                    continue;
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
+//                System.out.println("REcieve Packet: " + new String(packet.getData()));
+                parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            }
+        }catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+            socket.close();
+        }
 	}
 	
 	private void parsePacket(byte[] data, InetAddress address, int port) {
-		
 		String message = new String(data).trim();
 		
-		System.out.println(message.substring(0, 2));
+		//System.out.println(message.substring(0, 2));
 		PacketTypes type = Packet.lookupPacket(Integer.parseInt(message.substring(0, 2)));
-		Packet packet = null;
 		
 		switch(type){
-			default:
-				break;
 			case INVALID:
 				break;
 			case DISCONNECT:
+				Packet16Disconnect packet06 = new Packet16Disconnect(data);
+				handleDisconnect(packet06, address, port);
 				break;
 			case LOGIN:
-				packet = new LoginPacket00(data);
-				System.out.println("[" + address.getHostAddress() + ":" + port + "] " + ((LoginPacket00) packet).getUserName() + " has connected");
-				ClientInfo client = new ClientInfo(((LoginPacket00) packet).getUserName(), address, port);
-				HeroMP hero = new HeroMP(client.getUserName(), EntityManager.getHero().getPos());
-				addConnection(client, hero, (LoginPacket00) packet);
+				Packet10Login packet00 = new Packet10Login(data);
+				handleLogin(packet00, address, port);
 				break;
 			case MOVE:
-				packet = new MovePacket02(data);
-				for(int i = 0; i < connectedClients.size(); i++){
-					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
-					}
-				}
-				
-				packet.writeData(this);
+				Packet12Move packet02 = new Packet12Move(data);
+				handleMove(packet02, address, port);
 				break;
 			case REQUESTMAP:
-				packet = new RequestMapPacket05(data);
-				MapPacket04 p = new MapPacket04(((RequestMapPacket05)packet).getPacketNumber());
-				
-				byte[] data2 = new byte[1024];
-				for(int i = 0; i < p.getData().length; i++)
-					data2[i] = p.getData()[i];
-				
-				sendData(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2), address, port);
-				//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
+				Packet15RequestMap packet05 = new Packet15RequestMap(data);
+				handleRequestMap(packet05, address, port);
+				break;
+			case STATS:
+				Packet17Stat packet07 = new Packet17Stat(data);
+				handleStatPacket(packet07, address, port);
+				break;
+			default:
 				break;
 		}
-		
 	}
 	
-	public void addConnection(ClientInfo client, HeroMP hero, Packet packet) {
+	private void handleStatPacket(Packet17Stat packet07, InetAddress address, int port) {
+		HeroMP client = clientsMap.get(packet07.getUserName());
+		StatsSheet sheet = client.getSheet();
+		Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
+		stat.setNewBase(packet07.getValue());
+	}
+
+	private void handleDisconnect(Packet16Disconnect packet, InetAddress address, int port){
+		System.out.println("DISCONNECT PACKET RECEIVED");
+		if(clientsMap.containsKey(packet.getUserName())){
+			clientsMap.get(packet.getUserName()).setLive(false);
+			System.out.println("Player: " + clientsMap.get(packet.getUserName()).getUserName() + " has disconnected");
+			clientsMap.remove(packet.getUserName());
+		}
+		sendDataToAllClients(packet.getData());
+	}
+	
+	private void handleLogin(Packet10Login packet, InetAddress address, int port){
+		System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUserName() + " has connected");
+		String name = packet.getUserName();
+		HeroMP hero = new HeroMP(name, EntityManager.getHero().getPos(), address, port);
+		addConnection(hero, packet);
+	}
+	
+	private void handleMove(Packet12Move packet, InetAddress address, int port){
+		String s = packet.getUserName();
+		if(clientsMap.containsKey(s)){
+			clientsMap.get(s).setPosition(packet.getPos());
+			clientsMap.get(s).setDirection(packet.getDir());
+		}
+		packet.writeData(this);
+	}
+	
+	private void handleRequestMap(Packet15RequestMap packet, InetAddress address, int port){
+		Packet14Map p = new Packet14Map(packet.getPacketNumber());
+		
+		if(p.getPacketNumber() == -1){
+			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
+	        sendData(p2.getData(), address, port);
+		}else if(p.getPacketNumber() == -2){
+			System.out.println("TREE REQUEST RECEIVED");
+			Tree[] trees = MPHostState.getWorld().getTrees();
+			for(int i = 0; i < trees.length; i++){
+				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getY(), 0);
+				sendData(pso.getData(), address, port);
+			}
+			
+			
+			
+		}else{
+			byte[] data2 = new byte[1024];
+			for(int i = 0; i < p.getData().length; i++)
+				data2[i] = p.getData()[i];
+			
+			sendData(MPHostState.getWorld().getBytes(p.getPacketNumber(), data2), address, port);
+		}
+		
+		//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
+	}
+	
+	private void addConnection(HeroMP client, Packet packet) {
     	boolean alreadyConnected = false;
     	//loop through all the connected players 
-        for (ClientInfo c : this.connectedClients) {
-        	
-            if (client.getUserName().equalsIgnoreCase(c.getUserName())) {
-                if (c.getInetAddress() == null) {
-                    c.setIp(client.getInetAddress());
+        for (String name : clientsMap.keySet()) {
+        	HeroMP h = clientsMap.get(name);
+            if (name.equalsIgnoreCase(client.getUserName())) {
+                if (h.getInetAddress() == null) {
+                    h.setIp(client.getInetAddress());
                 }
-                if (c.getPort() == -1) {
-                    c.setPort(client.getPort());
+                if (h.getPort() == -1) {
+                    h.setPort(client.getPort());
                 }
                 alreadyConnected = true;
             } else {
                 // relay to the current connected player that there is a new
                 // player
-                sendData(packet.getData(), c.getInetAddress(), c.getPort());
+                sendData(packet.getData(), h.getInetAddress(), h.getPort());
 
                 // relay to the new player that the currently connect player
                 // exists
-                packet = new LoginPacket00(c.getUserName());
+                packet = new Packet10Login(h.getUserName());
                 sendData(packet.getData(), client.getInetAddress(), client.getPort());
             }
         }
         
-        packet = new ConnectPacket01(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
-        sendData(packet.getData(), client.getInetAddress(), client.getPort());
-        
         if (!alreadyConnected) {
         	System.out.println("Player: " + client.getUserName() + " joined server succesfully");
-        	sendData(new AcceptPacket03(client.getUserName(), MPHostState.getWorld().getWidth(), MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
-            connectedClients.add(client);
-            heroMockups.add(hero);
+            clientsMap.put(client.getUserName(), client);
         }
+        sendData(new Packet13Accept(client.getUserName(), MPHostState.getWorld().getWidth(), 
+    			MPHostState.getWorld().getHeight()).getData(), client.getInetAddress(), client.getPort());
     }
 	
 
 	public void sendData(byte[] data, InetAddress ip, int port){
-		
 		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+		
+//		System.out.println("SendPacket: " + new String(packet.getData()));
+		
 		try {
 			socket.send(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	public void sendDataToAllClients(byte[] data) {
-		for(ClientInfo c : connectedClients)
-			sendData(data, c.getInetAddress(), c.getPort());
+		for(String name : clientsMap.keySet()){
+			HeroMP h = clientsMap.get(name);
+			sendData(data, h.getInetAddress(), h.getPort());
+		}	
 	}
-	
-	public List<ClientInfo> getClients(){
-		return connectedClients;
+
+	public HashMap<String, HeroMP> getClientsMap() {
+		return clientsMap;
 	}
-	
-	public List<HeroMP> getMockups(){
-		return heroMockups;
-	}
-	
 
 }

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cr.combat.loot.Loot;
+import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
@@ -14,7 +16,14 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.wisp.Wisp;
+import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.EntityManager;
+import com.cr.net.HeroMP;
+import com.cr.net.NetStatus;
+import com.cr.net.packets.Packet19Loot;
+import com.cr.net.server.Server;
+import com.cr.states.net.MPClientState;
+import com.cr.states.net.MPHostState;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.terrain.Stone;
@@ -35,6 +44,8 @@ public class World {
 	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
 	private List<Integer> pixels = new ArrayList<Integer>();
 	
+	private Tree[] trees = new Tree[100];
+	
 	private int width, height;
 	private int timer = 0;
 	
@@ -46,15 +57,15 @@ public class World {
 	
 	private boolean day = true, night = false;
 	
-	float lightX = 0;
-	float lightY = 0;
-	float lightZ = 0;
+	private float lightX = 0;
+	private float lightY = 0;
+	private float lightZ = 0;
 	
-	float lightX2 = 0;
-	float lightY2 = 0;
-	float lightZ2 = 0;
+	private float lightX2 = 0;
+	private float lightY2 = 0;
+	private float lightZ2 = 0;
 	
-	float k = 0;
+	private float k = 0;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -64,7 +75,12 @@ public class World {
 		this.width = width;
 		this.height = height;
 		
+		
+		
+		
 		init();
+		System.out.println(MPClientState.getClient().trees.size());
+		generateTrees(MPClientState.getClient().trees);
 	}
 	
 	public World(){
@@ -87,6 +103,7 @@ public class World {
 			pixels.add(map.getTopLayer().getBitmap().getPixels()[i]);
 		
 		init();
+		generateWorldObjects();
 	}
 	
 	private void init(){
@@ -106,7 +123,7 @@ public class World {
 		
 		eyePosition = Camera.getPos();
 		
-		//generateWorldObjects();
+		
 	}
 	
 	private void initShader(){
@@ -147,81 +164,70 @@ public class World {
 	}
 	
 	private void generateWorldObjects(){
-
-		//sprite = new Sprite("normalMap1", shader, new Transform());
-//		sprite1 = new Sprite("blueMask", Game.shader, new Transform());
+//		for(int i = 0; i < 1; i++){
+//			ForestElf e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new ForestElf(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				//System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+//	
+//		for(int i = 0; i < 10; i++){
+//			Wisp e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new Wisp(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				//System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+	
 		
-		map = new TileMap(100, 100);
-
-		width = map.getWidth();
-		height = map.getHeight();
-		
-		em = new EntityManager(this);
-		camera = new Camera();
-		
-//		new LootEmitter(new Vector2f(200,200), 5000);
-		
-//		RangedTest dummy = new RangedTest(new Vector2f(400, 400), this);
-
-		for(int i = 0; i < 30; i++){
-			ForestElf e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new ForestElf(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
-		
-		for(int i = 0; i < 10; i++){
-			Wisp e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new Wisp(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				//System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
-
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < trees.length; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
 				t = new Tree(-1000, -1000);
+				t.init();
+				
 				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
 				//System.out.println(t.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
+					trees[i] = t;
 					generated = true;
 				}
 			}
 		}
-
-		for(int i = 0; i < 100; i++){
-			Stone s;
-			boolean generated = false;
-			while(!generated){
-				s = new Stone(-1000, -1000);
-				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
-				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
+	
+//		for(int i = 0; i < 100; i++){
+//			Stone s;
+//			boolean generated = false;
+//			while(!generated){
+//				s = new Stone(-1000, -1000);
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+//					
+//					generated = true;
+//				}
+//			}
+//		}
 	}
 	
 	private void dayNightCycle(float dt){
@@ -246,9 +252,9 @@ public class World {
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
-		
+	
 		dayNightCycle(dt);
-		
+
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
@@ -297,73 +303,41 @@ public class World {
 		return null;
 	}
 	
-	public byte[] getBytes2(int pNumber, byte[] data){
+	public byte[] getBytes(int pNumber, byte[] data){
 		for(int i = 0; i < 924; i++)
 			if(i + (pNumber*924) < 30000)
 				data[i+100] = byteMap.get(pixels.get(i + (pNumber*924)));
 		return data;
 	}
-	
-	public byte[] getBytes(int packetNumber, byte[] data){
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("Pn: " + packetNumber);
-	
-		int rest = ((packetNumber + 1) * 924) % (width*height);
-		int pre = 924 - rest;
-		
-		if(packetNumber != 0 && rest < 924 && ((packetNumber+1)*924) > (width*height*2) && ((packetNumber+1)*924) < (width*height*3)){
-			int start = (packetNumber * 924)   - (width * height);
-			for(int i = 0; i < pre; i++)
-				data[i + 100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[start + i]);
-			
-			for(int i = pre; i < 924; i++){
-				data[i + 100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[i]);
-			}
-			
-			return data;
-		}else if(((packetNumber+1)*924) > (width*height*3)){
-			int start = (width * height) - rest;
-			for(int i = 0; i < rest; i++)
-				data[i + 100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[i + start]);
-			return data;
-		}
-		
-		if(packetNumber != 0 && rest < 924){
-			int start = (packetNumber * 924);
-			for(int i = 0; i < pre; i++)
-				data[i + 100] = byteMap.get(map.getBottomLayer().getBitmap().getPixels()[start + i]);
-			
-			for(int i = pre; i < 924; i++){
-				data[i + 100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[i]);
-			}
-			
-			return data;
-		}
-		
-		if(packetNumber * 924 > width * height * 2){
-			for(int i = 0; i < 924; i++)
-				data[i+100] = byteMap.get(map.getTopLayer().getBitmap().getPixels()[(i + (packetNumber*924))  - (width * height * 2)]);
-			return data;
-		}
-			
-		if(packetNumber * 924 > width * height){
-			for(int i = 0; i < 924; i++)
-				data[i+100] = byteMap.get(map.getMiddleLayer().getBitmap().getPixels()[(i + (packetNumber*924)) - (width * height)]);
-			return data;
-		}
-		
-		for(int i = 0; i < 924; i++){
-			data[i+100] = byteMap.get(map.getBottomLayer().getBitmap().getPixels()[i + (packetNumber*924)]);
-		}
-		
-		
-		return data;
-		
-	}
 
+	public static void spawnLoot(int x, int y, int type, int amount){
+		new Loot(new Vector2f(x, y), new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), type, amount);
+	}
+	
+	public static void spawnLoot(int x, int y, LootTable lt, int amount){
+		if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+			Server server = MPHostState.getServer();
+			HashMap<String, HeroMP> players = server.getClientsMap();
+			System.out.println("Send Loot");
+			for(String s : players.keySet()){
+				System.out.println("Loot to: " + players.get(s).getUserName());
+				Packet19Loot p = new Packet19Loot(19, x, y, lt.getLootID(), 1);
+				server.sendData(p.getData(), players.get(s).getInetAddress(), players.get(s).getPort());
+			}
+		}
+		new Loot(new Vector2f(x, y), new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), lt.getLootID(), amount);
+	}
+	
+	public void generateTrees(List<Tree> trees){
+		for(Tree t : trees){
+			if(t != null){
+				t.init();
+			}
+			
+		}
+			
+	}
+	
 	public static Shader getShader() {
 		return shader;
 	}
@@ -380,6 +354,8 @@ public class World {
 		return height;
 	}
 
-	
+	public Tree[] getTrees() {
+		return trees;
+	}
 
 }

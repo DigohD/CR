@@ -5,49 +5,58 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
-import com.cr.entity.hero.HeroMP;
-import com.cr.net.packets.AcceptPacket03;
-import com.cr.net.packets.ConnectPacket01;
-import com.cr.net.packets.MapPacket04;
-import com.cr.net.packets.MovePacket02;
+import com.cr.net.HeroMP;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
-import com.cr.net.packets.RequestMapPacket05;
+import com.cr.net.packets.Packet10Login;
+import com.cr.net.packets.Packet11Connect;
+import com.cr.net.packets.Packet12Move;
+import com.cr.net.packets.Packet13Accept;
+import com.cr.net.packets.Packet14Map;
+import com.cr.net.packets.Packet15RequestMap;
+import com.cr.net.packets.Packet16Disconnect;
+import com.cr.net.packets.Packet18StaticObject;
+import com.cr.net.packets.Packet19Loot;
 import com.cr.states.net.MPClientState;
+import com.cr.world.World;
+import com.cr.world.terrain.Tree;
 
 public class Client implements Runnable{
-
+	
 	private InetAddress ip;
 	private DatagramSocket socket;
 	private Thread thread;
 	
-	private int port;
+	private Vector2f startPos;
 	
-	private List<ClientInfo> connectedClients = new ArrayList<ClientInfo>();
-	private List<HeroMP> heroMockups = new ArrayList<HeroMP>();
+	private int port;
+	private int packetNumber = 0;
+	private int width, height;
 	
 	private volatile boolean running = false;
+	public boolean disconnected = false;
 	
-	private int[] bottomLayerData, middleLayerData, topLayerData;
+	public boolean connected = false;
 	
+	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	private HashMap<Byte, Integer> byteToIntMap = new HashMap<Byte, Integer>();
 	
 	public LinkedList<Integer> pixels = new LinkedList<Integer>();
 	
-	int packetNumber = 0;
-	//int index = 0;
+	private Packet10Login loginPacket;
+	private String userName;
 	
-	public int width, height;
-	
-	public Client(String ip, int port){
-		
+	public Client(String userName, String ip, int port){
+		this.userName = userName;
 		this.port = port;
 	
 		byteToIntMap.put((byte)-1, ColorRGBA.BLACK);
@@ -58,8 +67,8 @@ public class Client implements Runnable{
 		byteToIntMap.put((byte)4, ColorRGBA.YELLOW);
 		
 		try {
-			socket = new DatagramSocket();
 			this.ip = InetAddress.getByName(ip);
+			socket = new DatagramSocket();
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} catch (UnknownHostException e) {
@@ -72,11 +81,12 @@ public class Client implements Runnable{
 		running = true;
 		thread = new Thread(this, "client-thread");
 		thread.start();
+		loginPacket = new Packet10Login(userName);
+		sendData(loginPacket.getData());
 	}
 	
 	public synchronized void stop(){
 		running = false;
-		socket.close();
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
@@ -86,21 +96,40 @@ public class Client implements Runnable{
 
 	@Override
 	public void run() {
-		
-		while(running){
+		while(!connected){
+			loginPacket = new Packet10Login(userName);
+			sendData(loginPacket.getData());
+			
 			byte[] data = new byte[1024];
 			DatagramPacket packet = new DatagramPacket(data, data.length);
-			
-			try {
+           
+            try {
 				socket.receive(packet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            
+            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            	
 		}
 		
+        while(running) {
+        	byte[] data = new byte[1024];
+        	DatagramPacket packet = new DatagramPacket(data, data.length);
+               
+            try{
+                socket.setSoTimeout(250);
+                socket.receive(packet);
+            }catch(SocketTimeoutException e){
+            	continue;
+            } catch (IOException e) {	
+            	e.printStackTrace();
+            }
+            	parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            }
+           socket.close();
 	}
-	
+
 	private void parsePacket(byte[] data, InetAddress address, int port) {
 		String message = new String(data).trim();
 		
@@ -109,81 +138,176 @@ public class Client implements Runnable{
 		
 		switch(type){
 			case MAP:
-				//System.out.println("data size: " + data.length);
-				packet = new MapPacket04(data);
-				if(packetNumber == ((MapPacket04)packet).getPacketNumber()){
-					assembleWorld(data);
-					System.out.println(pixels.size());
-					if(pixels.size() > width*height*3){
-						while(pixels.size() > 30000) pixels.removeFirst();
-						MPClientState.worldAssembled = true;
-						return;
-					}
-					packetNumber++;
-					RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
-					sendData(p.getData());
-					System.out.println("REQUEST SENT");
-				}else{
-					RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
-					sendData(p.getData());
-				}
-				
+				//System.out.println("MAP PACKET RECEIVED");
+				packet = new Packet14Map(data);
+				handleMap(packet, data, address, port);
 				break;
 			case ACCEPT:
-				packet = new AcceptPacket03(data);
-				width = ((AcceptPacket03)packet).getWidth();
-				height = ((AcceptPacket03)packet).getHeight();
-				bottomLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
-				middleLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
-				topLayerData = new int[((AcceptPacket03)packet).getWidth() * ((AcceptPacket03)packet).getHeight()];
-				
-				RequestMapPacket05 p = new RequestMapPacket05(packetNumber);
-				sendData(p.getData());
-				
+				connected = true;
+				System.out.println("ACCEPT PACKET RECEIVED");
+				packet = new Packet13Accept(data);
+				handleAccept(packet, address, port);
 				break;
 			case CONNECT:
-				packet = new ConnectPacket01(data);
-				HeroMP hostHero = new HeroMP(((ConnectPacket01)packet).getUserName(),((ConnectPacket01)packet).getPos());
-				heroMockups.add(hostHero);
-				connectedClients.add(new ClientInfo(((ConnectPacket01)packet).getUserName(), address, port));
+				
+				System.out.println("CONNECT PACKET RECEIVED");
+				packet = new Packet11Connect(data);
+				handleConnect(packet, address, port);
 				break;
 			case MOVE:
-				packet = new MovePacket02(data);
-				
-				for(int i = 0; i < connectedClients.size(); i++){
-					if(connectedClients.get(i).getUserName().equalsIgnoreCase(((MovePacket02)packet).getUserName())){
-						heroMockups.get(i).setPosition(((MovePacket02) packet).getPos());
-					}
-				}
+				//System.out.println("MOVE PACKET RECEIVED");
+				packet = new Packet12Move(data);
+				handleMove(packet, address, port);
+				break;
+			case LOGIN:
+				packet = new Packet10Login(data);
+				handleLogin(packet, address, port);
+				break;
+			case DISCONNECT:
+				packet = new Packet16Disconnect(data);
+				handleDisconnect(packet, address, port);
+				break;
+			case LOOT:
+				packet = new Packet19Loot(data);
+				handleLoot(packet, address, port);
+				break;
+			case STATICOBJECT:
+				packet = new Packet18StaticObject(data);
+				handleStaticObject(packet, address, port);
+				break;
+			default:
 				break;
 		}
 	}
 	
-	public void assembleWorld(byte[] data){
-		for(int i = 0; i < 924; i++){
-			pixels.addFirst(byteToIntMap.get(data[i+100]));
+	public List<Tree> trees = new ArrayList<Tree>();
+	
+	private void handleStaticObject(Packet packet, InetAddress address, int port) {
+		Packet18StaticObject p = (Packet18StaticObject) packet;
+		
+		int type = p.getType();
+		
+		switch(type){
+			case 0:
+				Tree t = new Tree(p.getX(), p.getY());
+				t.setObjectID(p.getObjectID());
+				trees.add(t);
+				System.out.println(trees.size());
+				if(trees.size() >= 100) MPClientState.worldAssembled = true;
+				break;
+			default:
+				break;
 		}
+		
+	}
+
+	private void handleLoot(Packet packet, InetAddress address, int port) {
+		Packet19Loot p = (Packet19Loot) packet;
+		World.spawnLoot(p.getX(), p.getY(), p.getType(), p.getAmount());
+	}
+
+	private void handleLogin(Packet packet, InetAddress address, int port) {
+		Packet10Login p = (Packet10Login) packet;
+		
+		if(!(p.getUserName().equalsIgnoreCase(this.userName))){
+			clientsMap.put(p.getUserName(), new HeroMP(p.getUserName(),new Vector2f(0,0), address, port));
+		}
+		else System.out.println(p.getUserName() + " has joined!");
+		
+	}
+	
+	private void handleDisconnect(Packet packet, InetAddress address, int port) {
+		Packet16Disconnect p = (Packet16Disconnect) packet;
+		if(clientsMap.containsKey(p.getUserName())){
+			clientsMap.get(p.getUserName()).setLive(false);
+			clientsMap.remove(p.getUserName());
+		}
+	}
+
+	private void handleMove(Packet packet, InetAddress address, int port){
+		String s = ((Packet12Move) packet).getUserName();
+		if(clientsMap.containsKey(s)){
+			clientsMap.get(s).setPosition(((Packet12Move) packet).getPos());
+			clientsMap.get(s).setDirection(((Packet12Move) packet).getDir());
+		}
+	}
+	
+	private void handleConnect(Packet packet, InetAddress address, int port){
+		HeroMP hostHero = new HeroMP(((Packet11Connect)packet).getUserName(),((Packet11Connect)packet).getPos(), address, port);
+		startPos = hostHero.getPosition();
+		clientsMap.put(hostHero.getUserName(), hostHero);
+	}
+	
+	private void handleAccept(Packet packet, InetAddress address, int port){
+		width = ((Packet13Accept)packet).getWidth();
+		height = ((Packet13Accept)packet).getHeight();
+
+		Packet15RequestMap p = new Packet15RequestMap(packetNumber);
+		sendData(p.getData());
+		//System.out.println("REQUEST MAP PACKET SENT");
+	}
+	
+	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
+		if(packetNumber == ((Packet14Map)packet).getPacketNumber()){
+			assembleWorld(data);
+			//System.out.println(pixels.size());
+			if(pixels.size() > width*height*3){
+				while(pixels.size() > 30000) pixels.removeFirst();
+				
+				Packet15RequestMap p2 = new Packet15RequestMap(-2);
+				sendData(p2.getData());
+				Packet15RequestMap p = new Packet15RequestMap(-1);
+				sendData(p.getData());
+				return;
+			}
+			packetNumber++;
+			Packet15RequestMap p = new Packet15RequestMap(packetNumber);
+			sendData(p.getData());
+			//System.out.println("REQUEST SENT");
+		}else{
+			Packet15RequestMap p = new Packet15RequestMap(packetNumber);
+			sendData(p.getData());
+		}
+	}
+	
+	private void assembleWorld(byte[] data){
+		for(int i = 0; i < 924; i++)
+			pixels.addFirst(byteToIntMap.get(data[i+100]));
 	}
 	
 	public void sendData(byte[] data){
-		
-		DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
-		try {
-			socket.send(packet);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(!disconnected){
+			DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+			try {
+				socket.send(packet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+			
+		
 		
 	}
 
-	public List<ClientInfo> getConnectedClients() {
-		return connectedClients;
+	public HashMap<String, HeroMP> getClientsMap() {
+		return clientsMap;
 	}
 
-	public List<HeroMP> getHeroMockups() {
-		return heroMockups;
+	public int getWidth() {
+		return width;
 	}
-	
+
+	public int getHeight() {
+		return height;
+	}
+
+	public Vector2f getStartPos() {
+		return startPos;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
 
 }
 

@@ -14,6 +14,7 @@ import com.cr.crafting.v2.property.Volatile;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Sprite;
 import com.cr.game.Game;
+import com.cr.item.Item;
 import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatsSheet.StatID;
@@ -59,7 +60,7 @@ public class ForestSoul extends Material{
 
 	@Override
 	public int getID() {
-		return 1;
+		return 4;
 	}
 
 	@Override
@@ -130,6 +131,12 @@ public class ForestSoul extends Material{
 			default:
 				break;
 		}
+	}
+
+	@Override
+	public void applyQualityBonuses(Item i, String sourceID) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

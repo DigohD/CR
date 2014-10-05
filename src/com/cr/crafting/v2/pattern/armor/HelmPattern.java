@@ -25,15 +25,17 @@ public class HelmPattern extends Pattern{
 	}
 
 	@Override
-	public Item generateItem(){
+	public Item generateItem(ArrayList<Material> materials){
 		CopperHelm ch = new CopperHelm();
+		createStatsFromMaterials(materials);
 		for(StatMod x : stats){
 			if(x.getAffectedStat() == StatID.ARMOR){
 				x.mulAmount(ArmorMod);
 			}
-			x.setSourceID("helm");
+			x.setSourceID("head");
 			ch.addStat(x);
 		}
+		applyQualities(ch, materials, "head");
 		return ch;
 	}
 

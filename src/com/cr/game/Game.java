@@ -19,7 +19,7 @@ public class Game extends CoreEngine{
 	public static Shader shader;
 	
 	public Game(){
-		boolean fullScreen = true;
+		boolean fullScreen = false;
 		if(fullScreen){
 			Window.setFullScreen();
 		}else Window.createWindow(800, 600, false);
@@ -45,8 +45,6 @@ public class Game extends CoreEngine{
 	@Override
 	public void getInput() {
 		Input.tick();
-		if(Input.getKey(Input.ESCAPE))
-			stop();
 	}
 
 	@Override

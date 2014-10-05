@@ -2,6 +2,8 @@ package com.cr.entity.hero.body;
 
 import java.awt.Rectangle;
 
+import com.cr.engine.core.Transform;
+import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
@@ -19,6 +21,11 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	protected Item item;
 	
+	protected boolean isLocal = false;
+	
+	protected Vector2f pos;
+	protected Direction dir;
+	
 	protected int width, height;
 	protected int horXOffset, vertXOffset, xOffset, yOffset;
 	
@@ -27,6 +34,26 @@ public abstract class PlayerPart implements Renderable, Tickable{
 		
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
+		
+		pos = Hero.position;
+		isLocal = true;
+		
+		this.horXOffset = horXOffset;
+		this.vertXOffset = vertXOffset;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
+		this.bob = bob;
+	}
+	
+	public PlayerPart(String imageString, Bob bob, int horXOffset, int vertXOffset, int xOffset, int yOffset, Vector2f pos, Transform t){
+		sprite = new Sprite(imageString, 1, 4, 0, 0, World.getShader(), t);
+		
+		width = sprite.getSpriteWidth();
+		height = sprite.getSpriteHeight();
+		
+		this.pos = pos;
+		isLocal = false;
+		dir = Direction.SOUTH;
 		
 		this.horXOffset = horXOffset;
 		this.vertXOffset = vertXOffset;
@@ -37,10 +64,13 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	@Override
 	public void render(Screen screen){
-		int x = (int) Hero.position.x;
-		int y = (int) Hero.position.y;
+		if(isLocal){
+			pos = Hero.position;
+			dir = Hero.currentDir;
+		}
+		int x = (int) pos.x;
+		int y = (int) pos.y;
 		
-		Direction dir = Hero.currentDir;
 		int spriteID = 0;
 		int horXOffset = 0;
 		
@@ -88,8 +118,8 @@ public abstract class PlayerPart implements Renderable, Tickable{
 	
 	@Override
 	public Rectangle getRect() {
-		int x = (int) Hero.position.x;
-		int y = (int) Hero.position.y;
+		int x = (int) pos.x;
+		int y = (int) pos.y;
 		
 		int drawX = x + (int)bob.getOffset().x + horXOffset + xOffset;
 		int drawY = y + (int)bob.getOffset().y + yOffset;
@@ -112,6 +142,14 @@ public abstract class PlayerPart implements Renderable, Tickable{
 
 	public Item getItem() {
 		return item;
+	}
+
+	public void setPos(Vector2f pos) {
+		this.pos = pos;
+	}
+
+	public void setDir(Direction dir) {
+		this.dir = dir;
 	}
 	
 	

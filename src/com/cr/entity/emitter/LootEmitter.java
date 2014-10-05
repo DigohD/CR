@@ -5,6 +5,7 @@ import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Vector2f;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
+import com.cr.world.World;
 
 public class LootEmitter extends Emitter{
 
@@ -18,7 +19,7 @@ public class LootEmitter extends Emitter{
 
 	@Override
 	public void emit() {
-		new Loot(position, new Vector2f(Randomizer.getFloat(-2f, 2f), -7.5f), lt.getLootID(), 1);
+		World.spawnLoot((int) position.x, (int) position.y, lt, 1);
 	}
 
 }

@@ -4,13 +4,13 @@ import com.cr.engine.core.Vector2f;
 import com.cr.net.client.Client;
 import com.cr.net.server.Server;
 
-public class ConnectPacket01 extends Packet{
+public class Packet11Connect extends Packet{
 
 	private String userName;
 	private Vector2f pos = new Vector2f(0, 0);
 
-	public ConnectPacket01(byte[] data) {
-		super(01);
+	public Packet11Connect(byte[] data) {
+		super(11);
 		String[] dataArray = readData(data).split(":");
 		  
 		this.userName = dataArray[1];
@@ -18,8 +18,8 @@ public class ConnectPacket01 extends Packet{
 		this.pos.y = Float.parseFloat(dataArray[3]);
 	}
 	
-	public ConnectPacket01(String userName,Vector2f pos) {
-		super(01);
+	public Packet11Connect(String userName,Vector2f pos) {
+		super(11);
 		this.userName = userName;
 		this.pos = pos;
 	}
@@ -37,7 +37,7 @@ public class ConnectPacket01 extends Packet{
 	
 	@Override
 	public byte[] getData() {
-		return ("01" + ":" + userName + ":" + pos.x + ":" + pos.y).getBytes();
+		return ("11" + ":" + userName + ":" + pos.x + ":" + pos.y).getBytes();
 	}
 	
 

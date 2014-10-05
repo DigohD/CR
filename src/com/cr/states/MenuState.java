@@ -5,6 +5,7 @@ import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.NetStatus;
 import com.cr.states.net.MPClientState;
@@ -39,6 +40,9 @@ public class MenuState extends GameState{
 			NetStatus.isMultiPlayer = true;
 			gsm.push(new MPClientState(gsm));
 		}
+		
+		if(Input.getKey(Input.ESCAPE))
+			Game.stop();
 	}
 
 	@Override
