@@ -137,8 +137,10 @@ public class Server implements Runnable{
 	}
 
 	private void handleDisconnect(Packet16Disconnect packet, InetAddress address, int port){
+		System.out.println("DISCONNECT PACKET RECEIVED");
 		if(clientsMap.containsKey(packet.getUserName())){
 			clientsMap.get(packet.getUserName()).setLive(false);
+			System.out.println("Player: " + clientsMap.get(packet.getUserName()).getUserName() + " has disconnected");
 			clientsMap.remove(packet.getUserName());
 		}
 		sendDataToAllClients(packet.getData());
@@ -167,12 +169,14 @@ public class Server implements Runnable{
 			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
 	        sendData(p2.getData(), address, port);
 		}else if(p.getPacketNumber() == -2){
-			System.out.println("OBJECT REQUEST RECEIVED");
+			System.out.println("TREE REQUEST RECEIVED");
 			Tree[] trees = MPHostState.getWorld().getTrees();
 			for(int i = 0; i < trees.length; i++){
 				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getY(), 0);
 				sendData(pso.getData(), address, port);
 			}
+			
+			
 			
 		}else{
 			byte[] data2 = new byte[1024];

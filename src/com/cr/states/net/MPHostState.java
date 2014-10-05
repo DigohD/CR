@@ -31,7 +31,7 @@ public class MPHostState extends GameState{
 		world = new World();
 		hero = EntityManager.getHero();
 		hero.setUserName("dgd");
-		server = new Server(1331);
+		server = new Server(12121);
 		server.start();
 	}
 
@@ -53,6 +53,8 @@ public class MPHostState extends GameState{
 			if(h.getSprite() == null)
 				h.init();
 		}
+		
+	
 	}
 
 	@Override

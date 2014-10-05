@@ -79,6 +79,7 @@ public class World {
 		
 		
 		init();
+		System.out.println(MPClientState.getClient().trees.size());
 		generateTrees(MPClientState.getClient().trees);
 	}
 	
@@ -163,35 +164,35 @@ public class World {
 	}
 	
 	private void generateWorldObjects(){
-		for(int i = 0; i < 1; i++){
-			ForestElf e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new ForestElf(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				//System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
-	
-		for(int i = 0; i < 10; i++){
-			Wisp e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new Wisp(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				//System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
+//		for(int i = 0; i < 1; i++){
+//			ForestElf e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new ForestElf(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				//System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
+//	
+//		for(int i = 0; i < 10; i++){
+//			Wisp e = null;
+//			boolean generated = false;
+//			while(!generated){
+//				e = new Wisp(new Vector2f(-1000, -1000), this);
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+//				//System.out.println(e.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+//					generated = true;
+//				}
+//			}
+//		}
 	
 		
 		for(int i = 0; i < trees.length; i++){
@@ -213,20 +214,20 @@ public class World {
 			}
 		}
 	
-		for(int i = 0; i < 100; i++){
-			Stone s;
-			boolean generated = false;
-			while(!generated){
-				s = new Stone(-1000, -1000);
-				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
-				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
-					
-					generated = true;
-				}
-			}
-		}
+//		for(int i = 0; i < 100; i++){
+//			Stone s;
+//			boolean generated = false;
+//			while(!generated){
+//				s = new Stone(-1000, -1000);
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+//					
+//					generated = true;
+//				}
+//			}
+//		}
 	}
 	
 	private void dayNightCycle(float dt){
