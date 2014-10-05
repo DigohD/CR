@@ -1,44 +1,33 @@
 package com.cr.world.terrain;
 
 import java.awt.Rectangle;
-import java.util.Vector;
 
 import com.cr.combat.loot.LootEntry;
 import com.cr.combat.loot.LootTable;
 import com.cr.engine.core.Vector2f;
-import com.cr.engine.graphics.Material;
-import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
-import com.cr.entity.Entity;
-import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.emitter.ImpactEmitter;
 import com.cr.entity.emitter.LootEmitter;
-import com.cr.entity.hero.Hero;
 import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
-import com.cr.item.weapon.Weapon;
 import com.cr.util.Randomizer;
 
-public class Stone extends Entity implements Renderable, Collideable, Tickable{
+public class Stone extends WorldObject implements Collideable, Tickable{
 
-	private Sprite sprite;
-	private Rectangle rect;
-	private Vector2f v;
+	private int objectID;
 	private int shiverCount = 0;
 	private int hitCount = Randomizer.getInt(4, 5);
 	
+	private Vector2f v;
 	private LootTable lt;
 	
 	public Stone(int x , int y){
 		super(new Vector2f(x, y));
-		sprite = new Sprite("stone");
-		rect = new Rectangle(x, y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		EntityManager.addEntity(this);
-		CollisionManager.addHitable(this);
+	
+		objectID = 1;
 		v = new Vector2f(0, 0);
-		
 		lt = new LootTable();
 		
 		lt.addEntry(new LootEntry(1, 5));
@@ -47,17 +36,22 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 	}
 
 	@Override
-	public void render(Screen screen) {
-		screen.renderSprite(sprite, position.x, position.y);
+	public void init() {
+		sprite = new Sprite("stone" + objectID);
+		rect = new Rectangle((int)position.x, (int)position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		EntityManager.addEntity(this);
+		CollisionManager.addHitable(this);
 	}
 
 	@Override
-	public Sprite getSprite() {
-		return sprite;
+	public void activate() {
+		
+		
 	}
 
 	@Override
 	public void tick(float dt) {
+		updateRect();
 		if(v.x != 0 && shiverCount++ == 3){
 			if(v.x >= 0){
 				v = v.add(new Vector2f(-0.4f, 0));
@@ -73,8 +67,6 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 			shiverCount = 0;
 		}
 		position = position.add(v);
-		rect.x = (int) position.x;
-		rect.y = (int) position.y;
 	}
 	
 	@Override
@@ -98,11 +90,12 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 		}
 	}
 
-	@Override
-	public Rectangle getRect() {
-		return rect;
+	public int getObjectID() {
+		return objectID;
 	}
 
-	
+	public void setObjectID(int objectID) {
+		this.objectID = objectID;
+	}
 	
 }

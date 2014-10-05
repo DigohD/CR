@@ -8,6 +8,7 @@ public class Packet18StaticObject extends Packet{
 	private int objectID;
 	private int x, y;
 	private int type;
+	private int amount;
 
 	public Packet18StaticObject(byte[] data){
 		super(18);
@@ -16,14 +17,16 @@ public class Packet18StaticObject extends Packet{
 		this.x = Integer.parseInt(array[2]);
 		this.y = Integer.parseInt(array[3]);
 		this.type = Integer.parseInt(array[4]);
+		this.amount = Integer.parseInt(array[5]);
 	}
 
-	public Packet18StaticObject(int objectID, int x, int y, int type) {
+	public Packet18StaticObject(int objectID, int x, int y, int type, int amount) {
 		super(18);
 		this.objectID = objectID;
 		this.x = x;
 		this.y = y;
 		this.type = type;
+		this.amount = amount;
 	}
 
 	@Override
@@ -39,7 +42,7 @@ public class Packet18StaticObject extends Packet{
 	@Override
 	public byte[] getData() {
 		
-		return ("18" + ":" + objectID + ":" + x + ":" + y + ":" + type).getBytes();
+		return ("18" + ":" + objectID + ":" + x + ":" + y + ":" + type + ":" + amount).getBytes();
 	}
 
 	public int getObjectID() {
@@ -56,6 +59,10 @@ public class Packet18StaticObject extends Packet{
 
 	public int getType() {
 		return type;
+	}
+
+	public int getAmount() {
+		return amount;
 	}
 
 }

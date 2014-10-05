@@ -3,6 +3,7 @@ package com.cr.game;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import com.cr.combat.Projectile;
 import com.cr.combat.loot.Loot;
@@ -14,11 +15,8 @@ import com.cr.entity.Tickable;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
-import com.cr.net.HeroMP;
-import com.cr.stats.StatsSheet;
 import com.cr.util.Camera;
 import com.cr.world.World;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 public class EntityManager {
 	
@@ -30,6 +28,8 @@ public class EntityManager {
 	private static List<Entity> mainAdds;
 	
 	private static Hero hero;
+	
+	private static Semaphore lock = new Semaphore(1);
 	
 	public EntityManager(World world){
 		tickableEntities = new ArrayList<Tickable>();
@@ -54,7 +54,13 @@ public class EntityManager {
 	}
 	
 	public static void addByMainThread(Entity e){
+		try {
+			lock.acquire();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		mainAdds.add(e);
+		lock.release();
 	}
 	
 	public static void addEntity(Entity e){
@@ -135,9 +141,15 @@ public class EntityManager {
 		teToAdd.clear();
 		deToAdd.clear();
 		
+		try {
+			lock.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		for(Entity mainAdd : mainAdds)
 			addEntity(mainAdd);
 		mainAdds.clear();
+		lock.release();
 		
 		removeDeadEntities();
 		CollisionManager.collisionCheck(hero);

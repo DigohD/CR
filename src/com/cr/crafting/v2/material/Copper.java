@@ -180,6 +180,11 @@ public class Copper extends Material{
 				baseBonus = 1.25f;
 				secBonus = 1f;
 				break;
+			case LEGENDARY:
+				primbonus = 1.5f;
+				baseBonus = 1.25f;
+				secBonus = 1f;
+				break;
 			default:
 				break;
 		}

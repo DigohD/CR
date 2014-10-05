@@ -128,6 +128,11 @@ public class ForestSoul extends Material{
 				baseBonus = 1.4f;
 				secBonus = 1.4f;
 				break;
+			case LEGENDARY:
+				primbonus = 1f;
+				baseBonus = 1.4f;
+				secBonus = 1.4f;
+				break;
 			default:
 				break;
 		}

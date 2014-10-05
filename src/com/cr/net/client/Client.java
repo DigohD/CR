@@ -28,6 +28,7 @@ import com.cr.net.packets.Packet18StaticObject;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.states.net.MPClientState;
 import com.cr.world.World;
+import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 
 public class Client implements Runnable{
@@ -101,25 +102,30 @@ public class Client implements Runnable{
 			sendData(loginPacket.getData());
 			
 			byte[] data = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(data, data.length);
-           
-            try {
-				socket.receive(packet);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
-            	
-		}
-		
+        	DatagramPacket packet = new DatagramPacket(data, data.length);
+               
+            try{
+                socket.setSoTimeout(1000);
+                //System.out.println("BEFORE RECEIVE, !conected");
+                socket.receive(packet);
+                //System.out.println("AFTER RECEIVE, !connected");
+            }catch(SocketTimeoutException e){
+            	continue;
+            } catch (IOException e) {	
+            	e.printStackTrace();
+            }
+            	parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+       }
+	
         while(running) {
         	byte[] data = new byte[1024];
         	DatagramPacket packet = new DatagramPacket(data, data.length);
                
             try{
-                socket.setSoTimeout(250);
+                socket.setSoTimeout(1000);
+               // System.out.println("BEFORE RECEIVE");
                 socket.receive(packet);
+                //System.out.println("AFTER RECEIVE");
             }catch(SocketTimeoutException e){
             	continue;
             } catch (IOException e) {	
@@ -156,8 +162,11 @@ public class Client implements Runnable{
 				break;
 			case MOVE:
 				//System.out.println("MOVE PACKET RECEIVED");
-				packet = new Packet12Move(data);
-				handleMove(packet, address, port);
+				if(MPClientState.worldAssembled){
+					packet = new Packet12Move(data);
+					handleMove(packet, address, port);
+				}
+				
 				break;
 			case LOGIN:
 				packet = new Packet10Login(data);
@@ -181,6 +190,9 @@ public class Client implements Runnable{
 	}
 	
 	public List<Tree> trees = new ArrayList<Tree>();
+	public List<Stone> stones = new ArrayList<Stone>();
+	boolean treesLoaded = false;
+	boolean stonesLoaded = false;
 	
 	private void handleStaticObject(Packet packet, InetAddress address, int port) {
 		Packet18StaticObject p = (Packet18StaticObject) packet;
@@ -188,16 +200,40 @@ public class Client implements Runnable{
 		int type = p.getType();
 		
 		switch(type){
+			case -1:
+				System.out.println("WORLD OBJECTS LOADED");
+				Packet15RequestMap p2 = new Packet15RequestMap(-1);
+				sendData(p2.getData());
+				MPClientState.worldAssembled = true;
+			break;
+			
 			case 0:
-				Tree t = new Tree(p.getX(), p.getY());
-				t.setObjectID(p.getObjectID());
-				trees.add(t);
-				System.out.println(trees.size());
-				if(trees.size() >= 100) MPClientState.worldAssembled = true;
+				if(trees.size() < p.getAmount()){
+					Tree t = new Tree(p.getX(), p.getY());
+					t.setObjectID(p.getObjectID());
+					trees.add(t);
+					Packet15RequestMap p3 = new Packet15RequestMap(-2);
+					sendData(p3.getData());
+				}
+				break;
+			case 1:
+				if(trees.size() < p.getAmount()){
+					Stone s = new Stone(p.getX(), p.getY());
+					s.setObjectID(p.getObjectID());
+					stones.add(s);
+					Packet15RequestMap p3 = new Packet15RequestMap(-2);
+					sendData(p3.getData());
+				}
 				break;
 			default:
 				break;
 		}
+		
+//		if(treesLoaded && stonesLoaded){
+//			System.out.println("WORLD ASSEMLBED");
+//			
+//		}
+			
 		
 	}
 
@@ -247,6 +283,8 @@ public class Client implements Runnable{
 		//System.out.println("REQUEST MAP PACKET SENT");
 	}
 	
+	boolean mapReceived = false;
+	
 	private void handleMap(Packet packet, byte[] data, InetAddress address, int port){
 		if(packetNumber == ((Packet14Map)packet).getPacketNumber()){
 			assembleWorld(data);
@@ -254,10 +292,15 @@ public class Client implements Runnable{
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
 				
-				Packet15RequestMap p2 = new Packet15RequestMap(-2);
-				sendData(p2.getData());
-				Packet15RequestMap p = new Packet15RequestMap(-1);
-				sendData(p.getData());
+				if(!mapReceived){
+					Packet15RequestMap p2 = new Packet15RequestMap(-2);
+					sendData(p2.getData());
+					mapReceived = true;
+				}
+				
+				
+			
+				
 				return;
 			}
 			packetNumber++;

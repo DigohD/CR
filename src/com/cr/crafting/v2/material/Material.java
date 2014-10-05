@@ -139,12 +139,14 @@ public abstract class Material{
 			upper = true;
 		
 		int rnd = Randomizer.getInt(1, 100);
-		if(rnd < 75)
+		if(rnd < 2)
 			quality = Quality.NORMAL;
-		else if(rnd < 95)
+		else if(rnd < 3)
 			quality = Quality.SUPERB;
-		else
+		else if(rnd < 4)
 			quality = Quality.MASTERFUL;
+		else
+			quality = Quality.LEGENDARY;
 		
 		setQualityMods();
 		

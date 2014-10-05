@@ -25,6 +25,7 @@ import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
+import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 
 public class Server implements Runnable{
@@ -161,6 +162,8 @@ public class Server implements Runnable{
 		packet.writeData(this);
 	}
 	
+	int counter = 0;
+	
 	private void handleRequestMap(Packet15RequestMap packet, InetAddress address, int port){
 		Packet14Map p = new Packet14Map(packet.getPacketNumber());
 		
@@ -168,15 +171,31 @@ public class Server implements Runnable{
 			Packet11Connect p2 = new Packet11Connect(EntityManager.getHero().getUserName(), EntityManager.getHero().getPos());
 	        sendData(p2.getData(), address, port);
 		}else if(p.getPacketNumber() == -2){
-			System.out.println("TREE REQUEST RECEIVED");
-			Tree[] trees = MPHostState.getWorld().getTrees();
-			for(int i = 0; i < trees.length; i++){
-				Packet18StaticObject pso = new Packet18StaticObject(trees[i].getObjectID(), (int)trees[i].getX(), (int)trees[i].getY(), 0);
+			System.out.println("Worldobject REQUEST RECEIVED");
+			
+			if(counter <= 90){
+				Tree[] trees = MPHostState.getWorld().getTrees();
+				for(int i = 0; i < 10; i++){
+					Packet18StaticObject pso = new Packet18StaticObject(trees[i+counter].getObjectID(), (int)trees[i+counter].getX(), 
+																		(int)trees[i+counter].getY(), 0, trees.length);
+					sendData(pso.getData(), address, port);
+				}
+				
+				Stone[] stones = MPHostState.getWorld().getStones();
+				for(int i = 0; i < 10; i++){
+					Packet18StaticObject pso = new Packet18StaticObject(stones[i+counter].getObjectID(), (int)stones[i+counter].getX(), 
+																		(int)stones[i+counter].getY(), 1, stones.length);
+					sendData(pso.getData(), address, port);
+				}
+			}
+
+			counter += 10;
+			
+			if(counter >= 100){
+				Packet18StaticObject pso = new Packet18StaticObject(0, 0, 0, -1, 0);
 				sendData(pso.getData(), address, port);
 			}
-			
-			
-			
+
 		}else{
 			byte[] data2 = new byte[1024];
 			for(int i = 0; i < p.getData().length; i++)

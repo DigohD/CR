@@ -16,7 +16,6 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.wisp.Wisp;
-import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
 import com.cr.net.NetStatus;
@@ -28,6 +27,7 @@ import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
+import com.cr.world.terrain.WorldObject;
 import com.cr.world.tile.Tile;
 
 public class World {
@@ -41,13 +41,18 @@ public class World {
 	
 	private Vector3f lightPosition,lightPosition2, ambientLight, eyePosition;
 	
-	private HashMap<Integer, Byte> byteMap = new HashMap<Integer, Byte>();
-	private List<Integer> pixels = new ArrayList<Integer>();
+	private HashMap<Integer, Byte> byteMap;
+	private HashMap<Vector2f, WorldObject> objectPosMap;
+	private List<Integer> pixels;
 	
-	private Tree[] trees = new Tree[100];
+	private Tree[] trees;
+	private Stone[] stones;
 	
 	private int width, height;
 	private int timer = 0;
+	
+	private int numOfTrees = 100;
+	private int numOfStones = 100;
 	
 	private float t = 0;
 	private float amplitudeWave = 5f;
@@ -69,18 +74,17 @@ public class World {
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
-		
+		objectPosMap = new HashMap<Vector2f, WorldObject>();
 		map = new TileMap(pixels, width, height);
 
 		this.width = width;
 		this.height = height;
-		
-		
-		
-		
+
 		init();
-		System.out.println(MPClientState.getClient().trees.size());
+		System.out.println("Number of Trees: " + MPClientState.getClient().trees.size());
 		generateTrees(MPClientState.getClient().trees);
+		System.out.println("Number of Stones: " + MPClientState.getClient().stones.size());
+		generateStones(MPClientState.getClient().stones);
 	}
 	
 	public World(){
@@ -91,19 +95,29 @@ public class World {
 		width = map.getWidth();
 		height = map.getHeight();
 		
-		initByteMap();
+		if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+			byteMap = new HashMap<Integer, Byte>();
+			pixels = new ArrayList<Integer>();
+			objectPosMap = new HashMap<Vector2f, WorldObject>();
+			
+			trees = new Tree[numOfTrees];
+			stones = new Stone[numOfStones];
+			
+			initByteMap();
+			
+			for(int i = 0; i < width*height; i++)
+				pixels.add(map.getBottomLayer().getBitmap().getPixels()[i]);
+			
+			for(int i = 0; i < width*height; i++)
+				pixels.add(map.getMiddleLayer().getBitmap().getPixels()[i]);
 		
-		for(int i = 0; i < width*height; i++)
-			pixels.add(map.getBottomLayer().getBitmap().getPixels()[i]);
-		
-		for(int i = 0; i < width*height; i++)
-			pixels.add(map.getMiddleLayer().getBitmap().getPixels()[i]);
-	
-		for(int i = 0; i < width*height; i++)
-			pixels.add(map.getTopLayer().getBitmap().getPixels()[i]);
+			for(int i = 0; i < width*height; i++)
+				pixels.add(map.getTopLayer().getBitmap().getPixels()[i]);
+		}
 		
 		init();
 		generateWorldObjects();
+		//generateEnemies();
 	}
 	
 	private void init(){
@@ -122,8 +136,6 @@ public class World {
 		camera = new Camera();
 		
 		eyePosition = Camera.getPos();
-		
-		
 	}
 	
 	private void initShader(){
@@ -163,71 +175,86 @@ public class World {
 		byteMap.put(ColorRGBA.YELLOW, (byte)4);
 	}
 	
-	private void generateWorldObjects(){
-//		for(int i = 0; i < 1; i++){
-//			ForestElf e = null;
-//			boolean generated = false;
-//			while(!generated){
-//				e = new ForestElf(new Vector2f(-1000, -1000), this);
-//				int x = Randomizer.getInt(0, width * 51) + 40;
-//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-//				//System.out.println(e.getSprite().getSpriteHeight());
-//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-//					generated = true;
-//				}
-//			}
-//		}
-//	
-//		for(int i = 0; i < 10; i++){
-//			Wisp e = null;
-//			boolean generated = false;
-//			while(!generated){
-//				e = new Wisp(new Vector2f(-1000, -1000), this);
-//				int x = Randomizer.getInt(0, width * 51) + 40;
-//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-//				//System.out.println(e.getSprite().getSpriteHeight());
-//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-//					generated = true;
-//				}
-//			}
-//		}
-	
-		
-		for(int i = 0; i < trees.length; i++){
+	private void generateTrees(int num){
+		for(int i = 0; i < num; i++){
 			Tree t;
 			boolean generated = false;
 			while(!generated){
 				t = new Tree(-1000, -1000);
 				t.init();
-				
 				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
 				//System.out.println(t.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
 					t.updateRect();
-					trees[i] = t;
+					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+						objectPosMap.put(t.getPosition(), t);
+						trees[i] = t;
+					}
+						
+					generated = true;
+				}
+			}
+		}
+	}
+	
+	private void generateStones(int num){
+		for(int i = 0; i < 100; i++){
+			Stone s;
+			boolean generated = false;
+			while(!generated){
+				s = new Stone(-1000, -1000);
+				s.init();
+				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
+				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+						objectPosMap.put(s.getPosition(), s);
+						stones[i] = s;
+					}
+					generated = true;
+				}
+			}
+		}
+	}
+	
+	private void generateEnemies(){
+		for(int i = 0; i < 1; i++){
+			ForestElf e = null;
+			boolean generated = false;
+			while(!generated){
+				e = new ForestElf(new Vector2f(-1000, -1000), this);
+				int x = Randomizer.getInt(0, width * 51) + 40;
+				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+				//System.out.println(e.getSprite().getSpriteHeight());
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
 					generated = true;
 				}
 			}
 		}
 	
-//		for(int i = 0; i < 100; i++){
-//			Stone s;
-//			boolean generated = false;
-//			while(!generated){
-//				s = new Stone(-1000, -1000);
-//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
-//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
-//					
-//					generated = true;
-//				}
-//			}
-//		}
+		for(int i = 0; i < 10; i++){
+			Wisp e = null;
+			boolean generated = false;
+			while(!generated){
+				e = new Wisp(new Vector2f(-1000, -1000), this);
+				int x = Randomizer.getInt(0, width * 51) + 40;
+				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+				//System.out.println(e.getSprite().getSpriteHeight());
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+					generated = true;
+				}
+			}
+		}
+	}
+	
+	private void generateWorldObjects(){
+		generateTrees(numOfTrees);
+		generateStones(numOfStones);
 	}
 	
 	private void dayNightCycle(float dt){
@@ -333,9 +360,15 @@ public class World {
 			if(t != null){
 				t.init();
 			}
-			
 		}
-			
+	}
+	
+	public void generateStones(List<Stone> stones){
+		for(Stone s : stones){
+			if(s != null){
+				s.init();
+			}
+		}
 	}
 	
 	public static Shader getShader() {
@@ -354,8 +387,24 @@ public class World {
 		return height;
 	}
 
+	public HashMap<Vector2f, WorldObject> getObjectPosMap() {
+		return objectPosMap;
+	}
+
+	public int getNumOfTrees() {
+		return numOfTrees;
+	}
+
+	public int getNumOfStones() {
+		return numOfStones;
+	}
+
 	public Tree[] getTrees() {
 		return trees;
+	}
+
+	public Stone[] getStones() {
+		return stones;
 	}
 
 }
