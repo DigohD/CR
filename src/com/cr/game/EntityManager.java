@@ -28,6 +28,7 @@ public class EntityManager {
 	private static List<Renderable> deToAdd;
 	
 	private static List<Entity> mainAdds;
+	private static List<Entity> maToAdd;
 	
 	private static Hero hero;
 	
@@ -38,6 +39,7 @@ public class EntityManager {
 		deToAdd = new ArrayList<Renderable>();
 		
 		mainAdds = new ArrayList<Entity>();
+		maToAdd = new ArrayList<Entity>();
 		
 		hero = new Hero(world);
 //		HeroMP h = new HeroMP(hero.position.clone());
@@ -51,6 +53,7 @@ public class EntityManager {
 		deToAdd.clear();
 		
 		mainAdds.clear();
+		maToAdd.clear();
 	}
 	
 	public static void addByMainThread(Entity e){
@@ -73,6 +76,7 @@ public class EntityManager {
 		if(e instanceof Loot){
 			Loot c = (Loot) e;
 			c.init();
+			maToAdd.add(c);
 			CollisionManager.addLoot(c);
 		}
 		if(e instanceof Projectile){
@@ -100,6 +104,7 @@ public class EntityManager {
 		}
 		if(e instanceof Loot){
 			Loot c = (Loot) e;
+			mainAdds.remove(c);
 			CollisionManager.removeLoot(c);
 		}
 		if(e instanceof Projectile){
@@ -135,9 +140,9 @@ public class EntityManager {
 		teToAdd.clear();
 		deToAdd.clear();
 		
-		for(Entity mainAdd : mainAdds)
-			addEntity(mainAdd);
-		mainAdds.clear();
+		for(Entity mainAdd : maToAdd)
+			mainAdds.add(mainAdd);
+		maToAdd.clear();
 		
 		removeDeadEntities();
 		CollisionManager.collisionCheck(hero);
