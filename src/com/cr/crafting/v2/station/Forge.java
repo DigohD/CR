@@ -72,6 +72,7 @@ public class Forge {
 	
 	public Item craft(){
 		Item i = pattern.generateItem(materials);
+		i.statsInit();
 		Inventory.addItem(i);
 		System.out.println("");
 		System.out.println("");
