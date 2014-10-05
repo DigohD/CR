@@ -188,8 +188,8 @@ public class Client implements Runnable{
 	public boolean treesLoaded = false;
 	public boolean stonesLoaded = false;
 	
-	int treeIndex = 0;
-	int stoneIndex = 0;
+	int treeIndex = 1;
+	int stoneIndex = 1;
 	
 	private void handleStaticObject(Packet packet, InetAddress address, int port) {
 		Packet18StaticObject p = (Packet18StaticObject) packet;
@@ -200,6 +200,8 @@ public class Client implements Runnable{
 			
 			
 			case 0:
+				System.out.println("TREES RECEIVED");
+				System.out.println("Trees: " + trees.size());
 				if(treeIndex < p.getAmount()){
 					Tree t = new Tree(p.getX(), p.getY());
 					t.setObjectID(p.getObjectID());
@@ -302,12 +304,12 @@ public class Client implements Runnable{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					Packet20RequestObj p2 = new Packet20RequestObj(0, treeIndex);
+					Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
 					sendData(p2.getData());
-					treeIndex++;
-					Packet20RequestObj p1 = new Packet20RequestObj(1, stoneIndex);
+			
+					Packet20RequestObj p1 = new Packet20RequestObj(1, 0);
 					sendData(p1.getData());
-					stoneIndex++;
+				
 					MPClientState.lock.release();
 					mapReceived = true;
 				}
