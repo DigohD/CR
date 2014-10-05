@@ -32,7 +32,7 @@ public class MPClientState extends GameState{
 		client = new Client("anders","213.100.75.188", 12121);
 		client.start();
 	
-		while(!worldAssembled){
+		while(!worldAssembled && !client.treesLoaded && !client.stonesLoaded){
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {

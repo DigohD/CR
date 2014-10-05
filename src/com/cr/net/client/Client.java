@@ -26,6 +26,7 @@ import com.cr.net.packets.Packet15RequestMap;
 import com.cr.net.packets.Packet16Disconnect;
 import com.cr.net.packets.Packet18StaticObject;
 import com.cr.net.packets.Packet19Loot;
+import com.cr.net.packets.Packet20RequestObj;
 import com.cr.states.net.MPClientState;
 import com.cr.world.World;
 import com.cr.world.terrain.Stone;
@@ -191,8 +192,11 @@ public class Client implements Runnable{
 	
 	public List<Tree> trees = new ArrayList<Tree>();
 	public List<Stone> stones = new ArrayList<Stone>();
-	boolean treesLoaded = false;
-	boolean stonesLoaded = false;
+	public boolean treesLoaded = false;
+	public boolean stonesLoaded = false;
+	
+	int treeIndex = 0;
+	int stoneIndex = 0;
 	
 	private void handleStaticObject(Packet packet, InetAddress address, int port) {
 		Packet18StaticObject p = (Packet18StaticObject) packet;
@@ -200,29 +204,34 @@ public class Client implements Runnable{
 		int type = p.getType();
 		
 		switch(type){
-			case -1:
-				System.out.println("WORLD OBJECTS LOADED");
-				Packet15RequestMap p2 = new Packet15RequestMap(-1);
-				sendData(p2.getData());
-				MPClientState.worldAssembled = true;
-			break;
+			
 			
 			case 0:
-				if(trees.size() < p.getAmount()){
+				if(treeIndex < p.getAmount()){
 					Tree t = new Tree(p.getX(), p.getY());
 					t.setObjectID(p.getObjectID());
 					trees.add(t);
-					Packet15RequestMap p3 = new Packet15RequestMap(-2);
-					sendData(p3.getData());
+					Packet20RequestObj p0 = new Packet20RequestObj(0, treeIndex);
+					sendData(p0.getData());
+					treeIndex++;
+				}
+				
+				if(trees.size() == p.getAmount()){
+					treesLoaded = true;
 				}
 				break;
 			case 1:
-				if(trees.size() < p.getAmount()){
+				if(stoneIndex < p.getAmount()){
 					Stone s = new Stone(p.getX(), p.getY());
 					s.setObjectID(p.getObjectID());
 					stones.add(s);
-					Packet15RequestMap p3 = new Packet15RequestMap(-2);
-					sendData(p3.getData());
+					Packet20RequestObj p1 = new Packet20RequestObj(0, stoneIndex);
+					sendData(p1.getData());
+					stoneIndex++;
+				}
+				
+				if(stones.size() == p.getAmount()){
+					stonesLoaded = true;
 				}
 				break;
 			default:
@@ -291,16 +300,13 @@ public class Client implements Runnable{
 			//System.out.println(pixels.size());
 			if(pixels.size() > width*height*3){
 				while(pixels.size() > 30000) pixels.removeFirst();
-				
+				MPClientState.worldAssembled = true;
 				if(!mapReceived){
-					Packet15RequestMap p2 = new Packet15RequestMap(-2);
+					Packet20RequestObj p2 = new Packet20RequestObj(0, 0);
 					sendData(p2.getData());
 					mapReceived = true;
 				}
-				
-				
-			
-				
+
 				return;
 			}
 			packetNumber++;
