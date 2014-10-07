@@ -123,13 +123,13 @@ public class World {
 		
 		init();
 		generateWorldObjects();
-		generateEnemies();
+		//generateEnemies();
 	}
 	
 	private void init(){
 		em = new EntityManager(this);
 		
-		fire = new FirePlace(new Vector2f(EntityManager.getHero().getX() + 1000, EntityManager.getHero().getY() +1000));
+		//fire = new FirePlace(new Vector2f(EntityManager.getHero().getX() , EntityManager.getHero().getY()));
 		
 		lightX = -1000;
 		lightY = (height * Tile.getTileHeight()) / 2;
@@ -159,7 +159,7 @@ public class World {
 	private void initShader(){
 		transform = new Transform();
 		
-		normalMap = new Texture("normalMap0");
+		normalMap = new Texture("normalMapGrass");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
@@ -315,9 +315,6 @@ public class World {
 	
 		dayNightCycle(dt);
 	
-			
-
-
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
