@@ -1,5 +1,8 @@
 package com.cr.world;
 
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,6 +15,7 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.forestelf.ForestElf;
@@ -21,10 +25,10 @@ import com.cr.net.HeroMP;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.net.server.Server;
-import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
+import com.cr.world.misc.FirePlace;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 import com.cr.world.terrain.WorldObject;
@@ -72,6 +76,8 @@ public class World {
 	
 	private float k = 0;
 	
+	private FirePlace fire;
+	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
 		objectPosMap = new HashMap<Vector2f, WorldObject>();
@@ -90,7 +96,7 @@ public class World {
 	public World(){
 		initShader();
 
-		map = new TileMap(250, 250);
+		map = new TileMap(150, 150);
 		
 		width = map.getWidth();
 		height = map.getHeight();
@@ -117,29 +123,43 @@ public class World {
 		
 		init();
 		generateWorldObjects();
-		//generateEnemies();
+		generateEnemies();
 	}
 	
 	private void init(){
 		em = new EntityManager(this);
 		
+		fire = new FirePlace(new Vector2f(EntityManager.getHero().getX() + 1000, EntityManager.getHero().getY() +1000));
+		
 		lightX = -1000;
 		lightY = (height * Tile.getTileHeight()) / 2;
 		lightZ = 0;
 		
-		lightPosition = transform.getModelMatrix().mul(new Vector3f(lightX, lightY, lightZ));
-		lightPosition2 = transform.getModelMatrix().mul(new Vector3f(lightX2, lightY2, lightZ2));
+//		lightX = fire.getX() + (fire.getWidth()/2);
+//		lightY = fire.getY() + (fire.getHeight()/2) + 20;
+//		lightZ = -100;
 		
 		lightX2 = EntityManager.getHero().getX() + 1000;
 		lightY2 = EntityManager.getHero().getY();
 		lightZ2 = 0;
+		
+		lightPosition = transform.getModelMatrix().mul(new Vector3f(lightX, lightY, lightZ));
+		lightPosition2 = transform.getModelMatrix().mul(new Vector3f(lightX2, lightY2, lightZ2));
+		
+		
 		camera = new Camera();
 		
 		eyePosition = Camera.getPos();
+		
+		
 	}
+	
+	private Texture normalMap;
 	
 	private void initShader(){
 		transform = new Transform();
+		
+		normalMap = new Texture("normalMap1");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
@@ -147,6 +167,7 @@ public class World {
 		shader.addUniform("modelMatrix");
 		shader.addUniform("time");
 		shader.addUniform("sampler");
+		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
@@ -161,9 +182,17 @@ public class World {
 		shader.addUniform("material_specular_color");
 		shader.addUniform("material_emissive_color");
 		
+		shader.bind();
 		shader.setUniformi("sampler", 0);
+		shader.setUniformi("normalMap", 1);
+		shader.unbind();
 		
-		ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
+		
+		normalMap.bind(1);
+		glActiveTexture(GL_TEXTURE0);
+		
+		
+		ambientLight = new Vector3f(0.1f, 0.1f, 0.3f);
 	}
 	
 	private void initByteMap(){
@@ -221,7 +250,7 @@ public class World {
 	}
 	
 	private void generateEnemies(){
-		for(int i = 0; i < 1; i++){
+		for(int i = 0; i < 30; i++){
 			ForestElf e = null;
 			boolean generated = false;
 			while(!generated){
@@ -236,7 +265,7 @@ public class World {
 			}
 		}
 	
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < 20; i++){
 			Wisp e = null;
 			boolean generated = false;
 			while(!generated){
@@ -258,29 +287,36 @@ public class World {
 	}
 	
 	private void dayNightCycle(float dt){
-		t += dt*0.01f;
+		t += dt*0.008f;
 		
 		if(t >= PI2) t = 0;
 		
 		if(t > 0 && t <= 3.14/6.0)
-			k += 0.001f;
+			k += 0.0008f;
 		
 		if(t > ((5.0*3.14) / 6.0) && t <= 3.14)
-			k -= 0.001f;
+			k -= 0.0008f;
 
 		lightPosition2.y = Camera.getCamY() + Window.getHeight()/2;
 		lightPosition2.x = lightX2 + ( -1.0f * (float)(Math.cos((-t-3.14f))) * 2000);
-		lightPosition2.z = -400 * (float) Math.sin(t);
+		lightPosition2.z = -600 * (float) Math.sin(t);
 		
 		lightPosition.x = lightX + (-1.0f * ((float) Math.cos(t)) * (2000 + (width * Tile.getTileWidth())));
 		lightPosition.z = -10000 * (float) Math.sin(t);
+		
+
 	}
+	
+
 	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
 	
 		dayNightCycle(dt);
+	
+			
+
 
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)

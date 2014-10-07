@@ -6,6 +6,7 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
+import com.cr.states.TestState;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.FontLoader;
@@ -19,10 +20,10 @@ public class Game extends CoreEngine{
 	public static Shader shader;
 	
 	public Game(){
-		boolean fullScreen = true;
+		boolean fullScreen = false;
 		if(fullScreen){
 			Window.setFullScreen();
-		}else Window.createWindow(800, 600, false);
+		}else Window.createWindow(1200, 675, false);
 	
 		init();
 	}
@@ -34,11 +35,15 @@ public class Game extends CoreEngine{
 		shader = new Shader("basicVertShader", "basicFragShader");
 		shader.addUniform("transformation");
 		shader.addUniform("sampler");
+		
+		shader.bind();
 		shader.setUniformi("sampler", 0);
+		shader.unbind();
 		
 		new FontLoader();
 		
 		gsm = new GameStateManager();
+		//gsm.push(new TestState(gsm));
 		gsm.push(new MenuState(gsm));
 	}
 

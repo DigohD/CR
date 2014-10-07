@@ -24,6 +24,12 @@ public class ImageLoader {
 		imageLib.put("water2", loadImage("/tiles/water2.png"));
 		imageLib.put("ripple", loadImage("/tiles/ripple.png"));
 		
+		//tile blending test
+		imageLib.put("grasstest", loadImage("/tiles/test/grass.png"));
+		imageLib.put("dirttest", loadImage("/tiles/test/dirt.png"));
+		imageLib.put("masktest", loadImage("/tiles/test/mask.png"));
+		
+		
 		//normal maps
 		imageLib.put("normalMap0", loadImage("/tiles/normalMap0.png"));
 		imageLib.put("normalMap1", loadImage("/tiles/normalMap1.png"));
@@ -64,6 +70,9 @@ public class ImageLoader {
 		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
 		
 		imageLib.put("stone1", loadImage("/prop/nature/stone1.png"));
+		
+		//misc
+		imageLib.put("fire", loadImage("/prop/misc/campfire.png"));
 		
 		// Hero
 //		imageLib.put("hero", loadImage("/hero/hero.png"));

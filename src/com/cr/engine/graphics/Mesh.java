@@ -50,9 +50,10 @@ public class Mesh {
 	
 	private void createVertexBuffer(Vertex[] vertices, int[] indices, boolean texCoords){
 		calcNormals(vertices, indices);
+		calcTangents(vertices, indices);
 		
 		if(!texCoords)
-			vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
+			vertexBuffer = BufferUtils.createFloatBuffer(9 * vertices.length);
 		else vertexBuffer = BufferUtils.createFloatBuffer(Vertex.SIZE * vertices.length);
 		
 		for(int i = 0; i < vertices.length; i++){
@@ -68,6 +69,10 @@ public class Mesh {
 			vertexBuffer.put(vertices[i].getNormal().x);
 			vertexBuffer.put(vertices[i].getNormal().y);
 			vertexBuffer.put(vertices[i].getNormal().z);
+			
+			vertexBuffer.put(vertices[i].getTangent().x);
+			vertexBuffer.put(vertices[i].getTangent().y);
+			vertexBuffer.put(vertices[i].getTangent().z);
 		}	
 		
 		vertexBuffer.flip();
@@ -111,7 +116,7 @@ public class Mesh {
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);
-		//glVertexAttribPointer(3, 3, GL_FLOAT, false, Vertex.SIZE * 4, 32);
+		glVertexAttribPointer(3, 3, GL_FLOAT, false, Vertex.SIZE * 4, 32);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glBindVertexArray(0);
@@ -150,7 +155,7 @@ public class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 6*4, 0);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, 6*4, 12);
-		//glVertexAttribPointer(3, 3, GL_FLOAT, false, 6*4, 20);
+		glVertexAttribPointer(3, 3, GL_FLOAT, false, 6*4, 20);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, texID);
@@ -183,7 +188,7 @@ public class Mesh {
 	}
 	
 	public void updateVertexData(Vertex[] vertices){
-		vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
+		vertexBuffer = BufferUtils.createFloatBuffer(9 * vertices.length);
 		
 		for(int i = 0; i < vertices.length; i++){
 			vertexBuffer.put(vertices[i].getPos().x);
@@ -193,6 +198,10 @@ public class Mesh {
 			vertexBuffer.put(vertices[i].getNormal().x);
 			vertexBuffer.put(vertices[i].getNormal().y);
 			vertexBuffer.put(vertices[i].getNormal().z);
+			
+			vertexBuffer.put(vertices[i].getTangent().x);
+			vertexBuffer.put(vertices[i].getTangent().y);
+			vertexBuffer.put(vertices[i].getTangent().z);
 			
 		}
 		
@@ -219,7 +228,7 @@ public class Mesh {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
-		//glEnableVertexAttribArray(3);
+		glEnableVertexAttribArray(3);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
@@ -228,7 +237,7 @@ public class Mesh {
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
-		//glDisableVertexAttribArray(3);
+		glDisableVertexAttribArray(3);
 	
 		glBindVertexArray(0);
 	}

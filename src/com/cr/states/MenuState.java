@@ -22,6 +22,7 @@ public class MenuState extends GameState{
 	
 	@Override
 	public void init() {
+		
 	}
 	
 	@Override

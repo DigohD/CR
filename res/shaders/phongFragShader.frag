@@ -4,12 +4,14 @@
 in vec2 texCoord; 
 in vec3 normal_out;
 in vec3 vertexPosition;
+in vec3 tangent_out;
 
 out vec4 fragColor;
 
 in float isWater_out;
 
 uniform sampler2D sampler;
+uniform sampler2D normalMap;
 
 uniform float time;
 uniform float k;
@@ -25,6 +27,27 @@ uniform vec3 material_emissive_color;
 
 uniform vec3 scene_ambient_light;
 uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
+
+vec3 calcBumpedNormal(){
+	vec3 normal = normalize(normal_out);
+	vec3 tangent = normalize(tangent_out);
+	
+	tangent = normalize(tangent - dot(tangent, normal) * normal);
+	
+	vec3 biTangent = cross(tangent, normal);
+	vec3 bumpMapNormal = (texture2D(normalMap, texCoord)).xyz;
+	
+	bumpMapNormal = 2.0 * bumpMapNormal - vec3(1.0, 1.0, 1.0);
+	
+	vec3 newNormal;
+	
+	mat3 TBN = mat3(tangent, biTangent, normal);
+	
+	newNormal = TBN * bumpMapNormal;
+	newNormal = normalize(newNormal);
+	
+	return newNormal;
+}
 
 
 vec4 calcAmbientLight(vec3 sceneAmbientLight, vec4 materialAmbient){
@@ -78,7 +101,8 @@ vec3 rotateZ(vec3 v, float angle){
 }
 
 void main(){
-	vec3 normal = normalize(normal_out);
+	//vec3 normal = normalize(normal_out);
+	vec3 normal = calcBumpedNormal();
 	
 	vec4 texColor;
 	
@@ -125,7 +149,7 @@ void main(){
 		if(time >= 3.14 && time <= 3.14*2.0){
 			shading = ambientLight + clamp(diffuseLight, 0, 1) + emissive;
 		}else{
-			shading = ambientLight + clamp(diffuseLight, 0, 1) + (k*clamp(diffuseLight2, 0, 1)) + (k*clamp(specularLight2, 0, 1)) + emissive;
+			shading = ambientLight + clamp(k*diffuseLight, 0, 1) + (k*clamp(diffuseLight2, 0, 1)) + (k*clamp(specularLight2, 0, 1)) + emissive;
 		}
 		
 	}else{
