@@ -20,7 +20,6 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -39,8 +38,7 @@ public class Mesh {
 	private boolean allDynamic;
 	
 	public Mesh(Vertex[] vertices, int[] indices){
-		createVertexBuffer(vertices, indices, true);
-		sendData();
+		sendData(vertices, indices);
 	}
 	
 	public Mesh(Vertex[] vertices, Vector2f[] texCoords, int[] indices, boolean allDynamic){
@@ -95,7 +93,9 @@ public class Mesh {
 		texCoordBuffer.flip();
 	}
 	
-	private void sendData(){
+	private void sendData(Vertex[] vertices, int[] indices){
+		createVertexBuffer(vertices, indices, true);
+		
 		vboID = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
@@ -153,9 +153,9 @@ public class Mesh {
 		glBindVertexArray(vaoID);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glVertexAttribPointer(0, 3, GL_FLOAT, false, 6*4, 0);
-		glVertexAttribPointer(2, 3, GL_FLOAT, false, 6*4, 12);
-		glVertexAttribPointer(3, 3, GL_FLOAT, false, 6*4, 20);
+		glVertexAttribPointer(0, 3, GL_FLOAT, false, 9*4, 0);
+		glVertexAttribPointer(2, 3, GL_FLOAT, false, 9*4, 12);
+		glVertexAttribPointer(3, 3, GL_FLOAT, false, 9*4, 20);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, texID);
@@ -188,7 +188,7 @@ public class Mesh {
 	}
 	
 	public void updateVertexData(Vertex[] vertices){
-		vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
+		vertexBuffer = BufferUtils.createFloatBuffer(9 * vertices.length);
 		
 		for(int i = 0; i < vertices.length; i++){
 			vertexBuffer.put(vertices[i].getPos().x);
@@ -199,9 +199,9 @@ public class Mesh {
 			vertexBuffer.put(vertices[i].getNormal().y);
 			vertexBuffer.put(vertices[i].getNormal().z);
 			
-//			vertexBuffer.put(vertices[i].getTangent().x);
-//			vertexBuffer.put(vertices[i].getTangent().y);
-//			vertexBuffer.put(vertices[i].getTangent().z);
+			vertexBuffer.put(vertices[i].getTangent().x);
+			vertexBuffer.put(vertices[i].getTangent().y);
+			vertexBuffer.put(vertices[i].getTangent().z);
 			
 		}
 		

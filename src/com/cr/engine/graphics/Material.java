@@ -13,6 +13,12 @@ public class Material {
 		this(1.0f, new Vector3f(1,1,1), new Vector3f(1,1,1), new Vector3f(0,0,0));
 	}
 	
+	public Material(float material_shininess, float diffuseIntensity, 
+			float specularIntensity, float emissiveIntensity){
+		this(material_shininess, new Vector3f(1,1,1).mul(diffuseIntensity), 
+				new Vector3f(1,1,1).mul(specularIntensity), new Vector3f(1,1,1).mul(emissiveIntensity));
+	}
+	
 	public Material(float material_shininess, Vector3f diffuseColor,
 			Vector3f specularColor, Vector3f emissiveColor){
 		this.material_shininess = material_shininess;

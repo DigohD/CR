@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
+import com.cr.engine.graphics.Material;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
@@ -59,7 +60,9 @@ public class Hero extends Mob implements Collideable{
 	
 	public static Transform t;
 	
-	HeroInput input;
+	private HeroInput input;
+	
+	private Material material;
 	
 	public Hero(World world) {
 		super(position, world);
@@ -83,7 +86,7 @@ public class Hero extends Mob implements Collideable{
 			}
 		}
 		
-		
+		material = new Material(0.1f, 2.6f, 0.1f, 0);
 				
 		head = new Head();
 		body = new UpperBody();
@@ -175,6 +178,13 @@ public class Hero extends Mob implements Collideable{
 
 	@Override
 	public void render(Screen screen) {
+		
+		World.getShader().bind();
+		World.getShader().setUniformf("material_shininess", material.getMaterialShininess());
+		World.getShader().setUniformf("material_diffuse_color", material.getDiffuseColor());
+		World.getShader().setUniformf("material_specular_color", material.getSpecularColor());
+		World.getShader().setUniformf("material_emissive_color", material.getEmissiveColor());
+		World.getShader().unbind();
 		
 		switch(currentDir){
 			case SOUTH:

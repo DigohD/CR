@@ -53,11 +53,7 @@ public class TileLayer {
 		for(int i = size-1; i >=0; i--){
 			pixelData[i] = pixels.getFirst();
 			pixels.removeFirst();
-//			System.out.print(pixelData[i]);
-//			if(i%100==0) System.out.println(pixelData[i]);
-		
 		}
-		
 		
 		bitmap = new Bitmap(width, height);
 		bitmap.setPixels(pixelData);
@@ -109,19 +105,9 @@ public class TileLayer {
 		for(int y = yStart; y < yEnd; y++){
 			for(int x = xStart; x < xEnd; x++){
 				if(bitmap.getPixel(x, y) == 0) continue;
-				
-				//System.out.println("tile:" + tiles.get(bitmap.getPixel(x, y)));
-				//System.out.println(tiles.containsKey(bitmap.getPixel(x, y)));
-				//System.out.println("x: " + x + ", y:" + y);
-//				System.out.println("COL" +tiles.get(bitmap.getPixel(x, y)).getCol());
-//				System.out.println("PIXEL" + bitmap.getPixel(x, y));
-				//System.out.println("ROW" +tiles.get(bitmap.getPixel(x, y)).getRow());
-				
-				
+
 				calcTexCoords(tiles.get(bitmap.getPixel(x, y)).getRow(), tiles.get(bitmap.getPixel(x, y)).getCol());
-				
-			
-			
+	
 				float xPos = x * tWidth;
 				float yPos = y * tHeight;
 				
@@ -159,8 +145,6 @@ public class TileLayer {
 	}
 	
 	public void renderTileLayer(boolean water){
-		
-		//System.out.println("RENDER");
 		transform.translate(0, 0, depth);
 		
 		for(Integer i : tiles.keySet()){
