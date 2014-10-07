@@ -188,7 +188,7 @@ public class Mesh {
 	}
 	
 	public void updateVertexData(Vertex[] vertices){
-		vertexBuffer = BufferUtils.createFloatBuffer(9 * vertices.length);
+		vertexBuffer = BufferUtils.createFloatBuffer(6 * vertices.length);
 		
 		for(int i = 0; i < vertices.length; i++){
 			vertexBuffer.put(vertices[i].getPos().x);
@@ -199,9 +199,9 @@ public class Mesh {
 			vertexBuffer.put(vertices[i].getNormal().y);
 			vertexBuffer.put(vertices[i].getNormal().z);
 			
-			vertexBuffer.put(vertices[i].getTangent().x);
-			vertexBuffer.put(vertices[i].getTangent().y);
-			vertexBuffer.put(vertices[i].getTangent().z);
+//			vertexBuffer.put(vertices[i].getTangent().x);
+//			vertexBuffer.put(vertices[i].getTangent().y);
+//			vertexBuffer.put(vertices[i].getTangent().z);
 			
 		}
 		

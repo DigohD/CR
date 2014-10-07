@@ -175,6 +175,7 @@ public class Hero extends Mob implements Collideable{
 
 	@Override
 	public void render(Screen screen) {
+		
 		switch(currentDir){
 			case SOUTH:
 				lowerBody.render(screen);

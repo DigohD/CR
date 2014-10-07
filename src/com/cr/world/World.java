@@ -159,7 +159,7 @@ public class World {
 	private void initShader(){
 		transform = new Transform();
 		
-		normalMap = new Texture("normalMap1");
+		normalMap = new Texture("normalMap0");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
@@ -192,7 +192,7 @@ public class World {
 		glActiveTexture(GL_TEXTURE0);
 		
 		
-		ambientLight = new Vector3f(0.1f, 0.1f, 0.3f);
+		ambientLight = new Vector3f(0.2f, 0.2f, 0.5f);
 	}
 	
 	private void initByteMap(){
