@@ -86,7 +86,7 @@ public class Hero extends Mob implements Collideable{
 			}
 		}
 		
-		material = new Material(0.1f, 2.6f, 0.1f, 0);
+		material = new Material(0f, 0.6f, 0f, 0);
 				
 		head = new Head();
 		body = new UpperBody();

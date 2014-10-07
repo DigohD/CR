@@ -131,9 +131,9 @@ public class World {
 		
 		//fire = new FirePlace(new Vector2f(EntityManager.getHero().getX() , EntityManager.getHero().getY()));
 		
-		lightX = -1000;
+		lightX = (width * Tile.getTileWidth()) / 2;
 		lightY = (height * Tile.getTileHeight()) / 2;
-		lightZ = 0;
+		lightZ = -100;
 		
 //		lightX = fire.getX() + (fire.getWidth()/2);
 //		lightY = fire.getY() + (fire.getHeight()/2) + 20;
@@ -313,7 +313,10 @@ public class World {
 		if(timer < 7500) timer++;
 		else timer = 0;
 	
-		dayNightCycle(dt);
+		//dayNightCycle(dt);
+		
+		lightPosition.x = EntityManager.getHero().getX();
+		lightPosition.y = EntityManager.getHero().getY();
 	
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
@@ -341,7 +344,7 @@ public class World {
 		
 		shader.unbind();
 	
-		em.render(screen);
+		//em.render(screen);
 	}
 	
 	public boolean tileExists(int xp, int yp){

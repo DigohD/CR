@@ -27,6 +27,7 @@ uniform vec3 material_emissive_color;
 
 uniform vec3 scene_ambient_light;
 uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
+uniform vec3 fallOff = vec3(0.4, 3, 200);
 
 vec3 calcBumpedNormal(){
 	vec3 normal = normalize(normal_out);
@@ -121,6 +122,8 @@ void main(){
 	vec4 ambient = texColor * vec4(material_diffuse_color, 1.0);
 	vec4 ambientLight = calcAmbientLight(scene_ambient_light, ambient); 
 	
+	float len = length(lightPosition - vertexPosition);
+	
 	//diffuse light
 	vec3 directionToLight = normalize(lightPosition - vertexPosition);
 	vec3 directionToLight2 = normalize(lightPosition2 - vertexPosition);
@@ -145,17 +148,13 @@ void main(){
 	
 	vec4 shading;
 	
-	if(isWater_out == 1){
-		if(time >= 3.14 && time <= 3.14*2.0){
-			shading = ambientLight + clamp(diffuseLight, 0, 1) + emissive;
-		}else{
-			shading = ambientLight + clamp(k*diffuseLight, 0, 1) + (k*clamp(diffuseLight2, 0, 1)) + (k*clamp(specularLight2, 0, 1)) + emissive;
-		}
-		
-	}else{
-		shading = ambientLight + clamp(diffuseLight, 0, 1)  + emissive;
-	}
 	
+	
+	float attenuation = 1.0 / (fallOff.x + (fallOff.y * len) + (fallOff.z*len*len));
+	
+	
+	
+	shading = ambientLight + (clamp(diffuseLight, 0, 1) * attenuation)+ clamp(specularLight, 0, 1)  + emissive;
 	
 	if(texture2D(sampler, texCoord.xy).w == 0){
 		shading = vec4(0);
