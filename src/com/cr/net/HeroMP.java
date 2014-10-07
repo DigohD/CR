@@ -23,6 +23,7 @@ import com.cr.stats.StatsSheet;
 import com.cr.util.CRString;
 import com.cr.util.Camera;
 import com.cr.util.FontLoader;
+import com.cr.util.SpriteLoader;
 
 public class HeroMP extends Entity implements Tickable, Renderable{
 	
@@ -56,7 +57,7 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	}
 	
 	public void init(){
-		sprite = new Sprite("mptest");
+		sprite = SpriteLoader.getSprite("mptest");
 		
 		head = new Head(position, t);
 		body = new UpperBody(position, t);

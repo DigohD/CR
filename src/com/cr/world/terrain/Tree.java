@@ -9,6 +9,7 @@ import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 
 public class Tree extends Entity implements Renderable{
 
@@ -23,7 +24,7 @@ public class Tree extends Entity implements Renderable{
 	}
 	
 	public void init(){
-		sprite = new Sprite("tree" + objectID);
+		sprite = SpriteLoader.getSprite("tree" + objectID);
 		rect = new Rectangle((int)getX(), (int)getY(), sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		
 		EntityManager.addEntity(this);

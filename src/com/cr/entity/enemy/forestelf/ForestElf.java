@@ -24,6 +24,7 @@ import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 import com.cr.world.World;
 
 public class ForestElf extends Enemy{
@@ -62,7 +63,7 @@ public class ForestElf extends Enemy{
 		
 		public ForestElfHead(Vector2f position) {
 			super(position);
-			headSprite = new Sprite("felfhead");
+			headSprite = SpriteLoader.getSprite("felfhead");
 
 			v = new Vector2f(0, 0);
 			offset = new Vector2f(0f, 0f);
@@ -112,7 +113,7 @@ public class ForestElf extends Enemy{
 		
 		public ForestElfRightHand(Vector2f position, Enemy parent) {
 			super(position);
-			handSprite = new Sprite("felfrighthand");
+			handSprite = SpriteLoader.getSprite("felfrighthand");
 			this.parent = parent;
 			
 			v = new Vector2f(0, 0);
@@ -163,7 +164,7 @@ public class ForestElf extends Enemy{
 		
 		public ForestElfLeftHand(Vector2f position, Enemy parent) {
 			super(position);
-			handSprite = new Sprite("felflefthand");
+			handSprite = SpriteLoader.getSprite("felflefthand");
 			this.parent = parent;
 			
 			v = new Vector2f(0, 0);
@@ -213,7 +214,7 @@ public class ForestElf extends Enemy{
 	
 	public ForestElf(Vector2f position, World world) {
 		super(position, world);
-		sprite = new Sprite("felfbody");
+		sprite = SpriteLoader.getSprite("felfbody");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
@@ -243,6 +244,7 @@ public class ForestElf extends Enemy{
 		}
 		
 		position = position.add(offset);
+		rect.setLocation(position.toPoint());
 		
 		head.tick(this, dt);
 		rightHand.tick(this, dt);
@@ -276,7 +278,7 @@ public class ForestElf extends Enemy{
 	
 	@Override
 	public Rectangle getRect() {
-		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		return rect;
 	}
 
 	@Override

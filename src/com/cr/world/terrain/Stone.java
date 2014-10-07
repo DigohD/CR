@@ -20,6 +20,7 @@ import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.item.weapon.Weapon;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 
 public class Stone extends Entity implements Renderable, Collideable, Tickable{
 
@@ -33,7 +34,9 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 	
 	public Stone(int x , int y){
 		super(new Vector2f(x, y));
-		sprite = new Sprite("stone");
+//		sprite = new Sprite("stone");
+		sprite = SpriteLoader.getSprite("stone");
+		System.out.println("Stone Sprite: " + sprite.getMesh());
 		rect = new Rectangle(x, y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		EntityManager.addEntity(this);
 		CollisionManager.addHitable(this);
@@ -48,6 +51,7 @@ public class Stone extends Entity implements Renderable, Collideable, Tickable{
 
 	@Override
 	public void render(Screen screen) {
+		sprite = SpriteLoader.getSprite("stone");
 		screen.renderSprite(sprite, position.x, position.y);
 	}
 

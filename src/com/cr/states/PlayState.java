@@ -10,6 +10,7 @@ import com.cr.game.GameStateManager;
 import com.cr.states.crafting.CraftInitState;
 import com.cr.states.inventory.InventoryState;
 import com.cr.stats.StatsSheet.StatID;
+import com.cr.util.SpriteLoader;
 import com.cr.world.World;
 
 public class PlayState extends GameState{
@@ -27,8 +28,8 @@ public class PlayState extends GameState{
 	@Override
 	public void init() {
 		w = new World();
-		healthBar = new Sprite("flatdarkred");
-		health = new Sprite("flatgreen");
+		healthBar = SpriteLoader.getSprite("flatdarkred");
+		health = SpriteLoader.getSprite("flatgreen");
 	}
 	
 	@Override
