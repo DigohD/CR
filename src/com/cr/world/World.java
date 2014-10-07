@@ -164,20 +164,20 @@ public class World {
 	}
 	
 	private void generateWorldObjects(){
-//		for(int i = 0; i < 1; i++){
-//			ForestElf e = null;
-//			boolean generated = false;
-//			while(!generated){
-//				e = new ForestElf(new Vector2f(-1000, -1000), this);
-//				int x = Randomizer.getInt(0, width * 51) + 40;
-//				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-//				//System.out.println(e.getSprite().getSpriteHeight());
-//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-//					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-//					generated = true;
-//				}
-//			}
-//		}
+		for(int i = 0; i < 50; i++){
+			ForestElf e = null;
+			boolean generated = false;
+			while(!generated){
+				e = new ForestElf(new Vector2f(-1000, -1000), this);
+				int x = Randomizer.getInt(0, width * 51) + 40;
+				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
+				//System.out.println(e.getSprite().getSpriteHeight());
+				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+					generated = true;
+				}
+			}
+		}
 //	
 //		for(int i = 0; i < 10; i++){
 //			Wisp e = null;

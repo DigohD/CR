@@ -10,6 +10,7 @@ import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
+import com.cr.util.SpriteLoader;
 import com.cr.world.World;
 
 public class Game extends CoreEngine{
@@ -30,6 +31,7 @@ public class Game extends CoreEngine{
 	private void init(){
 		screen = new Screen();
 		new ImageLoader();
+		new SpriteLoader();
 	
 		shader = new Shader("basicVertShader", "basicFragShader");
 		shader.addUniform("transformation");
