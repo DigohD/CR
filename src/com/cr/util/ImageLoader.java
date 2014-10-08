@@ -34,7 +34,9 @@ public class ImageLoader {
 		imageLib.put("normalMap0", loadImage("/tiles/normalMap0.png"));
 		imageLib.put("normalMap1", loadImage("/tiles/normalMap1.png"));
 		imageLib.put("normalMapGrass", loadImage("/tiles/normalMap_grass.png"));
+		imageLib.put("normalMapGrass2", loadImage("/tiles/normalMap_grass2.png"));
 		imageLib.put("normalMapWater", loadImage("/tiles/normalMap_water.png"));
+		imageLib.put("normalMapWater2", loadImage("/tiles/waterbump.png"));
 		
 		//cube maps
 		imageLib.put("cubemap0", loadImage("/tiles/cubemap0.png"));

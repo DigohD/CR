@@ -11,7 +11,8 @@ out vec4 fragColor;
 in float isWater_out;
 
 uniform sampler2D sampler;
-uniform sampler2D normalMap;
+uniform sampler2D normalMapWater;
+uniform sampler2D normalMapGrass;
 
 uniform float time;
 uniform float k;
@@ -29,14 +30,21 @@ uniform vec3 scene_ambient_light;
 uniform vec3 scene_light = vec3(0.6, 0.6, 0.6);
 uniform vec3 fallOff = vec3(0.4, 3, 200);
 
-vec3 calcBumpedNormal(){
+vec3 calcBumpedNormal(float isWater){
 	vec3 normal = normalize(normal_out);
 	vec3 tangent = normalize(tangent_out);
 	
 	tangent = normalize(tangent - dot(tangent, normal) * normal);
 	
 	vec3 biTangent = cross(tangent, normal);
-	vec3 bumpMapNormal = (texture2D(normalMap, texCoord)).xyz;
+	vec3 bumpMapNormal;
+	
+	if(isWater == 1.0){
+		bumpMapNormal = (texture2D(normalMapWater, texCoord)).xyz;
+	}else{
+		bumpMapNormal = (texture2D(normalMapGrass, texCoord)).xyz;
+	}
+	
 	
 	bumpMapNormal = 2.0 * bumpMapNormal - vec3(1.0, 1.0, 1.0);
 	
@@ -103,9 +111,10 @@ vec3 rotateZ(vec3 v, float angle){
 
 void main(){
 	//vec3 normal = normalize(normal_out);
-	vec3 normal = calcBumpedNormal();
+	vec3 normal = calcBumpedNormal(isWater_out);
 	
 	vec4 texColor;
+	
 	
 	if(isWater_out == 1){
 		vec2 a2DVectorTemp = vec2(0, 0.26f);
@@ -117,6 +126,10 @@ void main(){
 	}else{
 		texColor = texture2D(sampler, texCoord.xy);
 	}
+	
+	
+	
+	//texColor = texture2D(sampler, texCoord.xy);
 	
 	//ambient light
 	vec4 ambient = texColor * vec4(material_diffuse_color, 1.0);
@@ -152,7 +165,18 @@ void main(){
 	
 	float attenuation = 1.0 / (fallOff.x + (fallOff.y * len) + (fallOff.z*len*len));
 	
-	
+	/*
+	if(isWater_out == 1){
+		if(time >= 3.14 && time <= 3.14*2.0){
+			shading = ambientLight + clamp(diffuseLight, 0, 1) + emissive;
+		}else{
+			shading = ambientLight + (clamp(k*diffuseLight, 0, 1)) + ((k*clamp(diffuseLight2, 0, 1))) + (k*clamp(specularLight2, 0, 1)) + emissive;
+		}
+		
+	}else{
+		shading = ambientLight + (clamp(diffuseLight, 0, 1))  + emissive;
+	}
+	*/
 	
 	shading = ambientLight + (clamp(diffuseLight, 0, 1) * attenuation)+ clamp(specularLight, 0, 1)  + emissive;
 	

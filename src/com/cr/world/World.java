@@ -87,10 +87,6 @@ public class World {
 		this.height = height;
 
 		init();
-//		System.out.println("Number of Trees: " + MPClientState.getClient().trees.size());
-//		generateTrees(MPClientState.getClient().trees);
-//		System.out.println("Number of Stones: " + MPClientState.getClient().stones.size());
-//		generateStones(MPClientState.getClient().stones);
 	}
 	
 	public World(){
@@ -133,7 +129,7 @@ public class World {
 		
 		lightX = (width * Tile.getTileWidth()) / 2;
 		lightY = (height * Tile.getTileHeight()) / 2;
-		lightZ = -100;
+		lightZ = -10000;
 		
 //		lightX = fire.getX() + (fire.getWidth()/2);
 //		lightY = fire.getY() + (fire.getHeight()/2) + 20;
@@ -154,20 +150,19 @@ public class World {
 		
 	}
 	
-	private Texture normalMap;
+	private Texture normalMapWater, normalMapGrass;
 	
 	private void initShader(){
 		transform = new Transform();
 		
-		normalMap = new Texture("normalMapGrass");
+		normalMapWater = new Texture("normalMapWater2");
+		normalMapGrass = new Texture("normalMapGrass");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
 		shader.addUniform("transformation");
 		shader.addUniform("modelMatrix");
 		shader.addUniform("time");
-		shader.addUniform("sampler");
-		shader.addUniform("normalMap");
 		shader.addUniform("waveDataX");
 		shader.addUniform("waveDataY");
 		shader.addUniform("isWater");
@@ -177,6 +172,10 @@ public class World {
 		shader.addUniform("eyePosition");
 		shader.addUniform("k");
 		
+		shader.addUniform("sampler");
+		shader.addUniform("normalMapWater");
+		shader.addUniform("normalMapGrass");
+		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");
 		shader.addUniform("material_specular_color");
@@ -184,11 +183,12 @@ public class World {
 		
 		shader.bind();
 		shader.setUniformi("sampler", 0);
-		shader.setUniformi("normalMap", 1);
+		shader.setUniformi("normalMapWater", 1);
+		shader.setUniformi("normalMapGrass", 2);
 		shader.unbind();
 		
-		
-		normalMap.bind(1);
+		normalMapGrass.bind(2);
+		normalMapWater.bind(1);
 		glActiveTexture(GL_TEXTURE0);
 		
 		
@@ -315,8 +315,8 @@ public class World {
 	
 		//dayNightCycle(dt);
 		
-		lightPosition.x = EntityManager.getHero().getX();
-		lightPosition.y = EntityManager.getHero().getY();
+//		lightPosition.x = EntityManager.getHero().getX();
+//		lightPosition.y = EntityManager.getHero().getY();
 	
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)

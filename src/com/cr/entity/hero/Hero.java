@@ -179,12 +179,12 @@ public class Hero extends Mob implements Collideable{
 	@Override
 	public void render(Screen screen) {
 		
-		World.getShader().bind();
-		World.getShader().setUniformf("material_shininess", material.getMaterialShininess());
-		World.getShader().setUniformf("material_diffuse_color", material.getDiffuseColor());
-		World.getShader().setUniformf("material_specular_color", material.getSpecularColor());
-		World.getShader().setUniformf("material_emissive_color", material.getEmissiveColor());
-		World.getShader().unbind();
+//		World.getShader().bind();
+//		World.getShader().setUniformf("material_shininess", material.getMaterialShininess());
+//		World.getShader().setUniformf("material_diffuse_color", material.getDiffuseColor());
+//		World.getShader().setUniformf("material_specular_color", material.getSpecularColor());
+//		World.getShader().setUniformf("material_emissive_color", material.getEmissiveColor());
+//		World.getShader().unbind();
 		
 		switch(currentDir){
 			case SOUTH:
