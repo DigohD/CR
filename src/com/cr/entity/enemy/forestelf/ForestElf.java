@@ -104,7 +104,6 @@ public class ForestElf extends Enemy{
 	}
 	
 	private class ForestElfRightHand extends Entity{
-		
 		private Sprite handSprite;
 		private float counter;
 		private Vector2f v, offset;
@@ -122,12 +121,11 @@ public class ForestElf extends Enemy{
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
 			
-			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5);
+			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5, 1, 60);
 		}
 
 		public void tick(ForestElf parent, float dt) {
 			if(parent.isMoving){
-				ep.activate();
 				counter = counter + 0.2f;
 				v = new Vector2f(0, (float) Math.cos(counter));
 			}else{
@@ -173,14 +171,13 @@ public class ForestElf extends Enemy{
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
 			
-			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5);
+			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5, 150, 60);
 		}
 
 		public void tick(ForestElf parent, float dt) {
 			if(parent.isMoving){
 				counter = counter + 0.2f;
 				v = new Vector2f(0, (float) -Math.cos(counter));
-				ep.activate();
 			}else{
 				counter = counter + 0.05f;
 				v = new Vector2f(0, (float) -Math.cos(counter) / 4);
