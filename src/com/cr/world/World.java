@@ -77,6 +77,7 @@ public class World {
 	private float k = 0;
 	
 	private FirePlace fire;
+	private Texture normalMapWater, normalMapGrass, cubeMap;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -122,7 +123,6 @@ public class World {
 		//generateEnemies();
 	}
 	
-	Vector3f center = new Vector3f((width * Tile.getTileWidth()) / 2.0f, (height * Tile.getTileHeight()) / 2.0f, -100);
 	
 	private void init(){
 		em = new EntityManager(this);
@@ -150,13 +150,14 @@ public class World {
 		eyePosition = Camera.getPos();
 	}
 	
-	private Texture normalMapWater, normalMapGrass;
-	
+
 	private void initShader(){
 		transform = new Transform();
 		
 		normalMapWater = new Texture("normalMapWater2");
-		normalMapGrass = new Texture("normalMapGrass");
+		normalMapGrass = new Texture("normalMapGrass3");
+		
+		//cubeMap = new Texture("cubeMap0");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
@@ -175,6 +176,7 @@ public class World {
 		shader.addUniform("sampler");
 		shader.addUniform("normalMapWater");
 		shader.addUniform("normalMapGrass");
+		shader.addUniform("cubeMap0");
 		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");

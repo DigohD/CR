@@ -35,6 +35,7 @@ public class ImageLoader {
 		imageLib.put("normalMap1", loadImage("/tiles/normalMap1.png"));
 		imageLib.put("normalMapGrass", loadImage("/tiles/normalMap_grass.png"));
 		imageLib.put("normalMapGrass2", loadImage("/tiles/normalMap_grass2.png"));
+		imageLib.put("normalMapGrass3", loadImage("/tiles/grassbm.png"));
 		imageLib.put("normalMapWater", loadImage("/tiles/normalMap_water.png"));
 		imageLib.put("normalMapWater2", loadImage("/tiles/waterbump.png"));
 		

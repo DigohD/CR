@@ -40,9 +40,9 @@ vec3 calcBumpedNormal(float isWater){
 	vec3 bumpMapNormal;
 	
 	if(isWater == 1.0){
-		bumpMapNormal = (texture2D(normalMapWater, texCoord)).xyz;
+		bumpMapNormal = (texture2D(normalMapWater, texCoord)).rgb;
 	}else{
-		bumpMapNormal = (texture2D(normalMapGrass, texCoord)).xyz;
+		bumpMapNormal = (texture2D(normalMapGrass, texCoord)).rgb;
 	}
 	
 	
