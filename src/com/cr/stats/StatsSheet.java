@@ -41,7 +41,7 @@ public class StatsSheet {
 			sheet.put(StatID.STRENGTH, new Stat(StatID.STRENGTH, "Strength", 10, isHero));
 			sheet.put(StatID.AGILITY, new Stat(StatID.AGILITY, "Agility", 10, isHero));
 			sheet.put(StatID.INTELLIGENCE, new Stat(StatID.INTELLIGENCE, "Intelligence", 10, isHero));
-			sheet.put(StatID.TOUGHNESS, new Stat(StatID.TOUGHNESS, "Toughness", 10000, isHero));
+			sheet.put(StatID.TOUGHNESS, new Stat(StatID.TOUGHNESS, "Toughness", 10, isHero));
 			sheet.put(StatID.HP_MAX, new Stat(StatID.HP_MAX, "Max Hp", 100, isHero));
 			
 			sheet.put(StatID.MOVEMENT_SPEED, new Stat(StatID.MOVEMENT_SPEED, "Movement Speed", 1f, isHero));

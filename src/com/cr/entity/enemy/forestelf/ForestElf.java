@@ -33,7 +33,7 @@ public class ForestElf extends Enemy{
 		public ForestElfSheet(){
 			super();
 			sheet.put(StatID.LEVEL, new Stat("Level", 1));
-			sheet.put(StatID.STRENGTH, new Stat("Strength", 15));
+			sheet.put(StatID.STRENGTH, new Stat("Strength", 5));
 			sheet.put(StatID.AGILITY, new Stat("Agility", 5));
 			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 5));
 			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 1));

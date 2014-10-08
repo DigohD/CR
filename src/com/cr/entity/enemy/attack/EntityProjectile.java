@@ -43,18 +43,22 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 		if(!isActive && cooldown <= 0){
 			isActive = true;
 			live = true;
+			cooldown = 60;
 			EntityManager.addEntity(this);
 		}
 	}
 	
 	@Override
 	public void collisionWith(Collideable obj) {
-		if(obj instanceof Hero){
+		if(isActive && obj instanceof Hero){
 			Hero h = (Hero) obj;
-			new KnockBack(20, 1, h, null, distance.div(50));
+			new KnockBack(20, 1, h, null, distance.div(25));
 			
-			float finalDamage = RPCalc.calculateDamage(damage, entityOwner.getSheet(), h.getHeroSheet());
+			float finalDamage = RPCalc.calculateDamage(damage, entityOwner.getSheet(), Hero.getHeroSheet());
+			System.out.println("Damage " + finalDamage);
 			h.takeDamage(finalDamage);
+			
+			isActive = false;
 		}
 		
 	}
@@ -74,11 +78,11 @@ public class EntityProjectile extends EnemyProjectile implements Collideable{
 			if(counter < 25){
 				Vector2f dir = Hero.position.sub(entity.getPosition());
 				dir = dir.normalize();
-				dir = dir;
 				
 				distance = distance.add(dir);
 			}else if(!isReturning){
 				ret = distance.div(25);
+				isActive = false;
 				isReturning = true;
 			}
 			
