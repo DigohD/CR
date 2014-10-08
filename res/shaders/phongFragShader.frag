@@ -165,20 +165,20 @@ void main(){
 	
 	float attenuation = 1.0 / (fallOff.x + (fallOff.y * len) + (fallOff.z*len*len));
 	
-	/*
+	
 	if(isWater_out == 1){
 		if(time >= 3.14 && time <= 3.14*2.0){
-			shading = ambientLight + clamp(diffuseLight, 0, 1) + emissive;
+			shading = ambientLight + clamp(diffuseLight, 0, 1) + (k*clamp(specularLight, 0, 1)) + emissive;
 		}else{
-			shading = ambientLight + (clamp(k*diffuseLight, 0, 1)) + ((k*clamp(diffuseLight2, 0, 1))) + (k*clamp(specularLight2, 0, 1)) + emissive;
+			shading = ambientLight + (clamp(k*diffuseLight, 0, 1)) + (k*clamp(specularLight, 0, 1)) + ((k*clamp(diffuseLight2, 0, 1))) + (k*clamp(specularLight2, 0, 1)) + emissive;
 		}
 		
 	}else{
-		shading = ambientLight + (clamp(diffuseLight, 0, 1))  + emissive;
+		shading = ambientLight + (clamp(diffuseLight, 0, 1)) +(k*clamp(specularLight, 0, 1))  + emissive;
 	}
-	*/
 	
-	shading = ambientLight + (clamp(diffuseLight, 0, 1) * attenuation)+ clamp(specularLight, 0, 1)  + emissive;
+	
+	//shading = ambientLight + (clamp(diffuseLight, 0, 1) * attenuation)+ clamp(specularLight, 0, 1)  + emissive;
 	
 	if(texture2D(sampler, texCoord.xy).w == 0){
 		shading = vec4(0);
