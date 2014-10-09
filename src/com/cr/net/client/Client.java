@@ -265,9 +265,12 @@ public class Client implements Runnable{
 		Packet10Login p = (Packet10Login) packet;
 		
 		if(!(p.getUserName().equalsIgnoreCase(this.userName))){
-			clientsMap.put(p.getUserName(), new HeroMP(p.getUserName(),new Vector2f(0,0), address, port));
+			if(clientsMap.containsKey(p.getUserName())){
+				clientsMap.get(p.getUserName()).setLive(false);
+			}
+			clientsMap.put(p.getUserName(), new HeroMP(p.getUserName(), new Vector2f(0,0), address, port));
+			System.out.println(p.getUserName() + " has joined!");
 		}
-		else System.out.println(p.getUserName() + " has joined!");
 		
 	}
 	
