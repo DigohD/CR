@@ -45,11 +45,9 @@ public class HeroMPServer extends Mob implements Tickable, Renderable{
 	private RightHand rightHand;
 	private LeftHand leftHand;
 	
-	private StatsSheet sheet;
-	
 	private HeroMPInput input;
 	
-	private Vector2f Velocity, targetVel;
+	private Vector2f targetVel;
 	
 	public HeroMPServer(Vector2f position, World world){
 		super(position, world);
@@ -62,6 +60,10 @@ public class HeroMPServer extends Mob implements Tickable, Renderable{
 		this.port = port;
 		if(NetStatus.isMultiPlayer && NetStatus.isHOST)
 			sheet = new StatsSheet(true);
+		
+		input = new HeroMPInput(this);
+		
+		targetVel = new Vector2f(0, 0);
 	}
 	
 	public void init(){

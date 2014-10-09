@@ -119,10 +119,10 @@ public class Server implements Runnable{
 				Packet10Login packet00 = new Packet10Login(data);
 				handleLogin(packet00, address, port);
 				break;
-			case MOVE:
-				Packet12Move packet02 = new Packet12Move(data);
-				handleMove(packet02, address, port);
-				break;
+//			case MOVE:
+//				Packet12Move packet02 = new Packet12Move(data);
+//				handleMove(packet02, address, port);
+//				break;
 			case REQUESTMAP:
 				Packet15RequestMap packet05 = new Packet15RequestMap(data);
 				handleRequestMap(packet05, address, port);
@@ -134,9 +134,11 @@ public class Server implements Runnable{
 			case REQUESTOBJECT:
 				Packet20RequestObj packet20 = new Packet20RequestObj(data);
 				handleRequestObj(packet20, address, port);
+				break;
 			case INPUT:
 				Packet21Input packet21 = new Packet21Input(data);
 				handleInput(packet21, address, port);
+				break;
 			default:
 				break;
 		}

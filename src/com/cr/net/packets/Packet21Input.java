@@ -14,6 +14,8 @@ public class Packet21Input extends Packet{
 		
 		String dataArray[] = readData(data).split(":");
 		
+		System.out.println(new String(data));
+		
 		this.name = dataArray[1];
 		this.keyCode = Integer.parseInt(dataArray[2]);
 		this.pressed = Integer.parseInt(dataArray[3]);

@@ -9,6 +9,7 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.HeroMP;
 import com.cr.net.HeroMPServer;
+import com.cr.net.packets.Packet12Move;
 import com.cr.net.server.Server;
 import com.cr.states.GameState;
 import com.cr.states.StatsState;
@@ -55,7 +56,15 @@ public class MPHostState extends GameState{
 				h.init();
 		}
 		
+		for(String name : server.getClientsMap().keySet()){
+			HeroMPServer h = server.getClientsMap().get(name);
+			Packet12Move p = new Packet12Move(h.getUserName(), h.getPosition(), h.getCurrentDir());
+			p.writeData(server);
+		}
 	
+		Packet12Move p = new Packet12Move(EntityManager.getHero().getUserName(), EntityManager.getHero().getPosition(), 
+				EntityManager.getHero().getCurrentDir());
+		p.writeData(server);
 	}
 
 	@Override
