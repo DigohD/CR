@@ -45,6 +45,8 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	private StatsSheet sheet;
 	
+	private boolean fullyCreated = false;
+	
 	public HeroMP(Vector2f position){
 		super(position);
 	}
@@ -68,6 +70,7 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		leftHand = new LeftHand(position, t);
 		
 		EntityManager.addEntity(this);
+		fullyCreated = true;
 	}
 
 	@Override
@@ -81,12 +84,13 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	@Override
 	public void setPosition(Vector2f position) {
-		if(head != null && this.position.sub(position).length() == 0)
-			setBobing(false);
-		else if(head != null)
-			setBobing(true);
-		
-		this.position = position;
+		if(fullyCreated){
+			if(this.position.sub(position).length() == 0)
+				setBobing(false);
+			else setBobing(true);
+			
+			this.position = position;
+		}
 	}
 	
 	public void setDirection(Direction dir){
@@ -123,18 +127,13 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		
 		FontLoader.releaseFont(f);
 	}
-
+	
 	private void setBobing(boolean isBobing){
-		try{
-			head.getBob().setActive(isBobing);
-			lowerBody.getBob().setActive(isBobing);
-			body.getBob().setActive(isBobing);
-			rightHand.getBob().setActive(isBobing);
-			leftHand.getBob().setActive(isBobing);
-		}catch(NullPointerException e){
-			
-		}
-		
+		head.getBob().setActive(isBobing);
+		lowerBody.getBob().setActive(isBobing);
+		body.getBob().setActive(isBobing);
+		rightHand.getBob().setActive(isBobing);
+		leftHand.getBob().setActive(isBobing);
 	}
 	
 	@Override

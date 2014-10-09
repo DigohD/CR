@@ -162,7 +162,8 @@ public class Hero extends Mob implements Collideable{
 			}
 		}
 		
-		move(dt);
+		if(NetStatus.isMultiPlayer && NetStatus.isHOST || !NetStatus.isMultiPlayer)
+			move(dt);
 		
 		head.tick(dt);
 		body.tick(dt);
@@ -266,7 +267,7 @@ public class Hero extends Mob implements Collideable{
 		
 	}
 	
-	private void setBobing(boolean isBobing){
+	private static void setBobing(boolean isBobing){
 		head.getBob().setActive(isBobing);
 		lowerBody.getBob().setActive(isBobing);
 		body.getBob().setActive(isBobing);
@@ -328,6 +329,12 @@ public class Hero extends Mob implements Collideable{
 	}
 	
 	public static void setPosition2(Vector2f position) {
+		if(Hero.position.sub(position).length() == 0){
+			setBobing(false);
+		}
+		else {
+			setBobing(true);
+		}
 		Hero.position = position;
 	}
 
