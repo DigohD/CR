@@ -305,6 +305,7 @@ public class Hero extends Mob implements Collideable{
 	}
 	
 	public void setDirection(Direction dir){
+		currentDir = dir;
 		if(lowerBody != null)
 			lowerBody.setDir(dir);
 		if(body != null)

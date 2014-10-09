@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
+import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
 import com.cr.net.packets.Packet;
@@ -280,9 +281,8 @@ public class Client implements Runnable{
 
 	private void handleMove(Packet packet, InetAddress address, int port){
 		String s = ((Packet12Move) packet).getUserName();
-		
 		if(s.equalsIgnoreCase(userName)){
-			EntityManager.getHero().setPosition(((Packet12Move) packet).getPos());
+			Hero.setPosition2(((Packet12Move) packet).getPos());
 			EntityManager.getHero().setDirection(((Packet12Move) packet).getDir());
 		}
 		
