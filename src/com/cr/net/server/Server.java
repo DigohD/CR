@@ -21,6 +21,7 @@ import com.cr.net.packets.Packet16Disconnect;
 import com.cr.net.packets.Packet17Stat;
 import com.cr.net.packets.Packet18StaticObject;
 import com.cr.net.packets.Packet20RequestObj;
+import com.cr.net.packets.Packet21Input;
 import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
@@ -34,6 +35,9 @@ public class Server implements Runnable{
 	private Thread thread;
 	
 	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
+	
+	private Tree[] trees = MPHostState.getWorld().getTrees();
+	private Stone[] stones = MPHostState.getWorld().getStones();
 	
 	private boolean running = false;
 	
@@ -57,9 +61,7 @@ public class Server implements Runnable{
 	public void stop(){
 		System.out.println("Server closing..");
 		running = false;
-		
-		
-		
+
 		System.out.println("Server closed..");
 		try {
 			thread.join();
@@ -127,14 +129,19 @@ public class Server implements Runnable{
 			case REQUESTOBJECT:
 				Packet20RequestObj packet20 = new Packet20RequestObj(data);
 				handleRequestObj(packet20, address, port);
+			case INPUT:
+				Packet21Input packet21 = new Packet21Input(data);
+				handleInput(packet21, address, port);
 			default:
 				break;
 		}
 	}
 	
-	private Tree[] trees = MPHostState.getWorld().getTrees();
-	private Stone[] stones = MPHostState.getWorld().getStones();
-	
+	private void handleInput(Packet21Input packet21, InetAddress address, int port) {
+		HeroMP client = clientsMap.get(packet21.getName());
+		
+	}
+
 	private void handleRequestObj(Packet20RequestObj packet20, InetAddress address, int port) {
 		
 		int type = packet20.getType();

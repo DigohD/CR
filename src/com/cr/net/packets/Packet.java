@@ -16,7 +16,8 @@ public abstract class Packet {
 		STATS(17), 
 		STATICOBJECT(18),
 		LOOT(19),
-		REQUESTOBJECT(20);
+		REQUESTOBJECT(20),
+		INPUT(21);
 		
 		private int packetID;
 		
