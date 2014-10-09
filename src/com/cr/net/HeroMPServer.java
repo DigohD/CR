@@ -37,8 +37,6 @@ public class HeroMPServer extends Mob implements Tickable, Renderable{
 	
 	private Transform t = new Transform();
 	
-	private Direction dir;
-	
 	private Head head;
 	private UpperBody body;
 	private LowerBody lowerBody;
@@ -58,6 +56,7 @@ public class HeroMPServer extends Mob implements Tickable, Renderable{
 		this.userName = userName;
 		this.ip = ip;
 		this.port = port;
+		currentDir = Direction.SOUTH;
 		if(NetStatus.isMultiPlayer && NetStatus.isHOST)
 			sheet = new StatsSheet(true);
 		
@@ -80,6 +79,8 @@ public class HeroMPServer extends Mob implements Tickable, Renderable{
 
 	@Override
 	public void tick(float dt){
+		input.input();
+		
 		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		
@@ -100,15 +101,20 @@ public class HeroMPServer extends Mob implements Tickable, Renderable{
 	
 	@Override
 	public void setPosition(Vector2f position) {
-		if(head != null && this.position.sub(position).length() == 0)
-			setBobing(false);
-		else if(head != null)
-			setBobing(true);
-		
 		this.position = position;
 	}
 	
+	@Override
+	protected void move(float dt){
+		if(velocity.length() == 0)
+			setBobing(false);
+		else{
+			setBobing(true);
+		}
+	}
+	
 	public void setDirection(Direction dir){
+		currentDir = dir;
 		if(lowerBody != null)
 			lowerBody.setDir(dir);
 		if(body != null)
