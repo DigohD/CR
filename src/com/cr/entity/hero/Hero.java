@@ -156,10 +156,6 @@ public class Hero extends Mob implements Collideable{
 				passiveRegen(dt);
 				//System.out.println("MOVE PACKET SENT");
 			}
-			if(NetStatus.isHOST){
-				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
-				MPHostState.getServer().sendDataToAllClients(mp.getData());
-			}
 		}
 		
 		move(dt);

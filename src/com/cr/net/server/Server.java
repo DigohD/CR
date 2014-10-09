@@ -265,6 +265,7 @@ public class Server implements Runnable{
 	public void sendDataToAllClients(byte[] data) {
 		for(String name : clientsMap.keySet()){
 			HeroMPServer h = clientsMap.get(name);
+			System.out.println("" + h.getUserName() + " receives " + new String(data));
 			sendData(data, h.getInetAddress(), h.getPort());
 		}	
 	}

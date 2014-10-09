@@ -59,11 +59,9 @@ public class MPHostState extends GameState{
 		for(String name : server.getClientsMap().keySet()){
 			HeroMPServer h = server.getClientsMap().get(name);
 			Packet12Move p = new Packet12Move(h.getUserName(), h.getPosition(), h.getCurrentDir());
-			System.out.println("" + h.getUserName() + h.getPosition() + h.getCurrentDir());
 			p.writeData(server);
 		}
 	
-		System.out.println("" + hero.getUserName() + Hero.position + Hero.currentDir);
 		Packet12Move p = new Packet12Move(hero.getUserName(), Hero.position, Hero.currentDir);
 		p.writeData(server);
 	}

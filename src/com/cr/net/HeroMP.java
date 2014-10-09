@@ -134,7 +134,6 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 		}catch(NullPointerException e){
 			
 		}
-		
 	}
 	
 	@Override
