@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
+import com.cr.net.HeroMPServer;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
 import com.cr.net.packets.Packet10Login;
@@ -37,7 +38,7 @@ public class Server implements Runnable{
 	
 	private World world;
 	
-	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
+	private HashMap<String, HeroMPServer> clientsMap = new HashMap<String, HeroMPServer>();
 	
 	private Tree[] trees = MPHostState.getWorld().getTrees();
 	private Stone[] stones = MPHostState.getWorld().getStones();
@@ -142,8 +143,8 @@ public class Server implements Runnable{
 	}
 	
 	private void handleInput(Packet21Input packet21, InetAddress address, int port) {
-		HeroMP client = clientsMap.get(packet21.getName());
-		
+		HeroMPServer client = clientsMap.get(packet21.getName());
+		client.getInput().handleClientInput(packet21.getKeyCode(), packet21.isPressed());
 	}
 
 	private void handleRequestObj(Packet20RequestObj packet20, InetAddress address, int port) {
@@ -167,7 +168,7 @@ public class Server implements Runnable{
 	}
 
 	private void handleStatPacket(Packet17Stat packet07, InetAddress address, int port) {
-		HeroMP client = clientsMap.get(packet07.getUserName());
+		HeroMPServer client = clientsMap.get(packet07.getUserName());
 		StatsSheet sheet = client.getSheet();
 		Stat stat = sheet.getStat(StatID.valueOf(packet07.getStatID()));
 		stat.setNewBase(packet07.getValue());
@@ -186,7 +187,7 @@ public class Server implements Runnable{
 	private void handleLogin(Packet10Login packet, InetAddress address, int port){
 		System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUserName() + " has connected");
 		String name = packet.getUserName();
-		HeroMP hero = new HeroMP(name, EntityManager.getHero().getPos().clone(), address, port);
+		HeroMPServer hero = new HeroMPServer(name, EntityManager.getHero().getPos().clone(), address, port, world);
 		addConnection(hero, packet);
 	}
 	
@@ -214,11 +215,11 @@ public class Server implements Runnable{
 		//System.out.println(new String(MPHostState.getWorld().getBytes2(p.getPacketNumber(), data2)));
 	}
 	
-	private void addConnection(HeroMP client, Packet packet) {
+	private void addConnection(HeroMPServer client, Packet packet) {
     	boolean alreadyConnected = false;
     	//loop through all the connected players 
         for (String name : clientsMap.keySet()) {
-        	HeroMP h = clientsMap.get(name);
+        	HeroMPServer h = clientsMap.get(name);
             if (name.equalsIgnoreCase(client.getUserName())) {
                 if (h.getInetAddress() == null) {
                     h.setIp(client.getInetAddress());
@@ -262,12 +263,12 @@ public class Server implements Runnable{
 
 	public void sendDataToAllClients(byte[] data) {
 		for(String name : clientsMap.keySet()){
-			HeroMP h = clientsMap.get(name);
+			HeroMPServer h = clientsMap.get(name);
 			sendData(data, h.getInetAddress(), h.getPort());
 		}	
 	}
 
-	public HashMap<String, HeroMP> getClientsMap() {
+	public HashMap<String, HeroMPServer> getClientsMap() {
 		return clientsMap;
 	}
 

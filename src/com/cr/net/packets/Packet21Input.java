@@ -19,7 +19,7 @@ public class Packet21Input extends Packet{
 		this.pressed = Integer.parseInt(dataArray[3]);
 	}
 
-	public Packet21Input(int packetID, String name, int keyCode, int pressed) {
+	public Packet21Input(String name, int keyCode, int pressed) {
 		super(21);
 		this.name = name;
 		this.keyCode = keyCode;

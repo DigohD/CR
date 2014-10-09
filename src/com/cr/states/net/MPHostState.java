@@ -8,6 +8,7 @@ import com.cr.game.EntityManager;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.HeroMP;
+import com.cr.net.HeroMPServer;
 import com.cr.net.server.Server;
 import com.cr.states.GameState;
 import com.cr.states.StatsState;
@@ -49,7 +50,7 @@ public class MPHostState extends GameState{
 		world.tick(dt);
 		
 		for(String name : server.getClientsMap().keySet()){
-			HeroMP h = server.getClientsMap().get(name);
+			HeroMPServer h = server.getClientsMap().get(name);
 			if(h.getSprite() == null)
 				h.init();
 		}

@@ -22,6 +22,7 @@ import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.wisp.Wisp;
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMP;
+import com.cr.net.HeroMPServer;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.net.server.Server;
@@ -386,7 +387,7 @@ public class World {
 	public static void spawnLoot(int x, int y, LootTable lt, int amount){
 		if(NetStatus.isMultiPlayer && NetStatus.isHOST){
 			Server server = MPHostState.getServer();
-			HashMap<String, HeroMP> players = server.getClientsMap();
+			HashMap<String, HeroMPServer> players = server.getClientsMap();
 			System.out.println("Send Loot");
 			for(String s : players.keySet()){
 				System.out.println("Loot to: " + players.get(s).getUserName());
