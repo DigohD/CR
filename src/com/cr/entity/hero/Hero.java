@@ -135,20 +135,24 @@ public class Hero extends Mob implements Collideable{
 		
 		input.input();
 		
-		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
-		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 		
-		//if(!collisionWithTile(targetVel.x, 0))
-			position.x = position.x + targetVel.x*dt;
+		if(!NetStatus.isMultiPlayer || (NetStatus.isMultiPlayer && NetStatus.isHOST)){
+			velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
+			velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
+			
+			//if(!collisionWithTile(targetVel.x, 0))
+				position.x = position.x + targetVel.x*dt;
+			
+			
+			//if(!collisionWithTile(0, targetVel.y))
+				position.y = position.y + targetVel.y*dt;
+		}
 		
-		
-		//if(!collisionWithTile(0, targetVel.y))
-			position.y = position.y + targetVel.y*dt;
 			
 		if(NetStatus.isMultiPlayer){
 			if(!NetStatus.isHOST && MPClientState.getClient().treesLoaded && MPClientState.getClient().stonesLoaded){
-				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
-				MPClientState.getClient().sendData(mp.getData());
+//				Packet12Move mp  = new Packet12Move(userName, position, currentDir);
+//				MPClientState.getClient().sendData(mp.getData());
 				passiveRegen(dt);
 				//System.out.println("MOVE PACKET SENT");
 			}
@@ -298,6 +302,19 @@ public class Hero extends Mob implements Collideable{
 		
 		if(hpNow.getTotal() > sheet.getStat(StatID.HP_MAX).getTotal())
 			hpNow.setNewBase(sheet.getStat(StatID.HP_MAX).getTotal());
+	}
+	
+	public void setDirection(Direction dir){
+		if(lowerBody != null)
+			lowerBody.setDir(dir);
+		if(body != null)
+			body.setDir(dir);
+		if(rightHand != null)
+			rightHand.setDir(dir);
+		if(leftHand != null)
+			leftHand.setDir(dir);
+		if(head != null)
+			head.setDir(dir);
 	}
 	
 	@Override

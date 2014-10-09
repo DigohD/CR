@@ -21,72 +21,75 @@ public class HeroInput {
 	}
 	
 	public void input(){
-		if(Input.getKey(Input.W)){
-			hero.getTargetVel().y = -hero.getSpeed();
-			hero.setCurrentDir(Direction.NORTH);
-			hero.setMoving(true);
-		}
 		
-		if(Input.getKey(Input.S)){
-			hero.getTargetVel().y = hero.getSpeed();
-			hero.setCurrentDir(Direction.SOUTH);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getKey(Input.D)){
-			hero.getTargetVel().x = hero.getSpeed();
-			hero.setCurrentDir(Direction.EAST);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getKey(Input.A)){
-			hero.getTargetVel().x = -hero.getSpeed();
-			hero.setCurrentDir(Direction.WEST);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getKey(Input.W) && Input.getKey(Input.A)){
-			hero.getTargetVel().x = -diagonalSpeed(hero.getSpeed());
-			hero.getTargetVel().y = -diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.NORTH);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getKey(Input.W) && Input.getKey(Input.D)){
-			hero.getTargetVel().x = diagonalSpeed(hero.getSpeed());
-			hero.getTargetVel().y  = -diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.NORTH);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getKey(Input.S) && Input.getKey(Input.A)){
-			hero.getTargetVel().x = -diagonalSpeed(hero.getSpeed());
-			hero.getTargetVel().y  = diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.SOUTH);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getKey(Input.S) && Input.getKey(Input.D)){
-			hero.getTargetVel().x = diagonalSpeed(hero.getSpeed());
-			hero.getTargetVel().y  = diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.SOUTH);
-			hero.setMoving(true);
-		}
-		
-		if(Input.getMouseDown(1) && Hero.getLeftHand().getItem() != null)
-			Hero.getLeftHand().getItem().activate();
-		if(Input.getMouseDown(0) && Hero.getRightHand().getItem() != null)
-			Hero.getRightHand().getItem().activate();
-		
-		if(!Input.getKey(Input.W) && !Input.getKey(Input.S))
-			hero.getTargetVel().y  = 0;
-		if(!Input.getKey(Input.D) && !Input.getKey(Input.A))
-			hero.getTargetVel().x = 0;
-		
-		if(hero.getTargetVel().y  == 0 && hero.getTargetVel().x == 0)hero.setMoving(false);
-		
-		if(NetStatus.isMultiPlayer && !NetStatus.isHOST)
+		if(NetStatus.isMultiPlayer && !NetStatus.isHOST){
 			sendInputPacket();
+		}else{
+			if(Input.getKey(Input.W)){
+				hero.getTargetVel().y = -hero.getSpeed();
+				hero.setCurrentDir(Direction.NORTH);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.S)){
+				hero.getTargetVel().y = hero.getSpeed();
+				hero.setCurrentDir(Direction.SOUTH);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.D)){
+				hero.getTargetVel().x = hero.getSpeed();
+				hero.setCurrentDir(Direction.EAST);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.A)){
+				hero.getTargetVel().x = -hero.getSpeed();
+				hero.setCurrentDir(Direction.WEST);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.W) && Input.getKey(Input.A)){
+				hero.getTargetVel().x = -diagonalSpeed(hero.getSpeed());
+				hero.getTargetVel().y = -diagonalSpeed(hero.getSpeed());
+				hero.setCurrentDir(Direction.NORTH);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.W) && Input.getKey(Input.D)){
+				hero.getTargetVel().x = diagonalSpeed(hero.getSpeed());
+				hero.getTargetVel().y  = -diagonalSpeed(hero.getSpeed());
+				hero.setCurrentDir(Direction.NORTH);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.S) && Input.getKey(Input.A)){
+				hero.getTargetVel().x = -diagonalSpeed(hero.getSpeed());
+				hero.getTargetVel().y  = diagonalSpeed(hero.getSpeed());
+				hero.setCurrentDir(Direction.SOUTH);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getKey(Input.S) && Input.getKey(Input.D)){
+				hero.getTargetVel().x = diagonalSpeed(hero.getSpeed());
+				hero.getTargetVel().y  = diagonalSpeed(hero.getSpeed());
+				hero.setCurrentDir(Direction.SOUTH);
+				hero.setMoving(true);
+			}
+			
+			if(Input.getMouseDown(1) && Hero.getLeftHand().getItem() != null)
+				Hero.getLeftHand().getItem().activate();
+			if(Input.getMouseDown(0) && Hero.getRightHand().getItem() != null)
+				Hero.getRightHand().getItem().activate();
+			
+			if(!Input.getKey(Input.W) && !Input.getKey(Input.S))
+				hero.getTargetVel().y  = 0;
+			if(!Input.getKey(Input.D) && !Input.getKey(Input.A))
+				hero.getTargetVel().x = 0;
+			
+			if(hero.getTargetVel().y  == 0 && hero.getTargetVel().x == 0)hero.setMoving(false);
+		}
+			
 	}
 	
 	private void sendInputPacket(){
