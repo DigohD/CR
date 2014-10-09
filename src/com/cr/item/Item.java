@@ -1,5 +1,8 @@
 package com.cr.item;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Font;
@@ -16,6 +19,7 @@ import com.cr.item.weapon.Weapon;
 import com.cr.stats.StatMod;
 import com.cr.stats.StatModList;
 import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.CRString;
 import com.cr.util.Camera;
 import com.cr.util.FontLoader;
@@ -130,6 +134,23 @@ public abstract class Item implements Renderable, Tickable{
 		FontLoader.releaseFont(f);
 	}
 	
+	public void statsInit(){
+		ArrayList<StatMod> tmp = stats.getStatMods();
+		HashMap<StatID, StatMod> newMap = new HashMap<StatID, StatMod>();
+		
+		for(StatMod x : tmp){
+			if(!newMap.containsKey(x.getAffectedStat()))
+				newMap.put(x.getAffectedStat(), x);
+			else
+				newMap.get(x.getAffectedStat()).addAmount(x.getAmount());
+		}
+		
+		stats = new StatModList();
+		
+		for(StatMod x : newMap.values())
+			stats.addMod(x);
+	}
+	
 	protected void tickPassives(float dt){
 		
 	}
@@ -138,8 +159,6 @@ public abstract class Item implements Renderable, Tickable{
 		return stats;
 	}
 	
-	
-
 	@Override
 	public Sprite getSprite() {
 		return sprite;

@@ -24,6 +24,7 @@ import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 import com.cr.world.World;
 
 public class ForestElf extends Enemy{
@@ -32,7 +33,7 @@ public class ForestElf extends Enemy{
 		public ForestElfSheet(){
 			super();
 			sheet.put(StatID.LEVEL, new Stat("Level", 1));
-			sheet.put(StatID.STRENGTH, new Stat("Strength", 15));
+			sheet.put(StatID.STRENGTH, new Stat("Strength", 5));
 			sheet.put(StatID.AGILITY, new Stat("Agility", 5));
 			sheet.put(StatID.INTELLIGENCE, new Stat("Intelligence", 5));
 			sheet.put(StatID.TOUGHNESS, new Stat("Toughness", 1));
@@ -40,7 +41,7 @@ public class ForestElf extends Enemy{
 			
 			sheet.put(StatID.MOVEMENT_SPEED, new Stat("Movement Speed", 1f));
 			
-			sheet.put(StatID.ARMOR, new Stat("Armor", 1));
+			sheet.put(StatID.ARMOR, new Stat("Armor", 15));
 			sheet.put(StatID.ARMOR_RATING, new Stat("Armor Rating", 0));
 			sheet.put(StatID.PHYSICAL_POWER, new Stat("Physical Power", 0));
 			sheet.put(StatID.RAPIDNESS, new Stat("Rapidness", 0));
@@ -62,7 +63,7 @@ public class ForestElf extends Enemy{
 		
 		public ForestElfHead(Vector2f position) {
 			super(position);
-			headSprite = new Sprite("felfhead");
+			headSprite = SpriteLoader.getSprite("felfhead");
 
 			v = new Vector2f(0, 0);
 			offset = new Vector2f(0f, 0f);
@@ -103,7 +104,6 @@ public class ForestElf extends Enemy{
 	}
 	
 	private class ForestElfRightHand extends Entity{
-		
 		private Sprite handSprite;
 		private float counter;
 		private Vector2f v, offset;
@@ -112,7 +112,7 @@ public class ForestElf extends Enemy{
 		
 		public ForestElfRightHand(Vector2f position, Enemy parent) {
 			super(position);
-			handSprite = new Sprite("felfrighthand");
+			handSprite = SpriteLoader.getSprite("felfrighthand");
 			this.parent = parent;
 			
 			v = new Vector2f(0, 0);
@@ -121,12 +121,11 @@ public class ForestElf extends Enemy{
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
 			
-			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5);
+			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5, 1, 60);
 		}
 
 		public void tick(ForestElf parent, float dt) {
 			if(parent.isMoving){
-				ep.activate();
 				counter = counter + 0.2f;
 				v = new Vector2f(0, (float) Math.cos(counter));
 			}else{
@@ -163,7 +162,7 @@ public class ForestElf extends Enemy{
 		
 		public ForestElfLeftHand(Vector2f position, Enemy parent) {
 			super(position);
-			handSprite = new Sprite("felflefthand");
+			handSprite = SpriteLoader.getSprite("felflefthand");
 			this.parent = parent;
 			
 			v = new Vector2f(0, 0);
@@ -172,14 +171,13 @@ public class ForestElf extends Enemy{
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
 			
-			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5);
+			ep = new EntityProjectile(this, parent, Hero.position, width, height, 5, 150, 60);
 		}
 
 		public void tick(ForestElf parent, float dt) {
 			if(parent.isMoving){
 				counter = counter + 0.2f;
 				v = new Vector2f(0, (float) -Math.cos(counter));
-				ep.activate();
 			}else{
 				counter = counter + 0.05f;
 				v = new Vector2f(0, (float) -Math.cos(counter) / 4);
@@ -213,7 +211,7 @@ public class ForestElf extends Enemy{
 	
 	public ForestElf(Vector2f position, World world) {
 		super(position, world);
-		sprite = new Sprite("felfbody");
+		sprite = SpriteLoader.getSprite("felfbody");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
@@ -243,6 +241,7 @@ public class ForestElf extends Enemy{
 		}
 		
 		position = position.add(offset);
+		rect.setLocation(position.toPoint());
 		
 		head.tick(this, dt);
 		rightHand.tick(this, dt);
@@ -258,6 +257,12 @@ public class ForestElf extends Enemy{
 		rightHand.render(screen);
 		leftHand.render(screen);
 	}
+	
+	@Override
+	public void HeroCollide(Hero hero) {
+		
+	}
+
 	@Override
 	public void death() {
 		live = false;
@@ -270,7 +275,7 @@ public class ForestElf extends Enemy{
 	
 	@Override
 	public Rectangle getRect() {
-		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		return rect;
 	}
 
 	@Override

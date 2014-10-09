@@ -13,6 +13,7 @@ import com.cr.entity.Breakable;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
+import com.cr.entity.emitter.Particle;
 import com.cr.entity.enemy.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;

@@ -22,7 +22,7 @@ public class LeggingsPattern extends Pattern{
 	
 	public LeggingsPattern(){
 		super(true);
-		ArmorMod = 0.65f;
+		ArmorMod = 0.8f;
 		isWeapon = false;
 	}
 

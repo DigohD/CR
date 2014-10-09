@@ -7,6 +7,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 
 public class Tree extends WorldObject{
 
@@ -19,10 +20,8 @@ public class Tree extends WorldObject{
 	}
 	
 	public void init(){
-		sprite = new Sprite("tree" + objectID);
-		rect = new Rectangle((int)position.x, (int)position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		
-		
+		sprite = SpriteLoader.getSprite("tree" + objectID);
+		rect = new Rectangle((int)getX(), (int)getY(), sprite.getSpriteWidth(), sprite.getSpriteHeight());
 	}
 	
 	@Override

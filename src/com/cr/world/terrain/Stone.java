@@ -14,6 +14,7 @@ import com.cr.entity.emitter.LootEmitter;
 import com.cr.game.CollisionManager;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 
 public class Stone extends WorldObject implements Breakable, Tickable{
 
@@ -26,7 +27,6 @@ public class Stone extends WorldObject implements Breakable, Tickable{
 	
 	public Stone(int x , int y){
 		super(new Vector2f(x, y));
-	
 		objectID = 1;
 		v = new Vector2f(0, 0);
 		lt = new LootTable();
@@ -40,9 +40,8 @@ public class Stone extends WorldObject implements Breakable, Tickable{
 
 	@Override
 	public void init() {
-		sprite = new Sprite("stone" + objectID);
+		sprite = SpriteLoader.getSprite("stone");
 		rect = new Rectangle((int)position.x, (int)position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-	
 		CollisionManager.addBreakable(this);
 	}
 

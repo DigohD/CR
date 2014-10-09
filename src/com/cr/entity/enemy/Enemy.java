@@ -52,6 +52,7 @@ public abstract class Enemy extends Mob implements Collideable{
 		return sheet;
 	}
 	
+	public abstract void HeroCollide(Hero hero);
 	public abstract void initSpellBook(SpellBook sb);
 	
 	public boolean isMoving() {

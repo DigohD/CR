@@ -13,11 +13,12 @@ import com.cr.entity.emitter.Particle;
 import com.cr.game.EntityManager;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 
 public class WispPrison extends Ability{
 	private class WispPrisonEffect extends TimedEffect{
 		
-		private final Sprite sprite = new Sprite("wispp");
+		private final Sprite sprite = SpriteLoader.getSprite("wispp");
 		
 		public WispPrisonEffect(Mob target){
 			super(150, 1, target, source);

@@ -21,6 +21,7 @@ import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.Randomizer;
+import com.cr.util.SpriteLoader;
 import com.cr.world.World;
 
 public class Wisp extends Enemy{
@@ -61,8 +62,8 @@ public class Wisp extends Enemy{
 		
 		public WispLimb(Vector2f position, boolean dir) {
 			super(position);
-			limbSprite = new Sprite("wisplimb");
-			particle = new Sprite("wispp");
+			limbSprite = SpriteLoader.getSprite("wisplimb");
+			particle = SpriteLoader.getSprite("wispp");
 			width = sprite.getSpriteWidth();
 			height = sprite.getSpriteHeight();
 			EntityManager.addEntity(this);
@@ -115,7 +116,7 @@ public class Wisp extends Enemy{
 	
 	public Wisp(Vector2f position, World world) {
 		super(position, world);
-		sprite = new Sprite("wispbody");
+		sprite = SpriteLoader.getSprite("wispbody");
 		width = sprite.getSpriteWidth();
 		height = sprite.getSpriteHeight();
 		rect = new Rectangle((int)position.x,(int)position.y, width, height);
@@ -173,6 +174,12 @@ public class Wisp extends Enemy{
 	@Override
 	public void initSpellBook(SpellBook sb) {
 		sb.addSpell(new WispPrison(this, 600));
+	}
+
+	@Override
+	public void HeroCollide(Hero hero) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

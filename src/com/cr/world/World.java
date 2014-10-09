@@ -29,6 +29,7 @@ import com.cr.states.net.MPHostState;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.misc.FirePlace;
+import com.cr.util.SpriteLoader;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 import com.cr.world.terrain.WorldObject;
@@ -193,8 +194,8 @@ public class World {
 		normalMapWater.bind(1);
 		glActiveTexture(GL_TEXTURE0);
 		
-		
 		ambientLight = new Vector3f(0.1f, 0.1f, 0.3f);
+		new SpriteLoader();
 	}
 	
 	private void initByteMap(){

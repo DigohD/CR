@@ -76,8 +76,8 @@ public class Copper extends Material{
 		if(state == State.BALANCED){
 			span = (int) (span * mod3 * mod2 * 2);
 			
-			damageMod = new StatMod(mod1, StatID.DAMAGE_BASE, "", true);
-			diceMod = new StatMod(mod1 + span, StatID.DAMAGE_DICE, "", true);
+			damageMod = new StatMod(mod1 * primbonus, StatID.DAMAGE_BASE, "", true);
+			diceMod = new StatMod((mod1 * primbonus) + span, StatID.DAMAGE_DICE, "", true);
 			cooldownMod = new StatMod(10 * mod3 * mod4, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.25f);
@@ -89,8 +89,8 @@ public class Copper extends Material{
 		}else if(state == State.BLASTED){
 			span = (int) (span * mod1 * mod2 * 1);
 			
-			damageMod = new StatMod(mod2 * mod4, StatID.DAMAGE_BASE, "", true);
-			diceMod = new StatMod((mod2 * mod3) + span, StatID.DAMAGE_DICE, "", true);
+			damageMod = new StatMod(mod2 * mod4 * primbonus, StatID.DAMAGE_BASE, "", true);
+			diceMod = new StatMod((mod2 * mod3 * primbonus) + span, StatID.DAMAGE_DICE, "", true);
 			cooldownMod = new StatMod(10 * mod1 * mod3 * mod4, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.5f);
@@ -102,8 +102,8 @@ public class Copper extends Material{
 		}else if(state == State.FLASHED){
 			span = (int) (span * mod1 * mod4 * mod3 * 1);
 
-			damageMod = new StatMod(mod1 * mod3, StatID.DAMAGE_BASE, "", true);
-			diceMod = new StatMod((mod1 * mod3) + span, StatID.DAMAGE_DICE, "", true);
+			damageMod = new StatMod(mod1 * mod3 * primbonus, StatID.DAMAGE_BASE, "", true);
+			diceMod = new StatMod((mod1 * mod3 * primbonus) + span, StatID.DAMAGE_DICE, "", true);
 			cooldownMod = new StatMod(5 * mod2 * mod3 * mod4, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1f);
@@ -115,8 +115,8 @@ public class Copper extends Material{
 		}else if(state == State.HARDENED){
 			span = (int) (span * mod1 * 2);
 
-			damageMod = new StatMod(mod3, StatID.DAMAGE_BASE, "", true);
-			diceMod = new StatMod(mod3 + span, StatID.DAMAGE_DICE, "", true);
+			damageMod = new StatMod(mod3 * primbonus, StatID.DAMAGE_BASE, "", true);
+			diceMod = new StatMod((mod3  * primbonus) + span, StatID.DAMAGE_DICE, "", true);
 			cooldownMod = new StatMod(10 * mod2 * mod4, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.35f);
@@ -128,8 +128,8 @@ public class Copper extends Material{
 		}else if(state == State.TEMPERED){
 			span = (int) (span * mod4 * 2);
 
-			damageMod = new StatMod(mod1, StatID.DAMAGE_BASE, "", true);
-			diceMod = new StatMod(mod1 + span, StatID.DAMAGE_DICE, "", true);
+			damageMod = new StatMod(mod1 * primbonus, StatID.DAMAGE_BASE, "", true);
+			diceMod = new StatMod((mod1  * primbonus) + span, StatID.DAMAGE_DICE, "", true);
 			cooldownMod = new StatMod(10 * mod3 * mod2, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.15f);
@@ -149,19 +149,19 @@ public class Copper extends Material{
 		float base = 5;
 		
 		if(state == State.BALANCED){
-			armorMod = new StatMod(base * mod1 * mod4, StatID.ARMOR, "", true);
+			armorMod = new StatMod(base * mod1 * mod4 * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.BLASTED){
-			armorMod = new StatMod(base * mod2 * mod4, StatID.ARMOR, "", true);
+			armorMod = new StatMod(base * mod2 * mod4 * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.FLASHED){
-			armorMod = new StatMod(base * mod1 * mod3, StatID.ARMOR, "", true);
+			armorMod = new StatMod(base * mod1 * mod3 * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.HARDENED){
-			armorMod = new StatMod(base * mod3 * mod2, StatID.ARMOR, "", true);
+			armorMod = new StatMod(base * mod3 * mod2 * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.TEMPERED){
-			armorMod = new StatMod(base * mod1 * mod2, StatID.ARMOR, "", true);
+			armorMod = new StatMod(base * mod1 * mod2 * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}
 		return null;

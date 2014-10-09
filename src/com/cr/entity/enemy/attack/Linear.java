@@ -17,6 +17,7 @@ import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.item.weapon.Weapon;
 import com.cr.util.RPCalc;
+import com.cr.util.SpriteLoader;
 
 public class Linear extends EnemyProjectile implements Renderable{
 
@@ -31,7 +32,7 @@ public class Linear extends EnemyProjectile implements Renderable{
 		super(pos, owner);
 		this.velocity = velocity;
 		
-		sprite = new Sprite("wispp");
+		sprite = SpriteLoader.getSprite("wispp");
 		rect = new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		ie = new ImpactEmitter(position.add(new Vector2f(3.5f, 3.5f)), 1, "wispp", 15, velocity.normalize().mul(-1), 3);
 		

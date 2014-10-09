@@ -15,6 +15,7 @@ public class Particle extends Entity implements Tickable, Renderable{
 	protected Vector2f velocity;
 	protected Sprite sprite;
 	protected int lifeTime, timeLived;
+	protected Rectangle rect;
 	
 	public Particle(Vector2f position, Vector2f velocity, Sprite sprite,
 			int lifeTime) {
@@ -22,6 +23,7 @@ public class Particle extends Entity implements Tickable, Renderable{
 		this.velocity = velocity;
 		this.sprite = sprite;
 		this.lifeTime = lifeTime;
+		rect = new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		EntityManager.addEntity(this);
 	}
 
@@ -32,6 +34,7 @@ public class Particle extends Entity implements Tickable, Renderable{
 			live = false;
 		}
 		position = position.add(velocity.mul(dt));
+		rect.setLocation(position.toPoint());
 	}
 	
 	@Override
@@ -46,7 +49,7 @@ public class Particle extends Entity implements Tickable, Renderable{
 
 	@Override
 	public Rectangle getRect() {
-		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+		return rect;
 	}
 
 	

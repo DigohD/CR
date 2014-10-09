@@ -4,10 +4,15 @@ import java.awt.Image;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.property.Property;
+import com.cr.engine.graphics.Font;
+import com.cr.engine.graphics.Font.FontColor;
+import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.item.Item;
 import com.cr.stats.Stat;
 import com.cr.stats.StatMod;
+import com.cr.util.CRString;
+import com.cr.util.FontLoader;
 import com.cr.util.Randomizer;
 
 public abstract class Material{
@@ -32,7 +37,7 @@ public abstract class Material{
 	protected int newBalancedValue;
 	
 	protected int amount, usedAmount;
-	protected float secBonus, baseBonus, primbonus;
+	protected float secBonus = 1f, baseBonus = 1f, primbonus = 1f;
 	
 	protected boolean breakable, isPrimary;
 	
@@ -133,15 +138,6 @@ public abstract class Material{
 		else
 			upper = true;
 		
-		if(left && upper)
-			return State.TEMPERED;
-		if(left && lower)
-			return State.FLASHED;
-		if(right && lower)
-			return State.BLASTED;
-		if(right && upper)
-			return State.HARDENED;
-		
 		int rnd = Randomizer.getInt(1, 100);
 		if(rnd < 2)
 			quality = Quality.NORMAL;
@@ -153,6 +149,15 @@ public abstract class Material{
 			quality = Quality.LEGENDARY;
 		
 		setQualityMods();
+		
+		if(left && upper)
+			return State.TEMPERED;
+		if(left && lower)
+			return State.FLASHED;
+		if(right && lower)
+			return State.BLASTED;
+		if(right && upper)
+			return State.HARDENED;
 		
 		return null;
 	}
@@ -209,9 +214,19 @@ public abstract class Material{
 		ArrayList<StatMod> stats = new ArrayList<StatMod>();
 		if(isWeapon){
 			getWeaponStats(stats);
+			System.out.println();
+			System.out.println(this.getState().name() + " " + this.getName() + " stats!");
+			for(StatMod sm : stats)
+				System.out.println(sm.getAffectedStat().name() + ": " + sm.getAmount());
+			System.out.println();
 			return stats;
 		}else{
 			getArmorStats(stats);
+			System.out.println();
+			System.out.println(this.getName() + " stats!");
+			for(StatMod sm : stats)
+				System.out.println(sm.getAffectedStat().name() + ": " + sm.getAmount());
+			System.out.println();
 			return stats;
 		}
 	}
@@ -225,6 +240,25 @@ public abstract class Material{
 	
 	protected abstract void setQualityMods();
 	protected abstract void newMods();
+	
+	public void renderStatus(Screen screen, int xOffset, int yOffset){
+		Font f = FontLoader.aquireFont(FontColor.BLACK);
+		
+		f.setFont(CRString.create(getName() + ":"));
+		screen.renderFont(f, xOffset, yOffset, 0.3f);
+		
+		String stateS = state.name().toLowerCase();
+		stateS = Character.toUpperCase(stateS.charAt(0)) + stateS.substring(1);
+		f.setFont(CRString.create(stateS));
+		screen.renderFont(f, xOffset + 150, yOffset, 0.3f);
+		
+		String qualityS = quality.name().toLowerCase();
+		qualityS = Character.toUpperCase(qualityS.charAt(0)) + qualityS.substring(1);
+		f.setFont(CRString.create(qualityS));
+		screen.renderFont(f, xOffset + 300, yOffset, 0.3f);
+		
+		FontLoader.releaseFont(f);
+	}
 	
 	public void resetSpans(){
 		newHigherHeatLimit = higherHeatLimit;

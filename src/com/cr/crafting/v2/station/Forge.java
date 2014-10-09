@@ -8,6 +8,7 @@ import com.cr.crafting.v2.pattern.armor.BreastplatePattern;
 import com.cr.crafting.v2.pattern.armor.HelmPattern;
 import com.cr.crafting.v2.pattern.armor.LeggingsPattern;
 import com.cr.crafting.v2.pattern.weapon.KnifePattern;
+import com.cr.engine.graphics.Screen;
 import com.cr.entity.hero.Hero;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.item.Item;
@@ -71,6 +72,7 @@ public class Forge {
 	
 	public Item craft(){
 		Item i = pattern.generateItem(materials);
+		i.statsInit();
 		Inventory.addItem(i);
 		System.out.println("");
 		System.out.println("");
@@ -78,6 +80,13 @@ public class Forge {
 		return i;
 	}
 
+	public void renderProcess(Screen screen, int xOffset, int yOffset){
+		for(Material x : materials){
+			x.renderStatus(screen, xOffset, yOffset);
+			yOffset = yOffset + 30;
+		}
+	}
+	
 	public int getMinHeat() {
 		return minHeat;
 	}
