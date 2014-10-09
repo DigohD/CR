@@ -32,6 +32,120 @@ public class Vector3f {
 		float length = length();
 		return new Vector3f(x / length, y / length, z / length);
 	}
+	
+	/**
+	 * Rotates a vector about the x axis of a given point in 3d space
+	 * @param point the point to rotate about
+	 * @param angle the angle of rotation
+	 * @return the new rotated vector
+	 */
+	public Vector3f rotateX(Vector3f point, float angle){
+		float[][] m = new float[3][3];
+		
+		float rad = (float) Math.toRadians(angle);
+		float cos = (float) Math.cos(rad);
+		float sin = (float) Math.sin(rad);
+		
+		//the x component
+		m[0][0] = 1.0f; 
+		m[0][1] = 0; 
+		m[0][2] = 0;
+		
+		//the y component
+		m[1][0] = 0; 
+		m[1][1] = (this.y - point.y) * cos; 
+		m[1][2] = (this.y - point.y) * sin;
+		
+		//the z component
+		m[2][0] = 0; 
+		m[2][1] = -1.0f * (this.z - point.z) * sin; 
+		m[2][2] = (this.z - point.z) * cos;
+		
+		float x = m[0][0] + m[0][1] + m[0][2];
+		float y = m[1][0] + m[1][1] + m[1][2];
+		float z = m[2][0] + m[2][1] + m[2][2];
+		
+		Vector3f v = new Vector3f(x, y, z);
+		
+		return v;
+	}
+	
+	/**
+	 * Rotates a vector about the y axis of a given point in 3d space
+	 * @param point the point to rotate about
+	 * @param angle the angle of rotation
+	 * @return the new rotated vector
+	 */
+	public Vector3f rotateY(Vector3f point, float angle){
+		float[][] m = new float[3][3];
+		
+		float rad = (float) Math.toRadians(angle);
+		float cos = (float) Math.cos(rad);
+		float sin = (float) Math.sin(rad);
+		
+		//the x component
+		m[0][0] = (this.x - point.x) * cos; 
+		m[0][1] = 0; 
+		m[0][2] = -1.0f * (this.x - point.x) * sin;
+		
+		//the y component
+		m[1][0] = 0; 
+		m[1][1] = 1.0f; 
+		m[1][2] = 0;
+		
+		//the z component
+		m[2][0] = (this.z - point.z) * sin; 
+		m[2][1] = 0; 
+		m[2][2] = (this.z - point.z) * cos;
+		
+		float x = m[0][0] + m[0][1] + m[0][2];
+		float y = m[1][0] + m[1][1] + m[1][2];
+		float z = m[2][0] + m[2][1] + m[2][2];
+		
+		Vector3f v = new Vector3f(x, y, z);
+		
+		return v;
+	}
+	
+	/**
+	 * Rotates a vector about the z axis of a given point in 3d space
+	 * @param point the point to rotate about
+	 * @param angle the angle of rotation
+	 * @return the new rotated vector
+	 */
+	public Vector3f rotateZ(Vector3f point, float angle){
+		
+		float[][] m = new float[3][3];
+		
+		float rad = (float) Math.toRadians(angle);
+		float cos = (float) Math.cos(rad);
+		float sin = (float) Math.sin(rad);
+		
+		x = x - point.x;
+		y = y - point.y;
+		z = z - point.z;
+		
+		//the x component
+		m[0][0] = cos; 
+		m[0][1] = sin; 
+		m[0][2] = 0;
+				
+		//the y component
+		m[1][0] = -1.0f*sin; 
+		m[1][1] = cos; 
+		m[1][2] = 0;
+				
+		//the z component
+		m[2][0] = 0; 
+		m[2][1] = 0; 
+		m[2][2] = 1;
+		
+		float newX = x*m[0][0] + y*m[1][0] + z*m[2][0];
+		float newY = x*m[0][1] + y*m[1][1] + z*m[2][1];
+		float newZ = x*m[0][2] + y*m[1][2] + z*m[2][2];
+
+		return new Vector3f(newX + point.x, newY + point.y, newZ + point.z);
+	}
 
 	public Vector3f rotate(Vector3f axis, float angle){
 		float sinAngle = (float)Math.sin(-angle);

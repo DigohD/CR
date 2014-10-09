@@ -74,19 +74,19 @@ public class Hero extends Mob implements Collideable{
 			position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
 		}
 		
-		if(!(NetStatus.isMultiPlayer && !NetStatus.isHOST)){
-			//position = new Vector2f(10, 10);
-			if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
-				while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
-					position.y += Tile.getTileHeight();
-					if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
-						break;
-					}
-				}
-			}
-		}
+//		if(!(NetStatus.isMultiPlayer && !NetStatus.isHOST)){
+//			//position = new Vector2f(10, 10);
+//			if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+//				while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
+//					position.y += Tile.getTileHeight();
+//					if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+//						break;
+//					}
+//				}
+//			}
+//		}
 		
-		material = new Material(0f, 0.6f, 0f, 0);
+		material = new Material(1.9f, 1.6f, 2f, 0);
 				
 		head = new Head();
 		body = new UpperBody();
@@ -179,12 +179,12 @@ public class Hero extends Mob implements Collideable{
 	@Override
 	public void render(Screen screen) {
 		
-//		World.getShader().bind();
-//		World.getShader().setUniformf("material_shininess", material.getMaterialShininess());
-//		World.getShader().setUniformf("material_diffuse_color", material.getDiffuseColor());
-//		World.getShader().setUniformf("material_specular_color", material.getSpecularColor());
-//		World.getShader().setUniformf("material_emissive_color", material.getEmissiveColor());
-//		World.getShader().unbind();
+		World.getShader().bind();
+		World.getShader().setUniformf("material_shininess", material.getMaterialShininess());
+		World.getShader().setUniformf("material_diffuse_color", material.getDiffuseColor());
+		World.getShader().setUniformf("material_specular_color", material.getSpecularColor());
+		World.getShader().setUniformf("material_emissive_color", material.getEmissiveColor());
+		World.getShader().unbind();
 		
 		switch(currentDir){
 			case SOUTH:

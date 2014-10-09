@@ -77,6 +77,7 @@ public class World {
 	private float k = 0;
 	
 	private FirePlace fire;
+	private Texture normalMapWater, normalMapGrass, cubeMap;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -118,18 +119,19 @@ public class World {
 		}
 		
 		init();
-		generateWorldObjects();
+		//generateWorldObjects();
 		//generateEnemies();
 	}
+	
 	
 	private void init(){
 		em = new EntityManager(this);
 		
 		//fire = new FirePlace(new Vector2f(EntityManager.getHero().getX() , EntityManager.getHero().getY()));
 		
-		lightX = (width * Tile.getTileWidth()) / 2;
+		lightX = -1000;
 		lightY = (height * Tile.getTileHeight()) / 2;
-		lightZ = -10000;
+		lightZ = 0;
 		
 //		lightX = fire.getX() + (fire.getWidth()/2);
 //		lightY = fire.getY() + (fire.getHeight()/2) + 20;
@@ -142,21 +144,20 @@ public class World {
 		lightPosition = transform.getModelMatrix().mul(new Vector3f(lightX, lightY, lightZ));
 		lightPosition2 = transform.getModelMatrix().mul(new Vector3f(lightX2, lightY2, lightZ2));
 		
-		
+		//lightPosition = lightPosition.rotateZ(center, 45);
 		camera = new Camera();
 		
 		eyePosition = Camera.getPos();
-		
-		
 	}
 	
-	private Texture normalMapWater, normalMapGrass;
-	
+
 	private void initShader(){
 		transform = new Transform();
 		
 		normalMapWater = new Texture("normalMapWater2");
-		normalMapGrass = new Texture("normalMapGrass");
+		normalMapGrass = new Texture("normalMapGrass3");
+		
+		//cubeMap = new Texture("cubeMap0");
 		
 		shader = new Shader("phongVertShader", "phongFragShader");
 		
@@ -175,6 +176,7 @@ public class World {
 		shader.addUniform("sampler");
 		shader.addUniform("normalMapWater");
 		shader.addUniform("normalMapGrass");
+		shader.addUniform("cubeMap0");
 		
 		shader.addUniform("material_shininess");
 		shader.addUniform("material_diffuse_color");
@@ -192,7 +194,7 @@ public class World {
 		glActiveTexture(GL_TEXTURE0);
 		
 		
-		ambientLight = new Vector3f(0.2f, 0.2f, 0.5f);
+		ambientLight = new Vector3f(0.1f, 0.1f, 0.3f);
 	}
 	
 	private void initByteMap(){
@@ -291,10 +293,10 @@ public class World {
 		
 		if(t >= PI2) t = 0;
 		
-		if(t > 0 && t <= 3.14/6.0)
+		if(t > 0 && t <= 3.14f/6.0f)
 			k += 0.0008f;
 		
-		if(t > ((5.0*3.14) / 6.0) && t <= 3.14)
+		if(t > ((5.0*3.14f) / 6.0f) && t <= 3.14f)
 			k -= 0.0008f;
 
 		lightPosition2.y = Camera.getCamY() + Window.getHeight()/2;
@@ -307,16 +309,18 @@ public class World {
 
 	}
 	
-
+	
 	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
 	
-		//dayNightCycle(dt);
+		dayNightCycle(dt);
 		
 //		lightPosition.x = EntityManager.getHero().getX();
 //		lightPosition.y = EntityManager.getHero().getY();
+		
+		
 	
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
@@ -344,7 +348,7 @@ public class World {
 		
 		shader.unbind();
 	
-		//em.render(screen);
+		em.render(screen);
 	}
 	
 	public boolean tileExists(int xp, int yp){
