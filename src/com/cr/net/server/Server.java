@@ -26,6 +26,7 @@ import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
+import com.cr.world.World;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 
@@ -34,6 +35,8 @@ public class Server implements Runnable{
 	private DatagramSocket socket;
 	private Thread thread;
 	
+	private World world;
+	
 	private HashMap<String, HeroMP> clientsMap = new HashMap<String, HeroMP>();
 	
 	private Tree[] trees = MPHostState.getWorld().getTrees();
@@ -41,8 +44,9 @@ public class Server implements Runnable{
 	
 	private boolean running = false;
 	
-	public Server(int port){
+	public Server(int port, World world){
 		System.out.println("Server created");
+		this.world = world;
 		
 		try {
 			socket = new DatagramSocket(port);
@@ -182,7 +186,7 @@ public class Server implements Runnable{
 	private void handleLogin(Packet10Login packet, InetAddress address, int port){
 		System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUserName() + " has connected");
 		String name = packet.getUserName();
-		HeroMP hero = new HeroMP(name, EntityManager.getHero().getPos(), address, port);
+		HeroMP hero = new HeroMP(name, EntityManager.getHero().getPos().clone(), address, port);
 		addConnection(hero, packet);
 	}
 	

@@ -21,12 +21,14 @@ import com.cr.entity.hero.body.RightHand;
 import com.cr.entity.hero.body.UpperBody;
 import com.cr.game.EntityManager;
 import com.cr.stats.StatsSheet;
+import com.cr.stats.StatsSheet.StatID;
 import com.cr.util.CRString;
 import com.cr.util.Camera;
 import com.cr.util.FontLoader;
 import com.cr.util.SpriteLoader;
+import com.cr.world.World;
 
-public class HeroMP extends Entity implements Tickable, Renderable{
+public class HeroMPServer extends Mob implements Tickable, Renderable{
 	
 	private InetAddress ip;
 	private int port;
@@ -45,12 +47,16 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	
 	private StatsSheet sheet;
 	
-	public HeroMP(Vector2f position){
-		super(position);
+	private HeroMPInput input;
+	
+	private Vector2f Velocity, targetVel;
+	
+	public HeroMPServer(Vector2f position, World world){
+		super(position, world);
 	}
 	
-	public HeroMP(String userName, Vector2f position, InetAddress ip, int port){
-		super(position);
+	public HeroMPServer(String userName, Vector2f position, InetAddress ip, int port, World world){
+		super(position, world);
 		this.userName = userName;
 		this.ip = ip;
 		this.port = port;
@@ -72,6 +78,17 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 
 	@Override
 	public void tick(float dt){
+		velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
+		velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
+		
+		//if(!collisionWithTile(targetVel.x, 0))
+			position.x = position.x + targetVel.x*dt;
+	
+		//if(!collisionWithTile(0, targetVel.y))
+			position.y = position.y + targetVel.y*dt;
+		
+		move(dt);
+		
 		head.tick(dt);
 		body.tick(dt);
 		lowerBody.tick(dt);
@@ -142,6 +159,10 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	public Rectangle getRect() {
 		return new Rectangle((int) position.x, (int) position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 	}
+	
+	public float getSpeed() {
+		return speed * sheet.getStat(StatID.MOVEMENT_SPEED).getTotal();
+	}
 
 	public String getUserName() {
 		return userName;
@@ -166,6 +187,31 @@ public class HeroMP extends Entity implements Tickable, Renderable{
 	public StatsSheet getSheet() {
 		return sheet;
 	}
+
+	public Vector2f getTargetVel() {
+		return targetVel;
+	}
+	
+	public HeroMPInput getInput() {
+		return input;
+	}
+
+	@Override
+	public void death() {
+		
+	}
+
+	@Override
+	public void push(Vector2f distance) {
+		
+	}
+
+	@Override
+	public void playHurtSound() {
+		
+	}
+	
+	
 	
 
 }

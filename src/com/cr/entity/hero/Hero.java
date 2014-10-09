@@ -350,7 +350,7 @@ public class Hero extends Mob implements Collideable{
 		return inventory;
 	}
 
-	public static void setCurrentDir(Direction currentDir) {
+	public void setCurrentDir(Direction currentDir) {
 		Hero.currentDir = currentDir;
 	}
 

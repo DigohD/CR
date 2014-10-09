@@ -48,7 +48,6 @@ public class Stone extends WorldObject implements Breakable, Tickable{
 	@Override
 	public void activate() {
 		
-		
 	}
 
 	@Override

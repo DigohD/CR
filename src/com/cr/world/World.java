@@ -120,7 +120,7 @@ public class World {
 		}
 		
 		init();
-		//generateWorldObjects();
+		generateWorldObjects();
 		//generateEnemies();
 	}
 	

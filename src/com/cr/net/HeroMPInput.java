@@ -1,13 +1,15 @@
-package com.cr.entity.hero;
+package com.cr.net;
 
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero.Direction;
 
-public class HeroInput {
+public class HeroMPInput {
 	
-	private Hero hero;
+	private HeroMPServer hero;
 	
-	public HeroInput(Hero hero){
+	private boolean isW, isA, isS, isD;
+	
+	public HeroMPInput(HeroMPServer hero){
 		this.hero = hero;
 	}
 	
@@ -16,67 +18,97 @@ public class HeroInput {
 		return res/2.0f + 0.3f;
 	}
 	
+	public void handleClientInput(int keyCode, int pressed){
+		switch(keyCode){
+			case(Input.W):
+				if(pressed == 1)
+					isW = true;
+				else
+					isW = false;
+				break;
+			case(Input.A):
+				if(pressed == 1)
+					isA = true;
+				else
+					isA = false;
+				break;
+			case(Input.S):
+				if(pressed == 1)
+					isS = true;
+				else
+					isS = false;
+				break;
+			case(Input.D):
+				if(pressed == 1)
+					isD = true;
+				else
+					isD = false;
+				break;
+		
+		}
+	}
+	
 	public void input(){
-		if(Input.getKey(Input.W)){
+		if(isW){
 			hero.getTargetVel().y = -hero.getSpeed();
-			hero.setCurrentDir(Direction.NORTH);
+			hero.setDirection(Direction.NORTH);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.S)){
+		if(isS){
 			hero.getTargetVel().y = hero.getSpeed();
-			hero.setCurrentDir(Direction.SOUTH);
+			hero.setDirection(Direction.SOUTH);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.D)){
+		if(isD){
 			hero.getTargetVel().x = hero.getSpeed();
-			hero.setCurrentDir(Direction.EAST);
+			hero.setDirection(Direction.EAST);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.A)){
+		if(isA){
 			hero.getTargetVel().x = -hero.getSpeed();
-			hero.setCurrentDir(Direction.WEST);
+			hero.setDirection(Direction.WEST);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.W) && Input.getKey(Input.A)){
+		if(isW && isA){
 			hero.getTargetVel().x = -diagonalSpeed(hero.getSpeed());
 			hero.getTargetVel().y = -diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.NORTH);
+			hero.setDirection(Direction.NORTH);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.W) && Input.getKey(Input.D)){
+		if(isW && isD){
 			hero.getTargetVel().x = diagonalSpeed(hero.getSpeed());
 			hero.getTargetVel().y  = -diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.NORTH);
+			hero.setDirection(Direction.NORTH);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.S) && Input.getKey(Input.A)){
+		if(isS && isA){
 			hero.getTargetVel().x = -diagonalSpeed(hero.getSpeed());
 			hero.getTargetVel().y  = diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.SOUTH);
+			hero.setDirection(Direction.SOUTH);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getKey(Input.S) && Input.getKey(Input.D)){
+		if(isS && isD){
 			hero.getTargetVel().x = diagonalSpeed(hero.getSpeed());
 			hero.getTargetVel().y  = diagonalSpeed(hero.getSpeed());
-			hero.setCurrentDir(Direction.SOUTH);
+			hero.setDirection(Direction.SOUTH);
 			hero.setMoving(true);
 		}
 		
-		if(Input.getMouseDown(1) && Hero.getLeftHand().getItem() != null)
-			Hero.getLeftHand().getItem().activate();
-		if(Input.getMouseDown(0) && Hero.getRightHand().getItem() != null)
-			Hero.getRightHand().getItem().activate();
+//		if(Input.getMouseDown(1) && Hero.getLeftHand().getItem() != null)
+//			Hero.getLeftHand().getItem().activate();
+//		if(Input.getMouseDown(0) && Hero.getRightHand().getItem() != null)
+//			Hero.getRightHand().getItem().activate();
 		
-		if(!Input.getKey(Input.W) && !Input.getKey(Input.S))
+		if(!isW && !isS)
 			hero.getTargetVel().y  = 0;
-		if(!Input.getKey(Input.D) && !Input.getKey(Input.A))
+		if(!isD && !isA)
 			hero.getTargetVel().x = 0;
 		
 		if(hero.getTargetVel().y  == 0 && hero.getTargetVel().x == 0)hero.setMoving(false);

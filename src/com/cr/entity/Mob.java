@@ -10,6 +10,7 @@ import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.entity.Tickable;
 import com.cr.entity.enemy.EnemySheet;
+import com.cr.entity.hero.Hero.Direction;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.stats.Stat;
@@ -30,10 +31,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	protected StatsSheet sheet;
 	
 	protected Transform transform;
-	
-	public enum Direction{
-		NORTH, SOUTH, EAST, WEST;
-	}
 	
 	protected Direction currentDir;
 	
