@@ -156,7 +156,7 @@ public class World {
 		transform = new Transform();
 		
 		normalMapWater = new Texture("normalMapWater2");
-		normalMapGrass = new Texture("normalMapGrass3");
+		normalMapGrass = new Texture("normalMapGrass2");
 		
 		//cubeMap = new Texture("cubeMap0");
 		
