@@ -40,7 +40,7 @@ public class Stone extends WorldObject implements Breakable, Tickable{
 
 	@Override
 	public void init() {
-		sprite = SpriteLoader.getSprite("stone");
+		sprite = SpriteLoader.getSprite("stone1");
 		rect = new Rectangle((int)position.x, (int)position.y, sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		CollisionManager.addBreakable(this);
 	}
