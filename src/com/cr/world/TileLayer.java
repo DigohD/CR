@@ -18,7 +18,7 @@ import com.cr.world.tile.WaterTile;
 
 public class TileLayer {
 	
-	private int width, height;
+	private static int width, height;
 	private float depth;
 
 	private Bitmap bitmap;
@@ -95,6 +95,8 @@ public class TileLayer {
 		generateTileLayer(width/2, height/2, width, height);
 	}
 	
+	static float counter = width*height*0.0001f*3;
+	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
@@ -121,11 +123,11 @@ public class TileLayer {
 				indices.add(vertices.size() + 2);
 				indices.add(vertices.size() + 3);
 				indices.add(vertices.size() + 0);
-	
-				vertices.add(new Vertex(new Vector3f(xPos, yPos, 0), new Vector2f(xLow, yLow)));
-				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, 0), new Vector2f(xLow, yHigh)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, 0), new Vector2f(xHigh, yHigh)));
-				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, 0), new Vector2f(xHigh, yLow)));
+				
+				vertices.add(new Vertex(new Vector3f(xPos, yPos, counter -= 0.0001f), new Vector2f(xLow, yLow)));
+				vertices.add(new Vertex(new Vector3f(xPos, yPos + tHeight + yOffset, counter -= 0.0001f), new Vector2f(xLow, yHigh)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos + tHeight + yOffset, counter -= 0.0001f), new Vector2f(xHigh, yHigh)));
+				vertices.add(new Vertex(new Vector3f(xPos + tWidth + xOffset , yPos, counter -= 0.0001f), new Vector2f(xHigh, yLow)));
 			}
 		}
 		

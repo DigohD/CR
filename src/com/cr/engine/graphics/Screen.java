@@ -1,6 +1,7 @@
 package com.cr.engine.graphics;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 
 import com.cr.game.GameStateManager;
 import com.cr.util.Camera;
@@ -14,7 +15,8 @@ public class Screen {
 		glEnable(GL_ALPHA);
 		glEnable(GL_BLEND);
 		glEnable(GL_CULL_FACE);
-		//glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_ALPHA_TEST);
 		
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
@@ -27,6 +29,7 @@ public class Screen {
 	
 	private void clearScreen(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glAlphaFunc(GL_GREATER, 0);
 	}
 	
 	public void renderFont(Font font, float x, float y, float scale){

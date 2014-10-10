@@ -33,9 +33,9 @@ public class Grasslands{
 		
 		treePositions = new ArrayList<Vector2f>();
 		
-		bottomLayer = new TileLayer(width, height, 0);
-		middleLayer = new TileLayer(width, height, 0);
-		topLayer    = new TileLayer(width, height, -0.6f);
+		bottomLayer = new TileLayer(width, height, 80f);
+		middleLayer = new TileLayer(width, height, 50f);
+		topLayer    = new TileLayer(width, height, 40f);
 		
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
 		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());
@@ -61,8 +61,8 @@ public class Grasslands{
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
 				if(height > 0 && topLayer.getBitmap().getPixel(x, y) == ColorRGBA.GREEN){
-					if(Randomizer.getInt(0, 10) == 0)
-						treePositions.add(new Vector2f(x * Tile.getTileWidth(),y*Tile.getTileHeight()));
+					if(Randomizer.getInt(0, Randomizer.getInt(10, 20)) == 0)
+						treePositions.add(new Vector2f(x * Tile.getTileWidth(), y * Tile.getTileHeight()));
 				}
 			}
 		}
