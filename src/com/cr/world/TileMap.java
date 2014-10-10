@@ -51,17 +51,17 @@ public class TileMap {
 		Grasslands g = new Grasslands(width, height);
 		
 		bottomLayer = g.getBottomLayer();
-		middleLayer = g.getMiddleLayer();
+		//middleLayer = g.getMiddleLayer();
 		topLayer = g.getTopLayer();
 		
 		bottomLayer.generateTileLayer();
-		middleLayer.generateTileLayer();
+		//middleLayer.generateTileLayer();
 		topLayer.generateTileLayer();
 	}
 	
 	public void renderMap(){
 		bottomLayer.renderTileLayer(true);
-		middleLayer.renderTileLayer(false);
+		//middleLayer.renderTileLayer(false);
 		topLayer.renderTileLayer(false);
 	}
 	

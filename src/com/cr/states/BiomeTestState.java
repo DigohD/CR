@@ -11,6 +11,7 @@ import com.cr.engine.graphics.ColorRGBA;
 import com.cr.engine.graphics.Mesh;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Texture;
+import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
@@ -24,9 +25,13 @@ public class BiomeTestState extends GameState{
 	private BufferedImage image;
 	private int[] pixels;
 	
-	private int width = 500, height = 500;
+	private int width = 250, height = 250;
 	
 	private SimplexNoise noise = new SimplexNoise();
+	
+	private int octaves = 7;
+	private float roughness = 0.8f;
+	private float scale = 0.009f;
 
 	public BiomeTestState(GameStateManager gsm) {
 		super(gsm);
@@ -39,7 +44,7 @@ public class BiomeTestState extends GameState{
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 		
-		genMap(5, 0.7f, 0.005f);
+		generateMap(octaves, roughness, scale);
 		
 		texture = new Texture(image);
 		
@@ -56,7 +61,7 @@ public class BiomeTestState extends GameState{
 		t.scale(2, 2, 0);
 	}
 	
-	public void genMap(int octaves, float roughness, float scale){
+	public void generateMap(int octaves, float roughness, float scale){
 		float[] simplexNoise = generateOctavedSimplexNoise(width, height, octaves, roughness, scale);
 		
 		for(int y = 0; y < height; y++){
@@ -71,24 +76,25 @@ public class BiomeTestState extends GameState{
 	
 	public float[] generateOctavedSimplexNoise(int width, int height, int octaves, float roughness, float scale){
 	      float[] totalNoise = new float[width*height];
-	       float layerFrequency = scale;
-	       float layerWeight = 1;
-	       float weightSum = 0;
+	      float layerFrequency = scale;
+	      float layerWeight = 1;
+	      float weightSum = 0;
 
-	       for (int octave = 0; octave < octaves; octave++) {
-	          //Calculate single layer/octave of simplex noise, then add it to total noise
-	          for(int x = 0; x < width; x++)
-	             for(int y = 0; y < height; y++)
-	                totalNoise[x+y*width] += (float) SimplexNoise.noise(x * layerFrequency ,y * layerFrequency) * layerWeight;
+	      for(int octave = 0; octave < octaves; octave++) {
+	         //Calculate single layer/octave of simplex noise, then add it to total noise
+	         for(int x = 0; x < width; x++)
+	            for(int y = 0; y < height; y++)
+	               totalNoise[x+y*width] += (float) SimplexNoise.noise(x * layerFrequency ,y * layerFrequency) * layerWeight;
 	   
-	          //Increase variables with each incrementing octave
-	           layerFrequency *= 2;
-	           weightSum += layerWeight;
-	           layerWeight *= roughness;
+	         //Increase variables with each incrementing octave
+	          layerFrequency *= 2;
+	          weightSum += layerWeight;
+	          layerWeight *= roughness;
 	           
-	       }
-	       return totalNoise;
-	   }
+	      }
+	      
+	      return totalNoise;
+	}
 
 	@Override
 	public void tick(float dt) {

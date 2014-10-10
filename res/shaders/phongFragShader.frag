@@ -110,8 +110,8 @@ vec3 rotateZ(vec3 v, float angle){
 }
 
 void main(){
-	//vec3 normal = normalize(normal_out);
-	vec3 normal = calcBumpedNormal(isWater_out);
+	vec3 normal = normalize(normal_out);
+	//vec3 normal = calcBumpedNormal(isWater_out);
 	
 	vec4 texColor;
 	
@@ -174,7 +174,7 @@ void main(){
 		}
 		
 	}else{
-		shading = ambientLight + (clamp(diffuseLight, 0, 1)) +(k*clamp(specularLight, 0, 1))  + emissive;
+		shading = ambientLight + (clamp(diffuseLight, 0, 1))  + emissive;
 	}
 	
 	

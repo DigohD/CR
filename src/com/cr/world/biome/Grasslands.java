@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.util.Randomizer;
+import com.cr.util.SimplexNoise;
 import com.cr.world.TileLayer;
 import com.cr.world.tile.DirtTile;
 import com.cr.world.tile.GrassTile;
@@ -31,28 +32,83 @@ public class Grasslands{
 	
 	private int width, height;
 	
+	private int octaves = 7;
+	private float roughness = 0.8f;
+	private float scale = 0.009f;
+	
 	public Grasslands(int width, int height){
 		this.width = width;
 		this.height = height;
 		
 		bottomLayer = new TileLayer(width, height, 0);
 		middleLayer = new TileLayer(width, height, 0);
-		topLayer    = new TileLayer(width, height, 0);
+		topLayer    = new TileLayer(width, height, -0.6f);
 		
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
 		
-		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());
-		middleLayer.addTileType(ColorRGBA.YELLOW, new SandTile());
-		middleLayer.addTileType(ColorRGBA.GRAY, new StoneTile());
+//		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());
+//		middleLayer.addTileType(ColorRGBA.YELLOW, new SandTile());
+//		middleLayer.addTileType(ColorRGBA.GRAY, new StoneTile());
 		
 		topLayer.addTileType(ColorRGBA.GREEN, new GrassTile());
 		
-		generateLakes(width, height);
-		generateSand(width, height);
-		generateDirt(width, height);
-		generateGrass(width, height);
+		generateBottomLayer(octaves, roughness, scale);
+		generateTopLayer(octaves, roughness, scale);
 		
-		fillLayers();
+//		generateLakes(width, height);
+//		generateSand(width, height);
+//		generateDirt(width, height);
+//		generateGrass(width, height);
+//		
+//		fillLayers();
+	}
+	
+	public void generateBottomLayer(int octaves, float roughness, float scale){
+		float[] simplexNoise = generateOctavedSimplexNoise(width, height, octaves, roughness, scale);
+		
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				float height = simplexNoise[x+y*width];
+				if(height < 0.1) bottomLayer.getBitmap().setPixel(x, y, ColorRGBA.BLUE);
+				else bottomLayer.getBitmap().setPixel(x, y, ColorRGBA.BLACK);
+			}
+		}
+		
+	}
+	
+	public void generateTopLayer(int octaves, float roughness, float scale){
+		float[] simplexNoise = generateOctavedSimplexNoise(width, height, octaves, roughness, scale);
+		
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				float height = simplexNoise[x+y*width];
+				if(height >= 0.1) topLayer.getBitmap().setPixel(x, y, ColorRGBA.GREEN);
+				else topLayer.getBitmap().setPixel(x, y, ColorRGBA.BLACK);
+			}
+		}
+		
+	}
+	
+	public float[] generateOctavedSimplexNoise(int width, int height, int octaves, float roughness, float scale){
+	      float[] totalNoise = new float[width*height];
+	      float layerFrequency = scale;
+	      float layerWeight = 1;
+	      float weightSum = 0;
+
+	      for(int octave = 0; octave < octaves; octave++) {
+	         //Calculate single layer/octave of simplex noise, then add it to total noise
+	         for(int x = 0; x < width; x++)
+	            for(int y = 0; y < height; y++)
+	               totalNoise[x+y*width] += (float) SimplexNoise.noise(x * layerFrequency ,y * layerFrequency) * layerWeight;
+	   
+	         //Increase variables with each incrementing octave
+	          layerFrequency *= 2;
+	          weightSum += layerWeight;
+	          layerWeight *= roughness;
+	           
+	      }
+	      
+	      return totalNoise;
 	}
 	
 	private void fillLayers() {
