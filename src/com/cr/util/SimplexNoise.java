@@ -38,6 +38,7 @@ public class SimplexNoise {
 	 
 	// 2D simplex noise
 	 public static float noise(float xin, float yin) {
+		 
 	 float n0, n1, n2; // Noise contributions from the three corners
 	 // Skew the input space to determine which simplex cell we're in
 	 final float F2 = (float) (0.5f*(Math.sqrt(3.0)-1.0));

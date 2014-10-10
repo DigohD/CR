@@ -1,5 +1,7 @@
 package com.cr.states;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
@@ -15,6 +17,7 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.util.Randomizer;
 import com.cr.util.SimplexNoise;
 
 public class BiomeTestState extends GameState{
@@ -25,13 +28,13 @@ public class BiomeTestState extends GameState{
 	private BufferedImage image;
 	private int[] pixels;
 	
-	private int width = 250, height = 250;
+	private int width = 150, height = 150;
 	
 	private SimplexNoise noise = new SimplexNoise();
 	
-	private int octaves = 7;
-	private float roughness = 0.8f;
-	private float scale = 0.009f;
+	private int octaves = 8;
+	private float roughness = 0.4f;
+	private float scale = 0.006f;
 
 	public BiomeTestState(GameStateManager gsm) {
 		super(gsm);
@@ -67,7 +70,8 @@ public class BiomeTestState extends GameState{
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
-				if(height < 0.1) pixels[x+y*width] = ColorRGBA.BLUE;
+				if(height < -0.5f) pixels[x+y*width] = ColorRGBA.BLUE;
+				else if(height < -0.4f) pixels[x+y*width] = ColorRGBA.BROWN;
 				else pixels[x+y*width] = ColorRGBA.GREEN;
 			}
 		}
@@ -77,15 +81,28 @@ public class BiomeTestState extends GameState{
 	public float[] generateOctavedSimplexNoise(int width, int height, int octaves, float roughness, float scale){
 	      float[] totalNoise = new float[width*height];
 	      float layerFrequency = scale;
-	      float layerWeight = 1;
+	      float layerWeight = 1f;
 	      float weightSum = 0;
 
+	      
+	      
 	      for(int octave = 0; octave < octaves; octave++) {
-	         //Calculate single layer/octave of simplex noise, then add it to total noise
+//	    	 for(int z = 0; z < 100; z++){
+//	    	 int rX = Randomizer.getInt(-width, width);
+//	    	 int rY = Randomizer.getInt(-height, height);
+	    	  
+	      	int xO = Randomizer.getInt(0, 16000000);
+	      	int yO = Randomizer.getInt(0, 16000000);
+	      
+//	    	 Rectangle rect = new Rectangle(rX, rY, width, height);
+//	         Calculate single layer/octave of simplex noise, then add it to total noise
 	         for(int x = 0; x < width; x++)
 	            for(int y = 0; y < height; y++)
-	               totalNoise[x+y*width] += (float) SimplexNoise.noise(x * layerFrequency ,y * layerFrequency) * layerWeight;
-	   
+//	            	if(rect.contains(new Point(x, y)))
+	            		totalNoise[x+y*width] += (float) SimplexNoise.noise((x + xO) * layerFrequency,
+	            				(y + yO) * layerFrequency) * layerWeight;
+//	    	 }
+	    	 
 	         //Increase variables with each incrementing octave
 	          layerFrequency *= 2;
 	          weightSum += layerWeight;
@@ -96,10 +113,18 @@ public class BiomeTestState extends GameState{
 	      return totalNoise;
 	}
 
+	int timer;
+	
 	@Override
 	public void tick(float dt) {
 		if(Input.getKey(Input.ESCAPE))
 			gsm.pop();
+		
+		timer++;
+		if(timer > 50){
+			init();
+			timer = 0;
+		}
 	}
 
 	@Override
