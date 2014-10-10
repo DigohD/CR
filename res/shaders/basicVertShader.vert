@@ -11,6 +11,6 @@ uniform mat4 transformation;
 void main() 
 {
 	texCoord = texCoordIn;
-	outColor = vec3(1,1,1.6);
+	outColor = vec3(1,1,1);
 	gl_Position = transformation * vec4(position, 1);
 }

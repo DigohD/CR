@@ -30,6 +30,11 @@ public class MenuState extends GameState{
 		if(Input.getKey(Input.ENTER)){
 			gsm.push(new PlayState(gsm));
 		}
+		
+		if(Input.getKey(Input.B)){
+			gsm.push(new BiomeTestState(gsm));
+		}
+		
 		if(Input.getKey(Input.H)){
 			NetStatus.isHOST = true;
 			NetStatus.isMultiPlayer = true;
@@ -57,6 +62,9 @@ public class MenuState extends GameState{
 		
 		f.setFont(CRString.create("Press J to Join"));
 		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100 + 80, 0.5f);
+		
+		f.setFont(CRString.create("Press B to see biome"));
+		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100 + 80 + 40, 0.5f);
 		FontLoader.releaseFont(f);
 	}
 

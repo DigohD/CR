@@ -24,7 +24,14 @@ public class Texture {
 		img = ImageLoader.getImage(name);
 		width = img.getWidth();
 		height = img.getHeight();
-		id = loadTexture(name);
+		id = loadTexture();
+	}
+	
+	public Texture(BufferedImage img){
+		this.img = img;
+		width = img.getWidth();
+		height = img.getHeight();
+		id = loadTexture();
 	}
 	
 	public void bind(){
@@ -41,7 +48,7 @@ public class Texture {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	
-	private int loadTexture(String name){
+	private int loadTexture(){
 		int[] pixels = new int[width*height];
 			
 		img.getRGB(0, 0, width, height, pixels, 0, width);
