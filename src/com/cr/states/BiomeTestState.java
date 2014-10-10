@@ -28,7 +28,7 @@ public class BiomeTestState extends GameState{
 	private BufferedImage image;
 	private int[] pixels;
 	
-	private int width = 150, height = 150;
+	private int width = Window.getWidth(), height = Window.getHeight();
 	
 	private SimplexNoise noise = new SimplexNoise();
 	
@@ -70,9 +70,9 @@ public class BiomeTestState extends GameState{
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
-				if(height < -0.5f) pixels[x+y*width] = ColorRGBA.BLUE;
+				if(height < -0.5f) pixels[x+y*width] = ColorRGBA.GREEN;
 				else if(height < -0.4f) pixels[x+y*width] = ColorRGBA.BROWN;
-				else pixels[x+y*width] = ColorRGBA.GREEN;
+				else pixels[x+y*width] = ColorRGBA.BLUE;
 			}
 		}
 		
@@ -84,26 +84,15 @@ public class BiomeTestState extends GameState{
 	      float layerWeight = 1f;
 	      float weightSum = 0;
 
-	      
-	      
 	      for(int octave = 0; octave < octaves; octave++) {
-//	    	 for(int z = 0; z < 100; z++){
-//	    	 int rX = Randomizer.getInt(-width, width);
-//	    	 int rY = Randomizer.getInt(-height, height);
-	    	  
 	      	int xO = Randomizer.getInt(0, 16000000);
 	      	int yO = Randomizer.getInt(0, 16000000);
 	      
-//	    	 Rectangle rect = new Rectangle(rX, rY, width, height);
-//	         Calculate single layer/octave of simplex noise, then add it to total noise
 	         for(int x = 0; x < width; x++)
 	            for(int y = 0; y < height; y++)
-//	            	if(rect.contains(new Point(x, y)))
-	            		totalNoise[x+y*width] += (float) SimplexNoise.noise((x + xO) * layerFrequency,
-	            				(y + yO) * layerFrequency) * layerWeight;
-//	    	 }
-	    	 
-	         //Increase variables with each incrementing octave
+	            	totalNoise[x+y*width] += (float) SimplexNoise.noise((x + xO) * layerFrequency,
+	            			(y + yO) * layerFrequency) * layerWeight;
+
 	          layerFrequency *= 2;
 	          weightSum += layerWeight;
 	          layerWeight *= roughness;
@@ -113,18 +102,16 @@ public class BiomeTestState extends GameState{
 	      return totalNoise;
 	}
 
-	int timer;
+	
 	
 	@Override
 	public void tick(float dt) {
 		if(Input.getKey(Input.ESCAPE))
 			gsm.pop();
 		
-		timer++;
-		if(timer > 50){
-			init();
-			timer = 0;
-		}
+		if(Input.getKey(Input.ENTER))init();
+		
+		
 	}
 
 	@Override
