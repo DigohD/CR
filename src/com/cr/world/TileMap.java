@@ -16,21 +16,16 @@ public class TileMap {
 	private int height;
 	
 	private TileLayer bottomLayer, middleLayer, topLayer;
+	private Grasslands grassLands;
 	
 	public TileMap(LinkedList<Integer> pixels, int width, int height){
 		this.width = width;
 		this.height = height;
 		
-		
 		topLayer = new TileLayer(pixels, width, height, 0);
-		System.out.println();
 		middleLayer = new TileLayer(pixels, width, height, 0);
-		System.out.println();
 		bottomLayer = new TileLayer(pixels, width, height, 0);
-		System.out.println();
-	
-		
-		
+
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
 		
 		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());
@@ -49,6 +44,7 @@ public class TileMap {
 		this.height = height;
 
 		Grasslands g = new Grasslands(width, height);
+		this.grassLands = g;
 		
 		bottomLayer = g.getBottomLayer();
 		middleLayer = g.getMiddleLayer();
@@ -83,6 +79,10 @@ public class TileMap {
 
 	public TileLayer getTopLayer() {
 		return topLayer;
+	}
+
+	public Grasslands getGrassLands() {
+		return grassLands;
 	}
 	
 }

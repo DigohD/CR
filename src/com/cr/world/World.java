@@ -57,8 +57,8 @@ public class World {
 	private int width, height;
 	private int timer = 0;
 	
-	private int numOfTrees = 100;
-	private int numOfStones = 100;
+	private int numOfTrees = 500;
+	private int numOfStones = 300;
 	
 	private float t = 0;
 	private float amplitudeWave = 5f;
@@ -121,7 +121,7 @@ public class World {
 		}
 		
 		init();
-		//generateWorldObjects();
+		generateWorldObjects();
 		//generateEnemies();
 	}
 	
@@ -210,27 +210,38 @@ public class World {
 	}
 	
 	private void generateTrees(int num){
+		
 		for(int i = 0; i < num; i++){
-			Tree t;
-			boolean generated = false;
-			while(!generated){
-				t = new Tree(-1000, -1000);
-				t.init();
-				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
-				//System.out.println(t.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
-					t.updateRect();
-					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
-						objectPosMap.put(t.getPosition(), t);
-						trees[i] = t;
-					}
-						
-					generated = true;
-				}
+			Tree t = new Tree((int)map.getGrassLands().getTreePositions().get(i).x, (int)map.getGrassLands().getTreePositions().get(i).y);
+			t.init();
+			t.updateRect();
+			if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+				objectPosMap.put(t.getPosition(), t);
+				trees[i] = t;
 			}
 		}
+		
+//		for(int i = 0; i < num; i++){
+//			Tree t;
+//			boolean generated = false;
+//			while(!generated){
+//				t = new Tree(-1000, -1000);
+//				t.init();
+//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
+//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
+//				//System.out.println(t.getSprite().getSpriteHeight());
+//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
+//					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
+//					t.updateRect();
+//					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
+//						objectPosMap.put(t.getPosition(), t);
+//						trees[i] = t;
+//					}
+//						
+//					generated = true;
+//				}
+//			}
+//		}
 	}
 	
 	private void generateStones(int num){
@@ -270,7 +281,7 @@ public class World {
 			}
 		}
 	
-		for(int i = 0; i < 20; i++){
+		for(int i = 0; i < 40; i++){
 			Wisp e = null;
 			boolean generated = false;
 			while(!generated){
@@ -287,7 +298,8 @@ public class World {
 	}
 	
 	private void generateWorldObjects(){
-		generateTrees(numOfTrees);
+		generateTrees(map.getGrassLands().getTreePositions().size());
+		System.out.println(map.getGrassLands().getTreePositions().size());
 		generateStones(numOfStones);
 	}
 	
