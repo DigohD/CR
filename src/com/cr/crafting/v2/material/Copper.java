@@ -26,7 +26,7 @@ public class Copper extends Material{
 		
 		calculateMids();
 		
-		amount = 100;
+		usedAmount = 100;
 		
 		breakable = true;
 		
@@ -64,9 +64,9 @@ public class Copper extends Material{
 		if(state == State.BALANCED){
 			span = (int) (span * 2);
 			
-			damageMod = new StatMod(amount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
+			damageMod = new StatMod(usedAmount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
 			diceMod = new StatMod(primbonus * span, StatID.DAMAGE_DICE, "", true);
-			cooldownMod = new StatMod(amount/10 * 10, StatID.COOLDOWN, "", true);
+			cooldownMod = new StatMod(usedAmount/10 * 10, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.25f);
 			diceMod.mulAmount(1.25f);
@@ -77,9 +77,9 @@ public class Copper extends Material{
 		}else if(state == State.BLASTED){
 			span = (int) (span * 2);
 			
-			damageMod = new StatMod(amount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
+			damageMod = new StatMod(usedAmount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
 			diceMod = new StatMod(primbonus * span, StatID.DAMAGE_DICE, "", true);
-			cooldownMod = new StatMod(amount/10 * 10, StatID.COOLDOWN, "", true);
+			cooldownMod = new StatMod(usedAmount/10 * 10, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.5f);
 			diceMod.mulAmount(1f);
@@ -90,9 +90,9 @@ public class Copper extends Material{
 		}else if(state == State.FLASHED){
 			span = (int) (span * 2);
 
-			damageMod = new StatMod(amount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
+			damageMod = new StatMod(usedAmount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
 			diceMod = new StatMod(primbonus * span, StatID.DAMAGE_DICE, "", true);
-			cooldownMod = new StatMod(amount/10 * 10, StatID.COOLDOWN, "", true);
+			cooldownMod = new StatMod(usedAmount/10 * 10, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1f);
 			diceMod.mulAmount(1.5f);
@@ -103,9 +103,9 @@ public class Copper extends Material{
 		}else if(state == State.HARDENED){
 			span = (int) (span * 2);
 
-			damageMod = new StatMod(amount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
+			damageMod = new StatMod(usedAmount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
 			diceMod = new StatMod(primbonus * span, StatID.DAMAGE_DICE, "", true);
-			cooldownMod = new StatMod(amount/10 * 10, StatID.COOLDOWN, "", true);
+			cooldownMod = new StatMod(usedAmount/10 * 10, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.15f);
 			diceMod.mulAmount(1.35f);
@@ -116,9 +116,9 @@ public class Copper extends Material{
 		}else if(state == State.TEMPERED){
 			span = (int) (span * 2);
 
-			damageMod = new StatMod(amount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
+			damageMod = new StatMod(usedAmount/10 * primbonus, StatID.DAMAGE_BASE, "", true);
 			diceMod = new StatMod(primbonus * span, StatID.DAMAGE_DICE, "", true);
-			cooldownMod = new StatMod(amount/10 * 10, StatID.COOLDOWN, "", true);
+			cooldownMod = new StatMod(usedAmount/10 * 10, StatID.COOLDOWN, "", true);
 			
 			damageMod.mulAmount(1.35f);
 			diceMod.mulAmount(1.15f);
@@ -137,22 +137,26 @@ public class Copper extends Material{
 		float base = 1;
 		
 		if(state == State.BALANCED){
-			armorMod = new StatMod(amount/10 * base * primbonus, StatID.ARMOR, "", true);
+			armorMod = new StatMod(usedAmount/10 * base * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.BLASTED){
-			armorMod = new StatMod(amount/10 * base * primbonus, StatID.ARMOR, "", true);
+			armorMod = new StatMod(usedAmount/10 * base * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.FLASHED){
-			armorMod = new StatMod(amount/10 * base * primbonus, StatID.ARMOR, "", true);
+			armorMod = new StatMod(usedAmount/10 * base * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.HARDENED){
-			armorMod = new StatMod(amount/10 * base * primbonus, StatID.ARMOR, "", true);
+			armorMod = new StatMod(usedAmount/10 * base * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}else if(state == State.TEMPERED){
-			armorMod = new StatMod(amount/10 * base * primbonus, StatID.ARMOR, "", true);
+			armorMod = new StatMod(usedAmount/10 * base * primbonus, StatID.ARMOR, "", true);
 			stats.add(armorMod);
 		}
-		return null;
+		
+		System.out.println("CHECK");
+		System.out.println(usedAmount + " : " + base + " : " + primbonus);
+		System.out.println(usedAmount/10 * base * primbonus);
+		return stats;
 	}
 
 	@Override

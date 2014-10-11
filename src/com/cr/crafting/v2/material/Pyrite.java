@@ -16,8 +16,6 @@ import com.cr.stats.StatMod;
 import com.cr.stats.StatsSheet.StatID;
 
 public class Pyrite extends Material{
-
-	private float mod1, mod2, mod3, mod4;
 	
 	public Pyrite(){
 		properties = new ArrayList<Property>();		
@@ -26,11 +24,6 @@ public class Pyrite extends Material{
 		lowerTimeLimit = 60;
 		higherTimeLimit = 280;
 		balancedValue = 45;
-		
-		mod1 = 1f;
-		mod2 = 1f;
-		mod3 = 1f;
-		mod4 = 1f;
 		
 		isPrimary = false;
 		
@@ -61,59 +54,45 @@ public class Pyrite extends Material{
 
 	@Override
 	protected void newMods() {
-		mod1 = 1f + usedAmount / 75.0f;
-		mod2 = 1f + usedAmount / 65.0f;
-		mod3 = 1f + usedAmount / 60.0f;
-		mod4 = 1f + usedAmount / 55.0f;
-		
-		System.out.println(mod1 + " . " + mod2 + " . " + mod3 + " . " + mod4);
+
 	}
 
 	@Override
 	public ArrayList<StatMod> getWeaponStats(ArrayList<StatMod> stats) {
 		if(state == State.BALANCED){
-			stats.add(new StatMod(1 * mod1 * mod4 * baseBonus, StatID.STRENGTH, "", true));
-			stats.add(new StatMod(1 * mod2 * mod4 * baseBonus, StatID.AGILITY, "", true));
-			stats.add(new StatMod(1 * mod1 * mod4 * baseBonus, StatID.INTELLIGENCE, "", true));
-			stats.add(new StatMod(1 * mod2 * mod4 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.STRENGTH, "", true));
+			stats.add(new StatMod(usedAmount/10 * 3 * secBonus, StatID.PHYSICAL_POWER, "", true));
 		}else if(state == State.BLASTED){
-			stats.add(new StatMod(2 * mod3 * mod3 * baseBonus, StatID.STRENGTH, "", true));
-			stats.add(new StatMod(2 * mod2 * mod3 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.STRENGTH, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.TOUGHNESS, "", true));
 		}else if(state == State.FLASHED){
-			stats.add(new StatMod(2 * mod4 * mod2 * baseBonus, StatID.INTELLIGENCE, "", true));
-			stats.add(new StatMod(2 * mod2 * mod2 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 3 * secBonus, StatID.PHYSICAL_POWER, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.TOUGHNESS, "", true));
 		}else if(state == State.HARDENED){
-			stats.add(new StatMod(2 * mod1 * mod1 * baseBonus, StatID.AGILITY, "", true));
-			stats.add(new StatMod(2 * mod3 * mod1 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 2 * baseBonus, StatID.STRENGTH, "", true));
 		}else if(state == State.TEMPERED){
-			stats.add(new StatMod(4 * mod3 * mod4 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 2 * baseBonus, StatID.TOUGHNESS, "", true));
 		}
 		return stats;
 	}
 
 	@Override
 	public ArrayList<StatMod> getArmorStats(ArrayList<StatMod> stats) {	
-		StatMod armorMod;
-		float base = 5;
-		
 		if(state == State.BALANCED){
-			stats.add(new StatMod(1 * mod1 * mod4 * baseBonus, StatID.STRENGTH, "", true));
-			stats.add(new StatMod(1 * mod2 * mod4 * baseBonus, StatID.AGILITY, "", true));
-			stats.add(new StatMod(1 * mod1 * mod4 * baseBonus, StatID.INTELLIGENCE, "", true));
-			stats.add(new StatMod(1 * mod2 * mod4 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.STRENGTH, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * secBonus, StatID.ARMOR_RATING, "", true));
 		}else if(state == State.BLASTED){
-			stats.add(new StatMod(2 * mod3 * mod3 * baseBonus, StatID.STRENGTH, "", true));
-			stats.add(new StatMod(2 * mod2 * mod3 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.STRENGTH, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.TOUGHNESS, "", true));
 		}else if(state == State.FLASHED){
-			stats.add(new StatMod(2 * mod4 * mod2 * baseBonus, StatID.INTELLIGENCE, "", true));
-			stats.add(new StatMod(2 * mod2 * mod2 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * secBonus, StatID.ARMOR_RATING, "", true));
+			stats.add(new StatMod(usedAmount/10 * 1 * baseBonus, StatID.TOUGHNESS, "", true));
 		}else if(state == State.HARDENED){
-			stats.add(new StatMod(2 * mod1 * mod1 * baseBonus, StatID.AGILITY, "", true));
-			stats.add(new StatMod(2 * mod3 * mod1 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 2 * baseBonus, StatID.STRENGTH, "", true));
 		}else if(state == State.TEMPERED){
-			stats.add(new StatMod(4 * mod3 * mod4 * baseBonus, StatID.TOUGHNESS, "", true));
+			stats.add(new StatMod(usedAmount/10 * 2 * baseBonus, StatID.TOUGHNESS, "", true));
 		}
-		return null;
+		return stats;
 	}
 
 	@Override
