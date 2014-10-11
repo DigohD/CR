@@ -11,13 +11,14 @@ public class StatsSheet {
 						/*Primary Stats*/
 						LEVEL,
 						STRENGTH, AGILITY, INTELLIGENCE, TOUGHNESS,
-						HP_NOW, HP_MAX, MANA,
+						HP_NOW, HP_MAX, MANA_MAX, MANA_NOW,
 						
 						/*Mobility*/
 						MOVEMENT_SPEED,
 						
 						/*Secondary Stats*/
 						ARMOR, ARMOR_RATING, PHYSICAL_POWER, RAPIDNESS, SPELL_POWER,
+						
 						
 						/*On hit Effects*/
 						LIFE_ON_HIT,
@@ -43,6 +44,7 @@ public class StatsSheet {
 			sheet.put(StatID.INTELLIGENCE, new Stat(StatID.INTELLIGENCE, "Intelligence", 10, isHero));
 			sheet.put(StatID.TOUGHNESS, new Stat(StatID.TOUGHNESS, "Toughness", 10, isHero));
 			sheet.put(StatID.HP_MAX, new Stat(StatID.HP_MAX, "Max Hp", 100, isHero));
+			sheet.put(StatID.MANA_MAX, new Stat(StatID.MANA_MAX, "Max Hp", 0, isHero));
 			
 			sheet.put(StatID.MOVEMENT_SPEED, new Stat(StatID.MOVEMENT_SPEED, "Movement Speed", 1f, isHero));
 			
@@ -54,10 +56,12 @@ public class StatsSheet {
 			
 			sheet.put(StatID.LIFE_ON_HIT, new Stat(StatID.LIFE_ON_HIT, "Life On Hit", 0, isHero));
 			sheet.put(StatID.LIFE_REGEN, new Stat(StatID.LIFE_REGEN, "Life Regen /5s", 0, isHero));
+			sheet.put(StatID.MANA_REGEN, new Stat(StatID.MANA_REGEN, "Mana Regen /5s", 0, isHero));
 			
 			updateInternalStats();
 			
 			sheet.put(StatID.HP_NOW, new Stat(StatID.HP_NOW, "Current Hp", sheet.get(StatID.HP_MAX).getTotal(), isHero));
+			sheet.put(StatID.MANA_NOW, new Stat(StatID.MANA_NOW, "Current Mana", sheet.get(StatID.MANA_MAX).getTotal(), isHero));
 		}
 	}
 	
@@ -99,6 +103,12 @@ public class StatsSheet {
 				return "Current HP";
 			case HP_MAX:
 				return "Max HP";
+			case MANA_MAX:
+				return "Max Mana";
+			case MANA_NOW:
+				return "Current Mana";
+			case MOVEMENT_SPEED:
+				return "Move Speed";
 			case ARMOR:
 				return "Armor";
 			case PHYSICAL_POWER:
@@ -111,6 +121,16 @@ public class StatsSheet {
 				return "Life On Hit";
 			case LIFE_REGEN:
 				return "Life Regen /5s";
+			case ARMOR_RATING:
+				return "Armor Rating";
+			case COOLDOWN:
+				return "Cooldown";
+			case DAMAGE_BASE:
+				return "Damage";
+			case DAMAGE_DICE:
+				return "Dice";
+			case MANA_REGEN:
+				return "Mana Regen /5s";
 			default:
 				break;
 		}
