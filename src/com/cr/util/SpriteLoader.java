@@ -67,6 +67,8 @@ public class SpriteLoader {
 		
 		spriteLib.put("stone1", newSprite("stone1"));
 		
+		spriteLib.put("reeds", newSprite("reeds"));
+		
 		// Hero
 //		spriteLib.put("hero", newSprite("/hero/hero.png"));
 		spriteLib.put("herohead", newSprite("herohead"));

@@ -25,13 +25,14 @@ public class Grasslands{
 	
 	private int xOffset, yOffset;
 	
-	private List<Vector2f> treePositions;
+	private List<Vector2f> treePositions, reedPositions;
 	
 	public Grasslands(int width, int height){
 		this.width = width;
 		this.height = height;
 		
 		treePositions = new ArrayList<Vector2f>();
+		reedPositions = new ArrayList<Vector2f>();
 		
 		bottomLayer = new TileLayer(width, height, 0.8f);
 		middleLayer = new TileLayer(width, height, 0.5f);
@@ -52,6 +53,7 @@ public class Grasslands{
 		generateTopLayer(octaves, roughness, scale);
 		
 		generateTrees(octaves, roughness, scale);
+		generateReeds(octaves, roughness, scale);
 	}
 	
 	public void generateTrees(int octaves, float roughness, float scale){
@@ -63,6 +65,24 @@ public class Grasslands{
 				if(height > 0 && topLayer.getBitmap().getPixel(x, y) == ColorRGBA.GREEN){
 					if(Randomizer.getInt(0, Randomizer.getInt(10, 20)) == 0)
 						treePositions.add(new Vector2f(x * Tile.getTileWidth(), y * Tile.getTileHeight()));
+				}
+			}
+		}
+		
+	}
+	
+	public void generateReeds(int octaves, float roughness, float scale){
+		float[] simplexNoise = generateOctavedSimplexNoise(width, height, octaves, roughness, scale);
+		
+		for(int y = 0; y < height; y++){
+			for(int x = 0; x < width; x++){
+				float height = simplexNoise[x+y*width];
+				if(height > -0.55f && height < -0.50f && 
+						(bottomLayer.getBitmap().getPixel(x, y) == ColorRGBA.BLUE || middleLayer.getBitmap().getPixel(x, y) == ColorRGBA.BROWN)){
+					if(Randomizer.getInt(0, 1) >= 0)
+						reedPositions.add(new Vector2f((x * Tile.getTileWidth()) + Randomizer.getInt(-30, 30), 
+								(y * Tile.getTileHeight())  + Randomizer.getInt(-20, 20)));
+					
 				}
 			}
 		}
@@ -146,5 +166,9 @@ public class Grasslands{
 
 	public List<Vector2f> getTreePositions() {
 		return treePositions;
+	}
+	
+	public List<Vector2f> getReedPositions() {
+		return reedPositions;
 	}
 }

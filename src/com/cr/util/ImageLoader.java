@@ -76,6 +76,8 @@ public class ImageLoader {
 		
 		imageLib.put("stone1", loadImage("/prop/nature/stone1.png"));
 		
+		imageLib.put("reeds", loadImage("/prop/nature/reeds.png"));
+		
 		//misc
 		imageLib.put("fire", loadImage("/prop/misc/campfire.png"));
 		
