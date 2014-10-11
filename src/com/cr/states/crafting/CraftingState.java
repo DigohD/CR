@@ -55,6 +55,8 @@ public class CraftingState extends GameState{
 		
 		matsChoices = new ArrayList<MaterialChoice>();
 		
+		t.translate(0, 0, -10000);
+		
 		this.forge = forge;
 		
 		ArrayList<Material> mats = MaterialsBox.getMaterials();
