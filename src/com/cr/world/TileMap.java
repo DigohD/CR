@@ -53,9 +53,6 @@ public class TileMap {
 		bottomLayer.generateTileLayer();
 		middleLayer.generateTileLayer();
 		topLayer.generateTileLayer();
-		
-		
-		
 	}
 	
 	public void renderMap(){

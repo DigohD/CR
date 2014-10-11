@@ -210,11 +210,21 @@ public class World {
 	}
 	
 	private void generateTrees(int num){
-		
 		for(int i = 0; i < num; i++){
 			Tree t = new Tree((int)map.getGrassLands().getTreePositions().get(i).x, (int)map.getGrassLands().getTreePositions().get(i).y);
 			t.init();
+			
+			if(t.getX() < 0) t.getPosition().x = 0;
+			if(t.getY() < 0) t.getPosition().y = 0;
+			
+			if(t.getX() + t.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+				t.getPosition().x = (width*Tile.getTileWidth()) - t.getSprite().getSpriteWidth();
+			
+			if(t.getY() + t.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+				t.getPosition().y = (height*Tile.getTileHeight()) - t.getSprite().getSpriteHeight();
+			
 			t.updateRect();
+			
 			if(NetStatus.isMultiPlayer && NetStatus.isHOST){
 				objectPosMap.put(t.getPosition(), t);
 				trees[i] = t;

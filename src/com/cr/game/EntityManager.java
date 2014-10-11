@@ -149,8 +149,8 @@ public class EntityManager {
 			tickableEntities.add(t);
 		for(Renderable d : deToAdd)
 			renderableEntities.add(d);
-		if(deToAdd.size() > 0)
-			depthSort();		
+//		if(deToAdd.size() > 0)
+//			depthSort();		
 		
 		teToAdd.clear();
 		deToAdd.clear();

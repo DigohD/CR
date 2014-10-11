@@ -41,7 +41,7 @@ public class Screen {
 	}
 	
 	public void renderSprite(Sprite sprite, float x, float y, int unit){
-		sprite.getTransform().translate(x, y, 0);
+		sprite.getTransform().translate(x, y, (sprite.getSpriteHeight() + y)  * -1.0f * 0.01f);
 		sprite.bind(unit);
 		sprite.getMesh().render();
 		sprite.unbind();
@@ -49,7 +49,7 @@ public class Screen {
 	
 	public void renderSprite(Sprite sprite, float x, float y, float row, float col){
 		sprite.updateTexCoords(row, col);
-		sprite.getTransform().translate(x, y, 0);
+		sprite.getTransform().translate(x, y, (sprite.getSpriteHeight() + y) * -1.0f * 0.01f);
 		sprite.bind();
 		sprite.getMesh().render();
 		sprite.unbind();
@@ -57,7 +57,7 @@ public class Screen {
 	
 	public void renderSprite(Sprite sprite, float x, float y, float row, float col, float xScale, float yScale){
 		sprite.updateTexCoords(row, col);
-		sprite.getTransform().translate(x, y, 0);
+		sprite.getTransform().translate(x, y, (sprite.getSpriteHeight() + y) * -1.0f * 0.01f);
 		sprite.getTransform().scale(xScale, yScale, 1);
 		sprite.bind();
 		sprite.getMesh().render();
@@ -70,14 +70,14 @@ public class Screen {
 	}
 	
 	public void renderStaticSprite(Sprite sprite, float x, float y, int unit){
-		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), 0);
+		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), (sprite.getSpriteHeight() + y) * -1.0f * 0.01f);
 		sprite.bind(unit);
 		sprite.getMesh().render();
 		sprite.unbind();
 	}
 	
 	public void renderStaticSprite(Sprite sprite, float x, float y, float xScale, float yScale){
-		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), 0);
+		sprite.getTransform().translate(x + Camera.getCamX(), y + Camera.getCamY(), (sprite.getSpriteHeight() + y) * -1.0f * 0.01f);
 		sprite.getTransform().scale(xScale, yScale, 1);
 		sprite.bind();
 		sprite.getMesh().render();

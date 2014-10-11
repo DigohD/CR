@@ -70,8 +70,11 @@ public class BiomeTestState extends GameState{
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
-				if(height < -0.5f) pixels[x+y*width] = ColorRGBA.GREEN;
-				else if(height < -0.4f) pixels[x+y*width] = ColorRGBA.BROWN;
+				if(height < -0.99f) pixels[x+y*width] = ColorRGBA.WHITE;
+				else if(height < -0.7f) pixels[x+y*width] = ColorRGBA.GRAY;
+				else if(height < -0.5f) pixels[x+y*width] = ColorRGBA.DARK_GREEN;
+				else if(height < -0.28f) pixels[x+y*width] = ColorRGBA.GREEN;
+				else if(height < -0.2f) pixels[x+y*width] = ColorRGBA.YELLOW;
 				else pixels[x+y*width] = ColorRGBA.BLUE;
 			}
 		}
