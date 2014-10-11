@@ -1,7 +1,9 @@
 package com.cr.world;
 
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,14 +16,15 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
+import com.cr.engine.graphics.FrameBuffer;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.forestelf.ForestElf;
 import com.cr.entity.enemy.wisp.Wisp;
 import com.cr.game.EntityManager;
-import com.cr.net.HeroMP;
 import com.cr.net.HeroMPServer;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.Packet19Loot;
@@ -29,8 +32,8 @@ import com.cr.net.server.Server;
 import com.cr.states.net.MPHostState;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
-import com.cr.world.misc.FirePlace;
 import com.cr.util.SpriteLoader;
+import com.cr.world.misc.FirePlace;
 import com.cr.world.terrain.Reeds;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
@@ -80,7 +83,10 @@ public class World {
 	private float k = 0;
 	
 	private FirePlace fire;
+	private Sprite lightMap;
 	private Texture normalMapWater, normalMapGrass, cubeMap;
+	
+	FrameBuffer fb;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -95,6 +101,10 @@ public class World {
 	
 	public World(){
 		initShader();
+		
+		lightMap = new Sprite("light");
+		fb = new FrameBuffer(lightMap.getSpriteWidth(), lightMap.getSpriteHeight());
+		
 
 		map = new TileMap(250, 250);
 		
@@ -375,6 +385,15 @@ public class World {
 	}
 	
 	public void render(Screen screen) {
+		
+//		fb.bind();
+//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//		glBindTexture(GL_TEXTURE_2D, lightMap.getTexture().getID());
+//		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, lightMap.getSpriteWidth(), lightMap.getSpriteHeight());
+//		glBindTexture(GL_TEXTURE_2D, 0);
+//		
+//		fb.unbind();
+	
 		shader.bind();
 		
 		shader.setUniformf("waveDataX", angleWave);

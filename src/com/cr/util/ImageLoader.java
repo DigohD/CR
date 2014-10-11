@@ -12,6 +12,9 @@ public class ImageLoader {
 			new HashMap<String, BufferedImage>();
 	
 	public ImageLoader(){
+		
+		imageLib.put("light", loadImage("light.png"));
+		
 		// Tiles
 		imageLib.put("tileatlas", loadImage("/tiles/tileatlas.png"));
 		imageLib.put("tileatlas32", loadImage("/tiles/tileatlas32.png"));
