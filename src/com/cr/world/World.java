@@ -31,6 +31,7 @@ import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.world.misc.FirePlace;
 import com.cr.util.SpriteLoader;
+import com.cr.world.terrain.Reeds;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 import com.cr.world.terrain.WorldObject;
@@ -229,6 +230,24 @@ public class World {
 				objectPosMap.put(t.getPosition(), t);
 				trees[i] = t;
 			}
+			
+			
+		}
+		
+		for(int i = 0; i < map.getGrassLands().getReedPositions().size(); i++){
+			Reeds r = new Reeds((int)map.getGrassLands().getReedPositions().get(i).x, (int)map.getGrassLands().getReedPositions().get(i).y);
+			r.init();
+			
+			if(r.getX() < 0) r.getPosition().x = 0;
+			if(r.getY() < 0) r.getPosition().y = 0;
+			
+			if(r.getX() + r.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+				r.getPosition().x = (width*Tile.getTileWidth()) - r.getSprite().getSpriteWidth();
+			
+			if(r.getY() + r.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+				r.getPosition().y = (height*Tile.getTileHeight()) - r.getSprite().getSpriteHeight();
+			
+			r.updateRect();
 		}
 		
 //		for(int i = 0; i < num; i++){
