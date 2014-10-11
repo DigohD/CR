@@ -105,7 +105,7 @@ public class World {
 			pixels = new ArrayList<Integer>();
 			objectPosMap = new HashMap<Vector2f, WorldObject>();
 			
-			trees = new Tree[numOfTrees];
+			trees = new Tree[map.getGrassLands().getTreePositions().size()];
 			stones = new Stone[numOfStones];
 			
 			initByteMap();
