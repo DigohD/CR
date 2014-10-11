@@ -11,7 +11,7 @@ public class StatsSheet {
 						/*Primary Stats*/
 						LEVEL,
 						STRENGTH, AGILITY, INTELLIGENCE, TOUGHNESS,
-						HP_NOW, HP_MAX,
+						HP_NOW, HP_MAX, MANA,
 						
 						/*Mobility*/
 						MOVEMENT_SPEED,
@@ -23,7 +23,7 @@ public class StatsSheet {
 						LIFE_ON_HIT,
 	
 						/*Active Passive*/
-						LIFE_REGEN,
+						LIFE_REGEN, MANA_REGEN,
 						
 						/* Non-character Stats*/
 						DAMAGE_BASE, DAMAGE_DICE, COOLDOWN
