@@ -103,7 +103,7 @@ public class World {
 		initShader();
 		
 		lightMap = new Sprite("light");
-		fb = new FrameBuffer(Window.getWidth(), Window.getHeight());
+		fb = new FrameBuffer(Window.getWidth(), Window.getHeight(), false);
 		
 
 		map = new TileMap(250, 250);
