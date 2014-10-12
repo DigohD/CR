@@ -34,9 +34,9 @@ public class Grasslands{
 		treePositions = new ArrayList<Vector2f>();
 		reedPositions = new ArrayList<Vector2f>();
 		
-		bottomLayer = new TileLayer(width, height, 0.8f);
-		middleLayer = new TileLayer(width, height, 0.5f);
-		topLayer    = new TileLayer(width, height, 0.4f);
+		bottomLayer = new TileLayer(width, height, 8f);
+		middleLayer = new TileLayer(width, height, 5f);
+		topLayer    = new TileLayer(width, height, 4f);
 		
 		bottomLayer.addTileType(ColorRGBA.BLUE, new WaterTile());
 		middleLayer.addTileType(ColorRGBA.BROWN, new DirtTile());

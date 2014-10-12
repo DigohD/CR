@@ -103,7 +103,7 @@ public class World {
 		initShader();
 		
 		lightMap = new Sprite("light");
-		fb = new FrameBuffer(lightMap.getSpriteWidth(), lightMap.getSpriteHeight());
+		fb = new FrameBuffer(Window.getWidth(), Window.getHeight());
 		
 
 		map = new TileMap(250, 250);
@@ -387,9 +387,11 @@ public class World {
 	public void render(Screen screen) {
 		
 //		fb.bind();
+//		glBindTexture(GL_TEXTURE_2D, 0);
 //		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//		screen.renderSprite(lightMap, EntityManager.getHero().getX(), EntityManager.getHero().getY());
 //		glBindTexture(GL_TEXTURE_2D, lightMap.getTexture().getID());
-//		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, lightMap.getSpriteWidth(), lightMap.getSpriteHeight());
+//		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, Window.getWidth(), Window.getHeight());
 //		glBindTexture(GL_TEXTURE_2D, 0);
 //		
 //		fb.unbind();
