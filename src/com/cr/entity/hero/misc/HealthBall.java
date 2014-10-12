@@ -8,6 +8,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.game.EntityManager;
+import com.cr.game.Game;
 
 public class HealthBall extends Entity implements Renderable{
 	
@@ -16,7 +17,7 @@ public class HealthBall extends Entity implements Renderable{
 	public HealthBall(){
 		super(new Vector2f(100, 100));
 		EntityManager.addEntity(this);
-		sprite = new Sprite("healthfill");
+		sprite = new Sprite("healthfill", Game.shader);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ public class Tree extends WorldObject{
 
 	private int objectID;
 	
+	
 	public Tree(int x , int y){
 		super(new Vector2f(x, y));
 		objectID = Randomizer.getInt(1, 4);
@@ -28,11 +29,6 @@ public class Tree extends WorldObject{
 	public void activate() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void render(Screen screen) {
-		screen.renderSprite(sprite, position.x, position.y);
 	}
 
 	public int getObjectID() {

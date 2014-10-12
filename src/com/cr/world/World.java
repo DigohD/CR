@@ -1,9 +1,10 @@
 package com.cr.world;
 
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ import com.cr.world.terrain.Reeds;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 import com.cr.world.terrain.WorldObject;
+import com.cr.world.tile.GrassTile;
 import com.cr.world.tile.Tile;
 
 public class World {
@@ -222,9 +224,12 @@ public class World {
 	
 	private void generateTrees(int num){
 		for(int i = 0; i < num; i++){
-			Tree t = new Tree((int)map.getGrassLands().getTreePositions().get(i).x, (int)map.getGrassLands().getTreePositions().get(i).y);
-			t.init();
+			int x = (int)map.getGrassLands().getTreePositions().get(i).x;
+			int y = (int)map.getGrassLands().getTreePositions().get(i).y;
 			
+			Tree t = new Tree(x,y);
+			t.init();
+
 			if(t.getX() < 0) t.getPosition().x = 0;
 			if(t.getY() < 0) t.getPosition().y = 0;
 			
@@ -240,46 +245,22 @@ public class World {
 				objectPosMap.put(t.getPosition(), t);
 				trees[i] = t;
 			}
-			
-			
 		}
 		
-		for(int i = 0; i < map.getGrassLands().getReedPositions().size(); i++){
-			Reeds r = new Reeds((int)map.getGrassLands().getReedPositions().get(i).x, (int)map.getGrassLands().getReedPositions().get(i).y);
-			r.init();
-			
-			if(r.getX() < 0) r.getPosition().x = 0;
-			if(r.getY() < 0) r.getPosition().y = 0;
-			
-			if(r.getX() + r.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
-				r.getPosition().x = (width*Tile.getTileWidth()) - r.getSprite().getSpriteWidth();
-			
-			if(r.getY() + r.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
-				r.getPosition().y = (height*Tile.getTileHeight()) - r.getSprite().getSpriteHeight();
-			
-			r.updateRect();
-		}
-		
-//		for(int i = 0; i < num; i++){
-//			Tree t;
-//			boolean generated = false;
-//			while(!generated){
-//				t = new Tree(-1000, -1000);
-//				t.init();
-//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
-//				//System.out.println(t.getSprite().getSpriteHeight());
-//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-//					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
-//					t.updateRect();
-//					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
-//						objectPosMap.put(t.getPosition(), t);
-//						trees[i] = t;
-//					}
-//						
-//					generated = true;
-//				}
-//			}
+//		for(int i = 0; i < map.getGrassLands().getReedPositions().size(); i++){
+//			Reeds r = new Reeds((int)map.getGrassLands().getReedPositions().get(i).x, (int)map.getGrassLands().getReedPositions().get(i).y);
+//			r.init();
+//			
+//			if(r.getX() < 0) r.getPosition().x = 0;
+//			if(r.getY() < 0) r.getPosition().y = 0;
+//			
+//			if(r.getX() + r.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+//				r.getPosition().x = (width*Tile.getTileWidth()) - r.getSprite().getSpriteWidth();
+//			
+//			if(r.getY() + r.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+//				r.getPosition().y = (height*Tile.getTileHeight()) - r.getSprite().getSpriteHeight();
+//			
+//			r.updateRect();
 //		}
 	}
 	
@@ -294,6 +275,15 @@ public class World {
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+					if(s.getX() < 0) s.getPosition().x = 0;
+					if(s.getY() < 0) s.getPosition().y = 0;
+					
+					if(s.getX() + s.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+						s.getPosition().x = (width*Tile.getTileWidth()) - s.getSprite().getSpriteWidth();
+					
+					if(s.getY() + s.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+						s.getPosition().y = (height*Tile.getTileHeight()) - s.getSprite().getSpriteHeight();
+					
 					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
 						objectPosMap.put(s.getPosition(), s);
 						stones[i] = s;
@@ -386,15 +376,7 @@ public class World {
 	
 	public void render(Screen screen) {
 		
-//		fb.bind();
-//		glBindTexture(GL_TEXTURE_2D, 0);
-//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//		screen.renderSprite(lightMap, EntityManager.getHero().getX(), EntityManager.getHero().getY());
-//		glBindTexture(GL_TEXTURE_2D, lightMap.getTexture().getID());
-//		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, Window.getWidth(), Window.getHeight());
-//		glBindTexture(GL_TEXTURE_2D, 0);
-//		
-//		fb.unbind();
+	
 	
 		shader.bind();
 		
@@ -414,6 +396,11 @@ public class World {
 		shader.unbind();
 	
 		em.render(screen);
+		
+		fb.bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		screen.renderSprite(lightMap, EntityManager.getHero().getX(), EntityManager.getHero().getY());	
+		fb.unbind();
 	}
 	
 	public boolean tileExists(int xp, int yp){
