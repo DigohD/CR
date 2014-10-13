@@ -65,11 +65,6 @@ public abstract class Mob extends Entity implements Tickable, Renderable{
 	public void tick(float dt){
 		
 	}
-	
-	@Override
-	public void render(Screen screen) {
-		screen.renderSprite(sprite, position.x , position.y);
-	}
 
 	public Vector2f getVelocity() {
 		return velocity;

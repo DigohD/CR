@@ -20,14 +20,15 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
-import com.cr.entity.enemy.forestelf.ForestElf;
-import com.cr.entity.enemy.wisp.Wisp;
+import com.cr.entity.enemy.v2.Enemy;
+import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
 import com.cr.net.HeroMPServer;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.Packet19Loot;
 import com.cr.net.server.Server;
 import com.cr.states.net.MPHostState;
+import com.cr.stats.StatsSheet;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.util.SpriteLoader;
@@ -98,7 +99,7 @@ public class World {
 		initShader();
 		
 		map = new TileMap(250, 250);
-		
+
 		width = map.getWidth();
 		height = map.getHeight();
 		
@@ -124,7 +125,7 @@ public class World {
 		
 		init();
 		generateWorldObjects();
-		//generateEnemies();
+		generateEnemies();
 	}
 	
 	
@@ -302,31 +303,17 @@ public class World {
 	}
 	
 	private void generateEnemies(){
-		for(int i = 0; i < 30; i++){
-			ForestElf e = null;
+		for(int i = 0; i < 50; i++){
+			Enemy e = null;
 			boolean generated = false;
 			while(!generated){
-				e = new ForestElf(new Vector2f(-1000, -1000), this);
+				e = new Enemy(new Vector2f(-1000, -1000), this, null, SpriteLoader.getSprite("felfbody"), "Forest Elf", new StatsSheet(true));
 				int x = Randomizer.getInt(0, width * 51) + 40;
 				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
 				//System.out.println(e.getSprite().getSpriteHeight());
 				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
 					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
-					generated = true;
-				}
-			}
-		}
-	
-		for(int i = 0; i < 40; i++){
-			Wisp e = null;
-			boolean generated = false;
-			while(!generated){
-				e = new Wisp(new Vector2f(-1000, -1000), this);
-				int x = Randomizer.getInt(0, width * 51) + 40;
-				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				//System.out.println(e.getSprite().getSpriteHeight());
-				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
-					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
+					EntityManager.addEntity(e);
 					generated = true;
 				}
 			}
