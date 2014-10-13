@@ -8,7 +8,7 @@ import com.cr.combat.Projectile;
 import com.cr.combat.loot.Loot;
 import com.cr.entity.Breakable;
 import com.cr.entity.Collideable;
-import com.cr.entity.enemy.Enemy;
+import com.cr.entity.enemy.v2.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
 import com.cr.entity.hero.Hero;
 

@@ -195,6 +195,10 @@ public class SpriteLoader {
 	}
 	
 	public static Sprite getSprite(String name){
+		if(spriteLib.get(name) == null){
+			System.out.println("NO SUCH SPRITE, TERMINATING");
+			System.exit(0);
+		}
 		return spriteLib.get(name);
 	}
 	

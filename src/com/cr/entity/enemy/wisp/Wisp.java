@@ -181,5 +181,11 @@ public class Wisp extends Enemy{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void render(Screen screen) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
