@@ -13,18 +13,13 @@ public class ImageLoader {
 	
 	public ImageLoader(){
 		
-		imageLib.put("light", loadImage("light.png"));
+		//light map
+		imageLib.put("light", loadImage("/light/lightmap.png"));
+
 		
 		// Tiles
 		imageLib.put("tileatlas", loadImage("/tiles/tileatlas.png"));
 		imageLib.put("tileatlas32", loadImage("/tiles/tileatlas32.png"));
-		imageLib.put("grass", loadImage("/tiles/grass.png"));
-		imageLib.put("grass2", loadImage("/tiles/grass2.png"));
-		imageLib.put("dirt", loadImage("/tiles/dirt.png"));
-		imageLib.put("dirt2", loadImage("/tiles/dirt2.png"));
-		imageLib.put("sand", loadImage("/tiles/sand.png"));
-		imageLib.put("water", loadImage("/tiles/water.png"));
-		imageLib.put("water2", loadImage("/tiles/water2.png"));
 		imageLib.put("ripple", loadImage("/tiles/ripple.png"));
 		
 		//tile blending test
@@ -34,26 +29,17 @@ public class ImageLoader {
 		
 		
 		//normal maps
-		imageLib.put("normalMap0", loadImage("/tiles/normalMap0.png"));
-		imageLib.put("normalMap1", loadImage("/tiles/normalMap1.png"));
-		imageLib.put("normalMapGrass", loadImage("/tiles/normalMap_grass.png"));
-		imageLib.put("normalMapGrass2", loadImage("/tiles/normalMap_grass2.png"));
-		imageLib.put("normalMapGrass3", loadImage("/tiles/grassbm.png"));
-		imageLib.put("normalMapWater", loadImage("/tiles/normalMap_water.png"));
-		imageLib.put("normalMapWater2", loadImage("/tiles/waterbump.png"));
+		imageLib.put("normalMap0", loadImage("/tiles/maps/normalMap0.png"));
+		imageLib.put("normalMap1", loadImage("/tiles/maps/normalMap1.png"));
+		imageLib.put("normalMapGrass", loadImage("/tiles/maps/normalMap_grass.png"));
+		imageLib.put("normalMapGrass2", loadImage("/tiles/maps/normalMap_grass2.png"));
+		imageLib.put("normalMapGrass3", loadImage("/tiles/maps/grassbm.png"));
+		imageLib.put("normalMapWater", loadImage("/tiles/maps/normalMap_water.png"));
+		imageLib.put("normalMapWater2", loadImage("/tiles/maps/waterbump.png"));
 		
 		//cube maps
-		imageLib.put("cubemap0", loadImage("/tiles/cubemap0.png"));
-		imageLib.put("cubemap1", loadImage("/tiles/cubemap1.png"));
-		
-		imageLib.put("mask", loadImage("/tiles/mask.png"));
-		imageLib.put("mask1", loadImage("/tiles/mask1.png"));
-		
-		imageLib.put("yellowMask", loadImage("/tiles/yellowMask.png"));
-		imageLib.put("blueMask", loadImage("/tiles/blueMask.png"));
-		
-		//TileLayers
-		imageLib.put("waterlayer", loadBitmap("/tilelayers/waterlayer.png"));
+		imageLib.put("cubemap0", loadImage("/tiles/maps/cubemap0.png"));
+		imageLib.put("cubemap1", loadImage("/tiles/maps/cubemap1.png"));
 		
 		//Fonts
 		imageLib.put("uppercase", loadImage("/font/uppercase.png"));

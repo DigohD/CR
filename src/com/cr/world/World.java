@@ -1,9 +1,7 @@
 package com.cr.world;
 
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,10 +81,7 @@ public class World {
 	private float k = 0;
 	
 	private FirePlace fire;
-	private Sprite lightMap;
-	private Texture normalMapWater, normalMapGrass, cubeMap;
-	
-	FrameBuffer fb;
+	private Texture normalMapWater, normalMapGrass;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -102,10 +97,6 @@ public class World {
 	public World(){
 		initShader();
 		
-		lightMap = new Sprite("light");
-		fb = new FrameBuffer(lightMap.getSpriteWidth(), lightMap.getSpriteHeight());
-		
-
 		map = new TileMap(250, 250);
 		
 		width = map.getWidth();
@@ -222,9 +213,12 @@ public class World {
 	
 	private void generateTrees(int num){
 		for(int i = 0; i < num; i++){
-			Tree t = new Tree((int)map.getGrassLands().getTreePositions().get(i).x, (int)map.getGrassLands().getTreePositions().get(i).y);
-			t.init();
+			int x = (int)map.getGrassLands().getTreePositions().get(i).x;
+			int y = (int)map.getGrassLands().getTreePositions().get(i).y;
 			
+			Tree t = new Tree(x,y);
+			t.init();
+
 			if(t.getX() < 0) t.getPosition().x = 0;
 			if(t.getY() < 0) t.getPosition().y = 0;
 			
@@ -260,26 +254,20 @@ public class World {
 			r.updateRect();
 		}
 		
-//		for(int i = 0; i < num; i++){
-//			Tree t;
-//			boolean generated = false;
-//			while(!generated){
-//				t = new Tree(-1000, -1000);
-//				t.init();
-//				int x = Randomizer.getInt(0, width * Tile.getTileWidth()) + 40;
-//				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + t.getSprite().getSpriteHeight();
-//				//System.out.println(t.getSprite().getSpriteHeight());
-//				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
-//					t.setPosition(new Vector2f(x - 40, y - t.getSprite().getSpriteHeight()));
-//					t.updateRect();
-//					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
-//						objectPosMap.put(t.getPosition(), t);
-//						trees[i] = t;
-//					}
-//						
-//					generated = true;
-//				}
-//			}
+//		for(int i = 0; i < map.getGrassLands().getReedPositions().size(); i++){
+//			Reeds r = new Reeds((int)map.getGrassLands().getReedPositions().get(i).x, (int)map.getGrassLands().getReedPositions().get(i).y);
+//			r.init();
+//			
+//			if(r.getX() < 0) r.getPosition().x = 0;
+//			if(r.getY() < 0) r.getPosition().y = 0;
+//			
+//			if(r.getX() + r.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+//				r.getPosition().x = (width*Tile.getTileWidth()) - r.getSprite().getSpriteWidth();
+//			
+//			if(r.getY() + r.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+//				r.getPosition().y = (height*Tile.getTileHeight()) - r.getSprite().getSpriteHeight();
+//			
+//			r.updateRect();
 //		}
 	}
 	
@@ -294,6 +282,15 @@ public class World {
 				int y = Randomizer.getInt(0, height * Tile.getTileHeight()) + s.getSprite().getSpriteHeight();
 				if(map.getTopLayer().getTileID(x / Tile.getTileWidth(), y / Tile.getTileHeight()) == ColorRGBA.GREEN){
 					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+					if(s.getX() < 0) s.getPosition().x = 0;
+					if(s.getY() < 0) s.getPosition().y = 0;
+					
+					if(s.getX() + s.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+						s.getPosition().x = (width*Tile.getTileWidth()) - s.getSprite().getSpriteWidth();
+					
+					if(s.getY() + s.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+						s.getPosition().y = (height*Tile.getTileHeight()) - s.getSprite().getSpriteHeight();
+					
 					if(NetStatus.isMultiPlayer && NetStatus.isHOST){
 						objectPosMap.put(s.getPosition(), s);
 						stones[i] = s;
@@ -337,8 +334,46 @@ public class World {
 	}
 	
 	private void generateWorldObjects(){
+//		for(int i = 0; i < 40; i++){
+//			FirePlace s = null;
+//			boolean generated = false;
+//			while(!generated){
+//				s = new FirePlace(new Vector2f(-1000, -1000));
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + s.getSprite().getSpriteHeight();
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+//					if(s.getX() < 0) s.getPosition().x = 0;
+//					if(s.getY() < 0) s.getPosition().y = 0;
+//					
+//					if(s.getX() + s.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+//						s.getPosition().x = (width*Tile.getTileWidth()) - s.getSprite().getSpriteWidth();
+//					
+//					if(s.getY() + s.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+//						s.getPosition().y = (height*Tile.getTileHeight()) - s.getSprite().getSpriteHeight();
+//					
+//					
+//					generated = true;
+//				}
+//			}
+//		}
+		
+//		FloatBuffer buffer = BufferUtils.createFloatBuffer(lightSources.size() * 2);
+//		
+//		for(int i = 0; i < lightSources.size(); i++){
+//			buffer.put(lightSources.get(i).x);
+//			buffer.put(lightSources.get(i).y);
+//		}
+//		
+//		buffer.flip();
+//		
+//		shader.addUniform("lights");
+//		shader.bind();
+//		shader.setUniformf("lights", buffer);
+//		shader.unbind();
+		
 		generateTrees(map.getGrassLands().getTreePositions().size());
-		System.out.println(map.getGrassLands().getTreePositions().size());
+		//System.out.println(map.getGrassLands().getTreePositions().size());
 		generateStones(numOfStones);
 	}
 	
@@ -370,12 +405,7 @@ public class World {
 		else timer = 0;
 	
 		dayNightCycle(dt);
-		
-//		lightPosition.x = EntityManager.getHero().getX();
-//		lightPosition.y = EntityManager.getHero().getY();
-		
-		
-	
+
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
@@ -385,15 +415,6 @@ public class World {
 	}
 	
 	public void render(Screen screen) {
-		
-//		fb.bind();
-//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//		glBindTexture(GL_TEXTURE_2D, lightMap.getTexture().getID());
-//		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, lightMap.getSpriteWidth(), lightMap.getSpriteHeight());
-//		glBindTexture(GL_TEXTURE_2D, 0);
-//		
-//		fb.unbind();
-	
 		shader.bind();
 		
 		shader.setUniformf("waveDataX", angleWave);

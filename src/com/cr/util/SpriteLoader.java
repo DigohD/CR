@@ -17,13 +17,6 @@ public class SpriteLoader {
 		// Tiles
 		spriteLib.put("tileatlas", newSprite("tileatlas"));
 		spriteLib.put("tileatlas32", newSprite("tileatlas32"));
-		spriteLib.put("grass", newSprite("grass"));
-		spriteLib.put("grass2", newSprite("grass2"));
-		spriteLib.put("dirt", newSprite("dirt"));
-		spriteLib.put("dirt2", newSprite("dirt2"));
-		spriteLib.put("sand", newSprite("sand"));
-		spriteLib.put("water", newSprite("water"));
-		spriteLib.put("water2", newSprite("water2"));
 		spriteLib.put("ripple", newSprite("ripple"));
 		
 		//normal maps
@@ -34,11 +27,6 @@ public class SpriteLoader {
 		spriteLib.put("cubemap0", newSprite("cubemap0"));
 		spriteLib.put("cubemap1", newSprite("cubemap1"));
 		
-		spriteLib.put("mask", newSprite("mask"));
-		spriteLib.put("mask1", newSprite("mask1"));
-		
-		spriteLib.put("yellowMask", newSprite("yellowMask"));
-		spriteLib.put("blueMask", newSprite("blueMask"));
 		
 		//TileLayers
 //		spriteLib.put("waterlayer", loadBitmap("waterlayer"));

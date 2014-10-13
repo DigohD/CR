@@ -29,12 +29,13 @@ public class BiomeTestState extends GameState{
 	private int[] pixels;
 	
 	private int width = Window.getWidth(), height = Window.getHeight();
+	//private int width = 250, height = 250;
 	
 	private SimplexNoise noise = new SimplexNoise();
 	
 	private int octaves = 8;
 	private float roughness = 0.4f;
-	private float scale = 0.006f;
+	private float scale = 0.009f;
 
 	public BiomeTestState(GameStateManager gsm) {
 		super(gsm);

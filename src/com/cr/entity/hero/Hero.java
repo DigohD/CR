@@ -74,17 +74,17 @@ public class Hero extends Mob implements Collideable{
 			position = new Vector2f((world.getWidth() * Tile.getTileWidth()) / 2 , (world.getHeight() * Tile.getTileHeight()) / 2);
 		}
 		
-//		if(!(NetStatus.isMultiPlayer && !NetStatus.isHOST)){
-//			//position = new Vector2f(10, 10);
-//			if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
-//				while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
-//					position.y += Tile.getTileHeight();
-//					if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
-//						break;
-//					}
-//				}
-//			}
-//		}
+		if(!(NetStatus.isMultiPlayer && !NetStatus.isHOST)){
+			//position = new Vector2f(10, 10);
+			if(world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+				while(!world.getTile((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight())).isWalkable()){
+					position.y += Tile.getTileHeight();
+					if(!world.tileExists((int) (position.x / Tile.getTileWidth()), (int) (position.y / Tile.getTileHeight()))){
+						break;
+					}
+				}
+			}
+		}
 		
 		material = new Material(1.9f, 1.6f, 2f, 0);
 				
