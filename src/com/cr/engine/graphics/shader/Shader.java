@@ -18,6 +18,7 @@ import static org.lwjgl.opengl.GL20.glShaderSource;
 import static org.lwjgl.opengl.GL20.glUniform1f;
 import static org.lwjgl.opengl.GL20.glUniform1i;
 import static org.lwjgl.opengl.GL20.glUniform3f;
+import static org.lwjgl.opengl.GL20.glUniform1;
 import static org.lwjgl.opengl.GL20.glUniformMatrix4;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL20.glValidateProgram;
@@ -104,6 +105,10 @@ public class Shader {
 	
 	public void setUniformf(String uniformName, float value){
 		glUniform1f(uniforms.get(uniformName), value);
+	}
+	
+	public void setUniformf(String uniformName, FloatBuffer buffer){
+		glUniform1(uniforms.get(uniformName), buffer);
 	}
 	
 	public void setUniformf(String uniformName, Vector3f v){

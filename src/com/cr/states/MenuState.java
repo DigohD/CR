@@ -35,6 +35,10 @@ public class MenuState extends GameState{
 			gsm.push(new BiomeTestState(gsm));
 		}
 		
+		if(Input.getKey(Input.T)){
+			gsm.push(new TestState(gsm));
+		}
+		
 		if(Input.getKey(Input.H)){
 			NetStatus.isHOST = true;
 			NetStatus.isMultiPlayer = true;
@@ -65,6 +69,9 @@ public class MenuState extends GameState{
 		
 		f.setFont(CRString.create("Press B to see biome"));
 		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100 + 80 + 40, 0.5f);
+		
+		f.setFont(CRString.create("Press T to enter test state"));
+		screen.renderFont(f, Window.getWidth()/2 - 200, Window.getHeight()/2 - 100 + 80 + 80, 0.5f);
 		FontLoader.releaseFont(f);
 	}
 

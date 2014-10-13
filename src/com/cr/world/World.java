@@ -1,15 +1,15 @@
 package com.cr.world;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.lwjgl.BufferUtils;
 
 import com.cr.combat.loot.Loot;
 import com.cr.combat.loot.LootTable;
@@ -17,7 +17,6 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
-import com.cr.engine.graphics.FrameBuffer;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Texture;
@@ -35,11 +34,9 @@ import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.util.SpriteLoader;
 import com.cr.world.misc.FirePlace;
-import com.cr.world.terrain.Reeds;
 import com.cr.world.terrain.Stone;
 import com.cr.world.terrain.Tree;
 import com.cr.world.terrain.WorldObject;
-import com.cr.world.tile.GrassTile;
 import com.cr.world.tile.Tile;
 
 public class World {
@@ -85,10 +82,7 @@ public class World {
 	private float k = 0;
 	
 	private FirePlace fire;
-	private Sprite lightMap;
-	private Texture normalMapWater, normalMapGrass, cubeMap;
-	
-	FrameBuffer fb;
+	private Texture normalMapWater, normalMapGrass;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -103,9 +97,7 @@ public class World {
 	
 	public World(){
 		initShader();
-		
-		lightMap = new Sprite("light");
-		fb = new FrameBuffer(Window.getWidth(), Window.getHeight(), false);
+	
 		
 
 		map = new TileMap(250, 250);
@@ -327,8 +319,46 @@ public class World {
 	}
 	
 	private void generateWorldObjects(){
+//		for(int i = 0; i < 40; i++){
+//			FirePlace s = null;
+//			boolean generated = false;
+//			while(!generated){
+//				s = new FirePlace(new Vector2f(-1000, -1000));
+//				int x = Randomizer.getInt(0, width * 51) + 40;
+//				int y = Randomizer.getInt(0, height * 33) + s.getSprite().getSpriteHeight();
+//				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
+//					s.setPosition(new Vector2f(x - 40, y - s.getSprite().getSpriteHeight()));
+//					if(s.getX() < 0) s.getPosition().x = 0;
+//					if(s.getY() < 0) s.getPosition().y = 0;
+//					
+//					if(s.getX() + s.getSprite().getSpriteWidth() > (width*Tile.getTileWidth()))
+//						s.getPosition().x = (width*Tile.getTileWidth()) - s.getSprite().getSpriteWidth();
+//					
+//					if(s.getY() + s.getSprite().getSpriteHeight() > (height*Tile.getTileHeight()))
+//						s.getPosition().y = (height*Tile.getTileHeight()) - s.getSprite().getSpriteHeight();
+//					
+//					
+//					generated = true;
+//				}
+//			}
+//		}
+		
+//		FloatBuffer buffer = BufferUtils.createFloatBuffer(lightSources.size() * 2);
+//		
+//		for(int i = 0; i < lightSources.size(); i++){
+//			buffer.put(lightSources.get(i).x);
+//			buffer.put(lightSources.get(i).y);
+//		}
+//		
+//		buffer.flip();
+//		
+//		shader.addUniform("lights");
+//		shader.bind();
+//		shader.setUniformf("lights", buffer);
+//		shader.unbind();
+		
 		generateTrees(map.getGrassLands().getTreePositions().size());
-		System.out.println(map.getGrassLands().getTreePositions().size());
+		//System.out.println(map.getGrassLands().getTreePositions().size());
 		generateStones(numOfStones);
 	}
 	
@@ -360,12 +390,7 @@ public class World {
 		else timer = 0;
 	
 		dayNightCycle(dt);
-		
-//		lightPosition.x = EntityManager.getHero().getX();
-//		lightPosition.y = EntityManager.getHero().getY();
-		
-		
-	
+
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
 			angleWave -= PI2;
@@ -375,9 +400,6 @@ public class World {
 	}
 	
 	public void render(Screen screen) {
-		
-	
-	
 		shader.bind();
 		
 		shader.setUniformf("waveDataX", angleWave);
@@ -396,11 +418,6 @@ public class World {
 		shader.unbind();
 	
 		em.render(screen);
-		
-		fb.bind();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		screen.renderSprite(lightMap, EntityManager.getHero().getX(), EntityManager.getHero().getY());	
-		fb.unbind();
 	}
 	
 	public boolean tileExists(int xp, int yp){

@@ -8,13 +8,13 @@ import static org.lwjgl.opengl.GL30.*;
 
 import java.nio.ByteBuffer;
 
-import org.lwjgl.opengl.GL43;
-
 public class FrameBuffer {
 	
 	private int fboID, texID, dboID;
+	private boolean depthBuffer;
 	
 	public FrameBuffer(int width, int height, boolean depthBuffer){
+		this.depthBuffer = depthBuffer;
 		texID = createRenderTexture(width, height);
 		
 		fboID = glGenFramebuffers();
@@ -47,6 +47,9 @@ public class FrameBuffer {
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer)null);
 		
 		return id;
@@ -54,10 +57,12 @@ public class FrameBuffer {
 	
 	public void bind(){
 		glBindFramebuffer(GL_FRAMEBUFFER, fboID);
+		if(depthBuffer) glBindRenderbuffer(GL_RENDERBUFFER, dboID);
 	}
 	
 	public void unbind(){
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		if(depthBuffer) glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 
 	public int getFboID() {

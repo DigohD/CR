@@ -24,7 +24,6 @@ public class Screen {
 	
 	public void render(GameStateManager gsm){
 		clearScreen();
-		
 		gsm.render(this);
 	}
 	

@@ -28,14 +28,14 @@ public class BiomeTestState extends GameState{
 	private BufferedImage image;
 	private int[] pixels;
 	
-	//private int width = Window.getWidth(), height = Window.getHeight();
-	private int width = 250, height = 250;
+	private int width = Window.getWidth(), height = Window.getHeight();
+	//private int width = 250, height = 250;
 	
 	private SimplexNoise noise = new SimplexNoise();
 	
 	private int octaves = 8;
 	private float roughness = 0.4f;
-	private float scale = 0.02f;
+	private float scale = 0.009f;
 
 	public BiomeTestState(GameStateManager gsm) {
 		super(gsm);
@@ -71,10 +71,10 @@ public class BiomeTestState extends GameState{
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
-//				if(height < -0.99f) pixels[x+y*width] = ColorRGBA.WHITE;
-//				else if(height < -0.7f) pixels[x+y*width] = ColorRGBA.GRAY;
-				//if(height < -0.5f) pixels[x+y*width] = ColorRGBA.DARK_GREEN;
-				if(height < -0.28f) pixels[x+y*width] = ColorRGBA.GREEN;
+				if(height < -0.99f) pixels[x+y*width] = ColorRGBA.WHITE;
+				else if(height < -0.7f) pixels[x+y*width] = ColorRGBA.GRAY;
+				else if(height < -0.5f) pixels[x+y*width] = ColorRGBA.DARK_GREEN;
+				else if(height < -0.28f) pixels[x+y*width] = ColorRGBA.GREEN;
 				else if(height < -0.2f) pixels[x+y*width] = ColorRGBA.YELLOW;
 				else pixels[x+y*width] = ColorRGBA.BLUE;
 			}

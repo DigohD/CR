@@ -6,12 +6,10 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
 import com.cr.states.MenuState;
-import com.cr.states.TestState;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.FontLoader;
 import com.cr.util.ImageLoader;
-import com.cr.util.SpriteLoader;
 import com.cr.world.World;
 
 public class Game extends CoreEngine{
@@ -44,7 +42,6 @@ public class Game extends CoreEngine{
 		new FontLoader();
 		
 		gsm = new GameStateManager();
-		//gsm.push(new TestState(gsm));
 		gsm.push(new MenuState(gsm));
 	}
 
