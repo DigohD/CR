@@ -8,7 +8,7 @@ public class Limb extends Entity{
 
 	protected Enemy owner;
 	protected Vector2f bodyOffset;
-	
+
 	public Limb(Vector2f position, Enemy owner, Vector2f bodyOffset) {
 		super(position);
 		this.owner = owner;
