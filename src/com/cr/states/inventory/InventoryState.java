@@ -6,7 +6,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.inventory.Button;
+import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
@@ -17,7 +17,7 @@ public class InventoryState extends GameState{
 
 	private Sprite bg = new Sprite("inventorybg", Game.shader, new Transform());
 	private Inventory inventory;
-	private Button exit;
+	private ExitButton exit;
 	
 	public InventoryState(GameStateManager gsm) {
 		super(gsm);
@@ -29,7 +29,7 @@ public class InventoryState extends GameState{
 		
 		inventory.activateSlots();
 		
-		exit = new Button("exit", 600 + xOffset, 534 + yOffset);
+		exit = new ExitButton(600 + xOffset, 534 + yOffset);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class InventoryState extends GameState{
 	public void tick(float dt) {
 		inventory.tick(dt);
 		
-		//exit.tick(dt);
+		exit.tick(dt);
 		
 		Hero.updateInventory();
 		

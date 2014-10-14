@@ -5,7 +5,6 @@ import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.NetStatus;
@@ -15,8 +14,6 @@ import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
 public class MenuState extends GameState{
-	
-	private Button singlePlayer, multiPlayer, exit;
 
 	public MenuState(GameStateManager gsm) {
 		super(gsm);

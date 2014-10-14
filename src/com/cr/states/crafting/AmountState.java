@@ -1,14 +1,18 @@
 package com.cr.states.crafting;
 
 import com.cr.crafting.v2.material.Material;
+import com.cr.crafting.v2.station.AddButton;
+import com.cr.crafting.v2.station.DownArrow;
+import com.cr.crafting.v2.station.DownArrow2;
 import com.cr.crafting.v2.station.Forge;
+import com.cr.crafting.v2.station.UpArrow;
+import com.cr.crafting.v2.station.UpArrow2;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
-import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.states.GameState;
@@ -19,12 +23,12 @@ public class AmountState extends GameState{
 
 	private Sprite bg = new Sprite("amountbg", Game.shader, new Transform());
 	
-	private Button add;
+	private AddButton add;
 	
-	private Button down1;
-	private Button down2;
-	private Button up1;
-	private Button up2;
+	private DownArrow down1;
+	private DownArrow2 down2;
+	private UpArrow up1;
+	private UpArrow2 up2;
 	
 	private int amount;
 	
@@ -44,17 +48,17 @@ public class AmountState extends GameState{
 		
 		int xOffset =  (Window.getWidth() - 240) / 2;
 		int yOffset = (Window.getHeight() - 200) / 2;
-		add = new Button("addbutton", xOffset + 70, yOffset + 135);
+		add = new AddButton(xOffset + 70, yOffset + 135);
 		
 		this.activeMaterial = activeMaterial;
 		
 		xOffset =  (Window.getWidth() - 40) / 2;
 		yOffset = (Window.getHeight() - 40) / 2;
 		
-		down1 = new Button("downarrow", xOffset - 48, yOffset);
-		down2 = new Button("downarrow2", xOffset - 80, yOffset);
-		up1 = new Button("uparrow", xOffset + 48, yOffset);
-		up2 = new Button("uparrow2", xOffset + 90, yOffset);
+		down1 = new DownArrow(xOffset - 48, yOffset);
+		down2 = new DownArrow2(xOffset - 80, yOffset);
+		up1 = new UpArrow(xOffset + 48, yOffset);
+		up2 = new UpArrow2(xOffset + 90, yOffset);
 		
 		this.forge = forge;
 	}

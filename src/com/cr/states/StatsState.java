@@ -8,7 +8,7 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.entity.hero.Hero;
-import com.cr.entity.hero.inventory.Button;
+import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.stats.StatsSheet;
@@ -21,7 +21,7 @@ public class StatsState extends GameState{
 	Transform t = new Transform();
 	
 	private Sprite bg = new Sprite("inventorybg", Game.shader, t);
-	private Button exit;
+	private ExitButton exit;
 	
 	public StatsState(GameStateManager gsm) {
 		super(gsm);
@@ -30,7 +30,7 @@ public class StatsState extends GameState{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
-		exit = new Button("exit", 600 + xOffset, 534 + yOffset);
+		exit = new ExitButton(600 + xOffset, 534 + yOffset);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class StatsState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		//exit.tick(dt);
+		exit.tick(dt);
 		
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof PlayState){

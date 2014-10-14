@@ -10,7 +10,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.inventory.Button;
+import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.states.GameState;
@@ -18,7 +18,7 @@ import com.cr.states.GameState;
 public class PatternState extends GameState{
 
 	private Sprite bg = new Sprite("patternbg", Game.shader, new Transform());
-	private Button exit;
+	private ExitButton exit;
 	private ArrayList<PatternChoice> patternChoices = new ArrayList<PatternChoice>();
 	
 	private ArrayList<Pattern> patterns;
@@ -31,7 +31,7 @@ public class PatternState extends GameState{
 		
 		int xOffset =  (Window.getWidth() - 150) / 2;
 		int yOffset = (Window.getHeight() - 230);
-		exit = new Button("exit", xOffset, yOffset);
+		exit = new ExitButton(xOffset, yOffset);
 		
 		this.forge = forge;
 		patterns = new ArrayList<Pattern>();
@@ -51,10 +51,10 @@ public class PatternState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		//exit.tick(dt);
+		exit.tick(dt);
 		
 		for(PatternChoice x : patternChoices){
-			//x.tick(dt);
+			x.tick(dt);
 			if(x.isClicked()){
 				forge.setPattern(x.getPattern());
 				if(gsm.next() instanceof CraftingState){

@@ -108,7 +108,7 @@ public class ImageLoader {
 		// Inventory UI
 		//imageLib.put("stBG", loadImage("image", "semiTransparentBG.png"));
 		imageLib.put("inventorybg", loadImage("/inventory/inventorybg.png"));
-		imageLib.put("exit", loadImage("/inventory/exitbutton.png"));
+		imageLib.put("exitbutton", loadImage("/inventory/exitbutton.png"));
 		imageLib.put("inventorybutton", loadImage("/inventory/inventorybutton.png"));
 		imageLib.put("slot", loadImage("/inventory/slot.png"));
 		imageLib.put("contour", loadImage("/inventory/contour.png"));

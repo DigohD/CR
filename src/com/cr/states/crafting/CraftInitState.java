@@ -4,17 +4,22 @@ import java.util.ArrayList;
 
 import com.cr.crafting.v2.pattern.Pattern;
 import com.cr.crafting.v2.station.Forge;
+import com.cr.crafting.v2.station.PatternButton;
+import com.cr.crafting.v2.station.PatternChoice;
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.inventory.Button;
+import com.cr.entity.hero.inventory.ExitButton;
+import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.states.GameState;
 
 public class CraftInitState extends GameState{
 	
-	private Button pattern;
-	private Button exit;
+	private PatternButton pattern;
+	private ExitButton exit;
 	
 	private ArrayList<Pattern> patterns;
 	
@@ -27,8 +32,8 @@ public class CraftInitState extends GameState{
 		int xOffset =  (Window.getWidth() - 150) / 2;
 		int yOffset = (Window.getHeight() / 2);
 		
-		exit = new Button("exit", xOffset, yOffset);
-		pattern = new Button("patternbutton", xOffset, yOffset - 40);
+		exit = new ExitButton(xOffset, yOffset);
+		pattern = new PatternButton(xOffset, yOffset - 40);
 		
 		this.forge = forge;
 		patterns = new ArrayList<Pattern>();
@@ -45,7 +50,7 @@ public class CraftInitState extends GameState{
 
 	@Override
 	public void tick(float dt) {
-		//exit.tick(dt);
+		exit.tick(dt);
 		
 		if(Input.getKey(Input.SPACE) || exit.isClicked()) {
 			if(gsm.next() instanceof CraftingState){
