@@ -17,11 +17,11 @@ import com.cr.entity.enemy.v2.motion.SinusMotion;
 import com.cr.entity.enemy.v2.motion.SinusMotion.MotionAxis;
 import com.cr.game.EntityManager;
 import com.cr.stats.StatsSheet;
-import com.cr.util.AniMotions;
+import com.cr.util.ai.AniMotions;
 import com.cr.world.World;
 
 public class Enemy extends Mob implements Collideable{
-
+	
 	protected String name;
 	
 	protected Rectangle hitBox;
@@ -31,6 +31,8 @@ public class Enemy extends Mob implements Collideable{
 	protected Vector2f centerOffset, renderPosition;
 	
 	protected AniMotionSet motionSet = new AniMotionSet();
+	
+	protected boolean isMoving;
 	
 	public Enemy(Vector2f position, World world, Rectangle hitBox, Sprite body, String name, StatsSheet sheet) {
 		super(position, world);
@@ -46,10 +48,9 @@ public class Enemy extends Mob implements Collideable{
 		if(hitBox == null)
 			generateHitBox();
 		
-		motionSet.addMotion(MotionStatus.IDLE, AniMotions.getBreathing());
 		motionSet.setActiveMotion(MotionStatus.IDLE);
 	}
-
+	
 	@Override
 	public void tick(float dt){
 		for(Limb x : limbs)
@@ -58,7 +59,7 @@ public class Enemy extends Mob implements Collideable{
 		hitBox.x = (int) position.x;
 		hitBox.y = (int) position.y;
 		
-		motionSet.getActiveMotion(MotionStatus.IDLE).tick(dt);
+//		motionSet.getActiveMotion().tick(dt);
 		move(dt);
 	}
 	
@@ -69,7 +70,7 @@ public class Enemy extends Mob implements Collideable{
 	@Override
 	public void render(Screen screen) {
 		renderPosition = position.clone();
-		renderPosition = motionSet.getActiveMotion(MotionStatus.IDLE).applyMotion(renderPosition);
+//		renderPosition = motionSet.getActiveMotion().applyMotion(renderPosition);
 		screen.renderSprite(body, renderPosition.x , renderPosition.y);
 	}
 	

@@ -17,7 +17,7 @@ public class AniMotionSet{
 		activeAniMotion = motionSet.get(status);
 	}
 	
-	public AniMotion getActiveMotion(MotionStatus status){
-		return motionSet.get(status);
+	public AniMotion getActiveMotion(){
+		return activeAniMotion;
 	}
 }
