@@ -1,8 +1,6 @@
 package com.cr.states.crafting;
 
-import com.cr.crafting.v2.material.Material;
 import com.cr.crafting.v2.station.Forge;
-import com.cr.crafting.v2.station.ProcessButton;
 import com.cr.crafting.v2.station.SliderArrow;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
@@ -10,6 +8,7 @@ import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
+import com.cr.entity.hero.inventory.Button;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.states.GameState;
@@ -22,7 +21,7 @@ public class ProcessState extends GameState{
 	private Sprite bg = new Sprite("processbg", Game.shader, t);
 	private Sprite slider = new Sprite("slider", Game.shader, t);
 	
-	private ProcessButton process;
+	private Button process;
 	private SliderArrow heatArrow, timeArrow;
 	
 	private int heat, time;
@@ -43,7 +42,7 @@ public class ProcessState extends GameState{
 		int xOffset =  (Window.getWidth() - 150) / 2;
 		int yOffset = (Window.getHeight() - 230);
 		
-		process = new ProcessButton(xOffset + 30, yOffset - 170);
+		process = new Button("processbutton", xOffset + 30, yOffset - 170);
 		
 		xOffset =  (Window.getWidth()) / 2;
 		yOffset = ((Window.getHeight()) / 2) - 160;

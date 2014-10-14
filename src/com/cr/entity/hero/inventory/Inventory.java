@@ -82,15 +82,15 @@ public class Inventory implements Tickable, Renderable{
 	
 	@Override
 	public void tick(float dt) {
-		for(int i = 0; i < 11; i++)
-			for(int j = 0; j < 3; j++)
-				inventory[i][j].tick(dt);;
-				
-		lHSlot.tick(dt);
-		rHSlot.tick(dt);
-		headSlot.tick(dt);
-		upperBodySlot.tick(dt);
-		lowerBodySlot.tick(dt);
+//		for(int i = 0; i < 11; i++)
+//			for(int j = 0; j < 3; j++)
+//				inventory[i][j].tick(dt);;
+//				
+//		lHSlot.tick(dt);
+//		rHSlot.tick(dt);
+//		headSlot.tick(dt);
+//		upperBodySlot.tick(dt);
+//		lowerBodySlot.tick(dt);
 	}
 
 	public static void buttonClicked(Button button){

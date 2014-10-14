@@ -1,40 +1,30 @@
 package com.cr.entity.hero.inventory;
 
-import java.awt.Rectangle;
-
 import org.lwjgl.input.Mouse;
 
-import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.input.Input;
-import com.cr.entity.Renderable;
-import com.cr.entity.Tickable;
 import com.cr.entity.hero.Hero;
-import com.cr.game.Game;
 import com.cr.item.Item;
 import com.cr.stats.StatMod;
 
-public abstract class ItemSlot extends Button implements Renderable, Tickable, Hooverable{
+public abstract class ItemSlot extends Button implements Hooverable{
 
 	protected Sprite slotSprite;
 	protected Sprite itemSprite;
-	protected int xPos, yPos;
 	
 	protected boolean isHoover, isStatsApplied;
 	
 	protected Item item;
 	
 	public ItemSlot(int xPos, int yPos){
-		super(new Rectangle(xPos, yPos, 50, 50));
-		slotSprite = new Sprite("slot", Game.shader, new Transform());
-		this.xPos = xPos;
-		this.yPos = yPos;
+		super("slot", xPos, yPos);
 	}
 	
 	@Override
 	public void render(Screen screen) {
-		screen.renderStaticSprite(slotSprite, xPos, yPos);
+		super.render(screen);
 		if(item != null)
 			screen.renderStaticSprite(item.getIconSprite(), xPos, yPos);
 		if(item != null && rect.contains(Mouse.getX(), Mouse.getY()))

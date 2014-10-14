@@ -3,17 +3,13 @@ package com.cr.states.crafting;
 import java.util.ArrayList;
 
 import com.cr.crafting.v2.material.Material;
-import com.cr.crafting.v2.station.AddButton;
-import com.cr.crafting.v2.station.CraftButton;
 import com.cr.crafting.v2.station.Forge;
-import com.cr.crafting.v2.station.PatternButton;
-import com.cr.crafting.v2.station.ProcessButton;
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.inventory.ExitButton;
+import com.cr.entity.hero.inventory.Button;
 import com.cr.entity.hero.inventory.Hooverable;
 import com.cr.entity.hero.materials.MaterialChoice;
 import com.cr.entity.hero.materials.MaterialsBox;
@@ -21,7 +17,6 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.states.GameState;
 import com.cr.states.PlayState;
-import com.cr.states.inventory.InventoryState;
 
 public class ChooseBaseState extends GameState{
 
@@ -29,7 +24,7 @@ public class ChooseBaseState extends GameState{
 	
 	private Sprite bg = new Sprite("inventorybg", Game.shader, t);
 	
-	private ExitButton exit;
+	private Button exit;
 	
 	private Forge forge;
 	
@@ -42,7 +37,7 @@ public class ChooseBaseState extends GameState{
 		int xOffset = (Window.getWidth() - 800) / 2;
 		int yOffset = (Window.getHeight() - 600) / 2;
 		
-		exit = new ExitButton(xOffset + 690, yOffset + 550);
+		exit = new Button("exit", xOffset + 690, yOffset + 550);
 		
 		matsChoices = new ArrayList<MaterialChoice>();
 		
@@ -64,7 +59,7 @@ public class ChooseBaseState extends GameState{
 	@Override
 	public void tick(float dt) {
 		for(MaterialChoice x : matsChoices){
-			x.tick(dt);
+			//x.tick(dt);
 			if(x.isClicked()){
 				exit.removeFromInput();
 				

@@ -95,7 +95,7 @@ public class SpriteLoader {
 		// Inventory UI
 		//spriteLib.put("stBG", newSprite("image", "semiTransparentBG.png"));
 		spriteLib.put("inventorybg", newSprite("inventorybg"));
-		spriteLib.put("exitbutton", newSprite("exitbutton"));
+		spriteLib.put("exit", newSprite("exit"));
 		spriteLib.put("inventorybutton", newSprite("inventorybutton"));
 		spriteLib.put("slot", newSprite("slot"));
 		spriteLib.put("contour", newSprite("contour"));
