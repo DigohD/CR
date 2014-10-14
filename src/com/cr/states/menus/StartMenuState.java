@@ -1,4 +1,4 @@
-package com.cr.states;
+package com.cr.states.menus;
 
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
@@ -8,14 +8,18 @@ import com.cr.engine.input.Input;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.net.NetStatus;
-import com.cr.states.net.MPClientState;
+import com.cr.states.BiomeTestState;
+import com.cr.states.GameState;
+import com.cr.states.PlayState;
+import com.cr.states.TestState;
+import com.cr.states.net.ClientInputState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
-public class MenuState extends GameState{
+public class StartMenuState extends GameState{
 
-	public MenuState(GameStateManager gsm) {
+	public StartMenuState(GameStateManager gsm) {
 		super(gsm);
 		init();
 	}
@@ -48,7 +52,8 @@ public class MenuState extends GameState{
 		if(Input.getKey(Input.J)){
 			NetStatus.isHOST = false;
 			NetStatus.isMultiPlayer = true;
-			gsm.push(new MPClientState(gsm));
+		//	gsm.push(new MPClientState(gsm));
+			gsm.push(new ClientInputState(gsm));
 		}
 		
 		if(Input.getKey(Input.ESCAPE))

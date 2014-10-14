@@ -17,6 +17,11 @@ public abstract class Button implements Tickable{
 		Input.addButton(this);
 	}
 	
+	public Button(){
+		resetsButton = true;
+		Input.addButton(this);
+	}
+	
 	@Override
 	public void tick(float dt){
 

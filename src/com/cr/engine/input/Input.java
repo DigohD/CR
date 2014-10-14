@@ -181,6 +181,13 @@ public class Input extends Observable{
 		public static boolean getKeyUp(int keyCode){
 			return !getKey(keyCode) && lastKeys[keyCode];
 		}
+		
+	
+		
+		public static String getKeyName(int keyCode){
+			return Keyboard.getKeyName(keyCode);
+		}
+		
 
 		private static boolean isForcedRelease = false, lockPress = false;;
 		private static ArrayList<Button> buttons = new ArrayList<Button>();

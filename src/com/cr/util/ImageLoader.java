@@ -13,6 +13,9 @@ public class ImageLoader {
 	
 	public ImageLoader(){
 		
+		//gui
+		imageLib.put("textfield", loadImage("/gui/textfield.png"));
+		
 		//light map
 		imageLib.put("light", loadImage("/light/lightmap.png"));
 

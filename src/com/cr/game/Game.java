@@ -5,7 +5,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
-import com.cr.states.MenuState;
+import com.cr.states.menus.StartMenuState;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
 import com.cr.util.FontLoader;
@@ -42,7 +42,7 @@ public class Game extends CoreEngine{
 		new FontLoader();
 		
 		gsm = new GameStateManager();
-		gsm.push(new MenuState(gsm));
+		gsm.push(new StartMenuState(gsm));
 	}
 
 	@Override
