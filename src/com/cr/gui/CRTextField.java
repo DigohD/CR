@@ -11,7 +11,7 @@ import com.cr.game.Game;
 
 public class CRTextField extends Button implements Renderable{
 
-	private Sprite sprite, hooverSprite;
+	private Sprite sprite;
 	private int xPos, yPos;
 	private boolean isClicked;
 	

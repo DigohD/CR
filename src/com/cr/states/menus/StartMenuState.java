@@ -13,7 +13,7 @@ import com.cr.states.GameState;
 import com.cr.states.PlayState;
 import com.cr.states.TestState;
 import com.cr.states.net.ClientInputState;
-import com.cr.states.net.MPHostState;
+import com.cr.states.net.ServerInputState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
@@ -46,13 +46,12 @@ public class StartMenuState extends GameState{
 		if(Input.getKey(Input.H)){
 			NetStatus.isHOST = true;
 			NetStatus.isMultiPlayer = true;
-			gsm.push(new MPHostState(gsm));
+			gsm.push(new ServerInputState(gsm));
 		}
 		
 		if(Input.getKey(Input.J)){
 			NetStatus.isHOST = false;
 			NetStatus.isMultiPlayer = true;
-		//	gsm.push(new MPClientState(gsm));
 			gsm.push(new ClientInputState(gsm));
 		}
 		

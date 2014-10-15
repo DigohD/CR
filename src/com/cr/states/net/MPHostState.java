@@ -23,18 +23,18 @@ public class MPHostState extends GameState{
 	private static World world;
 	private Hero hero;
 	
-	public MPHostState(GameStateManager gsm) {
+	public MPHostState(GameStateManager gsm, String userName, int port) {
 		super(gsm);
 		init();
+		hero.setUserName(userName);
+		server = new Server(port, world);
+		server.start();
 	}
 
 	@Override
 	public void init() {
 		world = new World();
 		hero = EntityManager.getHero();
-		hero.setUserName("dgd");
-		server = new Server(12121, world);
-		server.start();
 	}
 
 	@Override

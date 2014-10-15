@@ -14,7 +14,7 @@ import com.cr.game.Game;
 
 public class CRButton extends Button implements Renderable{
 
-	private Sprite sprite, hooverSprite;
+	private Sprite sprite;
 	private int xPos, yPos;
 	private boolean isClicked;
 	
@@ -24,7 +24,7 @@ public class CRButton extends Button implements Renderable{
 		Transform t = new Transform();
 		sprite = new Sprite(name, Game.shader, t);
 		rect = new Rectangle(xPos, yPos, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		hooverSprite = new Sprite("buttonHoover", Game.shader, t);
+
 	}
 
 	@Override
