@@ -44,14 +44,10 @@ public class StartMenuState extends GameState{
 		}
 		
 		if(Input.getKey(Input.H)){
-			NetStatus.isHOST = true;
-			NetStatus.isMultiPlayer = true;
 			gsm.push(new ServerInputState(gsm));
 		}
 		
 		if(Input.getKey(Input.J)){
-			NetStatus.isHOST = false;
-			NetStatus.isMultiPlayer = true;
 			gsm.push(new ClientInputState(gsm));
 		}
 		

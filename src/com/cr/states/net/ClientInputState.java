@@ -1,5 +1,6 @@
 package com.cr.states.net;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.cr.engine.core.Transform;
@@ -13,6 +14,7 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.gui.CRButton;
 import com.cr.gui.CRTextField;
+import com.cr.net.NetStatus;
 import com.cr.states.GameState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
@@ -32,6 +34,8 @@ public class ClientInputState extends GameState{
 	private LinkedList<String> userNameChars = new LinkedList<String>();
 	private LinkedList<String> ipChars = new LinkedList<String>();
 	private LinkedList<String> portChars = new LinkedList<String>();
+	
+	private HashMap<Integer, Boolean> keyCodeMap = new HashMap<Integer, Boolean>();
 	
 	private Sprite txtActive, btnActive;
 	
@@ -90,6 +94,8 @@ public class ClientInputState extends GameState{
 		}
 		
 		if(join.isClicked()){
+			NetStatus.isHOST = false;
+			NetStatus.isMultiPlayer = true;
 			gsm.push(new MPClientState(gsm, name, ipAddress, Integer.parseInt(portNumber)));
 		}
 		

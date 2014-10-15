@@ -13,6 +13,7 @@ import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.gui.CRButton;
 import com.cr.gui.CRTextField;
+import com.cr.net.NetStatus;
 import com.cr.states.GameState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
@@ -80,6 +81,8 @@ public class ServerInputState extends GameState{
 		}
 		
 		if(host.isClicked()){
+			NetStatus.isHOST = true;
+			NetStatus.isMultiPlayer = true;
 			gsm.push(new MPHostState(gsm, name, Integer.parseInt(portNumber)));
 		}
 		
