@@ -1,35 +1,36 @@
 package com.cr.states.net;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
+import java.util.LinkedList;
 
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
+import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.gui.CRButton;
+import com.cr.gui.CRTextField;
 import com.cr.states.GameState;
 import com.cr.util.CRString;
 import com.cr.util.FontLoader;
 
 public class ClientInputState extends GameState{
 	
-	private CRButton userNameField, ipField, portField, finished;
+	private CRTextField userNameField, ipField, portField;
+	private CRButton join, exit;
 	
 	private String name = "", ipAddress = "";
-	private int portNumber;
+	private String portNumber;
 	
 	private boolean userName = false, ip = false, port = false;
 	private int timer = 0;
+	private int delay = 7;
 
-	private List<String> userNameChars = new ArrayList<String>();
-	private List<String> ipChars = new ArrayList<String>();
-	private List<String> portChars = new ArrayList<String>();
+	private LinkedList<String> userNameChars = new LinkedList<String>();
+	private LinkedList<String> ipChars = new LinkedList<String>();
+	private LinkedList<String> portChars = new LinkedList<String>();
 	
 	public ClientInputState(GameStateManager gsm) {
 		super(gsm);
@@ -38,10 +39,12 @@ public class ClientInputState extends GameState{
 
 	@Override
 	public void init() {
-		userNameField = new CRButton("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2 - 200);
-		ipField = new CRButton("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2 - 100);
-		portField = new CRButton("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2);
+		userNameField = new CRTextField("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2 - 200);
+		ipField = new CRTextField("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2 - 100);
+		portField = new CRTextField("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2);
 		
+		join = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 100);
+		exit = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 170);
 	}
 	
 	@Override
@@ -69,6 +72,13 @@ public class ClientInputState extends GameState{
 			port = true;
 		}
 		
+		if(join.isClicked()){
+			gsm.push(new MPClientState(gsm, name, ipAddress, Integer.parseInt(portNumber)));
+		}
+		
+		if(exit.isClicked())
+			gsm.pop();
+		
 		processInput(Input.A);
 		processInput(Input.B);
 		processInput(Input.C);
@@ -95,7 +105,8 @@ public class ClientInputState extends GameState{
 		processInput(Input.Y);
 		processInput(Input.Z);
 		
-		//processInput(Input.PERIOD);
+		processInput(Input.PERIOD);
+		processInput(Input.BACK);
 		
 		processInput(Input.KEY_0);
 		processInput(Input.KEY_1);
@@ -127,32 +138,34 @@ public class ClientInputState extends GameState{
 		for(String str : portChars)
 			s2 = s2 + str;
 		
-		if(s2 != "")
-			portNumber = Integer.parseInt(s2);
+		portNumber = s2;
 	}
-	
 	
 	private void processInput(int key){
 		if(userName)
-			processInput(key, userNameChars);
+			processInput(key, userNameChars, 8);
 		if(ip)
-			processInput(key, ipChars);
+			processInput(key, ipChars, 15);
 		if(port)
-			processInput(key, portChars);
+			processInput(key, portChars, 8);
 	}
 	
-	private void processInput(int key, List<String> list){
-		if(Input.getKey(key) && !Input.getKey(Input.LSHIFT)&& timer % 7 == 0)
-			if(list.size() <= 15)
-				list.add(Input.getKeyName(key).toLowerCase());
+	private void processInput(int key, LinkedList<String> list, int maxChars){
+		if(Input.getKey(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT) && timer % delay == 0)
+			if(list.size() <= maxChars)
+				list.addLast(".");
+		
+		if(Input.getKey(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT) && timer % delay == 0)
+			if(list.size() <= maxChars)
+				list.addLast((Input.getKeyName(key).toLowerCase()));
 
-		if(Input.getKey(key) && Input.getKey(Input.LSHIFT) && timer % 7 == 0)
-			if(list.size() <= 15)
-				list.add(Input.getKeyName(key));
+		if(Input.getKey(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT) && timer % delay == 0)
+			if(list.size() <= maxChars)
+				list.addLast(Input.getKeyName(key));
 
-		if(Input.getKey(Input.BACK) && timer % 7 == 0)
+		if(Input.getKey(key) && key == Input.BACK && timer % delay == 0)
 			if(list.size() >= 1)
-				list.remove(list.size()-1);
+				list.removeLast();
 	}
 
 	@Override
@@ -171,6 +184,14 @@ public class ClientInputState extends GameState{
 		userNameField.render(screen);
 		ipField.render(screen);
 		portField.render(screen);
+		join.render(screen);
+		exit.render(screen);
+		
+		f.setFont(CRString.create("Join"));
+		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 57, 0.4f);
+		
+		f.setFont(CRString.create("Exit"));
+		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 130, 0.4f);
 		
 		f.setFont(CRString.create(name));
 		screen.renderFont(f, Window.getWidth()/2 - 180, Window.getHeight()/2 - 240, 0.4f);
@@ -178,12 +199,12 @@ public class ClientInputState extends GameState{
 		f.setFont(CRString.create(ipAddress));
 		screen.renderFont(f, Window.getWidth()/2 - 180, Window.getHeight()/2 - 140, 0.4f);
 		
-		f.setFont(CRString.create("" + portNumber));
-		screen.renderFont(f, Window.getWidth()/2 - 180, Window.getHeight()/2 - 40, 0.4f);
-		
+		if(portChars.size() != 0){
+			f.setFont(CRString.create(portNumber));
+			screen.renderFont(f, Window.getWidth()/2 - 180, Window.getHeight()/2 - 40, 0.4f);
+		}
 		
 		FontLoader.releaseFont(f);
-		
 	}
 
 }

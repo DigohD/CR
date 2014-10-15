@@ -2,29 +2,26 @@ package com.cr.gui;
 
 import java.awt.Rectangle;
 
-import org.lwjgl.input.Mouse;
-
 import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Renderable;
 import com.cr.entity.hero.inventory.Button;
-import com.cr.entity.hero.inventory.Hooverable;
 import com.cr.game.Game;
 
-public class CRButton extends Button implements Renderable{
+public class CRTextField extends Button implements Renderable{
 
 	private Sprite sprite, hooverSprite;
 	private int xPos, yPos;
 	private boolean isClicked;
 	
-	public CRButton(String name, int xPos, int yPos) {
+	public CRTextField(String name, int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		Transform t = new Transform();
 		sprite = new Sprite(name, Game.shader, t);
 		rect = new Rectangle(xPos, yPos, sprite.getSpriteWidth(), sprite.getSpriteHeight());
-		hooverSprite = new Sprite("buttonHoover", Game.shader, t);
+		
 	}
 
 	@Override
@@ -57,6 +54,5 @@ public class CRButton extends Button implements Renderable{
 		}
 		return false;
 	}
-
 
 }

@@ -102,7 +102,7 @@ public class Font {
 		int width = fontSheet.getSpriteWidth();
 		int height = fontSheet.getSpriteHeight();
 		
-		float xOffset = 5f;
+		float xOffset = 40f;
 
 		float xLow = 0;
 		float xHigh = 0;
@@ -115,9 +115,9 @@ public class Font {
 //				xOffset = 70;
 //			}else xOffset = 0;
 			
-			if(i >= 1)
-				xOffset = 40;
-			else xOffset = 0;
+//			if(!Character.isLowerCase(charArray[i]))
+//				xOffset = 42;
+//			else xOffset = 42;
 
 			xLow = charMap.get(charArray[i]).x / fontSheet.getCols();
 			xHigh = xLow + (1 / fontSheet.getCols());

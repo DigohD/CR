@@ -26,14 +26,15 @@ public class MPClientState extends GameState{
 	
 	public static Semaphore lock = new Semaphore(1);
 	
-	public MPClientState(GameStateManager gsm) {
+	public MPClientState(GameStateManager gsm, String name, String ip, int port) {
 		super(gsm);
+		client = new Client(name, ip, port);
 		init();
 	}
 	
 	@Override
 	public void init() {
-		client = new Client("anders","192.168.0.2", 12121);
+		
 		try {
 			lock.acquire();
 		} catch (InterruptedException e1) {

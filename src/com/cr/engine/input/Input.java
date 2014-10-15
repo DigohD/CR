@@ -183,6 +183,13 @@ public class Input extends Observable{
 		}
 		
 	
+		public static String getChar(int code){
+		    switch (code){
+		        case Keyboard.KEY_PERIOD: return ".";
+		    }
+		    
+		    return "";
+		}
 		
 		public static String getKeyName(int keyCode){
 			return Keyboard.getKeyName(keyCode);

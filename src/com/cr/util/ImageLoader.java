@@ -15,6 +15,8 @@ public class ImageLoader {
 		
 		//gui
 		imageLib.put("textfield", loadImage("/gui/textfield.png"));
+		imageLib.put("crbutton", loadImage("/gui/button.png"));
+		imageLib.put("buttonHoover", loadImage("/gui/buttonHoover.png"));
 		
 		//light map
 		imageLib.put("light", loadImage("/light/lightmap.png"));
