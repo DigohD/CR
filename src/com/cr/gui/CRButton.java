@@ -58,5 +58,9 @@ public class CRButton extends Button implements Renderable{
 		return false;
 	}
 
+	@Override
+	public Rectangle getRect(){
+		return new Rectangle(xPos, yPos, sprite.getSpriteWidth(), sprite.getSpriteHeight());
+	}
 
 }

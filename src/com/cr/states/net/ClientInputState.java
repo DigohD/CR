@@ -2,12 +2,13 @@ package com.cr.states.net;
 
 import java.util.LinkedList;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
-import com.cr.entity.hero.inventory.ExitButton;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
 import com.cr.gui.CRButton;
@@ -32,6 +33,10 @@ public class ClientInputState extends GameState{
 	private LinkedList<String> ipChars = new LinkedList<String>();
 	private LinkedList<String> portChars = new LinkedList<String>();
 	
+	private Sprite txtActive, btnActive;
+	
+	private boolean joinBtn = false, exitBtn = false;
+	
 	public ClientInputState(GameStateManager gsm) {
 		super(gsm);
 		init();
@@ -43,16 +48,28 @@ public class ClientInputState extends GameState{
 		ipField = new CRTextField("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2 - 100);
 		portField = new CRTextField("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2);
 		
-		join = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 100);
-		exit = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 170);
+		join = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 100 - 20);
+		exit = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 170 - 20);
+		
+		txtActive = new Sprite("textfieldactive", Game.shader, new Transform());
+		btnActive = new Sprite("buttonHoover", Game.shader, new Transform());
 	}
 	
 	@Override
 	public void tick(float dt) {
 		if(timer < 7500) timer++;
 		else timer = 0;
+		
 		if(Input.getKey(Input.ESCAPE))
 			Game.stop();
+		
+		if(join.getRect().contains(Input.getMousePosition().x, Input.getMousePosition().y)){
+			joinBtn = true;
+		}else joinBtn = false;
+		
+		if(exit.getRect().contains(Input.getMousePosition().x, Input.getMousePosition().y)){
+			exitBtn = true;
+		}else exitBtn = false;
 		
 		if(userNameField.isClicked()){
 			userName = true;
@@ -79,45 +96,48 @@ public class ClientInputState extends GameState{
 		if(exit.isClicked())
 			gsm.pop();
 		
-		processInput(Input.A);
-		processInput(Input.B);
-		processInput(Input.C);
-		processInput(Input.D);
-		processInput(Input.E);
-		processInput(Input.F);
-		processInput(Input.G);
-		processInput(Input.H);
-		processInput(Input.I);
-		processInput(Input.J);
-		processInput(Input.K);
-		processInput(Input.L);
-		processInput(Input.M);
-		processInput(Input.N);
-		processInput(Input.O);
-		processInput(Input.P);
-		processInput(Input.Q);
-		processInput(Input.R);
-		processInput(Input.S);
-		processInput(Input.T);
-		processInput(Input.U);
-		processInput(Input.V);
-		processInput(Input.W);
-		processInput(Input.Y);
-		processInput(Input.Z);
+		if(timer % delay == 0){
+			processInput(Input.A);
+			processInput(Input.B);
+			processInput(Input.C);
+			processInput(Input.D);
+			processInput(Input.E);
+			processInput(Input.F);
+			processInput(Input.G);
+			processInput(Input.H);
+			processInput(Input.I);
+			processInput(Input.J);
+			processInput(Input.K);
+			processInput(Input.L);
+			processInput(Input.M);
+			processInput(Input.N);
+			processInput(Input.O);
+			processInput(Input.P);
+			processInput(Input.Q);
+			processInput(Input.R);
+			processInput(Input.S);
+			processInput(Input.T);
+			processInput(Input.U);
+			processInput(Input.V);
+			processInput(Input.W);
+			processInput(Input.Y);
+			processInput(Input.Z);
+			
+			processInput(Input.PERIOD);
+			processInput(Input.BACK);
+			
+			processInput(Input.KEY_0);
+			processInput(Input.KEY_1);
+			processInput(Input.KEY_2);
+			processInput(Input.KEY_3);
+			processInput(Input.KEY_4);
+			processInput(Input.KEY_5);
+			processInput(Input.KEY_6);
+			processInput(Input.KEY_7);
+			processInput(Input.KEY_8);
+			processInput(Input.KEY_9);
+		}
 		
-		processInput(Input.PERIOD);
-		processInput(Input.BACK);
-		
-		processInput(Input.KEY_0);
-		processInput(Input.KEY_1);
-		processInput(Input.KEY_2);
-		processInput(Input.KEY_3);
-		processInput(Input.KEY_4);
-		processInput(Input.KEY_5);
-		processInput(Input.KEY_6);
-		processInput(Input.KEY_7);
-		processInput(Input.KEY_8);
-		processInput(Input.KEY_9);
 
 		String s = "";
 		
@@ -151,19 +171,19 @@ public class ClientInputState extends GameState{
 	}
 	
 	private void processInput(int key, LinkedList<String> list, int maxChars){
-		if(Input.getKey(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT) && timer % delay == 0)
+		if(Input.getKey(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT))
 			if(list.size() <= maxChars)
 				list.addLast(".");
 		
-		if(Input.getKey(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT) && timer % delay == 0)
+		if(Input.getKey(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT))
 			if(list.size() <= maxChars)
 				list.addLast((Input.getKeyName(key).toLowerCase()));
 
-		if(Input.getKey(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT) && timer % delay == 0)
+		if(Input.getKey(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT))
 			if(list.size() <= maxChars)
 				list.addLast(Input.getKeyName(key));
 
-		if(Input.getKey(key) && key == Input.BACK && timer % delay == 0)
+		if(Input.getKey(key) && key == Input.BACK)
 			if(list.size() >= 1)
 				list.removeLast();
 	}
@@ -184,14 +204,26 @@ public class ClientInputState extends GameState{
 		userNameField.render(screen);
 		ipField.render(screen);
 		portField.render(screen);
+		
+		if(userName)
+			screen.renderSprite(txtActive, userNameField.getxPos(), userNameField.getyPos());
+		if(ip)
+			screen.renderSprite(txtActive, ipField.getxPos(), ipField.getyPos());
+		if(port)
+			screen.renderSprite(txtActive, portField.getxPos(), portField.getyPos());
+		
 		join.render(screen);
+		if(joinBtn) screen.renderSprite(btnActive, join.getxPos(), join.getyPos());
+		
 		exit.render(screen);
+		if(exitBtn) screen.renderSprite(btnActive, exit.getxPos(), exit.getyPos());
+			
 		
 		f.setFont(CRString.create("Join"));
-		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 57, 0.4f);
+		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 57 - 20, 0.4f);
 		
 		f.setFont(CRString.create("Exit"));
-		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 130, 0.4f);
+		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 130 - 20, 0.4f);
 		
 		f.setFont(CRString.create(name));
 		screen.renderFont(f, Window.getWidth()/2 - 180, Window.getHeight()/2 - 240, 0.4f);

@@ -2,8 +2,10 @@ package com.cr.states.net;
 
 import java.util.LinkedList;
 
+import com.cr.engine.core.Transform;
 import com.cr.engine.graphics.Font;
 import com.cr.engine.graphics.Screen;
+import com.cr.engine.graphics.Sprite;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.Font.FontColor;
 import com.cr.engine.input.Input;
@@ -34,6 +36,10 @@ public class ServerInputState extends GameState{
 
 	private LinkedList<String> userNameChars = new LinkedList<String>();
 	private LinkedList<String> portChars = new LinkedList<String>();
+	
+	private Sprite txtActive, btnActive;
+	
+	private boolean hostBtn = false, exitBtn = false;
 
 	@Override
 	public void init() {
@@ -42,23 +48,32 @@ public class ServerInputState extends GameState{
 		
 		host = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 100 - 80 - 44);
 		exit = new CRButton("crbutton", Window.getWidth()/2 - 55, Window.getHeight()/2 + 170 - 80 - 44);
+		
+		txtActive = new Sprite("textfieldactive", Game.shader, new Transform());
+		btnActive = new Sprite("buttonHoover", Game.shader, new Transform());
 	}
 	
 	@Override
 	public void tick(float dt) {
 		if(timer < 7500) timer++;
 		else timer = 0;
+		
 		if(Input.getKey(Input.ESCAPE))
 			Game.stop();
 		
+		if(host.getRect().contains(Input.getMousePosition().x, Input.getMousePosition().y)){
+			hostBtn = true;
+		}else hostBtn = false;
+		
+		if(exit.getRect().contains(Input.getMousePosition().x, Input.getMousePosition().y)){
+			exitBtn = true;
+		}else exitBtn = false;
+		
 		if(userNameField.isClicked()){
 			userName = true;
-
 			port = false;
 		}
-		
-
-		
+	
 		if(portField.isClicked()){
 			userName = false;
 			port = true;
@@ -163,11 +178,20 @@ public class ServerInputState extends GameState{
 	
 		userNameField.render(screen);
 		portField.render(screen);
+		
+		if(userName)
+			screen.renderSprite(txtActive, userNameField.getxPos(), userNameField.getyPos());
+		if(port)
+			screen.renderSprite(txtActive, portField.getxPos(), portField.getyPos());
+		
 		host.render(screen);
+		if(hostBtn) screen.renderSprite(btnActive, host.getxPos(), host.getyPos());
+		
 		exit.render(screen);
+		if(exitBtn) screen.renderSprite(btnActive, exit.getxPos(), exit.getyPos());
 		
 		f.setFont(CRString.create("Host"));
-		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 57 - 80 - 44, 0.4f);
+		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 57 - 80 - 40, 0.4f);
 		
 		f.setFont(CRString.create("Exit"));
 		screen.renderFont(f, Window.getWidth()/2 - 50, Window.getHeight()/2 + 130 - 80 - 44, 0.4f);

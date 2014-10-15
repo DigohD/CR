@@ -18,13 +18,12 @@ import com.cr.entity.hero.body.UpperBody;
 import com.cr.entity.hero.inventory.Inventory;
 import com.cr.entity.hero.materials.MaterialsBox;
 import com.cr.net.NetStatus;
-import com.cr.net.packets.Packet12Move;
 import com.cr.states.net.MPClientState;
-import com.cr.states.net.MPHostState;
 import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.world.World;
+import com.cr.world.terrain.Tree;
 import com.cr.world.tile.Tile;
 
 public class Hero extends Mob implements Collideable{
@@ -140,11 +139,11 @@ public class Hero extends Mob implements Collideable{
 			velocity.x = approachTarget(targetVel.x, velocity.x, dt*accSpeed);
 			velocity.y = approachTarget(targetVel.y, velocity.y, dt*accSpeed);
 			
-			//if(!collisionWithTile(targetVel.x, 0))
+			if(!collisionWithTile(targetVel.x, 0))
 				position.x = position.x + targetVel.x*dt;
 			
 			
-			//if(!collisionWithTile(0, targetVel.y))
+			if(!collisionWithTile(0, targetVel.y))
 				position.y = position.y + targetVel.y*dt;
 		}
 		
@@ -257,10 +256,12 @@ public class Hero extends Mob implements Collideable{
 		
 		return new Vector2f(x, y);
 	}
-	
+	boolean tree = false;
 	@Override
 	public void collisionWith(Collideable obj){
-		
+		if(obj instanceof Tree){
+			
+		}
 	}
 	
 	private static void setBobing(boolean isBobing){

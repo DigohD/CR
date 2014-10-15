@@ -8,9 +8,10 @@ import com.cr.combat.Projectile;
 import com.cr.combat.loot.Loot;
 import com.cr.entity.Breakable;
 import com.cr.entity.Collideable;
-import com.cr.entity.enemy.v2.Enemy;
 import com.cr.entity.enemy.attack.EnemyProjectile;
+import com.cr.entity.enemy.v2.Enemy;
 import com.cr.entity.hero.Hero;
+import com.cr.world.terrain.WorldObject;
 
 public class CollisionManager {
 	
@@ -22,6 +23,16 @@ public class CollisionManager {
 			new ArrayList<Projectile>();
 	private static List<EnemyProjectile> enemyProjectiles = 
 			new ArrayList<EnemyProjectile>();
+	
+	private static List<WorldObject> worldObjects = new ArrayList<WorldObject>();
+	
+	public static void addworldObject(WorldObject e){
+		worldObjects.add(e);
+	}
+	
+	public static void removeworldObject(WorldObject e){
+		worldObjects.remove(e);
+	}
 	
 	public static void addEnemy(Enemy e){
 		enemies.add(e);
@@ -132,6 +143,13 @@ public class CollisionManager {
 				}
 			}
 		}
+		
+//		for(int i = 0; i < worldObjects.size(); i++){
+//			WorldObject wo = worldObjects.get(i);
+//			if(collisionBetween(EntityManager.getHero().getRect(), wo.getRect())){
+//				EntityManager.getHero().collisionWith(wo);
+//			}
+//		}
 		
 		for(int i = 0; i < loot.size(); i++){
 			Loot p = loot.get(i);

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.entity.Collideable;
 import com.cr.game.EntityManager;
 import com.cr.util.Randomizer;
 import com.cr.util.SpriteLoader;
@@ -42,5 +43,7 @@ public class Reeds extends WorldObject{
 	public void setObjectID(int objectID) {
 		this.objectID = objectID;
 	}
+
+
 
 }

@@ -6,6 +6,7 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.Material;
 import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Sprite;
+import com.cr.entity.Collideable;
 import com.cr.entity.Entity;
 import com.cr.entity.Renderable;
 import com.cr.world.World;

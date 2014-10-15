@@ -34,6 +34,7 @@ public class TileLayer {
 	private float yHigh = 0;
 	
 	private float scaleFactor = 1f;
+	private static float counter;
 	
 	int[] pixelData;
 	
@@ -43,8 +44,10 @@ public class TileLayer {
 		meshes = new ArrayList<Mesh>();
 		tiles = new HashMap<Integer, Tile>();
 		
-		this.width = width;
-		this.height = height;
+		TileLayer.width = width;
+		TileLayer.height = height;
+		
+		counter = width*height*0.0001f*3;
 		
 		int size = width*height;
 		
@@ -63,8 +66,11 @@ public class TileLayer {
 		this.depth = depth;
 		bitmap = new Bitmap(width, height);
 		
-		this.width = width;
-		this.height = height;
+		TileLayer.width = width;
+		TileLayer.height = height;
+		
+		counter = width*height*0.0001f*3;
+		
 		this.transform = World.getTransform();
 		
 		this.shader = World.getShader();
@@ -78,8 +84,8 @@ public class TileLayer {
 		this.transform = transform;
 		bitmap = new Bitmap(name);
 		
-		this.width = bitmap.getWidth();
-		this.height = bitmap.getHeight();
+		TileLayer.width = bitmap.getWidth();
+		TileLayer.height = bitmap.getHeight();
 		this.transform = transform;
 		this.shader = World.getShader();
 		
@@ -94,8 +100,6 @@ public class TileLayer {
 		generateTileLayer(0, height/2, width/2, height);
 		generateTileLayer(width/2, height/2, width, height);
 	}
-	
-	static float counter = width*height*0.0001f*3;
 	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){
 		List<Vertex> vertices = new ArrayList<Vertex>();
