@@ -102,7 +102,7 @@ public class ClientInputState extends GameState{
 		if(exit.isClicked())
 			gsm.pop();
 		
-		if(timer % delay == 0){
+		
 			processInput(Input.A);
 			processInput(Input.B);
 			processInput(Input.C);
@@ -142,7 +142,7 @@ public class ClientInputState extends GameState{
 			processInput(Input.KEY_7);
 			processInput(Input.KEY_8);
 			processInput(Input.KEY_9);
-		}
+		
 		
 
 		String s = "";
@@ -177,21 +177,40 @@ public class ClientInputState extends GameState{
 	}
 	
 	private void processInput(int key, LinkedList<String> list, int maxChars){
-		if(Input.getKey(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT))
-			if(list.size() <= maxChars)
-				list.addLast(".");
+		if(!keyCodeMap.containsKey(key))
+			keyCodeMap.put(key, false);
 		
-		if(Input.getKey(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT))
-			if(list.size() <= maxChars)
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT))
+			if(list.size() <= maxChars){
+				list.addLast(".");
+				keyCodeMap.put(key, true);
+			}
+		
+		
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT))
+			if(list.size() <= maxChars){
 				list.addLast((Input.getKeyName(key).toLowerCase()));
+				keyCodeMap.put(key, true);
+			}
+		
 
-		if(Input.getKey(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT))
-			if(list.size() <= maxChars)
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT))
+			if(list.size() <= maxChars){
 				list.addLast(Input.getKeyName(key));
+				keyCodeMap.put(key, true);
+			}
+		
 
-		if(Input.getKey(key) && key == Input.BACK)
-			if(list.size() >= 1)
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key == Input.BACK)
+			if(list.size() >= 1){
 				list.removeLast();
+				keyCodeMap.put(key, true);
+			}
+		
+		
+		if(!Input.getKey(key))
+			keyCodeMap.put(key, false);
+		
 	}
 
 	@Override

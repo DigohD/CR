@@ -1,5 +1,6 @@
 package com.cr.states.net;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.cr.engine.core.Transform;
@@ -37,6 +38,8 @@ public class ServerInputState extends GameState{
 
 	private LinkedList<String> userNameChars = new LinkedList<String>();
 	private LinkedList<String> portChars = new LinkedList<String>();
+	
+	private HashMap<Integer, Boolean> keyCodeMap = new HashMap<Integer, Boolean>();
 	
 	private Sprite txtActive, btnActive;
 	
@@ -152,21 +155,40 @@ public class ServerInputState extends GameState{
 	}
 	
 	private void processInput(int key, LinkedList<String> list, int maxChars){
-		if(Input.getKey(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT) && timer % delay == 0)
-			if(list.size() <= maxChars)
-				list.addLast(".");
+		if(!keyCodeMap.containsKey(key))
+			keyCodeMap.put(key, false);
 		
-		if(Input.getKey(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT) && timer % delay == 0)
-			if(list.size() <= maxChars)
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key == Input.PERIOD && key != Input.BACK && !Input.getKey(Input.LSHIFT))
+			if(list.size() <= maxChars){
+				list.addLast(".");
+				keyCodeMap.put(key, true);
+			}
+		
+		
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key != Input.PERIOD &&  key != Input.BACK && !Input.getKey(Input.LSHIFT))
+			if(list.size() <= maxChars){
 				list.addLast((Input.getKeyName(key).toLowerCase()));
+				keyCodeMap.put(key, true);
+			}
+		
 
-		if(Input.getKey(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT) && timer % delay == 0)
-			if(list.size() <= maxChars)
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key != Input.PERIOD && key != Input.BACK && Input.getKey(Input.LSHIFT))
+			if(list.size() <= maxChars){
 				list.addLast(Input.getKeyName(key));
+				keyCodeMap.put(key, true);
+			}
+		
 
-		if(Input.getKey(key) && key == Input.BACK && timer % delay == 0)
-			if(list.size() >= 1)
+		if(Input.getKey(key) && !keyCodeMap.get(key) && key == Input.BACK)
+			if(list.size() >= 1){
 				list.removeLast();
+				keyCodeMap.put(key, true);
+			}
+		
+		
+		if(!Input.getKey(key))
+			keyCodeMap.put(key, false);
+		
 	}
 
 	@Override
