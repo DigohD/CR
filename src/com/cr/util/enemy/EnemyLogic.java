@@ -1,4 +1,4 @@
-package com.cr.util.ai;
+package com.cr.util.enemy;
 
 import com.cr.engine.core.Vector2f;
 import com.cr.entity.Mob;
@@ -24,5 +24,9 @@ public class EnemyLogic {
 	
 	public static float getDistanceToHero(Vector2f enemyPosition, Mob hero){
 		return enemyPosition.sub(hero.getPosition()).length();
+	}
+	
+	public static Vector2f getDirectionToHero(Vector2f enemyPosition, Mob hero){
+		return hero.getPosition().sub(enemyPosition).normalize();
 	}
 }

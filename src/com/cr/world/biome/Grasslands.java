@@ -7,6 +7,7 @@ import com.cr.engine.core.Vector2f;
 import com.cr.engine.graphics.ColorRGBA;
 import com.cr.util.Randomizer;
 import com.cr.util.SimplexNoise;
+import com.cr.util.enemy.Race;
 import com.cr.world.TileLayer;
 import com.cr.world.tile.DirtTile;
 import com.cr.world.tile.GrassTile;
@@ -107,6 +108,11 @@ public class Grasslands{
 	      return totalNoise;
 	}
 
+	public static Race[] getBiomeRaces(){
+		return new Race[]{
+				Race.GOBLIN};
+	}
+	
 	public TileLayer getBottomLayer() {
 		return bottomLayer;
 	}

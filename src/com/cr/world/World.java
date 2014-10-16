@@ -98,7 +98,7 @@ public class World {
 	public World(){
 		initShader();
 		
-		map = new TileMap(250, 250);
+		map = new TileMap(20, 20);
 
 		width = map.getWidth();
 		height = map.getHeight();
@@ -303,7 +303,7 @@ public class World {
 	}
 	
 	private void generateEnemies(){
-		for(int i = 0; i < 50; i++){
+		for(int i = 0; i < 1; i++){
 			Enemy e = null;
 			boolean generated = false;
 			while(!generated){

@@ -321,6 +321,11 @@ public class Hero extends Mob implements Collideable{
 		return sprite;
 	}
 	
+	@Override
+	public Vector2f getPosition(){
+		return position;
+	}
+	
 	public Vector2f getPos(){
 		return position;
 	}

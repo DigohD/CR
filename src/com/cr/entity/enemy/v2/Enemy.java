@@ -9,6 +9,8 @@ import com.cr.engine.graphics.Sprite;
 import com.cr.entity.Collideable;
 import com.cr.entity.Mob;
 import com.cr.entity.MotionEntity;
+import com.cr.entity.enemy.v2.behaviour.Aggressive;
+import com.cr.entity.enemy.v2.behaviour.Behaviour;
 import com.cr.entity.enemy.v2.motion.AniMotion;
 import com.cr.entity.enemy.v2.motion.AniMotionSet;
 import com.cr.entity.enemy.v2.motion.AniMotionSet.MotionStatus;
@@ -17,7 +19,9 @@ import com.cr.entity.enemy.v2.motion.SinusMotion;
 import com.cr.entity.enemy.v2.motion.SinusMotion.MotionAxis;
 import com.cr.game.EntityManager;
 import com.cr.stats.StatsSheet;
-import com.cr.util.ai.AniMotions;
+import com.cr.stats.StatsSheet.StatID;
+import com.cr.util.enemy.AniMotions;
+import com.cr.util.enemy.EnemyLogic;
 import com.cr.world.World;
 
 public class Enemy extends Mob implements Collideable{
@@ -28,9 +32,11 @@ public class Enemy extends Mob implements Collideable{
 	protected Sprite body;
 	
 	protected ArrayList<Limb> limbs = new ArrayList<Limb>();
-	protected Vector2f centerOffset, renderPosition;
+	protected Vector2f centerOffset, renderPosition, moveDirection;
 	
 	protected AniMotionSet motionSet = new AniMotionSet();
+	
+	protected Behaviour behaviour;
 	
 	protected boolean isMoving;
 	
@@ -42,11 +48,17 @@ public class Enemy extends Mob implements Collideable{
 		this.sheet = sheet;
 		
 		centerOffset = new Vector2f(body.getSpriteWidth() / 2, body.getSpriteHeight() / 2);
+		moveDirection = new Vector2f(0, 0);
 		velocity = new Vector2f(0, 0);
 		renderPosition = new Vector2f(0, 0);
 		
 		if(hitBox == null)
 			generateHitBox();
+		
+		behaviour = new Aggressive(300, this);
+		
+		motionSet.addMotion(MotionStatus.IDLE, AniMotions.getBreathing(4, 2));
+		motionSet.addMotion(MotionStatus.MOVING, AniMotions.getBreathing(8, 4));
 		
 		motionSet.setActiveMotion(MotionStatus.IDLE);
 	}
@@ -59,8 +71,20 @@ public class Enemy extends Mob implements Collideable{
 		hitBox.x = (int) position.x;
 		hitBox.y = (int) position.y;
 		
-//		motionSet.getActiveMotion().tick(dt);
-		move(dt);
+		behaviour.tick(dt);
+		
+		motionSet.getActiveMotion().tick(dt);
+		if(isMoving){
+			motionSet.setActiveMotion(MotionStatus.MOVING);
+			move(dt);
+		}else
+			motionSet.setActiveMotion(MotionStatus.IDLE);
+	}
+	
+	@Override
+	protected void move(float dt){
+		distance = velocity.mul(sheet.getStat(StatID.MOVEMENT_SPEED).getTotal());
+		position = position.add(distance);
 	}
 	
 	public void addLimb(Limb limb){
@@ -70,7 +94,7 @@ public class Enemy extends Mob implements Collideable{
 	@Override
 	public void render(Screen screen) {
 		renderPosition = position.clone();
-//		renderPosition = motionSet.getActiveMotion().applyMotion(renderPosition);
+		renderPosition = motionSet.getActiveMotion().applyMotion(renderPosition);
 		screen.renderSprite(body, renderPosition.x , renderPosition.y);
 	}
 	
@@ -110,6 +134,14 @@ public class Enemy extends Mob implements Collideable{
 	@Override
 	public void collisionWith(Collideable obj) {
 		
+	}
+
+	public void setMoveDirection(Vector2f moveDirection) {
+		this.moveDirection = moveDirection;
+	}
+
+	public void setMoving(boolean isMoving) {
+		this.isMoving = isMoving;
 	}
 
 	

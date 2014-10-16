@@ -1,4 +1,4 @@
-package com.cr.util.ai;
+package com.cr.util.enemy;
 
 public enum Race {
 	GOBLIN, WISP

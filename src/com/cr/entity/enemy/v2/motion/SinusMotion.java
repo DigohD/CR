@@ -16,6 +16,8 @@ public class SinusMotion extends Motion{
 		this.speed = speed;
 		this.offset = offset;
 		this.axis = axis;
+		
+		motionPoint = new Vector2f(0, 0);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.cr.util.ai;
+package com.cr.util.enemy;
 
 import com.cr.entity.enemy.v2.motion.AniMotion;
 import com.cr.entity.enemy.v2.motion.SinusMotion;
