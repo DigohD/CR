@@ -14,15 +14,14 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.graphics.ColorRGBA;
-import com.cr.engine.graphics.FrameBuffer;
 import com.cr.engine.graphics.Screen;
-import com.cr.engine.graphics.Sprite;
+import com.cr.engine.graphics.SpriteBatch;
 import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.entity.enemy.v2.Enemy;
-import com.cr.entity.hero.Hero;
 import com.cr.game.EntityManager;
+import com.cr.game.Game;
 import com.cr.net.HeroMPServer;
 import com.cr.net.NetStatus;
 import com.cr.net.packets.Packet19Loot;
@@ -84,6 +83,8 @@ public class World {
 	
 	private FirePlace fire;
 	private Texture normalMapWater, normalMapGrass;
+	
+	SpriteBatch treeBatch;
 	
 	public World(LinkedList<Integer> pixels, int width, int height){
 		initShader();
@@ -360,39 +361,52 @@ public class World {
 //		shader.setUniformf("lights", buffer);
 //		shader.unbind();
 		
-		generateTrees(map.getGrassLands().getTreePositions().size());
+		//generateTrees(map.getGrassLands().getTreePositions().size());
+		
+		pos.add(map.getGrassLands().getTreePositions().get(0));
+		treeBatch = new SpriteBatch(new Texture("treeAtlas"), 1, 4, pos, shader);
+		
+		
 		//System.out.println(map.getGrassLands().getTreePositions().size());
-		generateStones(numOfStones);
+		//generateStones(numOfStones);
 	}
+	List<Vector2f> pos = new ArrayList<Vector2f>();
 	
-	private void dayNightCycle(float dt){
-		t += dt*0.008f;
-		
-		if(t >= PI2) t = 0;
-		
-		if(t > 0 && t <= 3.14f/6.0f)
-			k += 0.0008f;
-		
-		if(t > ((5.0*3.14f) / 6.0f) && t <= 3.14f)
-			k -= 0.0008f;
+	private void dayNightCycle(float dt, int timer){
+		if(timer % 2 == 0){
+			t += dt*0.008f;
+			
+			if(t >= PI2) t = 0;
+			
+			if(t > 0 && t <= 3.14f/6.0f)
+				k += 0.0008f;
+			
+			if(t > ((5.0*3.14f) / 6.0f) && t <= 3.14f)
+				k -= 0.0008f;
 
-		lightPosition2.y = Camera.getCamY() + Window.getHeight()/2;
-		lightPosition2.x = lightX2 + ( -1.0f * (float)(Math.cos((-t-3.14f))) * 2000);
-		lightPosition2.z = -600 * (float) Math.sin(t);
+			lightPosition2.y = Camera.getCamY() + Window.getHeight()/2;
+			lightPosition2.x = lightX2 + ( -1.0f * (float)(Math.cos((-t-3.14f))) * 2000);
+			lightPosition2.z = -600 * (float) Math.sin(t);
+			
+			lightPosition.x = lightX + (-1.0f * ((float) Math.cos(t)) * (2000 + (width * Tile.getTileWidth())));
+			lightPosition.z = -10000 * (float) Math.sin(t);
+		}
 		
-		lightPosition.x = lightX + (-1.0f * ((float) Math.cos(t)) * (2000 + (width * Tile.getTileWidth())));
-		lightPosition.z = -10000 * (float) Math.sin(t);
-		
-
 	}
-	
-	
 	
 	public void tick(float dt){
 		if(timer < 7500) timer++;
 		else timer = 0;
 	
-		dayNightCycle(dt);
+		dayNightCycle(dt, timer);
+		
+		if(timer % 12 == 0){
+			System.out.println("Hero depth: " + (EntityManager.getHero().getHead().getSprite().getSpriteHeight() 
+					+ EntityManager.getHero().getY())  * -1.0f * 0.01f);
+			
+			System.out.println("TREE DEPTH: " + pos.get(0).y * -1.0f * 0.00001f);
+		}
+		
 
 		angleWave += dt * angleWaveSpeed;
 		while(angleWave > PI2)
@@ -418,9 +432,13 @@ public class World {
 		
 		map.renderMap();
 		
+		
 		shader.unbind();
 	
 		em.render(screen);
+		
+		treeBatch.render();
+		
 	}
 	
 	public boolean tileExists(int xp, int yp){

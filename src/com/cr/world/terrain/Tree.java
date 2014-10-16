@@ -15,22 +15,20 @@ public class Tree extends WorldObject implements Collideable{
 
 	private int objectID;
 	
-	
 	public Tree(int x , int y){
 		super(new Vector2f(x, y));
-		objectID = Randomizer.getInt(1, 4);
-		EntityManager.addByMainThread(this);
+		//objectID = Randomizer.getInt(1, 4);
+		//EntityManager.addByMainThread(this);
 	}
 	
 	public void init(){
-		sprite = SpriteLoader.getSprite("tree" + objectID);
+		//sprite = SpriteLoader.getSprite("tree" + objectID);
 		rect = new Rectangle((int)getX(), (int)getY(), sprite.getSpriteWidth(), sprite.getSpriteHeight());
 		//CollisionManager.addworldObject(this);
 	}
 	
 	@Override
 	public void activate() {
-		// TODO Auto-generated method stub
 		
 	}
 

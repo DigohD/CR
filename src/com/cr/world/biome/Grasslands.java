@@ -74,7 +74,7 @@ public class Grasslands{
 				float height = simplexNoise[x+y*width];
 				
 				if(height > 0 && topLayer.getBitmap().getPixel(x, y) == ColorRGBA.GREEN && 
-						topLayer.getBitmap().getPixel(x, y+7) == ColorRGBA.GREEN){
+						topLayer.getBitmap().getPixel(x+7, y+7) == ColorRGBA.GREEN){
 					if(Randomizer.getInt(0, Randomizer.getInt(10, 20)) == 0)
 						treePositions.add(new Vector2f(x * Tile.getTileWidth(), y * Tile.getTileHeight()));
 				}

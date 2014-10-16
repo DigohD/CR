@@ -408,6 +408,10 @@ public class Hero extends Mob implements Collideable{
 		this.userName = userName;
 	}
 
+	public static Head getHead() {
+		return head;
+	}
+
 	
 	
 	

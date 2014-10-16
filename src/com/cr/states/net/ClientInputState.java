@@ -29,7 +29,6 @@ public class ClientInputState extends GameState{
 	
 	private boolean userName = false, ip = false, port = false;
 	private int timer = 0;
-	private int delay = 7;
 
 	private LinkedList<String> userNameChars = new LinkedList<String>();
 	private LinkedList<String> ipChars = new LinkedList<String>();
@@ -103,48 +102,46 @@ public class ClientInputState extends GameState{
 			gsm.pop();
 		
 		
-			processInput(Input.A);
-			processInput(Input.B);
-			processInput(Input.C);
-			processInput(Input.D);
-			processInput(Input.E);
-			processInput(Input.F);
-			processInput(Input.G);
-			processInput(Input.H);
-			processInput(Input.I);
-			processInput(Input.J);
-			processInput(Input.K);
-			processInput(Input.L);
-			processInput(Input.M);
-			processInput(Input.N);
-			processInput(Input.O);
-			processInput(Input.P);
-			processInput(Input.Q);
-			processInput(Input.R);
-			processInput(Input.S);
-			processInput(Input.T);
-			processInput(Input.U);
-			processInput(Input.V);
-			processInput(Input.W);
-			processInput(Input.Y);
-			processInput(Input.Z);
-			
-			processInput(Input.PERIOD);
-			processInput(Input.BACK);
-			
-			processInput(Input.KEY_0);
-			processInput(Input.KEY_1);
-			processInput(Input.KEY_2);
-			processInput(Input.KEY_3);
-			processInput(Input.KEY_4);
-			processInput(Input.KEY_5);
-			processInput(Input.KEY_6);
-			processInput(Input.KEY_7);
-			processInput(Input.KEY_8);
-			processInput(Input.KEY_9);
+		processInput(Input.A);
+		processInput(Input.B);
+		processInput(Input.C);
+		processInput(Input.D);
+		processInput(Input.E);
+		processInput(Input.F);
+		processInput(Input.G);
+		processInput(Input.H);
+		processInput(Input.I);
+		processInput(Input.J);
+		processInput(Input.K);
+		processInput(Input.L);
+		processInput(Input.M);
+		processInput(Input.N);
+		processInput(Input.O);
+		processInput(Input.P);
+		processInput(Input.Q);
+		processInput(Input.R);
+		processInput(Input.S);
+		processInput(Input.T);
+		processInput(Input.U);
+		processInput(Input.V);
+		processInput(Input.W);
+		processInput(Input.Y);
+		processInput(Input.Z);
 		
+		processInput(Input.PERIOD);
+		processInput(Input.BACK);
+			
+		processInput(Input.KEY_0);
+		processInput(Input.KEY_1);
+		processInput(Input.KEY_2);
+		processInput(Input.KEY_3);
+		processInput(Input.KEY_4);
+		processInput(Input.KEY_5);
+		processInput(Input.KEY_6);
+		processInput(Input.KEY_7);
+		processInput(Input.KEY_8);
+		processInput(Input.KEY_9);
 		
-
 		String s = "";
 		
 		for(String str : userNameChars)

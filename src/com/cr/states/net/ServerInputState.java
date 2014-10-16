@@ -21,30 +21,28 @@ import com.cr.util.FontLoader;
 
 public class ServerInputState extends GameState{
 
-	public ServerInputState(GameStateManager gsm) {
-		super(gsm);
-		init();
-	}
-
-	private CRTextField userNameField, portField;
-	private CRButton host, exit;
+	private boolean userName = false, port = false;
+	private boolean hostBtn = false, exitBtn = false;
+	private int timer = 0;
 	
 	private String name = "";
 	private String portNumber;
 	
-	private boolean userName = false, port = false;
-	private int timer = 0;
-	private int delay = 7;
-
+	private CRTextField userNameField, portField;
+	private CRButton host, exit;
+	
+	private Sprite txtActive, btnActive;
+	
 	private LinkedList<String> userNameChars = new LinkedList<String>();
 	private LinkedList<String> portChars = new LinkedList<String>();
 	
 	private HashMap<Integer, Boolean> keyCodeMap = new HashMap<Integer, Boolean>();
 	
-	private Sprite txtActive, btnActive;
+	public ServerInputState(GameStateManager gsm) {
+		super(gsm);
+		init();
+	}
 	
-	private boolean hostBtn = false, exitBtn = false;
-
 	@Override
 	public void init() {
 		userNameField = new CRTextField("textfield", Window.getWidth()/2 - 200, Window.getHeight()/2 - 200);

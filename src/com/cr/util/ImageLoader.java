@@ -13,6 +13,7 @@ public class ImageLoader {
 	
 	public ImageLoader(){
 		
+		
 		//gui
 		imageLib.put("textfield", loadImage("/gui/textfield.png"));
 		imageLib.put("crbutton", loadImage("/gui/button.png"));
@@ -68,6 +69,8 @@ public class ImageLoader {
 		imageLib.put("tree2", loadImage("/prop/nature/tree2.png"));
 		imageLib.put("tree3", loadImage("/prop/nature/tree3.png"));
 		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
+		
+		imageLib.put("treeAtlas", loadImage("/prop/nature/treeAtlas.png"));
 		
 		imageLib.put("stone1", loadImage("/prop/nature/stone1.png"));
 		
