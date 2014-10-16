@@ -186,6 +186,7 @@ public class ImageLoader {
 		
 		imageLib.put("felfbody", loadImage("/enemy/forestelf/felfbody.png"));
 		imageLib.put("felfhead", loadImage("/enemy/forestelf/felfhead.png"));
+		imageLib.put("felfhelm", loadImage("/enemy/forestelf/felfhelm.png"));
 		imageLib.put("felflefthand", loadImage("/enemy/forestelf/felflefthand.png"));
 		imageLib.put("felfrighthand", loadImage("/enemy/forestelf/felfrighthand.png"));
 		

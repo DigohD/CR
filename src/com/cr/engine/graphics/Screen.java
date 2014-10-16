@@ -51,7 +51,7 @@ public class Screen {
 		sprite.unbind();
 	}
 	
-	public void renderSprite(Sprite sprite, float x, float y, float row, float col){
+	public void renderSprite(Sprite sprite, float x, float y, int row, int col){
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_ALPHA_TEST);
 		sprite.updateTexCoords(row, col);
@@ -61,10 +61,20 @@ public class Screen {
 		sprite.unbind();
 	}
 	
-	public void renderSprite(Sprite sprite, float x, float y, float row, float col, float xScale, float yScale){
+	public void renderSprite(Sprite sprite, float x, float y, int row, int col, float xScale, float yScale){
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_ALPHA_TEST);
 		sprite.updateTexCoords(row, col);
+		sprite.getTransform().translate(x, y, (sprite.getSpriteHeight() + y) * -1.0f * 0.01f);
+		sprite.getTransform().scale(xScale, yScale, 1);
+		sprite.bind();
+		sprite.getMesh().render();
+		sprite.unbind();
+	}
+	
+	public void renderSprite(Sprite sprite, float x, float y, float xScale, float yScale){
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_ALPHA_TEST);
 		sprite.getTransform().translate(x, y, (sprite.getSpriteHeight() + y) * -1.0f * 0.01f);
 		sprite.getTransform().scale(xScale, yScale, 1);
 		sprite.bind();

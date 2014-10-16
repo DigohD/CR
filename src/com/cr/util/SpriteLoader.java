@@ -167,6 +167,7 @@ public class SpriteLoader {
 		
 		spriteLib.put("felfbody", newSprite("felfbody"));
 		spriteLib.put("felfhead", newSprite("felfhead"));
+		spriteLib.put("felfhelm", newSprite("felfhelm"));
 		spriteLib.put("felflefthand", newSprite("felflefthand"));
 		spriteLib.put("felfrighthand", newSprite("felfrighthand"));
 		

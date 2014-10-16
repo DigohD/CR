@@ -32,6 +32,7 @@ import com.cr.stats.StatsSheet;
 import com.cr.util.Camera;
 import com.cr.util.Randomizer;
 import com.cr.util.SpriteLoader;
+import com.cr.util.enemy.EnemyAssembler;
 import com.cr.world.misc.FirePlace;
 import com.cr.world.terrain.Reeds;
 import com.cr.world.terrain.Stone;
@@ -98,7 +99,7 @@ public class World {
 	public World(){
 		initShader();
 		
-		map = new TileMap(20, 20);
+		map = new TileMap(100, 100);
 
 		width = map.getWidth();
 		height = map.getHeight();
@@ -303,14 +304,14 @@ public class World {
 	}
 	
 	private void generateEnemies(){
-		for(int i = 0; i < 1; i++){
+		for(int i = 0; i < 100; i++){
 			Enemy e = null;
 			boolean generated = false;
 			while(!generated){
-				e = new Enemy(new Vector2f(-1000, -1000), this, null, SpriteLoader.getSprite("felfbody"), "Forest Elf", new StatsSheet(true));
+				e = EnemyAssembler.getNewEnemy(this);
 				int x = Randomizer.getInt(0, width * 51) + 40;
 				int y = Randomizer.getInt(0, height * 33) + e.getSprite().getSpriteHeight();
-				//System.out.println(e.getSprite().getSpriteHeight());
+				
 				if(map.getTopLayer().getTileID(x / 58, y / 38) == ColorRGBA.GREEN){
 					e.setPosition(new Vector2f(x - 40, y - e.getSprite().getSpriteHeight()));
 					EntityManager.addEntity(e);

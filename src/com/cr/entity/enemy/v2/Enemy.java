@@ -54,13 +54,6 @@ public class Enemy extends Mob implements Collideable{
 		
 		if(hitBox == null)
 			generateHitBox();
-		
-		behaviour = new Aggressive(300, this);
-		
-		motionSet.addMotion(MotionStatus.IDLE, AniMotions.getBreathing(4, 2));
-		motionSet.addMotion(MotionStatus.MOVING, AniMotions.getBreathing(8, 4));
-		
-		motionSet.setActiveMotion(MotionStatus.IDLE);
 	}
 	
 	@Override
@@ -96,6 +89,9 @@ public class Enemy extends Mob implements Collideable{
 		renderPosition = position.clone();
 		renderPosition = motionSet.getActiveMotion().applyMotion(renderPosition);
 		screen.renderSprite(body, renderPosition.x , renderPosition.y);
+		
+		for(Limb x : limbs)
+			x.renderLimb(screen);
 	}
 	
 	public Vector2f getCenterOffset(){
@@ -142,6 +138,18 @@ public class Enemy extends Mob implements Collideable{
 
 	public void setMoving(boolean isMoving) {
 		this.isMoving = isMoving;
+	}
+
+	public AniMotionSet getMotionSet() {
+		return motionSet;
+	}
+
+	public void setBehaviour(Behaviour behaviour) {
+		this.behaviour = behaviour;
+	}
+
+	public Vector2f getRenderPosition() {
+		return renderPosition;
 	}
 
 	
