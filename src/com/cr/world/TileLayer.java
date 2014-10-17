@@ -164,12 +164,8 @@ public class TileLayer {
 			shader.setUniformf("isWater", 1.0f);
 		}else shader.setUniformf("isWater", 0.0f);
 		
-		Tile.getTexture().bind();
-		
 		for(Mesh m : meshes)
 			m.render();
-		
-		Tile.getTexture().unbind();
 	
 	}
 	

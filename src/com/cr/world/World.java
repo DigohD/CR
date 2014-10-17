@@ -364,7 +364,7 @@ public class World {
 		//generateTrees(map.getGrassLands().getTreePositions().size());
 		
 		pos.add(map.getGrassLands().getTreePositions().get(0));
-		treeBatch = new SpriteBatch(new Texture("treeAtlas"), 1, 4, pos, shader);
+		treeBatch = new SpriteBatch(new Texture("treeAtlas"), 1, 4, map.getGrassLands().getTreePositions(), shader);
 		
 		
 		//System.out.println(map.getGrassLands().getTreePositions().size());

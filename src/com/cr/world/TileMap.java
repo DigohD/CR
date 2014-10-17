@@ -8,6 +8,7 @@ import com.cr.world.tile.DirtTile;
 import com.cr.world.tile.GrassTile;
 import com.cr.world.tile.SandTile;
 import com.cr.world.tile.StoneTile;
+import com.cr.world.tile.Tile;
 import com.cr.world.tile.WaterTile;
 
 public class TileMap {
@@ -56,9 +57,11 @@ public class TileMap {
 	}
 	
 	public void renderMap(){
+		Tile.getTexture().bind();
 		bottomLayer.renderTileLayer(true);
 		middleLayer.renderTileLayer(false);
 		topLayer.renderTileLayer(false);
+		Tile.getTexture().unbind();
 	}
 	
 	public int getWidth(){
