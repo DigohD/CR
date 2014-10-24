@@ -71,6 +71,8 @@ public class ImageLoader {
 		imageLib.put("tree4", loadImage("/prop/nature/tree4.png"));
 		
 		imageLib.put("treeAtlas", loadImage("/prop/nature/treeAtlas.png"));
+		imageLib.put("smalltrees", loadImage("/prop/nature/smalltrees.png"));
+		imageLib.put("largetrees", loadImage("/prop/nature/largetrees.png"));
 		
 		imageLib.put("stone1", loadImage("/prop/nature/stone1.png"));
 		

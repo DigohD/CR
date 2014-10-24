@@ -95,10 +95,10 @@ public class TileLayer {
 	}
 	
 	public void generateTileLayer(){
-		generateTileLayer(0, 0, width/2, height/2);
-		generateTileLayer(width/2, 0, width, height/2);
-		generateTileLayer(0, height/2, width/2, height);
-		generateTileLayer(width/2, height/2, width, height);
+		generateTileLayer(0, 0, width, height);
+//		generateTileLayer(width/2, 0, width, height/2);
+//		generateTileLayer(0, height/2, width/2, height);
+//		generateTileLayer(width/2, height/2, width, height);
 	}
 	
 	public void generateTileLayer(int xStart, int yStart, int xEnd, int yEnd){

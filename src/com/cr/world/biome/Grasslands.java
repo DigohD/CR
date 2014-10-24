@@ -72,11 +72,13 @@ public class Grasslands{
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
-				
 				if(height > 0 && topLayer.getBitmap().getPixel(x, y) == ColorRGBA.GREEN && 
-						topLayer.getBitmap().getPixel(x+7, y+7) == ColorRGBA.GREEN){
-					if(Randomizer.getInt(0, Randomizer.getInt(10, 20)) == 0)
-						treePositions.add(new Vector2f(x * Tile.getTileWidth(), y * Tile.getTileHeight()));
+						topLayer.getBitmap().getPixel(x, y+14) == ColorRGBA.GREEN && 
+						topLayer.getBitmap().getPixel(x+14, y) == ColorRGBA.GREEN) {
+					if(Randomizer.getInt(0, Randomizer.getInt(10, 20)) == 0){
+						Vector2f pos = new Vector2f(x * Tile.getTileWidth(), y * Tile.getTileHeight());
+						treePositions.add(pos);
+					}	
 				}
 				
 				if(height > -0.55f && height < -0.50f && 

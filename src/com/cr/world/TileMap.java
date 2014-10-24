@@ -57,11 +57,13 @@ public class TileMap {
 	}
 	
 	public void renderMap(){
+		World.getShader().bind();
 		Tile.getTexture().bind();
 		bottomLayer.renderTileLayer(true);
 		middleLayer.renderTileLayer(false);
 		topLayer.renderTileLayer(false);
 		Tile.getTexture().unbind();
+		World.getShader().unbind();
 	}
 	
 	public int getWidth(){

@@ -8,8 +8,8 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
+import com.cr.engine.core.Vector2f;
 import com.cr.game.EntityManager;
-import com.cr.net.HeroMP;
 import com.cr.net.HeroMPServer;
 import com.cr.net.packets.Packet;
 import com.cr.net.packets.Packet.PacketTypes;
@@ -28,8 +28,6 @@ import com.cr.stats.Stat;
 import com.cr.stats.StatsSheet;
 import com.cr.stats.StatsSheet.StatID;
 import com.cr.world.World;
-import com.cr.world.terrain.Stone;
-import com.cr.world.terrain.Tree;
 
 public class Server implements Runnable{
 	
@@ -40,8 +38,8 @@ public class Server implements Runnable{
 	
 	private HashMap<String, HeroMPServer> clientsMap = new HashMap<String, HeroMPServer>();
 	
-	private Tree[] trees = MPHostState.getWorld().getTrees();
-	private Stone[] stones = MPHostState.getWorld().getStones();
+	private Vector2f[] trees = MPHostState.getWorld().getWoManager().getTreePositions();
+	private Vector2f[] stones = MPHostState.getWorld().getWoManager().getStonePositions();
 	
 	private boolean running = false;
 	
@@ -155,13 +153,13 @@ public class Server implements Runnable{
 		
 		switch(type){
 			case 0:
-				Packet18StaticObject pso = new Packet18StaticObject(trees[packet20.getIndex()].getObjectID(), (int)trees[packet20.getIndex()].getX(), 
-						(int)trees[packet20.getIndex()].getY(), 0, trees.length);
+				Packet18StaticObject pso = new Packet18StaticObject(0, (int)trees[packet20.getIndex()].x, 
+						(int)trees[packet20.getIndex()].y, 0, trees.length);
 				sendData(pso.getData(), address, port);
 				break;
 			case 1:
-				Packet18StaticObject pso2 = new Packet18StaticObject(stones[packet20.getIndex()].getObjectID(), (int)stones[packet20.getIndex()].getX(), 
-						(int)stones[packet20.getIndex()].getY(), 1, stones.length);
+				Packet18StaticObject pso2 = new Packet18StaticObject(1, (int)stones[packet20.getIndex()].x, 
+						(int)stones[packet20.getIndex()].y, 1, stones.length);
 				sendData(pso2.getData(), address, port);
 			default:
 				break;

@@ -1,4 +1,4 @@
-package com.cr.engine.graphics;
+package com.cr.world.terrain;
 
 import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
@@ -11,54 +11,61 @@ import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
 import com.cr.engine.core.Vector3f;
 import com.cr.engine.core.Vertex;
+import com.cr.engine.graphics.Mesh;
+import com.cr.engine.graphics.Texture;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.util.Randomizer;
+import com.cr.world.World;
 
-public class SpriteBatch {
+public class WorldObjectBatch {
 	
 	private Texture texture;
 	private Shader shader;
 	private Mesh mesh;
-	private List<Vector2f> positions;
 	
 	private float xLow = 0;
 	private float xHigh = 0;
 	private float yLow = 0;
 	private float yHigh = 0;
 	
-	private float rows, cols;
+	private float rows, cols, startRow, startCol;
 	
 	private int width, height;
 	
 	private Transform t;
 	
-	private static float counter;
+	private float counter;
 	
-	public SpriteBatch(Texture texture, float rows, float cols, List<Vector2f> positions, Shader shader){
+	public WorldObjectBatch(Texture texture, float rows, float cols){
+		this(texture, rows, cols, 0, 0);
+	}
+	
+	public WorldObjectBatch(Texture texture, float rows, float cols, float row, float col){
 		this.texture = texture;
-		this.positions = positions;
-		this.shader = shader;
+		this.shader = World.getShader();
 		
 		t = new Transform();
 		
 		this.rows = rows;
 		this.cols = cols;
+		this.startRow = row;
+		this.startCol = col;
 		
 		width = (int) (texture.getWidth() / cols); 
 		height = (int) (texture.getHeight() / rows);
-		
+	
 		counter = 0;
-		
-		generateMesh(positions);
 	}
 	
-	private void generateMesh(List<Vector2f> positions){
+	public void generateMesh(List<Vector2f> positions, boolean random){
+		generateMesh(rows, cols, positions, random);
+	}
+	
+	private void generateMesh(float rows, float cols, List<Vector2f> positions, boolean random){
 		List<Vertex> vertices = new ArrayList<Vertex>();
 		List<Integer> indices = new ArrayList<Integer>();
 	
 		for(int i = 0; i < positions.size(); i++){
-			
-			
 			indices.add(vertices.size() + 0);
 			indices.add(vertices.size() + 1);
 			indices.add(vertices.size() + 2);
@@ -68,7 +75,10 @@ public class SpriteBatch {
 			indices.add(vertices.size() + 0);
 			
 			float row = 0;
-			float col = Randomizer.getInt(0, 3);
+			float col = startCol;
+			if(random){
+				col = Randomizer.getInt(0, (int)cols);
+			}
 			
 			xLow = col / cols;
 			xHigh = xLow + (1 / cols);
@@ -76,7 +86,7 @@ public class SpriteBatch {
 			yHigh = yLow + (1 / rows);
 			
 			float y = positions.get(i).y;
-			counter -= y * 1.0f * 0.0001f;
+			counter = y * -1.0f * 0.01f;
 			
 			vertices.add(new Vertex(new Vector3f(positions.get(i).x, y, counter), new Vector2f(xLow, yLow)));
 			vertices.add(new Vertex(new Vector3f(positions.get(i).x, y + height,  counter), new Vector2f(xLow, yHigh)));
@@ -96,20 +106,12 @@ public class SpriteBatch {
 			iArray[i] = indexArray[i];
 		
 		mesh = new Mesh(vertexArray, iArray);
-		
 	}
 	
-	public void calcTexCoords(float row, float col){
-		xLow = col / cols;
-		xHigh = xLow + (1 / cols);
-		yLow = row / rows;
-		yHigh = yLow + (1 / rows);
-	}
-	
-	public void render(){
+	public void render(float depth){
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_ALPHA_TEST);
-		t.translate(0, 0, -10f);
+		t.translate(0, 0, depth);
 		shader.bind();
 		shader.setUniform("transformation", t.getOrthoTransformation());
 		texture.bind();
@@ -118,11 +120,11 @@ public class SpriteBatch {
 		shader.unbind();
 	}
 	
-	public int getSpriteWidth() {
+	public int getObjectWidth() {
 		return width;
 	}
 
-	public int getSpriteHeight() {
+	public int getObjectHeight() {
 		return height;
 	}
 
