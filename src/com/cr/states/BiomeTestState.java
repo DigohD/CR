@@ -1,9 +1,11 @@
 package com.cr.states;
 
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
@@ -17,8 +19,10 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
+import com.cr.util.BiomeGen;
 import com.cr.util.Randomizer;
 import com.cr.util.SimplexNoise;
+import com.cr.util.ColorToHeightPair;
 
 public class BiomeTestState extends GameState{
 	
@@ -28,14 +32,13 @@ public class BiomeTestState extends GameState{
 	private BufferedImage image;
 	private int[] pixels;
 	
-	private int width = Window.getWidth(), height = Window.getHeight();
-	//private int width = 250, height = 250;
-	
-	private SimplexNoise noise = new SimplexNoise();
+	private int width = Window.getWidth() / 2;
+	private int height = Window.getHeight() / 2;
 	
 	private int octaves = 8;
-	private float roughness = 0.4f;
-	private float scale = 0.009f;
+	private float roughness = 0.3f;
+	private float layerFrequency = 0.009f;
+	private float layerWeight = 1.0f;
 
 	public BiomeTestState(GameStateManager gsm) {
 		super(gsm);
@@ -47,8 +50,16 @@ public class BiomeTestState extends GameState{
 		t = new Transform();
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+			
+		List<ColorToHeightPair> list = new ArrayList<ColorToHeightPair> ();
 		
-		generateMap(octaves, roughness, scale);
+		list.add(new ColorToHeightPair(ColorRGBA.WHITE, -0.9f));
+		list.add(new ColorToHeightPair(ColorRGBA.GRAY, -0.5f));
+		list.add(new ColorToHeightPair(ColorRGBA.DARK_GREEN, 0.0f));
+		list.add(new ColorToHeightPair(ColorRGBA.GREEN, 0.4f));
+		list.add(new ColorToHeightPair(ColorRGBA.YELLOW, 0.5f));
+		
+		BiomeGen.generateProceduralTerrain(list, pixels, width, height, octaves, roughness, layerFrequency, layerWeight, true, ColorRGBA.BLUE);
 		
 		texture = new Texture(image);
 		
@@ -62,7 +73,7 @@ public class BiomeTestState extends GameState{
 		
 		mesh = new Mesh(vertices, indices);
 		t.translate(0, 0 , 0);
-		t.scale(2, 2, 0);
+		t.scale(1, 1, 0);
 	}
 	
 	public void generateMap(int octaves, float roughness, float scale){
@@ -71,11 +82,11 @@ public class BiomeTestState extends GameState{
 		for(int y = 0; y < height; y++){
 			for(int x = 0; x < width; x++){
 				float height = simplexNoise[x+y*width];
-				if(height < -0.99f) pixels[x+y*width] = ColorRGBA.WHITE;
-				else if(height < -0.7f) pixels[x+y*width] = ColorRGBA.GRAY;
-				else if(height < -0.5f) pixels[x+y*width] = ColorRGBA.DARK_GREEN;
-				else if(height < -0.28f) pixels[x+y*width] = ColorRGBA.GREEN;
-				else if(height < -0.2f) pixels[x+y*width] = ColorRGBA.YELLOW;
+				if(height < -0.9f) pixels[x+y*width] = ColorRGBA.WHITE;
+				else if(height < -0.5f) pixels[x+y*width] = ColorRGBA.GRAY;
+				else if(height < 0.0f) pixels[x+y*width] = ColorRGBA.DARK_GREEN;
+				else if(height < 0.4f) pixels[x+y*width] = ColorRGBA.GREEN;
+				else if(height < 0.5f) pixels[x+y*width] = ColorRGBA.YELLOW;
 				else pixels[x+y*width] = ColorRGBA.BLUE;
 			}
 		}
@@ -92,15 +103,16 @@ public class BiomeTestState extends GameState{
 	      	int xO = Randomizer.getInt(0, 16000000);
 	      	int yO = Randomizer.getInt(0, 16000000);
 	      
-	         for(int x = 0; x < width; x++)
-	            for(int y = 0; y < height; y++)
-	            	totalNoise[x+y*width] += (float) SimplexNoise.noise((x + xO) * layerFrequency,
-	            			(y + yO) * layerFrequency) * layerWeight;
-
+	        for(int x = 0; x < width; x++) {
+	        	for(int y = 0; y < height; y++) {
+		            totalNoise[x+y*width] += (float) SimplexNoise.noise((x + xO) * layerFrequency,
+		            		(y + yO) * layerFrequency) * layerWeight;
+		        }
+	        }
+	         
 	          layerFrequency *= 2;
 	          weightSum += layerWeight;
 	          layerWeight *= roughness;
-	           
 	      }
 	      
 	      return totalNoise;

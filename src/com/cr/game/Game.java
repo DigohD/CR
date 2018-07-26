@@ -5,6 +5,7 @@ import com.cr.engine.graphics.Screen;
 import com.cr.engine.graphics.Window;
 import com.cr.engine.graphics.shader.Shader;
 import com.cr.engine.input.Input;
+import com.cr.states.BiomeTestState;
 import com.cr.states.menus.StartMenuState;
 import com.cr.states.net.MPClientState;
 import com.cr.states.net.MPHostState;
@@ -19,7 +20,7 @@ public class Game extends CoreEngine{
 	public static Shader shader;
 	
 	public Game(){
-		boolean fullScreen = true;
+		boolean fullScreen = false;
 		if(fullScreen){
 			Window.setFullScreen();
 		}else Window.createWindow(800, 600, false);
@@ -42,7 +43,7 @@ public class Game extends CoreEngine{
 		new FontLoader();
 		
 		gsm = new GameStateManager();
-		gsm.push(new StartMenuState(gsm));
+		gsm.push(new BiomeTestState(gsm));
 	}
 
 	@Override
