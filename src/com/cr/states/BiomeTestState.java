@@ -2,10 +2,6 @@ package com.cr.states;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.cr.engine.core.Transform;
 import com.cr.engine.core.Vector2f;
@@ -19,10 +15,9 @@ import com.cr.engine.graphics.Window;
 import com.cr.engine.input.Input;
 import com.cr.game.Game;
 import com.cr.game.GameStateManager;
-import com.cr.util.BiomeGen;
+import com.cr.util.BiomeGenerator;
 import com.cr.util.Randomizer;
 import com.cr.util.SimplexNoise;
-import com.cr.util.ColorToHeightPair;
 
 public class BiomeTestState extends GameState{
 	
@@ -32,13 +27,8 @@ public class BiomeTestState extends GameState{
 	private BufferedImage image;
 	private int[] pixels;
 	
-	private int width = Window.getWidth() / 2;
-	private int height = Window.getHeight() / 2;
-	
-	private int octaves = 8;
-	private float roughness = 0.3f;
-	private float layerFrequency = 0.009f;
-	private float layerWeight = 1.0f;
+	private int width = Window.getWidth();
+	private int height = Window.getHeight();
 
 	public BiomeTestState(GameStateManager gsm) {
 		super(gsm);
@@ -47,19 +37,18 @@ public class BiomeTestState extends GameState{
 
 	@Override
 	public void init() {
-		t = new Transform();
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-			
-		List<ColorToHeightPair> list = new ArrayList<ColorToHeightPair> ();
 		
-		list.add(new ColorToHeightPair(ColorRGBA.WHITE, -0.9f));
-		list.add(new ColorToHeightPair(ColorRGBA.GRAY, -0.5f));
-		list.add(new ColorToHeightPair(ColorRGBA.DARK_GREEN, 0.0f));
-		list.add(new ColorToHeightPair(ColorRGBA.GREEN, 0.4f));
-		list.add(new ColorToHeightPair(ColorRGBA.YELLOW, 0.5f));
+		BiomeGenerator biomeGenerator = new BiomeGenerator(8, 0.3f, 0.009f, 1.0f);
 		
-		BiomeGen.generateProceduralTerrain(list, pixels, width, height, octaves, roughness, layerFrequency, layerWeight, true, ColorRGBA.BLUE);
+		biomeGenerator.addTileWeight(ColorRGBA.WHITE, -0.9f);
+		biomeGenerator.addTileWeight(ColorRGBA.GRAY, -0.5f);
+		biomeGenerator.addTileWeight(ColorRGBA.DARK_GREEN, 0.0f);
+		biomeGenerator.addTileWeight(ColorRGBA.GREEN, 0.4f);
+		biomeGenerator.addTileWeight(ColorRGBA.YELLOW, 0.5f);
+		
+		biomeGenerator.generateTerrain(pixels, width, height, true, ColorRGBA.BLUE);
 		
 		texture = new Texture(image);
 		
@@ -72,6 +61,9 @@ public class BiomeTestState extends GameState{
 						 2,3,0};
 		
 		mesh = new Mesh(vertices, indices);
+		
+		t = new Transform();
+		
 		t.translate(0, 0 , 0);
 		t.scale(1, 1, 0);
 	}
